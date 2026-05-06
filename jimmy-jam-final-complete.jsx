@@ -353,10 +353,51 @@ const JimmyJamApp = () => {
   ];
 
   const testimonials = [
-    { icon: '🏥', title: 'LUNG TRANSPLANT', quote: 'At 4 days old, needed transplant. Jimmy Jam raised funds!', impact: '$45,000' },
-    { icon: '🏠', title: 'AC SYSTEM', quote: 'One week from giving away our cat. Got AC system!', impact: '$3,200' },
-    { icon: '🚗', title: 'CAR REPAIR', quote: 'Needed car fixed to get job. Gave me hope back!', impact: '$1,800' },
-    { icon: '💪', title: 'SECOND CHANCE', quote: 'Thank you. You changed our lives.', impact: 'Assistance' }
+    { 
+      name: 'Sarah Jenkins',
+      title: 'Community Member',
+      quote: "The BBQ Slam isn't just about food; it's about community. They helped me get back on my feet after the flood when I had nowhere else to turn. Forever grateful for the Jimmy Jam family.",
+      rating: 5,
+      date: '10/12/23',
+      initials: 'SJ',
+      color: 'bg-rose-100'
+    },
+    { 
+      name: 'Robert Miller',
+      title: 'Grant Recipient',
+      quote: "I've never seen a group of people work so hard for others. The medical grant they provided changed my daughter's life. This organization is a blessing to Fort Worth.",
+      rating: 5,
+      date: '08/15/23',
+      initials: 'RM',
+      color: 'bg-blue-100'
+    },
+    { 
+      name: 'David Chen',
+      title: 'Silver Sponsor',
+      quote: "Best ribs I've ever had, and even better people. Proud to be a sponsor every year and see the direct impact our contributions have on local families in need.",
+      rating: 4,
+      date: '09/20/23',
+      initials: 'DC',
+      color: 'bg-amber-100'
+    },
+    { 
+      name: 'Maria Rodriguez',
+      title: 'Assistance Recipient',
+      quote: "When my truck broke down and I couldn't get to work, Jimmy Jam Outreach stepped in. They didn't just pay for the repair; they gave me hope during a dark time.",
+      rating: 5,
+      date: '11/05/23',
+      initials: 'MR',
+      color: 'bg-emerald-100'
+    },
+    { 
+      name: 'Kevin Thompson',
+      title: 'Volunteer',
+      quote: "A truly world-class event with a heart of gold. The impact they have on Fort Worth is immeasurable. It's an honor to wear the volunteer shirt every year.",
+      rating: 5,
+      date: '10/10/23',
+      initials: 'KT',
+      color: 'bg-indigo-100'
+    }
   ];
 
   const swagItems = [
@@ -1488,19 +1529,57 @@ const JimmyJamApp = () => {
 
         {/* TESTIMONIALS */}
         {activeNav === 'testimonials' && (
-          <div className="space-y-8">
-            <h2 className="text-4xl font-bold text-red-700 text-center">💬 REAL STORIES</h2>
-            <div className="grid md:grid-cols-4 gap-6">
+          <div className="space-y-8 pb-20">
+            {/* HEADER AREA LIKE IMAGE */}
+            <div className="relative h-48 rounded-2xl overflow-hidden shadow-xl mb-12">
+              <div className="absolute inset-0 bg-gray-900 bg-opacity-60 flex flex-col justify-end p-6 z-10">
+                <h1 className="text-3xl font-bold text-white mb-1">Jimmy Jam Stories</h1>
+                <p className="text-gray-300 text-sm flex items-center gap-1">📍 Fort Worth, Texas</p>
+              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                alt="BBQ Event" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute top-4 right-4 bg-white bg-opacity-90 px-4 py-2 rounded-lg shadow-lg z-20">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">opinions</p>
+              </div>
+            </div>
+
+            {/* TESTIMONIAL CARDS */}
+            <div className="space-y-12">
               {testimonials.map((t, i) => (
-                <div key={i} className="bg-white rounded-lg border-2 border-red-700 overflow-hidden shadow-lg">
-                  <div className="bg-red-100 p-6 text-center">
-                    <p className="text-5xl mb-3">{t.icon}</p>
-                    <h3 className="font-bold text-red-700">{t.title}</h3>
+                <div key={i} className="relative pt-6">
+                  {/* AVATAR BOX */}
+                  <div className={`absolute -top-0 left-4 w-16 h-16 ${t.color} rounded-xl shadow-lg z-30 flex items-center justify-center text-xl font-bold text-gray-700 border-2 border-white overflow-hidden`}>
+                    {t.initials}
                   </div>
-                  <div className="p-6">
-                    <p className="text-red-800 italic text-sm mb-4">"{t.quote}"</p>
-                    <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3">
-                      <p className="text-yellow-800 font-bold text-sm">{t.impact}</p>
+
+                  {/* CONTENT CARD */}
+                  <div className="bg-[#FAF9F6] rounded-2xl p-6 pl-24 shadow-sm border border-gray-100 relative group transition-all hover:shadow-md">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h3 className="font-bold text-gray-900">{t.name}</h3>
+                        <div className="flex gap-0.5 mt-0.5">
+                          {[...Array(5)].map((_, star) => (
+                            <span key={star} className={`text-xs ${star < t.rating ? 'text-rose-400' : 'text-gray-300'}`}>★</span>
+                          ))}
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-bold text-gray-400">{t.date}</span>
+                    </div>
+
+                    <div className="relative mt-4">
+                      <span className="absolute -top-4 -left-2 text-4xl text-gray-200 opacity-50 font-serif">"</span>
+                      <p className="text-gray-600 text-sm leading-relaxed italic">
+                        {t.quote}
+                      </p>
+                      <span className="absolute -bottom-6 right-0 text-4xl text-gray-200 opacity-50 font-serif">"</span>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-rose-400">{t.title}</span>
+                      <ChevronRight size={16} className="text-gray-300 group-hover:translate-x-1 transition-all" />
                     </div>
                   </div>
                 </div>
