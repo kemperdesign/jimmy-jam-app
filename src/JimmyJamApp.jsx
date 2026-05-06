@@ -239,7 +239,7 @@ const JimmyJamApp = () => {
 
   if (showSplash) {
     return (
-      <div className="fixed inset-0 bg-gradient-to-b from-zinc-900 to-zinc-800 flex flex-col items-center justify-center z-50">
+      <div className="fixed inset-0 bg-gradient-to-b from-red-700 to-red-600 flex flex-col items-center justify-center z-50">
         <div className="flex-1 flex items-center justify-center w-full">
           <div className="text-center">
             <div className="mb-8">
@@ -256,7 +256,7 @@ const JimmyJamApp = () => {
 
         <div className="w-full px-8 pb-20">
           <p className="text-white text-xl font-bold text-center mb-6">Loading Community</p>
-          <div className="w-full bg-zinc-900 bg-opacity-20 rounded-full h-2 overflow-hidden">
+          <div className="w-full bg-white bg-opacity-20 rounded-full h-2 overflow-hidden">
             <div 
               className="h-full bg-gradient-to-r from-yellow-300 to-yellow-100 transition-all duration-200"
               style={{ width: `${Math.min(loadingProgress, 100)}%` }}
@@ -305,14 +305,14 @@ const JimmyJamApp = () => {
 
   const galleryPhotos = [
     { id: 9, isPoster: true, title: 'BBQ SLAM & BOURBON', desc: 'Official Festival Poster' },
-    { id: 1, src: '🏆', title: 'BBQ Competition 2023', desc: 'Teams competing for prizes' },
-    { id: 2, src: '🔥', title: 'Smoking Brisket', desc: '14-hour St Augustine, Florida style' },
-    { id: 3, src: '🍖', title: 'Prize Winners', desc: 'Championship teams' },
-    { id: 4, src: '🥃', title: 'Bourbon Tasting', desc: 'Premium selection' },
-    { id: 5, src: '👥', title: 'Community Gathering', desc: 'Families together' },
-    { id: 6, src: '🎉', title: 'Awards Ceremony', desc: 'Celebration moment' },
-    { id: 7, src: '🌮', title: 'Food Vendors', desc: 'Local businesses' },
-    { id: 8, src: '🎵', title: 'Live Music', desc: 'Entertainment stage' }
+    { id: 1, src: '/images/event 1.webp', title: 'BBQ Competition 2023', desc: 'Teams competing for prizes' },
+    { id: 2, src: '/images/event 2.webp', title: 'Smoking Brisket', desc: '14-hour St Augustine, Florida style' },
+    { id: 3, src: '/images/event 3.webp', title: 'Prize Winners', desc: 'Championship teams' },
+    { id: 4, src: '/images/event 4.webp', title: 'Bourbon Tasting', desc: 'Premium selection' },
+    { id: 5, src: '/images/event 5.webp', title: 'Community Gathering', desc: 'Families together' },
+    { id: 6, src: '/images/event 6.webp', title: 'Awards Ceremony', desc: 'Celebration moment' },
+    { id: 7, src: '/images/481974352_947902437529671_1263519369693082133_n.jpg', title: 'Food Vendors', desc: 'Local businesses' },
+    { id: 8, src: '/images/482024108_947900074196574_2207116397592462971_n.jpg', title: 'Live Music', desc: 'Entertainment stage' }
   ];
 
   const bourbonMenu = {
@@ -499,9 +499,9 @@ const JimmyJamApp = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-800">
+    <div className="min-h-screen bg-gray-100">
       {/* HEADER */}
-      <header className="sticky top-0 z-40 bg-zinc-800 text-white shadow-lg">
+      <header className="sticky top-0 z-40 bg-red-700 text-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             {activeNav !== 'home' && (
@@ -515,7 +515,7 @@ const JimmyJamApp = () => {
             </div>
 
             <div className="hidden lg:flex items-center gap-2">
-              <button className="p-2 hover:bg-zinc-700 rounded-lg">
+              <button className="p-2 hover:bg-red-600 rounded-lg">
                 <Search size={20} />
               </button>
               <Bell size={20} />
@@ -546,23 +546,23 @@ const JimmyJamApp = () => {
 
             {/* MAIN FEATURE GRID */}
             <div className="space-y-4">
-              <h2 className="text-3xl font-bold text-zinc-100 text-center">EXPLORE</h2>
+              <h2 className="text-3xl font-bold text-gray-800 text-center">EXPLORE</h2>
               
               <div className="grid grid-cols-3 gap-4">
                 {mainFeatures.map((feature, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveNav(feature.action)}
-                    className="group bg-zinc-900 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all transform hover:scale-105 border-2 border-zinc-800 hover:border-zinc-700"
+                    className="group bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-all transform hover:scale-105 border-2 border-gray-200 hover:border-red-700"
                   >
                     <div className="flex flex-col items-center gap-3">
-                      <div className="w-20 h-20 rounded-full border-4 border-zinc-700 flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-50 group-hover:bg-zinc-800 transition-all">
+                      <div className="w-20 h-20 rounded-full border-4 border-red-700 flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-50 group-hover:bg-red-700 transition-all">
                         <span className="text-4xl group-hover:hidden">{feature.icon}</span>
                         <span className="text-white text-3xl hidden group-hover:block">→</span>
                       </div>
                       <div className="text-center">
-                        <p className="font-bold text-zinc-100 text-sm">{feature.title}</p>
-                        <p className="text-zinc-300 text-xs">{feature.desc}</p>
+                        <p className="font-bold text-gray-800 text-sm">{feature.title}</p>
+                        <p className="text-gray-600 text-xs">{feature.desc}</p>
                       </div>
                     </div>
                   </button>
@@ -574,7 +574,7 @@ const JimmyJamApp = () => {
             <div className="text-center">
               <button
                 onClick={() => setActiveNav('assistance')}
-                className="bg-gradient-to-r from-zinc-900 to-zinc-700 hover:from-red-800 hover:to-orange-700 text-white px-12 py-4 rounded-lg font-bold text-lg shadow-lg transform hover:scale-105 transition-all"
+                className="bg-gradient-to-r from-red-700 to-orange-600 hover:from-red-800 hover:to-orange-700 text-white px-12 py-4 rounded-lg font-bold text-lg shadow-lg transform hover:scale-105 transition-all"
               >
                 ❤️ APPLY FOR HELP
               </button>
@@ -588,11 +588,11 @@ const JimmyJamApp = () => {
             {/* HEADER WITH MONTH */}
             <div className="flex items-center justify-between mb-4">
               <button className="p-2 hover:bg-gray-200 rounded-lg transition-all">
-                <ChevronLeft size={24} className="text-zinc-100" />
+                <ChevronLeft size={24} className="text-gray-800" />
               </button>
-              <h2 className="text-2xl font-bold text-zinc-100">JULY</h2>
+              <h2 className="text-2xl font-bold text-gray-800">JULY</h2>
               <button className="p-2 hover:bg-gray-200 rounded-lg transition-all">
-                <Search size={24} className="text-zinc-100" />
+                <Search size={24} className="text-gray-800" />
               </button>
             </div>
 
@@ -600,28 +600,28 @@ const JimmyJamApp = () => {
             <div className="grid grid-cols-7 gap-2 text-center mb-4">
               {['WED', 'THU', 'FRI', 'SAT', 'SUN', 'MON', 'TUE'].map((day, i) => (
                 <div key={day}>
-                  <p className={`text-xs font-bold ${i === 1 ? 'text-black' : 'text-zinc-400'}`}>{day}</p>
-                  <p className={`text-lg font-bold py-2 rounded-full ${i === 1 ? 'bg-black text-white' : 'text-zinc-300'}`}>{2 + i}</p>
+                  <p className={`text-xs font-bold ${i === 1 ? 'text-black' : 'text-gray-500'}`}>{day}</p>
+                  <p className={`text-lg font-bold py-2 rounded-full ${i === 1 ? 'bg-black text-white' : 'text-gray-700'}`}>{2 + i}</p>
                 </div>
               ))}
             </div>
 
             {/* TABS */}
             <div className="flex gap-3 mb-4">
-              <button onClick={() => setActiveTab('all')} className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'all' ? 'bg-yellow-400 text-black' : 'bg-gray-300 text-zinc-300'}`}>
+              <button onClick={() => setActiveTab('all')} className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'all' ? 'bg-yellow-400 text-black' : 'bg-gray-300 text-gray-700'}`}>
                 All Events
               </button>
-              <button onClick={() => setActiveTab('my')} className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'my' ? 'bg-yellow-400 text-black' : 'bg-gray-300 text-zinc-300'}`}>
+              <button onClick={() => setActiveTab('my')} className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'my' ? 'bg-yellow-400 text-black' : 'bg-gray-300 text-gray-700'}`}>
                 My Schedule
               </button>
             </div>
 
             {/* FILTER TAGS */}
             <div className="flex gap-2 flex-wrap mb-4">
-              <button className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm font-semibold hover:bg-zinc-800 transition-all">⚙️ Filters</button>
-              <button className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm font-semibold hover:bg-zinc-800 transition-all">🍽️ Food</button>
-              <button className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm font-semibold hover:bg-zinc-800 transition-all">🎵 Music</button>
-              <button className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm font-semibold hover:bg-zinc-800 transition-all">🏆 BBQ</button>
+              <button className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm font-semibold hover:bg-gray-100 transition-all">⚙️ Filters</button>
+              <button className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm font-semibold hover:bg-gray-100 transition-all">🍽️ Food</button>
+              <button className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm font-semibold hover:bg-gray-100 transition-all">🎵 Music</button>
+              <button className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm font-semibold hover:bg-gray-100 transition-all">🏆 BBQ</button>
             </div>
 
             {/* EVENTS LIST */}
@@ -635,13 +635,13 @@ const JimmyJamApp = () => {
 
                   {/* EVENT CARDS */}
                   {dateGroup.events.map((event, idx) => (
-                    <div key={idx} className="bg-zinc-900 rounded-lg p-4 shadow-md hover:shadow-lg transition-all border-b-2 border-zinc-800">
+                    <div key={idx} className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all border-b-2 border-gray-200">
                       <div className="flex gap-3">
                         {/* LEFT SIDE - INFO */}
                         <div className="flex-1">
-                          <p className="text-xs font-bold text-zinc-400 mb-1">{event.time} | {dateGroup.date}</p>
-                          <h3 className="text-base font-bold text-zinc-100">{event.title}</h3>
-                          <p className="text-xs text-zinc-300 mt-1">{event.location}</p>
+                          <p className="text-xs font-bold text-gray-500 mb-1">{event.time} | {dateGroup.date}</p>
+                          <h3 className="text-base font-bold text-gray-900">{event.title}</h3>
+                          <p className="text-xs text-gray-600 mt-1">{event.location}</p>
                           
                           {/* CATEGORY TAGS */}
                           <div className="flex gap-2 mt-2">
@@ -659,15 +659,15 @@ const JimmyJamApp = () => {
                       </div>
 
                       {/* ACTION BUTTONS */}
-                      <div className="flex gap-3 justify-end mt-3 pt-3 border-t border-zinc-800">
-                        <button className="p-1.5 hover:bg-zinc-800 rounded-lg transition-all">
-                          <Upload size={16} className="text-zinc-300" />
+                      <div className="flex gap-3 justify-end mt-3 pt-3 border-t border-gray-200">
+                        <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-all">
+                          <Upload size={16} className="text-gray-600" />
                         </button>
-                        <button className="p-1.5 hover:bg-zinc-800 rounded-lg transition-all">
-                          <Star size={16} className="text-zinc-300" />
+                        <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-all">
+                          <Star size={16} className="text-gray-600" />
                         </button>
-                        <button className="p-1.5 hover:bg-zinc-800 rounded-lg transition-all">
-                          <Bell size={16} className="text-zinc-300" />
+                        <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-all">
+                          <Bell size={16} className="text-gray-600" />
                         </button>
                       </div>
                     </div>
@@ -711,7 +711,7 @@ const JimmyJamApp = () => {
                   </div>
                 </div>
                 
-                <p className="text-[10px] text-zinc-400 mt-6 font-bold uppercase tracking-widest">jimmyjamoutreach.com</p>
+                <p className="text-[10px] text-gray-400 mt-6 font-bold uppercase tracking-widest">jimmyjamoutreach.com</p>
               </div>
             </div>
 
@@ -723,27 +723,27 @@ const JimmyJamApp = () => {
             {/* TICKET OPTIONS */}
             <div className="space-y-4">
               {ticketTypes.map((ticket, idx) => (
-                <div key={idx} className="bg-zinc-900 rounded-lg p-6 border-2 border-zinc-800 shadow-lg hover:shadow-xl transition-all">
+                <div key={idx} className="bg-white rounded-lg p-6 border-2 border-gray-300 shadow-lg hover:shadow-xl transition-all">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-3">
                       <span className="text-3xl">{ticket.icon}</span>
-                      <h3 className="font-bold text-zinc-100">{ticket.title}</h3>
+                      <h3 className="font-bold text-gray-800">{ticket.title}</h3>
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold text-white">${ticket.price}</p>
+                      <p className="text-2xl font-bold text-red-700">${ticket.price}</p>
                     </div>
                   </div>
                   
                   <div className="space-y-2">
                     {ticket.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                        <span className="text-white font-bold">•</span>
+                      <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                        <span className="text-red-700 font-bold">•</span>
                         <span>{feature}</span>
                       </div>
                     ))}
                   </div>
 
-                  <button className="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-white py-2 rounded-lg font-bold text-sm transition-all">
+                  <button className="w-full mt-4 bg-red-700 hover:bg-red-800 text-white py-2 rounded-lg font-bold text-sm transition-all">
                     BUY NOW
                   </button>
                 </div>
@@ -755,18 +755,18 @@ const JimmyJamApp = () => {
               <h3 className="text-lg font-bold text-blue-900">Event Information</h3>
               
               <div>
-                <p className="font-bold text-zinc-100 mb-2">When</p>
-                <p className="text-zinc-300">July 4-5, 2024</p>
+                <p className="font-bold text-gray-800 mb-2">When</p>
+                <p className="text-gray-700">July 4-5, 2024</p>
               </div>
 
               <div>
-                <p className="font-bold text-zinc-100 mb-2">Where</p>
-                <p className="text-zinc-300">Francis Field<br />25 W Castillo Dr, St. Augustine, FL 32084</p>
+                <p className="font-bold text-gray-800 mb-2">Where</p>
+                <p className="text-gray-700">Francis Field<br />25 W Castillo Dr, St. Augustine, FL 32084</p>
               </div>
 
               <div>
-                <p className="font-bold text-zinc-100 mb-2">What's Included</p>
-                <ul className="space-y-1 text-sm text-zinc-300">
+                <p className="font-bold text-gray-800 mb-2">What's Included</p>
+                <ul className="space-y-1 text-sm text-gray-700">
                   <li>✓ World-class BBQ competition</li>
                   <li>✓ Premium bourbon tasting</li>
                   <li>✓ Live music performances</li>
@@ -787,14 +787,14 @@ const JimmyJamApp = () => {
             </div>
 
             {/* TABS */}
-            <div className="flex gap-3 border-b-2 border-zinc-800">
-              <button onClick={() => setActiveTab('venue')} className={`px-4 py-3 font-bold transition-all flex items-center gap-2 ${activeTab === 'venue' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-zinc-300'}`}>
+            <div className="flex gap-3 border-b-2 border-gray-300">
+              <button onClick={() => setActiveTab('venue')} className={`px-4 py-3 font-bold transition-all flex items-center gap-2 ${activeTab === 'venue' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
                 📍 Map
               </button>
-              <button onClick={() => setActiveTab('gps')} className={`px-4 py-3 font-bold transition-all flex items-center gap-2 ${activeTab === 'gps' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-zinc-300'}`}>
+              <button onClick={() => setActiveTab('gps')} className={`px-4 py-3 font-bold transition-all flex items-center gap-2 ${activeTab === 'gps' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
                 🧭 GPS Map
               </button>
-              <button onClick={() => setActiveTab('info')} className={`px-4 py-3 font-bold transition-all flex items-center gap-2 ${activeTab === 'info' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-zinc-300'}`}>
+              <button onClick={() => setActiveTab('info')} className={`px-4 py-3 font-bold transition-all flex items-center gap-2 ${activeTab === 'info' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
                 ℹ️ Info
               </button>
             </div>
@@ -802,30 +802,30 @@ const JimmyJamApp = () => {
             {/* VENUE MAP TAB */}
             {activeTab === 'venue' && (
               <div className="space-y-4">
-                <div className="w-full h-96 bg-zinc-900 rounded-lg overflow-hidden border-2 border-zinc-800 shadow-lg relative">
+                <div className="w-full h-96 bg-white rounded-lg overflow-hidden border-2 border-gray-300 shadow-lg relative">
                   <img 
                     src="https://images.unsplash.com/photo-1569336415962-a4bd9f6dfc0f?auto=format&fit=crop&q=80&w=1200" 
                     alt="Festival Map" 
                     className="w-full h-full object-cover opacity-80"
                   />
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="bg-zinc-900/90 p-4 rounded-xl shadow-xl text-center border-2 border-zinc-700">
+                    <div className="bg-white/90 p-4 rounded-xl shadow-xl text-center border-2 border-red-700">
                       <p className="text-4xl mb-2">🎪</p>
-                      <p className="text-zinc-100 font-bold text-lg leading-tight uppercase tracking-widest">Francis Field<br/>Official Festival Map</p>
+                      <p className="text-gray-900 font-bold text-lg leading-tight uppercase tracking-widest">Francis Field<br/>Official Festival Map</p>
                     </div>
                   </div>
                 </div>
 
                 {/* LEGEND */}
-                <div className="bg-zinc-900 rounded-lg p-4 border-2 border-zinc-800 space-y-3">
+                <div className="bg-white rounded-lg p-4 border-2 border-gray-300 space-y-3">
                   <div className="flex justify-between items-center mb-3">
-                    <h3 className="font-bold text-zinc-100">Map Legend</h3>
-                    <p className="text-[10px] font-bold text-zinc-400 uppercase">Click to toggle</p>
+                    <h3 className="font-bold text-gray-900">Map Legend</h3>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase">Click to toggle</p>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4">
                     {[
-                      { id: 'stage', label: 'BBQ Stage', color: 'bg-zinc-8000' },
+                      { id: 'stage', label: 'BBQ Stage', color: 'bg-red-500' },
                       { id: 'food', label: 'Food Vendors', color: 'bg-green-500' },
                       { id: 'bar', label: 'Bourbon Bar', color: 'bg-blue-500' },
                       { id: 'restroom', label: 'Restrooms', color: 'bg-yellow-500' },
@@ -838,7 +838,7 @@ const JimmyJamApp = () => {
                         className={`flex items-center gap-2 p-1 rounded transition-all ${mapFilters.includes(item.id) ? 'opacity-100' : 'opacity-40 scale-95'}`}
                       >
                         <div className={`w-6 h-6 ${item.color} rounded shadow-sm`}></div>
-                        <span className="text-sm font-semibold text-zinc-300">{item.label}</span>
+                        <span className="text-sm font-semibold text-gray-700">{item.label}</span>
                       </button>
                     ))}
                   </div>
@@ -849,7 +849,7 @@ const JimmyJamApp = () => {
             {/* GPS MAP TAB */}
             {activeTab === 'gps' && (
               <div className="space-y-4">
-                <div className="w-full h-96 bg-zinc-800 rounded-lg overflow-hidden border-2 border-blue-300 shadow-lg relative">
+                <div className="w-full h-96 bg-gray-100 rounded-lg overflow-hidden border-2 border-blue-300 shadow-lg relative">
                   <iframe
                     title="GPS Map"
                     width="100%"
@@ -872,7 +872,7 @@ const JimmyJamApp = () => {
                 </button>
 
                 {showFilters && (
-                  <div className="bg-zinc-900 rounded-lg p-4 border-2 border-blue-300 grid grid-cols-2 gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
+                  <div className="bg-white rounded-lg p-4 border-2 border-blue-300 grid grid-cols-2 gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
                     {[
                       { id: 'stage', label: 'Stages', icon: '🎤' },
                       { id: 'food', label: 'Food', icon: '🍔' },
@@ -882,7 +882,7 @@ const JimmyJamApp = () => {
                       <button
                         key={f.id}
                         onClick={() => setMapFilters(prev => prev.includes(f.id) ? prev.filter(x => x !== f.id) : [...prev, f.id])}
-                        className={`flex items-center gap-2 p-3 rounded-lg border-2 transition-all ${mapFilters.includes(f.id) ? 'bg-blue-50 border-blue-600 text-blue-700' : 'bg-zinc-800 border-zinc-800 text-zinc-400'}`}
+                        className={`flex items-center gap-2 p-3 rounded-lg border-2 transition-all ${mapFilters.includes(f.id) ? 'bg-blue-50 border-blue-600 text-blue-700' : 'bg-gray-50 border-gray-200 text-gray-500'}`}
                       >
                         <span>{f.icon}</span>
                         <span className="text-xs font-bold">{f.label}</span>
@@ -892,15 +892,15 @@ const JimmyJamApp = () => {
                 )}
 
                 {/* LOCATION INFO */}
-                <div className="bg-zinc-900 rounded-lg p-4 border-2 border-blue-300 space-y-3 shadow-lg">
+                <div className="bg-white rounded-lg p-4 border-2 border-blue-300 space-y-3 shadow-lg">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-zinc-800 rounded-lg flex items-center justify-center text-xl">📍</div>
+                    <div className="w-10 h-10 bg-red-700 rounded-lg flex items-center justify-center text-xl">📍</div>
                     <div>
-                      <h3 className="font-bold text-zinc-100 leading-tight">Francis Field</h3>
-                      <p className="text-xs text-zinc-400 italic">Official Jimmy Jam Venue</p>
+                      <h3 className="font-bold text-gray-900 leading-tight">Francis Field</h3>
+                      <p className="text-xs text-gray-500 italic">Official Jimmy Jam Venue</p>
                     </div>
                   </div>
-                  <p className="text-sm text-zinc-300">25 W Castillo Dr, St. Augustine, FL 32084</p>
+                  <p className="text-sm text-gray-600">25 W Castillo Dr, St. Augustine, FL 32084</p>
                   <button 
                     onClick={() => window.open('https://www.google.com/maps/dir/?api=1&destination=Francis+Field+St+Augustine+FL', '_blank')}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold shadow-lg transform active:scale-95 transition-all flex items-center justify-center gap-2"
@@ -916,11 +916,11 @@ const JimmyJamApp = () => {
               <div className="space-y-3">
                 {/* SEARCH */}
                 <div className="relative mb-4">
-                  <Search className="absolute left-4 top-3 text-zinc-400" size={20} />
+                  <Search className="absolute left-4 top-3 text-gray-400" size={20} />
                   <input
                     type="text"
                     placeholder="Search..."
-                    className="w-full pl-12 pr-4 py-3 border-2 border-zinc-800 rounded-lg text-zinc-300 placeholder-gray-400 focus:outline-none focus:border-blue-600"
+                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-lg text-gray-700 placeholder-gray-400 focus:outline-none focus:border-blue-600"
                   />
                 </div>
 
@@ -938,8 +938,8 @@ const JimmyJamApp = () => {
                       key={idx}
                       className="w-full bg-yellow-50 hover:bg-yellow-100 border-b-2 border-blue-600 p-4 text-left transition-all flex items-center justify-between group"
                     >
-                      <p className="font-bold text-lg text-zinc-100 group-hover:text-blue-600">{item.title}</p>
-                      <span className="text-2xl text-zinc-400 group-hover:text-blue-600">›</span>
+                      <p className="font-bold text-lg text-gray-900 group-hover:text-blue-600">{item.title}</p>
+                      <span className="text-2xl text-gray-400 group-hover:text-blue-600">›</span>
                     </button>
                   ))}
                 </div>
@@ -952,28 +952,28 @@ const JimmyJamApp = () => {
         {activeNav === 'sponsors' && (
           <div className="space-y-8 pb-20">
             <div className="text-center space-y-2">
-              <h1 className="text-4xl font-bold text-white">OFFICIAL PARTNERS</h1>
-              <p className="text-zinc-300">Thank you to our generous sponsors who make Jimmy Jam possible.</p>
+              <h1 className="text-4xl font-bold text-gray-900">OFFICIAL PARTNERS</h1>
+              <p className="text-gray-600">Thank you to our generous sponsors who make Jimmy Jam possible.</p>
             </div>
 
             <div className="space-y-6">
               {/* PLATINUM / TITLE */}
-              <div className="bg-zinc-900 border-2 border-orange-500 rounded-xl p-8 flex flex-col items-center justify-center shadow-lg shadow-orange-500/20">
-                <span className="text-orange-500 font-bold tracking-widest text-sm mb-4 uppercase">Title Sponsor</span>
-                <div className="h-32 w-full bg-zinc-800 rounded-lg flex items-center justify-center overflow-hidden border border-zinc-700">
-                  <h2 className="text-4xl font-black text-zinc-100 tracking-tighter">BULLSEYE<span className="text-orange-500">BBQ</span></h2>
+              <div className="bg-white border-4 border-red-600 rounded-xl p-8 flex flex-col items-center justify-center shadow-2xl">
+                <span className="text-red-700 font-bold tracking-widest text-sm mb-4 uppercase">Title Sponsor</span>
+                <div className="h-32 w-full bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden border border-gray-200">
+                  <h2 className="text-4xl font-black text-gray-900 tracking-tighter">BULLSEYE<span className="text-red-600">BBQ</span></h2>
                 </div>
               </div>
 
               {/* GOLD */}
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { name: 'ST AUGUSTINE DISTILLERY', color: 'text-amber-400' },
-                  { name: 'FLORIDA HERITAGE BANK', color: 'text-blue-400' }
+                  { name: 'ST AUGUSTINE DISTILLERY', color: 'text-amber-600' },
+                  { name: 'FLORIDA HERITAGE BANK', color: 'text-blue-700' }
                 ].map((sponsor, idx) => (
-                  <div key={idx} className="bg-zinc-900 border border-zinc-700 rounded-xl p-4 flex flex-col items-center justify-center">
-                    <span className="text-zinc-500 font-bold text-[10px] mb-2 uppercase">Gold Sponsor</span>
-                    <div className="h-24 w-full bg-zinc-800 rounded flex items-center justify-center p-2 text-center">
+                  <div key={idx} className="bg-white border-2 border-amber-400 rounded-xl p-4 flex flex-col items-center justify-center shadow-lg">
+                    <span className="text-amber-600 font-bold text-[10px] mb-2 uppercase">Gold Sponsor</span>
+                    <div className="h-24 w-full bg-gray-50 rounded flex items-center justify-center p-2 text-center">
                       <h3 className={`text-sm md:text-xl font-bold ${sponsor.color}`}>{sponsor.name}</h3>
                     </div>
                   </div>
@@ -990,19 +990,19 @@ const JimmyJamApp = () => {
                   'Oceanview Hotels',
                   'St Augie Brewing'
                 ].map((name, idx) => (
-                  <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 flex flex-col items-center justify-center">
-                    <div className="h-16 w-full bg-zinc-800 rounded flex items-center justify-center text-center p-1">
-                      <h4 className="text-[10px] md:text-xs font-bold text-zinc-300">{name}</h4>
+                  <div key={idx} className="bg-white border-2 border-gray-200 rounded-lg p-3 flex flex-col items-center justify-center shadow">
+                    <div className="h-16 w-full bg-gray-50 rounded flex items-center justify-center text-center p-1">
+                      <h4 className="text-[10px] md:text-xs font-bold text-gray-600">{name}</h4>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
             
-            <div className="mt-12 bg-zinc-800 p-6 rounded-xl text-center">
-              <h3 className="text-xl font-bold text-white mb-2">Become a Partner</h3>
-              <p className="text-sm text-zinc-300 mb-4">Join our community of sponsors and support local outreach.</p>
-              <button onClick={() => setActiveNav('connect')} className="px-6 py-2 bg-white text-black font-bold rounded hover:bg-zinc-200 transition-all">CONTACT US</button>
+            <div className="mt-12 bg-red-50 p-6 rounded-xl text-center border-2 border-red-200">
+              <h3 className="text-xl font-bold text-red-800 mb-2">Become a Partner</h3>
+              <p className="text-sm text-red-600 mb-4">Join our community of sponsors and support local outreach.</p>
+              <button onClick={() => setActiveNav('connect')} className="px-6 py-2 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition-all shadow-md">CONTACT US</button>
             </div>
           </div>
         )}
@@ -1010,20 +1010,20 @@ const JimmyJamApp = () => {
         {/* RECIPE BOOK */}
         {activeNav === 'recipes' && (
           <div className="space-y-6 pb-20">
-            <h1 className="text-3xl font-bold text-center text-white mb-6">Jimmy Jam Recipe Book</h1>
+            <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">Jimmy Jam Recipe Book</h1>
             <div className="grid gap-6">
               {[
                 { title: 'Smoked Brisket Rub', time: '10 min prep', desc: 'A classic Florida-style rub with salt, pepper, garlic, and paprika.', icon: '🥩' },
                 { title: 'Bourbon BBQ Sauce', time: '20 min prep', desc: 'Sweet and tangy sauce infused with premium bourbon.', icon: '🍯' },
                 { title: 'Pitmaster Baked Beans', time: '2 hours slow-cook', desc: 'Slow-cooked beans with bacon, brown sugar, and molasses.', icon: '🥘' }
               ].map((recipe, idx) => (
-                <div key={idx} className="bg-zinc-900 rounded-lg border-2 border-zinc-700 p-6 shadow-lg flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
-                  <div className="text-6xl bg-zinc-800 p-6 rounded-full border-2 border-zinc-600 shadow-inner">{recipe.icon}</div>
+                <div key={idx} className="bg-white rounded-xl border-2 border-gray-200 p-6 shadow-lg flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left hover:border-red-300 transition-all">
+                  <div className="text-6xl bg-red-50 p-6 rounded-full border border-red-100">{recipe.icon}</div>
                   <div className="flex-1 space-y-2">
-                    <h2 className="text-2xl font-bold text-white">{recipe.title}</h2>
-                    <p className="text-sm font-bold text-orange-400 uppercase tracking-widest">{recipe.time}</p>
-                    <p className="text-zinc-300 leading-relaxed">{recipe.desc}</p>
-                    <button className="mt-4 w-full md:w-auto px-6 py-2 bg-white text-black font-bold rounded-lg hover:bg-zinc-200 transition-all shadow-md">VIEW RECIPE</button>
+                    <h2 className="text-2xl font-bold text-gray-900">{recipe.title}</h2>
+                    <p className="text-sm font-bold text-red-600 uppercase tracking-widest">{recipe.time}</p>
+                    <p className="text-gray-600 leading-relaxed">{recipe.desc}</p>
+                    <button className="mt-4 w-full md:w-auto px-6 py-2 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition-all shadow-md">VIEW RECIPE</button>
                   </div>
                 </div>
               ))}
@@ -1035,9 +1035,9 @@ const JimmyJamApp = () => {
         {activeNav === 'photos' && (
           <div className="space-y-8">
             {/* MAIN PHOTO */}
-            <div className="bg-zinc-900 rounded-lg overflow-hidden shadow-xl">
+            <div className="bg-white rounded-lg overflow-hidden shadow-xl">
               {galleryPhotos[currentPhotoIndex].isPoster ? (
-                <div className="relative bg-[#365ca8] h-[500px] flex items-center justify-center border-b-4 border-orange-500">
+                <div className="relative bg-[#365ca8] h-[500px] flex items-center justify-center border-b-8 border-red-600">
                   <div className="flex flex-col items-center justify-center text-white text-center p-4">
                     <p className="text-[12px] font-bold tracking-widest uppercase mb-4 text-blue-100">Jimmy Jam Community Outreach</p>
                     <h2 className="text-3xl font-bold mb-2 tracking-wide">BBQ SLAM & BOURBON</h2>
@@ -1057,21 +1057,21 @@ const JimmyJamApp = () => {
                   </div>
                 </div>
               ) : (
-                <div className="relative bg-gradient-to-br from-zinc-800 to-zinc-700 h-[500px] flex items-center justify-center text-9xl">
-                  {galleryPhotos[currentPhotoIndex].src}
+                <div className="relative bg-gradient-to-br from-red-600 to-orange-600 h-[500px] flex items-center justify-center overflow-hidden">
+                  <img src={galleryPhotos[currentPhotoIndex].src} alt={galleryPhotos[currentPhotoIndex].title} className="w-full h-full object-cover" />
                 </div>
               )}
               <div className="p-8">
-                <h3 className="text-3xl font-bold text-white mb-2">{galleryPhotos[currentPhotoIndex].title}</h3>
-                <p className="text-zinc-300 text-lg mb-6">{galleryPhotos[currentPhotoIndex].desc}</p>
+                <h3 className="text-3xl font-bold text-red-700 mb-2">{galleryPhotos[currentPhotoIndex].title}</h3>
+                <p className="text-gray-600 text-lg mb-6">{galleryPhotos[currentPhotoIndex].desc}</p>
                 <div className="flex items-center justify-between">
-                  <button onClick={prevPhoto} className="bg-zinc-800 hover:bg-zinc-700 text-white p-3 rounded-lg transition-all">
+                  <button onClick={prevPhoto} className="bg-red-700 hover:bg-red-800 text-white p-3 rounded-lg transition-all">
                     <ChevronLeft size={24} />
                   </button>
                   <div className="text-center">
-                    <p className="text-zinc-300">{currentPhotoIndex + 1} of {galleryPhotos.length}</p>
+                    <p className="text-gray-600">{currentPhotoIndex + 1} of {galleryPhotos.length}</p>
                   </div>
-                  <button onClick={nextPhoto} className="bg-zinc-800 hover:bg-zinc-700 text-white p-3 rounded-lg transition-all">
+                  <button onClick={nextPhoto} className="bg-red-700 hover:bg-red-800 text-white p-3 rounded-lg transition-all">
                     <ChevronRight size={24} />
                   </button>
                 </div>
@@ -1080,23 +1080,23 @@ const JimmyJamApp = () => {
 
             {/* THUMBNAIL GRID */}
             <div>
-              <h3 className="text-2xl font-bold text-zinc-100 mb-4">Browse Photos</h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Browse Photos</h3>
               <div className="grid grid-cols-4 gap-4">
                 {galleryPhotos.map((photo, idx) => (
                   <button
                     key={photo.id}
                     onClick={() => setCurrentPhotoIndex(idx)}
                     className={`aspect-square rounded-lg flex items-center justify-center transition-all transform hover:scale-110 border-4 ${
-                      idx === currentPhotoIndex ? 'border-zinc-700 shadow-lg' : 'border-zinc-800 hover:border-zinc-400'
-                    } bg-gradient-to-br from-zinc-800 to-zinc-700 overflow-hidden`}
+                      idx === currentPhotoIndex ? 'border-red-700 shadow-lg' : 'border-gray-300 hover:border-red-400'
+                    } bg-gradient-to-br from-red-100 to-orange-100 overflow-hidden`}
                   >
                     {photo.isPoster ? (
-                      <div className="w-full h-full bg-[#365ca8] flex flex-col items-center justify-center p-1 border-b-2 border-orange-500">
+                      <div className="w-full h-full bg-[#365ca8] flex flex-col items-center justify-center p-1 border-b-4 border-red-600">
                          <span className="text-2xl">🔥</span>
                          <span className="text-[8px] text-white font-bold mt-1 text-center leading-tight">BBQ SLAM</span>
                       </div>
                     ) : (
-                      <span className="text-5xl">{photo.src}</span>
+                      <img src={photo.src} alt={photo.title} className="w-full h-full object-cover" />
                     )}
                   </button>
                 ))}
@@ -1109,8 +1109,8 @@ const JimmyJamApp = () => {
         {activeNav === 'events' && activeTab === 'overview' && (
           <div className="space-y-8 pb-20">
             <div className="text-center space-y-2">
-              <h1 className="text-4xl font-bold text-zinc-100">OUR EVENTS</h1>
-              <p className="text-zinc-300">Select an event to explore details and register</p>
+              <h1 className="text-4xl font-bold text-gray-900">OUR EVENTS</h1>
+              <p className="text-gray-600">Select an event to explore details and register</p>
             </div>
 
             <div className="grid grid-cols-1 gap-6">
@@ -1119,12 +1119,12 @@ const JimmyJamApp = () => {
                 onClick={() => setActiveTab('bourbon-event')}
                 className="group relative h-64 rounded-2xl overflow-hidden shadow-xl transition-all transform hover:scale-[1.02] border-4 border-white"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-zinc-700 to-zinc-900 opacity-90 group-hover:opacity-100 transition-all"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-800 opacity-90 group-hover:opacity-100 transition-all"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-6">
                   <span className="text-6xl mb-4">🥃</span>
                   <h2 className="text-3xl font-bold">Bourbon & Barbeque</h2>
                   <p className="text-orange-100 mt-2">Premium Tasting & Feast</p>
-                  <div className="mt-4 bg-zinc-900 text-orange-700 px-6 py-2 rounded-full font-bold text-sm">EXPLORE EVENT</div>
+                  <div className="mt-4 bg-white text-orange-700 px-6 py-2 rounded-full font-bold text-sm">EXPLORE EVENT</div>
                 </div>
               </button>
 
@@ -1133,12 +1133,12 @@ const JimmyJamApp = () => {
                 onClick={() => setActiveTab('bbq-slam-event')}
                 className="group relative h-64 rounded-2xl overflow-hidden shadow-xl transition-all transform hover:scale-[1.02] border-4 border-white"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 to-zinc-700 opacity-90 group-hover:opacity-100 transition-all"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-orange-600 opacity-90 group-hover:opacity-100 transition-all"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-6">
                   <span className="text-6xl mb-4">🍖</span>
                   <h2 className="text-3xl font-bold">BBQ Slam Event</h2>
                   <p className="text-red-100 mt-2">World-Class Competition</p>
-                  <div className="mt-4 bg-zinc-900 text-white px-6 py-2 rounded-full font-bold text-sm">EXPLORE EVENT</div>
+                  <div className="mt-4 bg-white text-red-700 px-6 py-2 rounded-full font-bold text-sm">EXPLORE EVENT</div>
                 </div>
               </button>
             </div>
@@ -1152,20 +1152,20 @@ const JimmyJamApp = () => {
               <ChevronLeft size={24} /> Back to Events
             </button>
 
-            <div className="bg-gradient-to-r from-zinc-700 to-zinc-900 text-white p-10 rounded-2xl shadow-lg text-center">
+            <div className="bg-gradient-to-r from-orange-600 to-red-800 text-white p-10 rounded-2xl shadow-lg text-center">
               <h1 className="text-4xl font-bold mb-2">Bourbon & Barbeque</h1>
               <p className="text-orange-100 text-lg">The Ultimate Pairing Experience</p>
             </div>
 
             {/* MENU SECTION */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-zinc-100 border-l-4 border-orange-600 pl-4">The Menu</h2>
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">The Menu</h2>
               <div className="grid md:grid-cols-2 gap-4">
                 {bourbonMenu.bbq.map((item, i) => (
-                  <div key={i} className="bg-zinc-900 p-5 rounded-xl shadow-md border border-orange-100 flex justify-between items-center">
+                  <div key={i} className="bg-white p-5 rounded-xl shadow-md border border-orange-100 flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-zinc-100">{item.name}</p>
-                      <p className="text-xs text-zinc-400">{item.desc}</p>
+                      <p className="font-bold text-gray-800">{item.name}</p>
+                      <p className="text-xs text-gray-500">{item.desc}</p>
                     </div>
                     <span className="text-orange-600 font-bold">{item.price}</span>
                   </div>
@@ -1175,10 +1175,10 @@ const JimmyJamApp = () => {
 
             {/* SPONSORS SECTION */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-zinc-100 border-l-4 border-orange-600 pl-4">Event Sponsors</h2>
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">Event Sponsors</h2>
               <div className="grid grid-cols-3 gap-4">
                 {sponsorsData.slice(0, 3).map((sponsor) => (
-                  <div key={sponsor.id} className="bg-zinc-900 p-4 rounded-xl shadow-md text-center border-2 border-transparent hover:border-orange-500 transition-all">
+                  <div key={sponsor.id} className="bg-white p-4 rounded-xl shadow-md text-center border-2 border-transparent hover:border-orange-500 transition-all">
                     <span className="text-4xl block mb-2">{sponsor.logo}</span>
                     <p className="font-bold text-xs">{sponsor.name}</p>
                   </div>
@@ -1188,7 +1188,7 @@ const JimmyJamApp = () => {
 
             {/* VIDEOS SECTION */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-zinc-100 border-l-4 border-orange-600 pl-4">Video Highlights</h2>
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">Video Highlights</h2>
               <div className="aspect-video bg-gray-900 rounded-2xl flex items-center justify-center text-6xl shadow-2xl relative overflow-hidden group">
                 🎬
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer">
@@ -1202,30 +1202,30 @@ const JimmyJamApp = () => {
         {/* BBQ SLAM EVENT DETAIL */}
         {activeNav === 'events' && activeTab === 'bbq-slam-event' && (
           <div className="space-y-8 pb-20">
-            <button onClick={() => setActiveTab('overview')} className="flex items-center gap-2 text-white font-bold mb-4">
+            <button onClick={() => setActiveTab('overview')} className="flex items-center gap-2 text-red-700 font-bold mb-4">
               <ChevronLeft size={24} /> Back to Events
             </button>
 
-            <div className="bg-gradient-to-r from-zinc-900 to-zinc-700 text-white p-10 rounded-2xl shadow-lg text-center">
+            <div className="bg-gradient-to-r from-red-700 to-orange-600 text-white p-10 rounded-2xl shadow-lg text-center">
               <h1 className="text-4xl font-bold mb-2">BBQ Slam Event</h1>
               <p className="text-red-100 text-lg">Championship Competition</p>
             </div>
 
             {/* REGISTRATION FORMS */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-zinc-100 border-l-4 border-zinc-700 pl-4">Registrations</h2>
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Registrations</h2>
               <div className="grid grid-cols-1 gap-3">
                 {[
                   { title: 'BBQ Team Entry', icon: '🍖', color: 'red' },
                   { title: 'Vendor Entry Form', icon: '⛺', color: 'orange' },
                   { title: 'Car Show Entry', icon: '🚗', color: 'gray' }
                 ].map((form, i) => (
-                  <button key={i} className="bg-zinc-900 p-6 rounded-xl shadow-md flex items-center justify-between border-2 border-transparent hover:border-zinc-700 transition-all">
+                  <button key={i} className="bg-white p-6 rounded-xl shadow-md flex items-center justify-between border-2 border-transparent hover:border-red-700 transition-all">
                     <div className="flex items-center gap-4">
                       <span className="text-3xl">{form.icon}</span>
-                      <span className="font-bold text-lg text-zinc-100">{form.title}</span>
+                      <span className="font-bold text-lg text-gray-800">{form.title}</span>
                     </div>
-                    <span className="text-white font-bold">REGISTER →</span>
+                    <span className="text-red-700 font-bold">REGISTER →</span>
                   </button>
                 ))}
               </div>
@@ -1233,14 +1233,14 @@ const JimmyJamApp = () => {
 
             {/* CALENDAR SECTION */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-zinc-100 border-l-4 border-zinc-700 pl-4">Calendar of Events</h2>
-              <div className="bg-zinc-900 rounded-xl overflow-hidden shadow-md border border-zinc-800">
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Calendar of Events</h2>
+              <div className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-200">
                 {detailedSchedule[5].events.slice(0, 4).map((event, i) => (
                   <div key={i} className="flex items-center gap-4 p-4 border-b last:border-b-0">
-                    <span className="text-xs font-bold text-white w-20">{event.time}</span>
+                    <span className="text-xs font-bold text-red-700 w-20">{event.time}</span>
                     <div className="flex-1">
-                      <p className="font-bold text-zinc-100">{event.title}</p>
-                      <p className="text-[10px] text-zinc-400">{event.location}</p>
+                      <p className="font-bold text-gray-800">{event.title}</p>
+                      <p className="text-[10px] text-gray-500">{event.location}</p>
                     </div>
                   </div>
                 ))}
@@ -1249,8 +1249,8 @@ const JimmyJamApp = () => {
 
             {/* SPONSOR LOGOS */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-zinc-100 border-l-4 border-zinc-700 pl-4">Official Partners</h2>
-              <div className="bg-zinc-900 p-6 rounded-xl shadow-md">
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Official Partners</h2>
+              <div className="bg-white p-6 rounded-xl shadow-md">
                 <div className="grid grid-cols-4 gap-6">
                   {sponsorsData.map((sponsor) => (
                     <button 
@@ -1262,7 +1262,7 @@ const JimmyJamApp = () => {
                       className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all group"
                     >
                       <span className="text-3xl group-hover:scale-110 transition-transform">{sponsor.logo}</span>
-                      <p className="text-[10px] font-bold text-zinc-400 uppercase text-center group-hover:text-white">{sponsor.name}</p>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase text-center group-hover:text-red-700">{sponsor.name}</p>
                     </button>
                   ))}
                 </div>
@@ -1276,11 +1276,11 @@ const JimmyJamApp = () => {
           <div className="space-y-4">
             {/* SEARCH BAR */}
             <div className="relative">
-              <Search className="absolute left-4 top-3 text-zinc-400" size={20} />
+              <Search className="absolute left-4 top-3 text-gray-400" size={20} />
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full pl-12 pr-4 py-3 border-2 border-zinc-800 rounded-full text-zinc-300 placeholder-gray-400 focus:outline-none focus:border-zinc-700"
+                className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-full text-gray-700 placeholder-gray-400 focus:outline-none focus:border-red-700"
               />
             </div>
 
@@ -1290,7 +1290,7 @@ const JimmyJamApp = () => {
                 <button
                   key={artist.id}
                   onClick={() => setSelectedArtist(artist)}
-                  className="w-full bg-zinc-900 rounded-2xl p-4 border-2 border-zinc-700 shadow-md hover:shadow-lg transition-all text-left hover:bg-zinc-800"
+                  className="w-full bg-white rounded-2xl p-4 border-2 border-red-700 shadow-md hover:shadow-lg transition-all text-left hover:bg-red-50"
                 >
                   <div className="flex items-start gap-4">
                     {/* LOGO */}
@@ -1300,12 +1300,12 @@ const JimmyJamApp = () => {
 
                     {/* TEXT */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-base font-bold text-zinc-100">{artist.name}</h3>
-                      <p className="text-sm text-zinc-300 truncate">{artist.genre}</p>
+                      <h3 className="text-base font-bold text-gray-900">{artist.name}</h3>
+                      <p className="text-sm text-gray-600 truncate">{artist.genre}</p>
                     </div>
 
                     {/* ARROW */}
-                    <ChevronRight size={20} className="text-white flex-shrink-0 mt-1" />
+                    <ChevronRight size={20} className="text-red-700 flex-shrink-0 mt-1" />
                   </div>
                 </button>
               ))}
@@ -1319,7 +1319,7 @@ const JimmyJamApp = () => {
             {/* BACK BUTTON */}
             <button
               onClick={() => setSelectedArtist(null)}
-              className="flex items-center gap-2 text-white font-bold mb-2"
+              className="flex items-center gap-2 text-red-700 font-bold mb-2"
             >
               <ChevronLeft size={24} />
               Back
@@ -1336,42 +1336,42 @@ const JimmyJamApp = () => {
             </div>
 
             {/* ARTIST NAME */}
-            <h1 className="text-3xl font-bold text-white">{selectedArtist.name}</h1>
+            <h1 className="text-3xl font-bold text-red-700">{selectedArtist.name}</h1>
 
             {/* SHARE BUTTON */}
-            <button className="px-4 py-2 border-2 border-zinc-700 text-white rounded-full font-semibold hover:bg-zinc-800 transition-all flex items-center gap-2 w-fit">
+            <button className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2 w-fit">
               📤 Share
             </button>
 
             {/* DESCRIPTION */}
-            <div className="bg-zinc-900 rounded-lg p-4 border-2 border-zinc-800">
-              <p className="text-zinc-300 text-sm leading-relaxed">{selectedArtist.description}</p>
+            <div className="bg-white rounded-lg p-4 border-2 border-gray-300">
+              <p className="text-gray-700 text-sm leading-relaxed">{selectedArtist.description}</p>
             </div>
 
             {/* PERFORMANCE INFO */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-zinc-800 rounded-lg p-4 border-2 border-zinc-700">
-                <p className="text-xs text-zinc-300 font-semibold">Performance Time</p>
-                <p className="text-lg font-bold text-white mt-1">⏰ {selectedArtist.time}</p>
+              <div className="bg-red-50 rounded-lg p-4 border-2 border-red-700">
+                <p className="text-xs text-gray-600 font-semibold">Performance Time</p>
+                <p className="text-lg font-bold text-red-700 mt-1">⏰ {selectedArtist.time}</p>
               </div>
-              <div className="bg-zinc-800 rounded-lg p-4 border-2 border-zinc-700">
-                <p className="text-xs text-zinc-300 font-semibold">Stage</p>
-                <p className="text-lg font-bold text-white mt-1">🎪 {selectedArtist.stage}</p>
+              <div className="bg-red-50 rounded-lg p-4 border-2 border-red-700">
+                <p className="text-xs text-gray-600 font-semibold">Stage</p>
+                <p className="text-lg font-bold text-red-700 mt-1">🎪 {selectedArtist.stage}</p>
               </div>
             </div>
 
             {/* SOCIAL/ACTION BUTTONS */}
             <div className="flex gap-2 flex-wrap">
-              <button className="px-4 py-2 border-2 border-zinc-700 text-white rounded-full font-semibold hover:bg-zinc-800 transition-all">
+              <button className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all">
                 ♥️ Favorite
               </button>
-              <button className="px-4 py-2 border-2 border-zinc-700 text-white rounded-full font-semibold hover:bg-zinc-800 transition-all">
+              <button className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all">
                 🔔 Remind Me
               </button>
             </div>
 
             {/* ADD TO CALENDAR */}
-            <button className="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-lg font-bold transition-all">
+            <button className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-bold transition-all">
               📅 Add to Calendar
             </button>
           </div>
@@ -1382,11 +1382,11 @@ const JimmyJamApp = () => {
           <div className="space-y-4">
             {/* SEARCH BAR */}
             <div className="relative">
-              <Search className="absolute left-4 top-3 text-zinc-400" size={20} />
+              <Search className="absolute left-4 top-3 text-gray-400" size={20} />
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full pl-12 pr-4 py-3 border-2 border-zinc-800 rounded-full text-zinc-300 placeholder-gray-400 focus:outline-none focus:border-zinc-700"
+                className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-full text-gray-700 placeholder-gray-400 focus:outline-none focus:border-red-700"
               />
             </div>
 
@@ -1396,7 +1396,7 @@ const JimmyJamApp = () => {
                 <button
                   key={sponsor.id}
                   onClick={() => setSelectedSponsor(sponsor)}
-                  className="w-full bg-zinc-900 rounded-2xl p-4 border-2 border-zinc-700 shadow-md hover:shadow-lg transition-all text-left hover:bg-zinc-800"
+                  className="w-full bg-white rounded-2xl p-4 border-2 border-red-700 shadow-md hover:shadow-lg transition-all text-left hover:bg-red-50"
                 >
                   <div className="flex items-start gap-4">
                     {/* LOGO */}
@@ -1406,12 +1406,12 @@ const JimmyJamApp = () => {
 
                     {/* TEXT */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-base font-bold text-zinc-100">{sponsor.name}</h3>
-                      <p className="text-sm text-zinc-300 truncate">{sponsor.tagline}</p>
+                      <h3 className="text-base font-bold text-gray-900">{sponsor.name}</h3>
+                      <p className="text-sm text-gray-600 truncate">{sponsor.tagline}</p>
                     </div>
 
                     {/* ARROW */}
-                    <ChevronRight size={20} className="text-white flex-shrink-0 mt-1" />
+                    <ChevronRight size={20} className="text-red-700 flex-shrink-0 mt-1" />
                   </div>
                 </button>
               ))}
@@ -1425,7 +1425,7 @@ const JimmyJamApp = () => {
             {/* BACK BUTTON */}
             <button
               onClick={() => setSelectedSponsor(null)}
-              className="flex items-center gap-2 text-white font-bold mb-4"
+              className="flex items-center gap-2 text-red-700 font-bold mb-4"
             >
               <ChevronLeft size={24} />
               Back
@@ -1438,46 +1438,46 @@ const JimmyJamApp = () => {
 
             {/* TITLE & TAGLINE */}
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold text-white">{selectedSponsor.name}</h1>
-              <p className="text-zinc-300">{selectedSponsor.tagline}</p>
+              <h1 className="text-3xl font-bold text-red-700">{selectedSponsor.name}</h1>
+              <p className="text-gray-600">{selectedSponsor.tagline}</p>
             </div>
 
             {/* SOCIAL & SHARE BUTTONS */}
             <div className="flex gap-2 flex-wrap">
-              <button className="px-4 py-2 border-2 border-zinc-700 text-white rounded-full font-semibold hover:bg-zinc-800 transition-all flex items-center gap-2">
+              <button className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2">
                 🌐 Website
               </button>
-              <button className="w-10 h-10 border-2 border-zinc-700 text-white rounded-full font-bold hover:bg-zinc-800 transition-all flex items-center justify-center">
+              <button className="w-10 h-10 border-2 border-red-700 text-red-700 rounded-full font-bold hover:bg-red-50 transition-all flex items-center justify-center">
                 f
               </button>
-              <button className="w-10 h-10 border-2 border-zinc-700 text-white rounded-full font-bold hover:bg-zinc-800 transition-all flex items-center justify-center">
+              <button className="w-10 h-10 border-2 border-red-700 text-red-700 rounded-full font-bold hover:bg-red-50 transition-all flex items-center justify-center">
                 📷
               </button>
-              <button className="px-4 py-2 border-2 border-zinc-700 text-white rounded-full font-semibold hover:bg-zinc-800 transition-all flex items-center gap-2">
+              <button className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2">
                 📤 Share
               </button>
             </div>
 
             {/* DESCRIPTION */}
-            <div className="bg-zinc-900 rounded-lg p-4 border-2 border-zinc-700">
-              <h3 className="font-bold text-zinc-100 mb-2">About</h3>
-              <p className="text-zinc-300 text-sm leading-relaxed">{selectedSponsor.description}</p>
+            <div className="bg-white rounded-lg p-4 border-2 border-red-700">
+              <h3 className="font-bold text-gray-900 mb-2">About</h3>
+              <p className="text-gray-700 text-sm leading-relaxed">{selectedSponsor.description}</p>
             </div>
 
             {/* LOCATION */}
-            <div className="bg-zinc-900 rounded-lg p-4 border-2 border-zinc-700">
+            <div className="bg-white rounded-lg p-4 border-2 border-red-700">
               <div className="flex items-start gap-3">
                 <span className="text-xl">📍</span>
                 <div>
-                  <p className="font-bold text-white">{selectedSponsor.name}</p>
-                  <p className="text-zinc-300 text-sm">{selectedSponsor.location}</p>
+                  <p className="font-bold text-red-700">{selectedSponsor.name}</p>
+                  <p className="text-gray-600 text-sm">{selectedSponsor.location}</p>
                 </div>
               </div>
             </div>
 
             {/* MAP PLACEHOLDER */}
-            <div className="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center border-2 border-zinc-800">
-              <p className="text-zinc-300 font-semibold">📍 Map View</p>
+            <div className="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center border-2 border-gray-300">
+              <p className="text-gray-600 font-semibold">📍 Map View</p>
             </div>
           </div>
         )}
@@ -1485,22 +1485,22 @@ const JimmyJamApp = () => {
         {/* BOURBON */}
         {activeNav === 'bourbon' && (
           <div className="space-y-8">
-            <h1 className="text-5xl font-bold text-center bg-gradient-to-r from-zinc-800 to-zinc-700 text-white p-8 rounded-lg">🥃 BOURBON & BBQ</h1>
+            <h1 className="text-5xl font-bold text-center bg-gradient-to-r from-red-600 to-orange-600 text-white p-8 rounded-lg">🥃 BOURBON & BBQ</h1>
 
-            <div className="flex gap-4 border-b-2 border-zinc-800">
-              <button onClick={() => setActiveTab('bbq')} className={`px-4 py-3 font-bold ${activeTab === 'bbq' ? 'border-b-4 border-zinc-700 text-white' : 'text-zinc-300'}`}>BBQ Menu</button>
-              <button onClick={() => setActiveTab('bourbon')} className={`px-4 py-3 font-bold ${activeTab === 'bourbon' ? 'border-b-4 border-zinc-700 text-white' : 'text-zinc-300'}`}>Bourbon</button>
+            <div className="flex gap-4 border-b-2 border-gray-300">
+              <button onClick={() => setActiveTab('bbq')} className={`px-4 py-3 font-bold ${activeTab === 'bbq' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}>BBQ Menu</button>
+              <button onClick={() => setActiveTab('bourbon')} className={`px-4 py-3 font-bold ${activeTab === 'bourbon' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}>Bourbon</button>
             </div>
 
             {activeTab === 'bbq' && (
               <div className="grid md:grid-cols-2 gap-6">
                 {bourbonMenu.bbq.map((item, i) => (
-                  <div key={i} className="bg-zinc-900 rounded-lg p-6 border-l-4 border-zinc-700 shadow-lg">
+                  <div key={i} className="bg-white rounded-lg p-6 border-l-4 border-red-700 shadow-lg">
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-bold text-white text-lg">{item.name}</h3>
+                      <h3 className="font-bold text-red-700 text-lg">{item.name}</h3>
                       <span className="text-red-600 font-bold">{item.price}</span>
                     </div>
-                    <p className="text-zinc-300">{item.desc}</p>
+                    <p className="text-gray-600">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -1509,12 +1509,12 @@ const JimmyJamApp = () => {
             {activeTab === 'bourbon' && (
               <div className="grid md:grid-cols-2 gap-6">
                 {bourbonMenu.bourbon.map((item, i) => (
-                  <div key={i} className="bg-zinc-900 rounded-lg p-6 border-l-4 border-yellow-700 shadow-lg">
+                  <div key={i} className="bg-white rounded-lg p-6 border-l-4 border-yellow-700 shadow-lg">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-bold text-yellow-900 text-lg">{item.name}</h3>
                       <span className="text-yellow-700 font-bold">{item.price}</span>
                     </div>
-                    <p className="text-zinc-300">{item.desc}</p>
+                    <p className="text-gray-600">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -1533,23 +1533,23 @@ const JimmyJamApp = () => {
             </div>
 
             {/* LOCATION SELECTOR */}
-            <div className="bg-zinc-900 rounded-lg p-4 border-2 border-blue-300 flex items-center gap-2">
+            <div className="bg-white rounded-lg p-4 border-2 border-blue-300 flex items-center gap-2">
               <span className="text-2xl">☀️</span>
               <div className="flex-1">
-                <p className="text-sm text-zinc-300">St Augustine, FL</p>
+                <p className="text-sm text-gray-600">St Augustine, FL</p>
               </div>
-              <span className="text-zinc-400">▼</span>
+              <span className="text-gray-400">▼</span>
             </div>
 
             {/* TABS */}
-            <div className="flex gap-2 border-b-2 border-zinc-800">
-              <button onClick={() => setActiveTab('forecast')} className={`px-4 py-3 font-bold transition-all ${activeTab === 'forecast' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-zinc-300'}`}>
+            <div className="flex gap-2 border-b-2 border-gray-300">
+              <button onClick={() => setActiveTab('forecast')} className={`px-4 py-3 font-bold transition-all ${activeTab === 'forecast' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
                 📅 7-Day
               </button>
-              <button onClick={() => setActiveTab('hourly')} className={`px-4 py-3 font-bold transition-all ${activeTab === 'hourly' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-zinc-300'}`}>
+              <button onClick={() => setActiveTab('hourly')} className={`px-4 py-3 font-bold transition-all ${activeTab === 'hourly' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
                 ⏰ Hourly
               </button>
-              <button onClick={() => setActiveTab('map')} className={`px-4 py-3 font-bold transition-all ${activeTab === 'map' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-zinc-300'}`}>
+              <button onClick={() => setActiveTab('map')} className={`px-4 py-3 font-bold transition-all ${activeTab === 'map' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
                 🗺️ Map
               </button>
             </div>
@@ -1557,10 +1557,10 @@ const JimmyJamApp = () => {
             {/* 7-DAY FORECAST */}
             {activeTab === 'forecast' && (
               <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-zinc-100 mb-4">7-Day Forecast</h3>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">7-Day Forecast</h3>
                 <div className="grid grid-cols-7 gap-2">
                   {weatherData.forecast.map((day, i) => (
-                    <div key={i} className="bg-zinc-900 rounded-lg border-2 border-blue-300 p-3 text-center shadow-md hover:shadow-lg transition-all">
+                    <div key={i} className="bg-white rounded-lg border-2 border-blue-300 p-3 text-center shadow-md hover:shadow-lg transition-all">
                       <p className="text-xs font-bold text-blue-700 mb-2">{day.day}</p>
                       <p className="text-3xl mb-2">{day.icon}</p>
                       <p className="text-lg font-bold text-blue-700">{day.high}°</p>
@@ -1575,11 +1575,11 @@ const JimmyJamApp = () => {
             {/* HOURLY FORECAST */}
             {activeTab === 'hourly' && (
               <div className="space-y-3">
-                <h3 className="text-2xl font-bold text-zinc-100 mb-4">Hourly Forecast</h3>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">Hourly Forecast</h3>
                 
                 {/* Today */}
-                <div className="bg-zinc-900 rounded-lg p-4 border-2 border-blue-300">
-                  <p className="font-bold text-zinc-100 mb-3">Today</p>
+                <div className="bg-white rounded-lg p-4 border-2 border-blue-300">
+                  <p className="font-bold text-gray-900 mb-3">Today</p>
                   <div className="space-y-2">
                     {[
                       { time: '4:00 PM', icon: '☀️', temp: 78, humidity: 65, wind: '8 mph E' },
@@ -1587,13 +1587,13 @@ const JimmyJamApp = () => {
                       { time: '6:00 PM', icon: '⛅', temp: 74, humidity: 70, wind: '6 mph SE' },
                       { time: '7:00 PM', icon: '🌤️', temp: 72, humidity: 72, wind: '5 mph SE' }
                     ].map((hour, idx) => (
-                      <div key={idx} className="flex items-center justify-between py-2 border-b border-zinc-800 last:border-b-0">
+                      <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
                         <div className="flex items-center gap-3 flex-1">
-                          <p className="font-bold text-zinc-100 w-16">{hour.time}</p>
+                          <p className="font-bold text-gray-800 w-16">{hour.time}</p>
                           <p className="text-2xl">{hour.icon}</p>
-                          <p className="font-bold text-zinc-100 w-12">{hour.temp}°</p>
+                          <p className="font-bold text-gray-800 w-12">{hour.temp}°</p>
                         </div>
-                        <div className="text-right text-xs text-zinc-300">
+                        <div className="text-right text-xs text-gray-600">
                           <p>💧 {hour.humidity}%</p>
                           <p>💨 {hour.wind}</p>
                         </div>
@@ -1603,21 +1603,21 @@ const JimmyJamApp = () => {
                 </div>
 
                 {/* Tomorrow */}
-                <div className="bg-zinc-900 rounded-lg p-4 border-2 border-blue-300">
-                  <p className="font-bold text-zinc-100 mb-3">Tomorrow</p>
+                <div className="bg-white rounded-lg p-4 border-2 border-blue-300">
+                  <p className="font-bold text-gray-900 mb-3">Tomorrow</p>
                   <div className="space-y-2">
                     {[
                       { time: '12:00 AM', icon: '🌙', temp: 70, humidity: 75, wind: '4 mph S' },
                       { time: '1:00 AM', icon: '🌙', temp: 69, humidity: 77, wind: '3 mph S' },
                       { time: '2:00 AM', icon: '🌙', temp: 68, humidity: 78, wind: '2 mph S' }
                     ].map((hour, idx) => (
-                      <div key={idx} className="flex items-center justify-between py-2 border-b border-zinc-800 last:border-b-0">
+                      <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
                         <div className="flex items-center gap-3 flex-1">
-                          <p className="font-bold text-zinc-100 w-16">{hour.time}</p>
+                          <p className="font-bold text-gray-800 w-16">{hour.time}</p>
                           <p className="text-2xl">{hour.icon}</p>
-                          <p className="font-bold text-zinc-100 w-12">{hour.temp}°</p>
+                          <p className="font-bold text-gray-800 w-12">{hour.temp}°</p>
                         </div>
-                        <div className="text-right text-xs text-zinc-300">
+                        <div className="text-right text-xs text-gray-600">
                           <p>💧 {hour.humidity}%</p>
                           <p>💨 {hour.wind}</p>
                         </div>
@@ -1631,43 +1631,43 @@ const JimmyJamApp = () => {
             {/* MAP VIEW */}
             {activeTab === 'map' && (
               <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-zinc-100">Weather Map</h3>
-                <div className="w-full h-64 bg-gradient-to-br from-gray-300 to-gray-200 rounded-lg flex items-center justify-center border-2 border-zinc-800 shadow-lg">
+                <h3 className="text-2xl font-bold text-gray-800">Weather Map</h3>
+                <div className="w-full h-64 bg-gradient-to-br from-gray-300 to-gray-200 rounded-lg flex items-center justify-center border-2 border-gray-300 shadow-lg">
                   <div className="text-center">
                     <p className="text-4xl mb-2">🗺️</p>
-                    <p className="text-zinc-300 font-semibold">St Augustine, FL</p>
-                    <p className="text-sm text-zinc-400 mt-2">Interactive weather map</p>
+                    <p className="text-gray-600 font-semibold">St Augustine, FL</p>
+                    <p className="text-sm text-gray-500 mt-2">Interactive weather map</p>
                   </div>
                 </div>
 
                 {/* LEGEND */}
-                <div className="bg-zinc-900 rounded-lg p-4 border-2 border-blue-300">
-                  <p className="font-bold text-zinc-100 mb-3">Legend</p>
+                <div className="bg-white rounded-lg p-4 border-2 border-blue-300">
+                  <p className="font-bold text-gray-900 mb-3">Legend</p>
                   <div className="grid grid-cols-4 gap-3">
                     <div className="text-center">
                       <div className="w-6 h-6 bg-green-500 rounded mx-auto mb-1"></div>
-                      <p className="text-xs font-semibold text-zinc-300">Rain</p>
+                      <p className="text-xs font-semibold text-gray-700">Rain</p>
                     </div>
                     <div className="text-center">
                       <div className="w-6 h-6 bg-purple-500 rounded mx-auto mb-1"></div>
-                      <p className="text-xs font-semibold text-zinc-300">Ice</p>
+                      <p className="text-xs font-semibold text-gray-700">Ice</p>
                     </div>
                     <div className="text-center">
                       <div className="w-6 h-6 bg-pink-500 rounded mx-auto mb-1"></div>
-                      <p className="text-xs font-semibold text-zinc-300">Mix</p>
+                      <p className="text-xs font-semibold text-gray-700">Mix</p>
                     </div>
                     <div className="text-center">
                       <div className="w-6 h-6 bg-cyan-400 rounded mx-auto mb-1"></div>
-                      <p className="text-xs font-semibold text-zinc-300">Snow</p>
+                      <p className="text-xs font-semibold text-gray-700">Snow</p>
                     </div>
                   </div>
                 </div>
 
                 {/* TIME SLIDER */}
-                <div className="bg-zinc-900 rounded-lg p-4 border-2 border-blue-300">
-                  <p className="text-sm font-bold text-zinc-100 mb-3">Time: 4:00 PM | Duration: 6 hours</p>
+                <div className="bg-white rounded-lg p-4 border-2 border-blue-300">
+                  <p className="text-sm font-bold text-gray-800 mb-3">Time: 4:00 PM | Duration: 6 hours</p>
                   <input type="range" min="0" max="100" className="w-full" />
-                  <div className="flex justify-between text-xs text-zinc-300 mt-2">
+                  <div className="flex justify-between text-xs text-gray-600 mt-2">
                     <span>4p</span>
                     <span>8p</span>
                     <span>12a</span>
@@ -1694,8 +1694,8 @@ const JimmyJamApp = () => {
                 alt="BBQ Event" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute top-4 right-4 bg-zinc-900 bg-opacity-90 px-4 py-2 rounded-lg shadow-lg z-20">
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center">opinions</p>
+              <div className="absolute top-4 right-4 bg-white bg-opacity-90 px-4 py-2 rounded-lg shadow-lg z-20">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">opinions</p>
               </div>
             </div>
 
@@ -1704,7 +1704,7 @@ const JimmyJamApp = () => {
               {testimonials.map((t, i) => (
                 <div key={i} className="relative pt-6">
                   {/* AVATAR BOX */}
-                  <div className={`absolute -top-0 left-4 w-16 h-16 ${t.color} rounded-xl shadow-lg z-30 flex items-center justify-center text-xl font-bold text-zinc-300 border-2 border-white overflow-hidden`}>
+                  <div className={`absolute -top-0 left-4 w-16 h-16 ${t.color} rounded-xl shadow-lg z-30 flex items-center justify-center text-xl font-bold text-gray-700 border-2 border-white overflow-hidden`}>
                     {t.initials}
                   </div>
 
@@ -1712,19 +1712,19 @@ const JimmyJamApp = () => {
                   <div className="bg-[#FAF9F6] rounded-2xl p-6 pl-24 shadow-sm border border-gray-100 relative group transition-all hover:shadow-md">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <h3 className="font-bold text-zinc-100">{t.name}</h3>
+                        <h3 className="font-bold text-gray-900">{t.name}</h3>
                         <div className="flex gap-0.5 mt-0.5">
                           {[...Array(5)].map((_, star) => (
                             <span key={star} className={`text-xs ${star < t.rating ? 'text-rose-400' : 'text-gray-300'}`}>★</span>
                           ))}
                         </div>
                       </div>
-                      <span className="text-[10px] font-bold text-zinc-400">{t.date}</span>
+                      <span className="text-[10px] font-bold text-gray-400">{t.date}</span>
                     </div>
 
                     <div className="relative mt-4">
                       <span className="absolute -top-4 -left-2 text-4xl text-gray-200 opacity-50 font-serif">"</span>
-                      <p className="text-zinc-300 text-sm leading-relaxed italic">
+                      <p className="text-gray-600 text-sm leading-relaxed italic">
                         {t.quote}
                       </p>
                       <span className="absolute -bottom-6 right-0 text-4xl text-gray-200 opacity-50 font-serif">"</span>
@@ -1744,24 +1744,24 @@ const JimmyJamApp = () => {
         {/* ASSISTANCE */}
         {activeNav === 'assistance' && !appSubmitted && (
           <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-white text-center">❤️ APPLICATION FOR ASSISTANCE</h2>
+            <h2 className="text-4xl font-bold text-red-700 text-center">❤️ APPLICATION FOR ASSISTANCE</h2>
             
-            <div className="bg-zinc-900 rounded-lg border-2 border-zinc-700 p-8 space-y-6 max-w-2xl mx-auto shadow-lg">
+            <div className="bg-white rounded-lg border-2 border-red-700 p-8 space-y-6 max-w-2xl mx-auto shadow-lg">
               <div className="grid md:grid-cols-2 gap-6">
-                <input type="text" placeholder="First Name *" className="p-3 border-2 border-zinc-800 rounded-lg" value={assistanceForm.firstName} onChange={(e) => setAssistanceForm({...assistanceForm, firstName: e.target.value})} />
-                <input type="text" placeholder="Last Name *" className="p-3 border-2 border-zinc-800 rounded-lg" value={assistanceForm.lastName} onChange={(e) => setAssistanceForm({...assistanceForm, lastName: e.target.value})} />
-                <input type="email" placeholder="Email *" className="p-3 border-2 border-zinc-800 rounded-lg" value={assistanceForm.email} onChange={(e) => setAssistanceForm({...assistanceForm, email: e.target.value})} />
-                <input type="tel" placeholder="Phone *" className="p-3 border-2 border-zinc-800 rounded-lg" value={assistanceForm.phone} onChange={(e) => setAssistanceForm({...assistanceForm, phone: e.target.value})} />
+                <input type="text" placeholder="First Name *" className="p-3 border-2 border-red-300 rounded-lg" value={assistanceForm.firstName} onChange={(e) => setAssistanceForm({...assistanceForm, firstName: e.target.value})} />
+                <input type="text" placeholder="Last Name *" className="p-3 border-2 border-red-300 rounded-lg" value={assistanceForm.lastName} onChange={(e) => setAssistanceForm({...assistanceForm, lastName: e.target.value})} />
+                <input type="email" placeholder="Email *" className="p-3 border-2 border-red-300 rounded-lg" value={assistanceForm.email} onChange={(e) => setAssistanceForm({...assistanceForm, email: e.target.value})} />
+                <input type="tel" placeholder="Phone *" className="p-3 border-2 border-red-300 rounded-lg" value={assistanceForm.phone} onChange={(e) => setAssistanceForm({...assistanceForm, phone: e.target.value})} />
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-white mb-4">What assistance do you need?</h3>
+                <h3 className="text-xl font-bold text-red-700 mb-4">What assistance do you need?</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   {assistanceTypes.map(type => (
-                    <label key={type.id} className="flex items-start p-4 border-2 border-zinc-800 rounded-lg hover:bg-zinc-800 cursor-pointer">
+                    <label key={type.id} className="flex items-start p-4 border-2 border-red-300 rounded-lg hover:bg-red-50 cursor-pointer">
                       <input type="checkbox" className="mt-1 mr-3 w-5 h-5" checked={assistanceForm.assistanceType.includes(type.id)} onChange={() => handleAssistanceTypeToggle(type.id)} />
                       <div>
-                        <p className="font-bold text-white">{type.label}</p>
+                        <p className="font-bold text-red-700">{type.label}</p>
                         <p className="text-red-600 text-sm">{type.desc}</p>
                       </div>
                     </label>
@@ -1769,14 +1769,14 @@ const JimmyJamApp = () => {
                 </div>
               </div>
 
-              <textarea className="w-full p-3 border-2 border-zinc-800 rounded-lg" rows="5" placeholder="Tell us about your situation..." value={assistanceForm.description} onChange={(e) => setAssistanceForm({...assistanceForm, description: e.target.value})} />
+              <textarea className="w-full p-3 border-2 border-red-300 rounded-lg" rows="5" placeholder="Tell us about your situation..." value={assistanceForm.description} onChange={(e) => setAssistanceForm({...assistanceForm, description: e.target.value})} />
 
               <label className="flex items-start gap-3">
                 <input type="checkbox" className="mt-1 w-5 h-5" checked={assistanceForm.agree} onChange={(e) => setAssistanceForm({...assistanceForm, agree: e.target.checked})} />
-                <span className="text-white">I confirm this information is accurate.</span>
+                <span className="text-red-700">I confirm this information is accurate.</span>
               </label>
 
-              <button onClick={submitAssistance} className="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-4 rounded-lg font-bold text-lg">✓ SUBMIT APPLICATION</button>
+              <button onClick={submitAssistance} className="w-full bg-red-700 hover:bg-red-800 text-white py-4 rounded-lg font-bold text-lg">✓ SUBMIT APPLICATION</button>
             </div>
           </div>
         )}
@@ -1801,7 +1801,7 @@ const JimmyJamApp = () => {
               {/* INSTAGRAM */}
               <button className="w-full bg-gray-800 p-4 rounded-lg flex items-center justify-between border-b-2 border-yellow-500">
                 <div className="flex items-center gap-3">
-                  <div className="bg-zinc-900 text-zinc-100 rounded-full w-12 h-12 flex items-center justify-center text-lg">📷</div>
+                  <div className="bg-white text-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-lg">📷</div>
                   <span className="text-white font-bold">INSTAGRAM</span>
                 </div>
                 <span className="text-yellow-400 font-bold text-sm">@JIMMYJAM</span>
@@ -1810,7 +1810,7 @@ const JimmyJamApp = () => {
               {/* FACEBOOK */}
               <button className="w-full bg-gray-800 p-4 rounded-lg flex items-center justify-between border-b-2 border-yellow-500">
                 <div className="flex items-center gap-3">
-                  <div className="bg-zinc-900 text-zinc-100 rounded-full w-12 h-12 flex items-center justify-center text-lg">f</div>
+                  <div className="bg-white text-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-lg">f</div>
                   <span className="text-white font-bold">FACEBOOK</span>
                 </div>
                 <span className="text-yellow-400 font-bold text-sm">JIMMY JAM OUTREACH</span>
@@ -1819,7 +1819,7 @@ const JimmyJamApp = () => {
               {/* TIKTOK */}
               <button className="w-full bg-gray-800 p-4 rounded-lg flex items-center justify-between border-b-2 border-yellow-500">
                 <div className="flex items-center gap-3">
-                  <div className="bg-zinc-900 text-zinc-100 rounded-full w-12 h-12 flex items-center justify-center text-lg">🎵</div>
+                  <div className="bg-white text-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-lg">🎵</div>
                   <span className="text-white font-bold">TIKTOK</span>
                 </div>
                 <span className="text-yellow-400 font-bold text-sm">@JIMMYJAM</span>
@@ -1828,7 +1828,7 @@ const JimmyJamApp = () => {
               {/* TWITTER/X */}
               <button className="w-full bg-gray-800 p-4 rounded-lg flex items-center justify-between border-b-2 border-yellow-500">
                 <div className="flex items-center gap-3">
-                  <div className="bg-zinc-900 text-zinc-100 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold">X</div>
+                  <div className="bg-white text-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold">X</div>
                   <span className="text-white font-bold">X (TWITTER)</span>
                 </div>
                 <span className="text-yellow-400 font-bold text-sm">@JIMMYJAM</span>
@@ -1837,7 +1837,7 @@ const JimmyJamApp = () => {
               {/* SPOTIFY */}
               <button className="w-full bg-gray-800 p-4 rounded-lg flex items-center justify-between border-b-2 border-yellow-500">
                 <div className="flex items-center gap-3">
-                  <div className="bg-zinc-900 text-zinc-100 rounded-full w-12 h-12 flex items-center justify-center text-lg">🎧</div>
+                  <div className="bg-white text-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-lg">🎧</div>
                   <span className="text-white font-bold">SPOTIFY</span>
                 </div>
                 <span className="text-yellow-400 font-bold text-sm">PLAYLIST</span>
@@ -1846,7 +1846,7 @@ const JimmyJamApp = () => {
               {/* YOUTUBE */}
               <button className="w-full bg-gray-800 p-4 rounded-lg flex items-center justify-between border-b-2 border-yellow-500">
                 <div className="flex items-center gap-3">
-                  <div className="bg-zinc-900 text-zinc-100 rounded-full w-12 h-12 flex items-center justify-center text-lg">▶️</div>
+                  <div className="bg-white text-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-lg">▶️</div>
                   <span className="text-white font-bold">YOUTUBE</span>
                 </div>
                 <span className="text-yellow-400 font-bold text-sm">CHANNEL</span>
@@ -1855,7 +1855,7 @@ const JimmyJamApp = () => {
               {/* WEBSITE */}
               <button className="w-full bg-gray-800 p-4 rounded-lg flex items-center justify-between border-b-2 border-yellow-500">
                 <div className="flex items-center gap-3">
-                  <div className="bg-zinc-900 text-zinc-100 rounded-full w-12 h-12 flex items-center justify-center text-lg">🌐</div>
+                  <div className="bg-white text-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-lg">🌐</div>
                   <span className="text-white font-bold">WEBSITE</span>
                 </div>
                 <span className="text-yellow-400 font-bold text-sm">JIMMYJAM.COM</span>
@@ -1867,7 +1867,7 @@ const JimmyJamApp = () => {
               <p className="text-white text-sm mb-4">
                 Follow us on social media for updates and community stories
               </p>
-              <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-zinc-100 py-3 rounded-lg font-bold transition-all">
+              <button className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 py-3 rounded-lg font-bold transition-all">
                 FOLLOW ALL
               </button>
             </div>
@@ -1893,25 +1893,25 @@ const JimmyJamApp = () => {
             </div>
 
             {/* TABS */}
-            <div className="flex gap-6 border-b-2 border-zinc-800 px-2">
-              <button onClick={() => setActiveTab('festival')} className={`px-2 py-3 font-bold transition-all text-lg ${activeTab === 'festival' ? 'border-b-4 border-yellow-500 text-yellow-500' : 'text-zinc-300'}`}>
+            <div className="flex gap-6 border-b-2 border-gray-300 px-2">
+              <button onClick={() => setActiveTab('festival')} className={`px-2 py-3 font-bold transition-all text-lg ${activeTab === 'festival' ? 'border-b-4 border-yellow-500 text-yellow-500' : 'text-gray-600'}`}>
                 Festival
               </button>
-              <button onClick={() => setActiveTab('exclusive')} className={`px-2 py-3 font-bold transition-all text-lg ${activeTab === 'exclusive' ? 'border-b-4 border-yellow-500 text-gray-300' : 'text-zinc-300'}`}>
+              <button onClick={() => setActiveTab('exclusive')} className={`px-2 py-3 font-bold transition-all text-lg ${activeTab === 'exclusive' ? 'border-b-4 border-yellow-500 text-gray-300' : 'text-gray-600'}`}>
                 Amex Shop
               </button>
-              <button onClick={() => setActiveTab('wishlist')} className={`px-2 py-3 font-bold transition-all text-lg ${activeTab === 'wishlist' ? 'border-b-4 border-yellow-500 text-gray-300' : 'text-zinc-300'}`}>
+              <button onClick={() => setActiveTab('wishlist')} className={`px-2 py-3 font-bold transition-all text-lg ${activeTab === 'wishlist' ? 'border-b-4 border-yellow-500 text-gray-300' : 'text-gray-600'}`}>
                 Wishlist
               </button>
             </div>
 
             {/* SEARCH */}
             <div className="relative">
-              <Search className="absolute left-4 top-4 text-zinc-400" size={20} />
+              <Search className="absolute left-4 top-4 text-gray-400" size={20} />
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full pl-12 pr-4 py-3 border-2 border-zinc-800 rounded-full bg-zinc-800 text-zinc-300 placeholder-gray-400 focus:outline-none focus:border-yellow-500 focus:bg-zinc-900"
+                className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-full bg-gray-100 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-yellow-500 focus:bg-white"
               />
             </div>
 
@@ -1921,14 +1921,14 @@ const JimmyJamApp = () => {
                 {swagItems.map((item, i) => (
                   <div key={i} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
                     {/* PRODUCT IMAGE */}
-                    <div className="bg-zinc-900 h-56 flex items-center justify-center relative">
+                    <div className="bg-white h-56 flex items-center justify-center relative">
                       <img 
                         src={item.image} 
                         alt={item.name} 
                         className="w-full h-full object-cover" 
                       />
                       {/* HEART ICON */}
-                      <button className="absolute top-3 right-3 bg-zinc-900 hover:bg-zinc-800 text-red-600 rounded-full p-2.5 transition-all shadow-lg border border-red-100">
+                      <button className="absolute top-3 right-3 bg-white hover:bg-red-50 text-red-600 rounded-full p-2.5 transition-all shadow-lg border border-red-100">
                         ♡
                       </button>
                     </div>
@@ -1947,8 +1947,8 @@ const JimmyJamApp = () => {
             {activeTab === 'wishlist' && (
               <div className="text-center py-16">
                 <p className="text-5xl mb-4">♡</p>
-                <p className="text-zinc-300 font-bold text-lg">Your wishlist is empty</p>
-                <p className="text-zinc-400 text-sm mt-2">Add items to save for later</p>
+                <p className="text-gray-700 font-bold text-lg">Your wishlist is empty</p>
+                <p className="text-gray-500 text-sm mt-2">Add items to save for later</p>
               </div>
             )}
           </div>
@@ -1961,7 +1961,7 @@ const JimmyJamApp = () => {
               <p className="text-blue-100">Galveston Bay / Port Bolivar</p>
             </div>
 
-            <div className="bg-zinc-900 rounded-xl p-6 shadow-md border-2 border-blue-200">
+            <div className="bg-white rounded-xl p-6 shadow-md border-2 border-blue-200">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="font-bold text-xl text-blue-900">Today's Forecast</h3>
                 <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Live</span>
@@ -1988,7 +1988,7 @@ const JimmyJamApp = () => {
               </div>
             </div>
 
-            <div className="bg-zinc-900 rounded-xl p-6 shadow-md border-2 border-blue-200">
+            <div className="bg-white rounded-xl p-6 shadow-md border-2 border-blue-200">
               <h3 className="font-bold text-lg text-blue-900 mb-4">24-Hour Cycle</h3>
               <div className="h-40 bg-blue-50 rounded-lg flex items-end gap-1 p-2">
                 {Array.from({ length: 24 }).map((_, i) => (
@@ -2014,7 +2014,7 @@ const JimmyJamApp = () => {
         {/* BBQ VIDEO LIBRARY */}
         {activeNav === 'videos' && (
           <div className="space-y-6 pb-20">
-            <div className="bg-gradient-to-br from-zinc-700 to-red-700 text-white p-8 rounded-2xl shadow-lg text-center">
+            <div className="bg-gradient-to-br from-orange-600 to-red-700 text-white p-8 rounded-2xl shadow-lg text-center">
               <h2 className="text-3xl font-bold mb-2">📽️ BBQ ACADEMY</h2>
               <p className="text-orange-100">Instructional Library</p>
             </div>
@@ -2028,7 +2028,7 @@ const JimmyJamApp = () => {
                 { title: 'St Augustine, Florida Style BBQ Chicken', url: 'https://www.youtube.com/embed/n3f-k7Jj-Hk', category: 'Chuds BBQ', views: '1.5M' },
                 { title: 'Pork Belly Burnt Ends', url: 'https://www.youtube.com/embed/f6UvV8M_n6k', category: 'HowToBBQRight', views: '8M' }
               ].map((video, i) => (
-                <div key={i} className="bg-zinc-900 rounded-xl overflow-hidden shadow-md border-2 border-zinc-800 hover:border-red-600 transition-all group">
+                <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border-2 border-gray-200 hover:border-red-600 transition-all group">
                   <div className="aspect-video bg-black relative">
                     <iframe 
                       className="w-full h-full"
@@ -2042,10 +2042,10 @@ const JimmyJamApp = () => {
                   </div>
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-zinc-800 px-2 py-0.5 rounded">{video.category}</span>
-                      <span className="text-[10px] text-zinc-400">👁️ {video.views}</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-0.5 rounded">{video.category}</span>
+                      <span className="text-[10px] text-gray-400">👁️ {video.views}</span>
                     </div>
-                    <h3 className="font-bold text-zinc-100 leading-tight group-hover:text-white transition-colors">{video.title}</h3>
+                    <h3 className="font-bold text-gray-800 leading-tight group-hover:text-red-700 transition-colors">{video.title}</h3>
                   </div>
                 </div>
               ))}
@@ -2075,19 +2075,19 @@ const JimmyJamApp = () => {
                 ]}
               ].map((group, i) => (
                 <div key={i} className="space-y-3">
-                  <h3 className="font-bold text-lg text-zinc-100 ml-2">{group.category}</h3>
+                  <h3 className="font-bold text-lg text-gray-800 ml-2">{group.category}</h3>
                   {group.items.map((item, idx) => (
-                    <div key={idx} className="bg-zinc-900 p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div key={idx} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{item.icon}</span>
                         <div>
-                          <p className="font-bold text-zinc-100">{item.name}</p>
-                          <p className="text-xs text-zinc-400 font-semibold uppercase">{item.dates}</p>
+                          <p className="font-bold text-gray-900">{item.name}</p>
+                          <p className="text-xs text-gray-500 font-semibold uppercase">{item.dates}</p>
                         </div>
                       </div>
                       <span className={`text-[10px] font-bold px-2 py-1 rounded ${
                         item.status === 'Active' ? 'bg-green-100 text-green-700' : 
-                        item.status === 'Upcoming' ? 'bg-blue-100 text-blue-700' : 'bg-zinc-800 text-zinc-400'
+                        item.status === 'Upcoming' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-500'
                       }`}>
                         {item.status.toUpperCase()}
                       </span>
@@ -2132,44 +2132,44 @@ const JimmyJamApp = () => {
               ))}
             </div>
 
-            <div className="bg-zinc-900 p-6 rounded-2xl border-2 border-dashed border-zinc-800 text-center">
-              <p className="text-zinc-400 font-semibold italic">"The perfect soundtrack for your next backyard cookout."</p>
+            <div className="bg-white p-6 rounded-2xl border-2 border-dashed border-gray-300 text-center">
+              <p className="text-gray-500 font-semibold italic">"The perfect soundtrack for your next backyard cookout."</p>
             </div>
           </div>
         )}
       </main>
 
       {/* FOOTER - BOTTOM NAVIGATION */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-zinc-800 text-white shadow-lg z-30">
+      <footer className="fixed bottom-0 left-0 right-0 bg-red-700 text-white shadow-lg z-30">
         <div className="max-w-6xl mx-auto px-4 py-2 relative">
           <div className="flex items-center justify-between">
             {/* HOME */}
-            <button onClick={() => { setActiveNav('home'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-zinc-700 rounded-lg transition-all flex-1">
+            <button onClick={() => { setActiveNav('home'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all flex-1">
               <span className="text-2xl">🏠</span>
               <span className="text-xs font-semibold">Home</span>
             </button>
 
             {/* ARTISTS */}
-            <button onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-zinc-700 rounded-lg transition-all flex-1">
+            <button onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all flex-1">
               <span className="text-2xl">🎤</span>
               <span className="text-xs font-semibold">Artists</span>
             </button>
 
             {/* SCHEDULE */}
-            <button onClick={() => { setActiveNav('schedule'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-zinc-700 rounded-lg transition-all flex-1">
+            <button onClick={() => { setActiveNav('schedule'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all flex-1">
               <span className="text-2xl">📅</span>
               <span className="text-xs font-semibold">Schedule</span>
             </button>
 
             {/* MAPS */}
-            <button onClick={() => { setActiveNav('maps'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-zinc-700 rounded-lg transition-all flex-1">
+            <button onClick={() => { setActiveNav('maps'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all flex-1">
               <span className="text-2xl">📍</span>
               <span className="text-xs font-semibold">Maps</span>
             </button>
 
             {/* MORE MENU */}
             <div className="relative flex-1">
-              <button onClick={() => setShowMoreMenu(!showMoreMenu)} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-zinc-700 rounded-lg transition-all w-full">
+              <button onClick={() => setShowMoreMenu(!showMoreMenu)} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all w-full">
                 <span className="text-2xl">☰</span>
                 <span className="text-xs font-semibold">More</span>
               </button>
@@ -2178,49 +2178,49 @@ const JimmyJamApp = () => {
               {showMoreMenu && (
                 <>
                   <div className="fixed inset-0 bg-black/5 z-40" onClick={() => setShowMoreMenu(false)}></div>
-                  <div className="absolute bottom-full right-0 mb-2 bg-zinc-900 text-zinc-100 rounded-lg shadow-2xl w-56 py-2 z-50">
-                  <button onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
+                  <div className="absolute bottom-full right-0 mb-2 bg-white text-gray-800 rounded-lg shadow-2xl w-56 py-2 z-50">
+                  <button onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🎤</span>
                     <span className="font-semibold">View the Full Lineup</span>
                   </button>
 
-                  <button onClick={() => { setActiveNav('recipes'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
+                  <button onClick={() => { setActiveNav('recipes'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">📖</span>
                     <span className="font-semibold">Recipe Book</span>
                   </button>
 
-                  <button onClick={() => { setActiveNav('sponsors'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
+                  <button onClick={() => { setActiveNav('sponsors'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🏆</span>
                     <span className="font-semibold">Official Partners</span>
                   </button>
 
-                  <button onClick={() => { setActiveNav('connect'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
+                  <button onClick={() => { setActiveNav('connect'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🔗</span>
                     <span className="font-semibold">Connect</span>
                   </button>
 
 
-                  <button onClick={() => { setActiveNav('tides'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
+                  <button onClick={() => { setActiveNav('tides'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🌊</span>
                     <span className="font-semibold">Tide Chart</span>
                   </button>
 
-                  <button onClick={() => { setActiveNav('seasons'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
+                  <button onClick={() => { setActiveNav('seasons'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🦌</span>
                     <span className="font-semibold">Season Tracker</span>
                   </button>
 
-                  <button onClick={() => { window.open('https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda', '_blank'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
+                  <button onClick={() => { window.open('https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda', '_blank'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🎵</span>
                     <span className="font-semibold">Festival Playlists</span>
                   </button>
 
-                  <button onClick={() => { setActiveNav('videos'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
+                  <button onClick={() => { setActiveNav('videos'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">📽️</span>
                     <span className="font-semibold">BBQ Video Library</span>
                   </button>
 
-                  <button onClick={() => { setActiveNav('tickets'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all bg-zinc-800 text-white font-bold rounded-b-lg">
+                  <button onClick={() => { setActiveNav('tickets'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all bg-red-700 text-white font-bold rounded-b-lg">
                     <span className="text-xl">🎫</span>
                     <span>BUY TICKETS</span>
                   </button>
