@@ -2092,6 +2092,7 @@ const JimmyJamApp = () => {
                     <span>BUY TICKETS</span>
                   </button>
                 </div>
+                </>
               )}
             </div>
           </div>
