@@ -1906,7 +1906,7 @@ const JimmyJamApp = () => {
         {activeNav === 'seasons' && (
           <div className="space-y-6 pb-20">
             <div className="bg-gradient-to-br from-green-700 to-emerald-900 text-white p-8 rounded-2xl shadow-lg text-center">
-              <h2 className="text-3xl font-bold mb-2">🦌 OUTDOOR CALENDAR</h2>
+              <h2 className="text-3xl font-bold mb-2">🦌 SEASON TRACKER</h2>
               <p className="text-green-100">St Augustine, Florida Hunting & Fishing Seasons</p>
             </div>
 
@@ -2026,7 +2026,9 @@ const JimmyJamApp = () => {
 
               {/* MORE MENU DROPDOWN */}
               {showMoreMenu && (
-                <div className="absolute bottom-full right-0 mb-2 bg-white text-gray-800 rounded-lg shadow-2xl w-56 py-2 z-50">
+                <>
+                  <div className="fixed inset-0 bg-black/5 z-40" onClick={() => setShowMoreMenu(false)}></div>
+                  <div className="absolute bottom-full right-0 mb-2 bg-white text-gray-800 rounded-lg shadow-2xl w-56 py-2 z-50">
                   <button onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🎤</span>
                     <span className="font-semibold">View the Full Lineup</span>
@@ -2047,20 +2049,6 @@ const JimmyJamApp = () => {
                     <span className="font-semibold">Connect</span>
                   </button>
 
-                  <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">🔔</span>
-                    <span className="font-semibold">Schedule Reminders</span>
-                  </button>
-
-                  <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">⏰</span>
-                    <span className="font-semibold">Notification History</span>
-                  </button>
-
-                  <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">💬</span>
-                    <span className="font-semibold">Concert Concierge</span>
-                  </button>
 
                   <button onClick={() => { setActiveNav('tides'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🌊</span>
@@ -2069,7 +2057,7 @@ const JimmyJamApp = () => {
 
                   <button onClick={() => { setActiveNav('seasons'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🦌</span>
-                    <span className="font-semibold">Outdoor Calendar</span>
+                    <span className="font-semibold">Season Tracker</span>
                   </button>
 
                   <button onClick={() => { setActiveNav('playlists'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
