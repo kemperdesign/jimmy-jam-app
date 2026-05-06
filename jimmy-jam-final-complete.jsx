@@ -927,12 +927,45 @@ const JimmyJamApp = () => {
           </div>
         )}
 
-        {/* SPONSORS / OFFICIAL PARTNERS */}
-        {activeNav === 'sponsors' && (
+        {/* OFFICIAL PARTNERS */}
+        {activeNav === 'official-partners' && (
           <div className="space-y-8 pb-20">
             <div className="text-center space-y-2">
               <h1 className="text-4xl font-bold text-gray-900">OFFICIAL PARTNERS</h1>
-              <p className="text-gray-600">Thank you to our generous sponsors who make Jimmy Jam possible.</p>
+              <p className="text-gray-600">The organizations and community leaders that make Jimmy Jam possible.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { name: 'City of St. Augustine', desc: 'Host City & Local Government Partner', icon: '🏛️' },
+                { name: 'Florida BBQ Society', desc: 'Sanctioning Body & Event Coordinators', icon: '🔥' },
+                { name: 'St. Johns County Sheriff', desc: 'Event Security & Logistics Partner', icon: '🚔' },
+                { name: 'Local Outreach Charities', desc: 'Beneficiaries of Jimmy Jam BBQ Slam', icon: '❤️' }
+              ].map((partner, idx) => (
+                <div key={idx} className="bg-white border-2 border-red-200 rounded-xl p-6 flex items-center gap-6 shadow-md hover:shadow-lg transition-all">
+                  <div className="text-5xl bg-red-50 p-4 rounded-full border border-red-100">{partner.icon}</div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-1">{partner.name}</h3>
+                    <p className="text-sm text-gray-600">{partner.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-12 bg-red-50 p-6 rounded-xl text-center border-2 border-red-200">
+              <h3 className="text-xl font-bold text-red-800 mb-2">Partner With Us</h3>
+              <p className="text-sm text-red-600 mb-4">Interested in becoming an official partner? Let's connect.</p>
+              <button onClick={() => setActiveNav('connect')} className="px-6 py-2 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition-all shadow-md">CONTACT US</button>
+            </div>
+          </div>
+        )}
+
+        {/* SPONSORS */}
+        {activeNav === 'sponsors' && (
+          <div className="space-y-8 pb-20">
+            <div className="text-center space-y-2">
+              <h1 className="text-4xl font-bold text-gray-900">SPONSORS</h1>
+              <p className="text-gray-600">Thank you to our generous sponsors who fund our community initiatives.</p>
             </div>
 
             <div className="space-y-6">
@@ -2169,7 +2202,7 @@ const JimmyJamApp = () => {
                     <span className="font-semibold">Recipe Book</span>
                   </button>
 
-                  <button onClick={() => { setActiveNav('sponsors'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                  <button onClick={() => { setActiveNav('official-partners'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🏆</span>
                     <span className="font-semibold">Official Partners</span>
                   </button>
