@@ -514,9 +514,11 @@ const JimmyJamApp = () => {
       <header className="sticky top-0 z-40 bg-red-700 text-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <button onClick={() => { setActiveNav('home'); setMobileMenuOpen(false); }} className="lg:hidden text-white text-2xl">
-              <ChevronLeft size={28} />
-            </button>
+            {activeNav !== 'home' && (
+              <button onClick={() => { setActiveNav('home'); }} className="lg:hidden text-white text-2xl">
+                <ChevronLeft size={28} />
+              </button>
+            )}
 
             <div className="text-center flex-1 lg:text-center">
               <h1 className="font-bold text-xl text-white">{activeNav.toUpperCase()}</h1>
@@ -1111,11 +1113,18 @@ const JimmyJamApp = () => {
               <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Official Partners</h2>
               <div className="bg-white p-6 rounded-xl shadow-md">
                 <div className="grid grid-cols-4 gap-6">
-                  {sponsorsData.map((sponsor) => (
-                    <div key={sponsor.id} className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all">
-                      <span className="text-3xl">{sponsor.logo}</span>
-                      <p className="text-[10px] font-bold text-gray-400 uppercase text-center">{sponsor.name}</p>
-                    </div>
+                   {sponsorsData.map((sponsor) => (
+                    <button 
+                      key={sponsor.id} 
+                      onClick={() => {
+                        setSelectedSponsor(sponsor);
+                        setActiveNav('sponsors');
+                      }}
+                      className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all group"
+                    >
+                      <span className="text-3xl group-hover:scale-110 transition-transform">{sponsor.logo}</span>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase text-center group-hover:text-red-700">{sponsor.name}</p>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -1864,22 +1873,23 @@ const JimmyJamApp = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { title: 'The Perfect Brisket Trim', duration: '12:45', category: 'Prep', views: '2.4k' },
-                { title: 'Managing Your Firebox', duration: '15:20', category: 'Smoking', views: '1.8k' },
-                { title: 'Competition Rib Glazing', duration: '08:30', category: 'Finishing', views: '3.1k' },
-                { title: 'Homemade Rub Secrets', duration: '10:15', category: 'Flavor', views: '950' },
-                { title: 'Selecting the Right Wood', duration: '07:50', category: 'Basics', views: '1.2k' },
-                { title: 'Pulled Pork Masterclass', duration: '18:10', category: 'Meat', views: '4.2k' }
+                { title: 'The Perfect Brisket Masterclass', url: 'https://www.youtube.com/embed/VmH-vT7Z2fI', category: 'Aaron Franklin', views: '12M' },
+                { title: 'Competition Ribs Tutorial', url: 'https://www.youtube.com/embed/kXp-o-OayJ4', category: 'Myron Mixon', views: '5M' },
+                { title: 'Ultimate Pulled Pork Guide', url: 'https://www.youtube.com/embed/0H3M0E9z_3E', category: 'Meat Church', views: '3M' },
+                { title: 'Brisket Trimming Secrets', url: 'https://www.youtube.com/embed/m-0Uv8T2pYI', category: 'Mad Scientist BBQ', views: '2M' },
+                { title: 'Texas Style BBQ Chicken', url: 'https://www.youtube.com/embed/n3f-k7Jj-Hk', category: 'Chuds BBQ', views: '1.5M' },
+                { title: 'Pork Belly Burnt Ends', url: 'https://www.youtube.com/embed/f6UvV8M_n6k', category: 'HowToBBQRight', views: '8M' }
               ].map((video, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border-2 border-gray-200 hover:border-red-600 transition-all group">
-                  <div className="aspect-video bg-gray-900 relative flex items-center justify-center text-4xl group-hover:scale-105 transition-all">
-                    🔥
-                    <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
-                      <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-xl pl-1">▶</div>
-                    </div>
-                    <span className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-[10px] px-2 py-1 rounded font-bold">
-                      {video.duration}
-                    </span>
+                  <div className="aspect-video bg-gray-900 relative">
+                    <iframe 
+                      className="w-full h-full"
+                      src={video.url}
+                      title={video.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
                   </div>
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
@@ -1890,6 +1900,92 @@ const JimmyJamApp = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* OUTDOOR CALENDAR */}
+        {activeNav === 'seasons' && (
+          <div className="space-y-6 pb-20">
+            <div className="bg-gradient-to-br from-green-700 to-emerald-900 text-white p-8 rounded-2xl shadow-lg text-center">
+              <h2 className="text-3xl font-bold mb-2">🦌 OUTDOOR CALENDAR</h2>
+              <p className="text-green-100">Texas Hunting & Fishing Seasons</p>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                { category: 'Hunting', items: [
+                  { name: 'Deer (Archery)', dates: 'Sep 30 - Nov 3', status: 'Upcoming', icon: '🏹' },
+                  { name: 'Deer (General)', dates: 'Nov 4 - Jan 21', status: 'Closed', icon: '🦌' },
+                  { name: 'Dove (North Zone)', dates: 'Sep 1 - Nov 12', status: 'Active', icon: '🕊️' },
+                  { name: 'Spring Turkey', dates: 'Mar 30 - May 12', status: 'Closed', icon: '🦃' }
+                ]},
+                { category: 'Fishing', items: [
+                  { name: 'Largemouth Bass', dates: 'Year Round (Peak Mar-May)', status: 'Active', icon: '🐟' },
+                  { name: 'White Bass / Crappie', dates: 'Peak Feb - Apr', status: 'Active', icon: '🎣' },
+                  { name: 'Catfish', dates: 'Year Round (Peak May-Jul)', status: 'Active', icon: '🐱' }
+                ]}
+              ].map((group, i) => (
+                <div key={i} className="space-y-3">
+                  <h3 className="font-bold text-lg text-gray-800 ml-2">{group.category}</h3>
+                  {group.items.map((item, idx) => (
+                    <div key={idx} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{item.icon}</span>
+                        <div>
+                          <p className="font-bold text-gray-900">{item.name}</p>
+                          <p className="text-xs text-gray-500 font-semibold uppercase">{item.dates}</p>
+                        </div>
+                      </div>
+                      <span className={`text-[10px] font-bold px-2 py-1 rounded ${
+                        item.status === 'Active' ? 'bg-green-100 text-green-700' : 
+                        item.status === 'Upcoming' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-500'
+                      }`}>
+                        {item.status.toUpperCase()}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* FESTIVAL PLAYLISTS */}
+        {activeNav === 'playlists' && (
+          <div className="space-y-6 pb-20">
+            <div className="bg-gradient-to-br from-purple-700 to-indigo-900 text-white p-8 rounded-2xl shadow-lg text-center">
+              <h2 className="text-3xl font-bold mb-2">🎶 FESTIVAL SOUNDS</h2>
+              <p className="text-purple-100">Curated BBQ & Country Vibes</p>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                { name: 'Spotify', icon: '🎧', color: 'bg-[#1DB954]', link: 'https://open.spotify.com' },
+                { name: 'YouTube Music', icon: '📽️', color: 'bg-[#FF0000]', link: 'https://music.youtube.com' },
+                { name: 'Pandora', icon: '🦋', color: 'bg-[#00A0EE]', link: 'https://www.pandora.com' }
+              ].map((platform, i) => (
+                <a 
+                  key={i} 
+                  href={platform.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={`${platform.color} p-6 rounded-2xl flex items-center justify-between shadow-lg text-white transition-all transform hover:scale-[1.02]`}
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="text-4xl">{platform.icon}</span>
+                    <div>
+                      <p className="font-bold text-xl">{platform.name}</p>
+                      <p className="text-white text-opacity-80 text-sm">Listen to Jimmy Jam Official</p>
+                    </div>
+                  </div>
+                  <ChevronRight size={28} />
+                </a>
+              ))}
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border-2 border-dashed border-gray-300 text-center">
+              <p className="text-gray-500 font-semibold italic">"The perfect soundtrack for your next backyard cookout."</p>
             </div>
           </div>
         )}
@@ -1971,6 +2067,26 @@ const JimmyJamApp = () => {
                   <button onClick={() => { setActiveNav('tides'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🌊</span>
                     <span className="font-semibold">Tide Chart</span>
+                  </button>
+
+                  <button onClick={() => { setActiveNav('seasons'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                    <span className="text-xl">🦌</span>
+                    <span className="font-semibold">Outdoor Calendar</span>
+                  </button>
+
+                  <button onClick={() => { setActiveNav('playlists'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                    <span className="text-xl">🎵</span>
+                    <span className="font-semibold">Festival Playlists</span>
+                  </button>
+
+                  <button onClick={() => { setActiveNav('seasons'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                    <span className="text-xl">🦌</span>
+                    <span className="font-semibold">Outdoor Calendar</span>
+                  </button>
+
+                  <button onClick={() => { setActiveNav('playlists'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                    <span className="text-xl">🎵</span>
+                    <span className="font-semibold">Festival Playlists</span>
                   </button>
 
                   <button onClick={() => { setActiveNav('videos'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
