@@ -297,22 +297,7 @@ const JimmyJamApp = () => {
     ]}
   ];
 
-  const galleryPhotos = [
-    { id: 1, src: '🏆', title: 'BBQ Competition 2023', desc: 'Teams competing for prizes' },
-    { id: 2, src: '🔥', title: 'Smoking Brisket', desc: '14-hour Texas style' },
-    { id: 3, src: '🍖', title: 'Prize Winners', desc: 'Championship teams' },
-    { id: 4, src: '🥃', title: 'Bourbon Tasting', desc: 'Premium selection' },
-    { id: 5, src: '👥', title: 'Community Gathering', desc: 'Families together' },
-    { id: 6, src: '🎉', title: 'Awards Ceremony', desc: 'Celebration moment' },
-    { id: 7, src: '🌮', title: 'Food Vendors', desc: 'Local businesses' },
-    { id: 8, src: '🎵', title: 'Live Music', desc: 'Entertainment stage' }
-  ];
 
-  const bbqTeams = [
-    { rank: 1, name: 'Smoke Signals', score: 94, brisket: 98, ribs: 92, chicken: 92, sauce: 88 },
-    { rank: 2, name: 'Pit Masters Elite', score: 92, brisket: 95, ribs: 94, chicken: 90, sauce: 85 },
-    { rank: 3, name: 'BBQ Legends', score: 89, brisket: 91, ribs: 88, chicken: 89, sauce: 87 }
-  ];
 
   const bourbonMenu = {
     bbq: [
