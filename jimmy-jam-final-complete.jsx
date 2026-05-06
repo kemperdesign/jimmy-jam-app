@@ -23,13 +23,13 @@ const JimmyJamApp = () => {
     {
       id: 1,
       name: '95.9 The Ranch',
-      tagline: 'The Sound of Texas',
+      tagline: 'The Sound of St Augustine, Florida',
       logo: '📻',
       website: 'theranch959.com',
       facebook: 'theranch959',
       instagram: 'theranch959',
-      description: 'Fort Worth\'s premier country music station bringing live entertainment and community events to North Texas.',
-      location: 'Fort Worth, TX',
+      description: 'St Augustine\'s premier country music station bringing live entertainment and community events to North St Augustine, Florida.',
+      location: 'St Augustine, FL',
       image: '🎤'
     },
     {
@@ -41,7 +41,7 @@ const JimmyJamApp = () => {
       facebook: 'adobeinteriors',
       instagram: 'adobeinteriors',
       description: 'Locally crafted furniture and home decor created with quality materials and American craftsmanship.',
-      location: 'Fort Worth, TX',
+      location: 'St Augustine, FL',
       image: '🛋️'
     },
     {
@@ -52,8 +52,8 @@ const JimmyJamApp = () => {
       website: 'andrewsdist.com',
       facebook: 'andrewsdist',
       instagram: 'andrewsdist',
-      description: 'A trusted distributor serving Texas businesses for over 50 years with quality products and service.',
-      location: 'Fort Worth, TX',
+      description: 'A trusted distributor serving St Augustine, Florida businesses for over 50 years with quality products and service.',
+      location: 'St Augustine, FL',
       image: '📦'
     },
     {
@@ -65,7 +65,7 @@ const JimmyJamApp = () => {
       facebook: 'ariat',
       instagram: 'ariat',
       description: 'Premium western boots and equestrian gear designed for performance and style.',
-      location: 'Fort Worth, TX',
+      location: 'St Augustine, FL',
       image: '🤠'
     },
     {
@@ -76,8 +76,8 @@ const JimmyJamApp = () => {
       website: 'bluemintthai.com',
       facebook: 'bluemintthai',
       instagram: 'bluemintthai',
-      description: 'Authentic Thai and Asian cuisine serving Fort Worth with fresh ingredients and traditional recipes.',
-      location: 'Fort Worth, TX',
+      description: 'Authentic Thai and Asian cuisine serving St Augustine with fresh ingredients and traditional recipes.',
+      location: 'St Augustine, FL',
       image: '🥢'
     },
     {
@@ -88,8 +88,8 @@ const JimmyJamApp = () => {
       website: 'breedingbeef.com',
       facebook: 'breedingbeef',
       instagram: 'breedingbeef',
-      description: 'Premium beef cattle raised with care and quality standards for Texas ranches and competitions.',
-      location: 'Fort Worth, TX',
+      description: 'Premium beef cattle raised with care and quality standards for St Augustine, Florida ranches and competitions.',
+      location: 'St Augustine, FL',
       image: '🐂'
     },
     {
@@ -100,20 +100,20 @@ const JimmyJamApp = () => {
       website: 'brimsbolos.com',
       facebook: 'brimsbolos',
       instagram: 'brimsbolos',
-      description: 'Custom hats and accessories for your unique style. Celebrate Texas culture with authentic western wear.',
-      location: 'Fort Worth, TX',
+      description: 'Custom hats and accessories for your unique style. Celebrate St Augustine, Florida culture with authentic western wear.',
+      location: 'St Augustine, FL',
       image: '🎪'
     },
     {
       id: 8,
       name: 'Buyers Barricades',
-      tagline: 'The Texas Authority in Barricade Rental',
+      tagline: 'The St Augustine, Florida Authority in Barricade Rental',
       logo: '🚧',
       website: 'buyersbarricades.com',
       facebook: 'buyersbarricades',
       instagram: 'buyersbarricades',
-      description: 'Professional barricade and event equipment rentals serving Texas events and venues.',
-      location: 'Fort Worth, TX',
+      description: 'Professional barricade and event equipment rentals serving St Augustine, Florida events and venues.',
+      location: 'St Augustine, FL',
       image: '🛡️'
     }
   ];
@@ -136,7 +136,7 @@ const JimmyJamApp = () => {
       genre: 'Fronted by singer-songwriter Randy...',
       logo: '🎵',
       image: '🎶',
-      description: 'Fronted by singer-songwriter Randy Rogers, Randy Rogers Band continues to pack venues across Texas and beyond. Known for their energetic live performances and dedicated fanbase, they deliver authentic Texas country music with heart and soul.',
+      description: 'Fronted by singer-songwriter Randy Rogers, Randy Rogers Band continues to pack venues across St Augustine, Florida and beyond. Known for their energetic live performances and dedicated fanbase, they deliver authentic St Augustine, Florida country music with heart and soul.',
       time: '8:30 PM',
       stage: 'Main Stage'
     },
@@ -176,7 +176,7 @@ const JimmyJamApp = () => {
       genre: 'The Broken Spokes are a beloved Tex...',
       logo: '🚲',
       image: '🎸',
-      description: 'The Broken Spokes are a beloved Texas band bringing classic country rock to audiences across the state. Their timeless sound and connection with fans make every show memorable.',
+      description: 'The Broken Spokes are a beloved St Augustine, Florida band bringing classic country rock to audiences across the state. Their timeless sound and connection with fans make every show memorable.',
       time: '4:00 PM',
       stage: 'Ranch Stage'
     },
@@ -186,9 +186,9 @@ const JimmyJamApp = () => {
       genre: 'Rising country artist with authentic...',
       logo: '🤠',
       image: '🎤',
-      description: 'Weldon Henson is a rising star in country music, bringing authentic storytelling and genuine emotion to his performances. His deep connection to Texas roots shine through in every song.',
+      description: 'Weldon Henson is a rising star in country music, bringing authentic storytelling and genuine emotion to his performances. His deep connection to St Augustine, Florida roots shine through in every song.',
       time: '3:00 PM',
-      stage: 'Fort Worth Stage'
+      stage: 'St Augustine Stage'
     },
     {
       id: 8,
@@ -198,7 +198,7 @@ const JimmyJamApp = () => {
       image: '🎺',
       description: 'The Horseshoe Collective brings a dynamic, energetic approach to traditional country music. Their ensemble performance style creates an exciting, engaging live experience.',
       time: '2:00 PM',
-      stage: 'Fort Worth Stage'
+      stage: 'St Augustine Stage'
     }
   ];
 
@@ -301,7 +301,7 @@ const JimmyJamApp = () => {
 
   const galleryPhotos = [
     { id: 1, src: '🏆', title: 'BBQ Competition 2023', desc: 'Teams competing for prizes' },
-    { id: 2, src: '🔥', title: 'Smoking Brisket', desc: '14-hour Texas style' },
+    { id: 2, src: '🔥', title: 'Smoking Brisket', desc: '14-hour St Augustine, Florida style' },
     { id: 3, src: '🍖', title: 'Prize Winners', desc: 'Championship teams' },
     { id: 4, src: '🥃', title: 'Bourbon Tasting', desc: 'Premium selection' },
     { id: 5, src: '👥', title: 'Community Gathering', desc: 'Families together' },
@@ -312,7 +312,7 @@ const JimmyJamApp = () => {
 
   const bourbonMenu = {
     bbq: [
-      { name: 'Smoked Brisket', desc: '14-hour Texas style', price: '$18' },
+      { name: 'Smoked Brisket', desc: '14-hour St Augustine, Florida style', price: '$18' },
       { name: 'St. Louis Ribs', desc: 'Fall-off-bone tender', price: '$16' },
       { name: 'Pulled Pork', desc: 'Carolina mustard sauce', price: '$12' },
       { name: 'Smoked Chicken', desc: 'Apple-smoked', price: '$12' }
@@ -361,7 +361,7 @@ const JimmyJamApp = () => {
     { 
       name: 'Robert Miller',
       title: 'Grant Recipient',
-      quote: "I've never seen a group of people work so hard for others. The medical grant they provided changed my daughter's life. This organization is a blessing to Fort Worth.",
+      quote: "I've never seen a group of people work so hard for others. The medical grant they provided changed my daughter's life. This organization is a blessing to St Augustine.",
       rating: 5,
       date: '08/15/23',
       initials: 'RM',
@@ -388,7 +388,7 @@ const JimmyJamApp = () => {
     { 
       name: 'Kevin Thompson',
       title: 'Volunteer',
-      quote: "A truly world-class event with a heart of gold. The impact they have on Fort Worth is immeasurable. It's an honor to wear the volunteer shirt every year.",
+      quote: "A truly world-class event with a heart of gold. The impact they have on St Augustine is immeasurable. It's an honor to wear the volunteer shirt every year.",
       rating: 5,
       date: '10/10/23',
       initials: 'KT',
@@ -703,7 +703,7 @@ const JimmyJamApp = () => {
                   <p>The Broken Spokes</p>
                   <p className="text-red-300">Amanda Shires</p>
                   <p>Jason Scott</p>
-                  <p className="text-sm text-gray-300 mt-3">Fort Worth, TX</p>
+                  <p className="text-sm text-gray-300 mt-3">St Augustine, FL</p>
                   <p className="text-sm text-gray-300">July 4-5, 2024</p>
                 </div>
                 
@@ -757,7 +757,7 @@ const JimmyJamApp = () => {
 
               <div>
                 <p className="font-bold text-gray-800 mb-2">Where</p>
-                <p className="text-gray-700">Fort Worth Stockyards<br />Fort Worth, Texas</p>
+                <p className="text-gray-700">St Augustine Stockyards<br />St Augustine, St Augustine, Florida</p>
               </div>
 
               <div>
@@ -802,7 +802,7 @@ const JimmyJamApp = () => {
                   <div>
                     <p className="text-6xl mb-3">🎪</p>
                     <p className="text-gray-700 font-bold text-lg">Venue Floor Plan</p>
-                    <p className="text-sm text-gray-600 mt-2">Fort Worth Stockyards</p>
+                    <p className="text-sm text-gray-600 mt-2">St Augustine Stockyards</p>
                     <p className="text-xs text-gray-500 mt-1">July 4-5, 2024</p>
                   </div>
                 </div>
@@ -848,7 +848,7 @@ const JimmyJamApp = () => {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
                       <p className="text-6xl mb-3">🗺️</p>
-                      <p className="text-blue-800 font-bold text-lg">Fort Worth Stockyards</p>
+                      <p className="text-blue-800 font-bold text-lg">St Augustine Stockyards</p>
                       <p className="text-sm text-blue-700 mt-2">Interactive GPS Map</p>
                     </div>
                   </div>
@@ -868,8 +868,8 @@ const JimmyJamApp = () => {
 
                 {/* LOCATION INFO */}
                 <div className="bg-white rounded-lg p-4 border-2 border-blue-300 space-y-3">
-                  <h3 className="font-bold text-gray-900">Fort Worth Stockyards</h3>
-                  <p className="text-sm text-gray-600">2501 Meacham Blvd, Fort Worth, TX 76106</p>
+                  <h3 className="font-bold text-gray-900">St Augustine Stockyards</h3>
+                  <p className="text-sm text-gray-600">2501 Meacham Blvd, St Augustine, FL 76106</p>
                   <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-bold transition-all text-sm">
                     🧭 Get Directions
                   </button>
@@ -1385,7 +1385,7 @@ const JimmyJamApp = () => {
             <div className="bg-white rounded-lg p-4 border-2 border-blue-300 flex items-center gap-2">
               <span className="text-2xl">☀️</span>
               <div className="flex-1">
-                <p className="text-sm text-gray-600">Fort Worth, TX</p>
+                <p className="text-sm text-gray-600">St Augustine, FL</p>
               </div>
               <span className="text-gray-400">▼</span>
             </div>
@@ -1484,7 +1484,7 @@ const JimmyJamApp = () => {
                 <div className="w-full h-64 bg-gradient-to-br from-gray-300 to-gray-200 rounded-lg flex items-center justify-center border-2 border-gray-300 shadow-lg">
                   <div className="text-center">
                     <p className="text-4xl mb-2">🗺️</p>
-                    <p className="text-gray-600 font-semibold">Fort Worth, TX</p>
+                    <p className="text-gray-600 font-semibold">St Augustine, FL</p>
                     <p className="text-sm text-gray-500 mt-2">Interactive weather map</p>
                   </div>
                 </div>
@@ -1536,7 +1536,7 @@ const JimmyJamApp = () => {
             <div className="relative h-48 rounded-2xl overflow-hidden shadow-xl mb-12">
               <div className="absolute inset-0 bg-gray-900 bg-opacity-60 flex flex-col justify-end p-6 z-10">
                 <h1 className="text-3xl font-bold text-white mb-1">Jimmy Jam Stories</h1>
-                <p className="text-gray-300 text-sm flex items-center gap-1">📍 Fort Worth, Texas</p>
+                <p className="text-gray-300 text-sm flex items-center gap-1">📍 St Augustine, St Augustine, Florida</p>
               </div>
               <img 
                 src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
@@ -1870,7 +1870,7 @@ const JimmyJamApp = () => {
                 { title: 'Competition Ribs Tutorial', url: 'https://www.youtube.com/embed/kXp-o-OayJ4', category: 'Myron Mixon', views: '5M' },
                 { title: 'Ultimate Pulled Pork Guide', url: 'https://www.youtube.com/embed/0H3M0E9z_3E', category: 'Meat Church', views: '3M' },
                 { title: 'Brisket Trimming Secrets', url: 'https://www.youtube.com/embed/m-0Uv8T2pYI', category: 'Mad Scientist BBQ', views: '2M' },
-                { title: 'Texas Style BBQ Chicken', url: 'https://www.youtube.com/embed/n3f-k7Jj-Hk', category: 'Chuds BBQ', views: '1.5M' },
+                { title: 'St Augustine, Florida Style BBQ Chicken', url: 'https://www.youtube.com/embed/n3f-k7Jj-Hk', category: 'Chuds BBQ', views: '1.5M' },
                 { title: 'Pork Belly Burnt Ends', url: 'https://www.youtube.com/embed/f6UvV8M_n6k', category: 'HowToBBQRight', views: '8M' }
               ].map((video, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border-2 border-gray-200 hover:border-red-600 transition-all group">
@@ -1902,7 +1902,7 @@ const JimmyJamApp = () => {
           <div className="space-y-6 pb-20">
             <div className="bg-gradient-to-br from-green-700 to-emerald-900 text-white p-8 rounded-2xl shadow-lg text-center">
               <h2 className="text-3xl font-bold mb-2">🦌 OUTDOOR CALENDAR</h2>
-              <p className="text-green-100">Texas Hunting & Fishing Seasons</p>
+              <p className="text-green-100">St Augustine, Florida Hunting & Fishing Seasons</p>
             </div>
 
             <div className="space-y-4">
