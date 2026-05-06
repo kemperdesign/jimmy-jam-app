@@ -9,6 +9,8 @@ const JimmyJamApp = () => {
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
+  const [mapFilters, setMapFilters] = useState(['stage', 'food', 'bar', 'restroom', 'firstaid', 'parking']);
+  const [showFilters, setShowFilters] = useState(false);
 
   // Set default tabs when navigating to specific pages
   useEffect(() => {
@@ -127,7 +129,7 @@ const JimmyJamApp = () => {
       name: 'Whiskey Myers',
       genre: 'Genre-bending band Whiskey Myers...',
       logo: '🎸',
-      image: '🎤',
+      image: 'https://images.unsplash.com/photo-1501612722273-d492477c552b?auto=format&fit=crop&q=80&w=800',
       description: 'Genre-bending band Whiskey Myers have played nearly 3,000 live shows to ever-increasing crowd sizes since their emergence in 2007. In addition to headlining their own sold-out shows from coast to coast at iconic venues such as Red Rocks Amphitheatre and Ryman Auditorium, plus performing at marquee festivals Bonnaroo, Stagecoach, Download and more, the six-piece was also personally selected to open The Rolling Stones\' Chicago stadium show. Lauded by Rolling Stone as "their most supercharged album yet" that "sounds on the whole like an album by a band working at the height of its powers."',
       time: '10:00 PM',
       stage: 'Main Stage'
@@ -137,7 +139,7 @@ const JimmyJamApp = () => {
       name: 'Randy Rogers Band',
       genre: 'Fronted by singer-songwriter Randy...',
       logo: '🎵',
-      image: '🎶',
+      image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800',
       description: 'Fronted by singer-songwriter Randy Rogers, Randy Rogers Band continues to pack venues across St Augustine, Florida and beyond. Known for their energetic live performances and dedicated fanbase, they deliver authentic St Augustine, Florida country music with heart and soul.',
       time: '8:30 PM',
       stage: 'Main Stage'
@@ -147,7 +149,7 @@ const JimmyJamApp = () => {
       name: 'Amanda Shires',
       genre: 'A truly singular creative force, Gramm...',
       logo: '🎼',
-      image: '🎺',
+      image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800',
       description: 'A truly singular creative force, Grammy-nominated artist Amanda Shires brings her powerful vocals and honest songwriting to every performance. Her blend of country, folk, and rock creates an unforgettable musical experience.',
       time: '7:00 PM',
       stage: 'US Energy Stage'
@@ -157,7 +159,7 @@ const JimmyJamApp = () => {
       name: 'Jason Scott & the High Heat',
       genre: 'Born and bred in Oklahoma City, Jas...',
       logo: '🔥',
-      image: '🎸',
+      image: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=800',
       description: 'Born and bred in Oklahoma City, Jason Scott & the High Heat bring high-energy performances and authentic country rock. Their passionate delivery and tight musicianship make them a festival favorite.',
       time: '6:00 PM',
       stage: 'US Energy Stage'
@@ -167,7 +169,7 @@ const JimmyJamApp = () => {
       name: 'Ellis Bullard',
       genre: '"In the wake of 2024\'s Honky Tonk Ai...',
       logo: '⭐',
-      image: '🎤',
+      image: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&q=80&w=800',
       description: 'Ellis Bullard is making waves in the country music scene with his fresh approach to honky-tonk traditions. His rising popularity and distinctive sound have earned him spots at major festivals nationwide.',
       time: '5:00 PM',
       stage: 'Ranch Stage'
@@ -177,7 +179,7 @@ const JimmyJamApp = () => {
       name: 'The Broken Spokes',
       genre: 'The Broken Spokes are a beloved Tex...',
       logo: '🚲',
-      image: '🎸',
+      image: 'https://images.unsplash.com/photo-1516280440502-628d098a58e6?auto=format&fit=crop&q=80&w=800',
       description: 'The Broken Spokes are a beloved St Augustine, Florida band bringing classic country rock to audiences across the state. Their timeless sound and connection with fans make every show memorable.',
       time: '4:00 PM',
       stage: 'Ranch Stage'
@@ -187,7 +189,7 @@ const JimmyJamApp = () => {
       name: 'Weldon Henson',
       genre: 'Rising country artist with authentic...',
       logo: '🤠',
-      image: '🎤',
+      image: 'https://images.unsplash.com/photo-1496664444929-8c75efb9546f?auto=format&fit=crop&q=80&w=800',
       description: 'Weldon Henson is a rising star in country music, bringing authentic storytelling and genuine emotion to his performances. His deep connection to St Augustine, Florida roots shine through in every song.',
       time: '3:00 PM',
       stage: 'St Augustine Stage'
@@ -197,7 +199,7 @@ const JimmyJamApp = () => {
       name: 'The Horseshoe Collective',
       genre: 'Dynamic ensemble delivering country...',
       logo: '🎭',
-      image: '🎺',
+      image: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&q=80&w=800',
       description: 'The Horseshoe Collective brings a dynamic, energetic approach to traditional country music. Their ensemble performance style creates an exciting, engaging live experience.',
       time: '2:00 PM',
       stage: 'St Augustine Stage'
@@ -758,7 +760,7 @@ const JimmyJamApp = () => {
 
               <div>
                 <p className="font-bold text-gray-800 mb-2">Where</p>
-                <p className="text-gray-700">St Augustine Stockyards<br />St Augustine, St Augustine, Florida</p>
+                <p className="text-gray-700">Francis Field<br />25 W Castillo Dr, St. Augustine, FL 32084</p>
               </div>
 
               <div>
@@ -799,44 +801,45 @@ const JimmyJamApp = () => {
             {/* VENUE MAP TAB */}
             {activeTab === 'venue' && (
               <div className="space-y-4">
-                <div className="w-full h-96 bg-gradient-to-br from-gray-300 to-gray-200 rounded-lg flex items-center justify-center border-2 border-gray-300 shadow-lg text-center">
-                  <div>
-                    <p className="text-6xl mb-3">🎪</p>
-                    <p className="text-gray-700 font-bold text-lg">Venue Floor Plan</p>
-                    <p className="text-sm text-gray-600 mt-2">St Augustine Stockyards</p>
-                    <p className="text-xs text-gray-500 mt-1">July 4-5, 2024</p>
+                <div className="w-full h-96 bg-white rounded-lg overflow-hidden border-2 border-gray-300 shadow-lg relative">
+                  <img 
+                    src="https://images.unsplash.com/photo-1569336415962-a4bd9f6dfc0f?auto=format&fit=crop&q=80&w=1200" 
+                    alt="Festival Map" 
+                    className="w-full h-full object-cover opacity-80"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="bg-white/90 p-4 rounded-xl shadow-xl text-center border-2 border-red-700">
+                      <p className="text-4xl mb-2">🎪</p>
+                      <p className="text-gray-900 font-bold text-lg leading-tight uppercase tracking-widest">Francis Field<br/>Official Festival Map</p>
+                    </div>
                   </div>
                 </div>
 
                 {/* LEGEND */}
                 <div className="bg-white rounded-lg p-4 border-2 border-gray-300 space-y-3">
-                  <h3 className="font-bold text-gray-900 mb-3">Legend</h3>
+                  <div className="flex justify-between items-center mb-3">
+                    <h3 className="font-bold text-gray-900">Map Legend</h3>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase">Click to toggle</p>
+                  </div>
                   
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-red-500 rounded"></div>
-                      <span className="text-sm font-semibold text-gray-700">BBQ Stage</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-green-500 rounded"></div>
-                      <span className="text-sm font-semibold text-gray-700">Food Vendors</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-blue-500 rounded"></div>
-                      <span className="text-sm font-semibold text-gray-700">Bourbon Bar</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-yellow-500 rounded"></div>
-                      <span className="text-sm font-semibold text-gray-700">Restrooms</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-purple-500 rounded"></div>
-                      <span className="text-sm font-semibold text-gray-700">First Aid</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-orange-500 rounded"></div>
-                      <span className="text-sm font-semibold text-gray-700">Parking</span>
-                    </div>
+                    {[
+                      { id: 'stage', label: 'BBQ Stage', color: 'bg-red-500' },
+                      { id: 'food', label: 'Food Vendors', color: 'bg-green-500' },
+                      { id: 'bar', label: 'Bourbon Bar', color: 'bg-blue-500' },
+                      { id: 'restroom', label: 'Restrooms', color: 'bg-yellow-500' },
+                      { id: 'firstaid', label: 'First Aid', color: 'bg-purple-500' },
+                      { id: 'parking', label: 'Parking', color: 'bg-orange-500' }
+                    ].map(item => (
+                      <button 
+                        key={item.id}
+                        onClick={() => setMapFilters(prev => prev.includes(item.id) ? prev.filter(f => f !== item.id) : [...prev, item.id])}
+                        className={`flex items-center gap-2 p-1 rounded transition-all ${mapFilters.includes(item.id) ? 'opacity-100' : 'opacity-40 scale-95'}`}
+                      >
+                        <div className={`w-6 h-6 ${item.color} rounded shadow-sm`}></div>
+                        <span className="text-sm font-semibold text-gray-700">{item.label}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -845,34 +848,63 @@ const JimmyJamApp = () => {
             {/* GPS MAP TAB */}
             {activeTab === 'gps' && (
               <div className="space-y-4">
-                <div className="w-full h-96 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-lg flex items-center justify-center border-2 border-blue-300 shadow-lg relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <p className="text-6xl mb-3">🗺️</p>
-                      <p className="text-blue-800 font-bold text-lg">St Augustine Stockyards</p>
-                      <p className="text-sm text-blue-700 mt-2">Interactive GPS Map</p>
-                    </div>
-                  </div>
-                  
-                  {/* CENTER PIN */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-8 h-8 rounded-full border-4 border-red-600 bg-red-300 opacity-80 flex items-center justify-center">
-                      <div className="w-3 h-3 rounded-full bg-red-700"></div>
-                    </div>
-                  </div>
+                <div className="w-full h-96 bg-gray-100 rounded-lg overflow-hidden border-2 border-blue-300 shadow-lg relative">
+                  <iframe
+                    title="GPS Map"
+                    width="100%"
+                    height="100%"
+                    frameBorder="0"
+                    style={{ border: 0 }}
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA_...&q=Francis+Field+St+Augustine+FL"
+                    allowFullScreen
+                  ></iframe>
+                  {/* OVERLAY IF KEY IS MISSING (Mock for demo) */}
+                  <div className="absolute inset-0 bg-blue-900/10 pointer-events-none"></div>
                 </div>
 
                 {/* FILTER BUTTON */}
-                <button className="w-full bg-blue-100 hover:bg-blue-200 text-blue-700 py-3 rounded-lg font-bold transition-all border-2 border-blue-300">
-                  🔽 FILTERS
+                <button 
+                  onClick={() => setShowFilters(!showFilters)}
+                  className={`w-full py-3 rounded-lg font-bold transition-all border-2 ${showFilters ? 'bg-blue-600 text-white border-blue-700' : 'bg-blue-100 text-blue-700 border-blue-300'}`}
+                >
+                  {showFilters ? '✕ CLOSE FILTERS' : '🔽 FILTERS'}
                 </button>
 
+                {showFilters && (
+                  <div className="bg-white rounded-lg p-4 border-2 border-blue-300 grid grid-cols-2 gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
+                    {[
+                      { id: 'stage', label: 'Stages', icon: '🎤' },
+                      { id: 'food', label: 'Food', icon: '🍔' },
+                      { id: 'bar', label: 'Drinks', icon: '🥃' },
+                      { id: 'parking', label: 'Parking', icon: '🚗' }
+                    ].map(f => (
+                      <button
+                        key={f.id}
+                        onClick={() => setMapFilters(prev => prev.includes(f.id) ? prev.filter(x => x !== f.id) : [...prev, f.id])}
+                        className={`flex items-center gap-2 p-3 rounded-lg border-2 transition-all ${mapFilters.includes(f.id) ? 'bg-blue-50 border-blue-600 text-blue-700' : 'bg-gray-50 border-gray-200 text-gray-500'}`}
+                      >
+                        <span>{f.icon}</span>
+                        <span className="text-xs font-bold">{f.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
                 {/* LOCATION INFO */}
-                <div className="bg-white rounded-lg p-4 border-2 border-blue-300 space-y-3">
-                  <h3 className="font-bold text-gray-900">St Augustine Stockyards</h3>
-                  <p className="text-sm text-gray-600">2501 Meacham Blvd, St Augustine, FL 76106</p>
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-bold transition-all text-sm">
-                    🧭 Get Directions
+                <div className="bg-white rounded-lg p-4 border-2 border-blue-300 space-y-3 shadow-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-red-700 rounded-lg flex items-center justify-center text-xl">📍</div>
+                    <div>
+                      <h3 className="font-bold text-gray-900 leading-tight">Francis Field</h3>
+                      <p className="text-xs text-gray-500 italic">Official Jimmy Jam Venue</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600">25 W Castillo Dr, St. Augustine, FL 32084</p>
+                  <button 
+                    onClick={() => window.open('https://www.google.com/maps/dir/?api=1&destination=Francis+Field+St+Augustine+FL', '_blank')}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold shadow-lg transform active:scale-95 transition-all flex items-center justify-center gap-2"
+                  >
+                    🧭 GET DIRECTIONS
                   </button>
                 </div>
               </div>
@@ -1181,8 +1213,13 @@ const JimmyJamApp = () => {
             </button>
 
             {/* HERO IMAGE */}
-            <div className="w-full h-64 bg-gradient-to-br from-gray-700 to-gray-600 rounded-lg flex items-center justify-center text-6xl shadow-lg">
-              {selectedArtist.image}
+            <div className="w-full h-64 bg-black rounded-lg overflow-hidden shadow-lg relative">
+              <img 
+                src={selectedArtist.image} 
+                alt={selectedArtist.name} 
+                className="w-full h-full object-cover" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
             </div>
 
             {/* ARTIST NAME */}

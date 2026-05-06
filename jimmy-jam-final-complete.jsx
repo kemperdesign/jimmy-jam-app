@@ -127,7 +127,7 @@ const JimmyJamApp = () => {
       name: 'Whiskey Myers',
       genre: 'Genre-bending band Whiskey Myers...',
       logo: '🎸',
-      image: '🎤',
+      image: 'https://images.unsplash.com/photo-1501612722273-d492477c552b?auto=format&fit=crop&q=80&w=800',
       description: 'Genre-bending band Whiskey Myers have played nearly 3,000 live shows to ever-increasing crowd sizes since their emergence in 2007. In addition to headlining their own sold-out shows from coast to coast at iconic venues such as Red Rocks Amphitheatre and Ryman Auditorium, plus performing at marquee festivals Bonnaroo, Stagecoach, Download and more, the six-piece was also personally selected to open The Rolling Stones\' Chicago stadium show. Lauded by Rolling Stone as "their most supercharged album yet" that "sounds on the whole like an album by a band working at the height of its powers."',
       time: '10:00 PM',
       stage: 'Main Stage'
@@ -137,7 +137,7 @@ const JimmyJamApp = () => {
       name: 'Randy Rogers Band',
       genre: 'Fronted by singer-songwriter Randy...',
       logo: '🎵',
-      image: '🎶',
+      image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800',
       description: 'Fronted by singer-songwriter Randy Rogers, Randy Rogers Band continues to pack venues across St Augustine, Florida and beyond. Known for their energetic live performances and dedicated fanbase, they deliver authentic St Augustine, Florida country music with heart and soul.',
       time: '8:30 PM',
       stage: 'Main Stage'
@@ -147,17 +147,17 @@ const JimmyJamApp = () => {
       name: 'Amanda Shires',
       genre: 'A truly singular creative force, Gramm...',
       logo: '🎼',
-      image: '🎺',
+      image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800',
       description: 'A truly singular creative force, Grammy-nominated artist Amanda Shires brings her powerful vocals and honest songwriting to every performance. Her blend of country, folk, and rock creates an unforgettable musical experience.',
       time: '7:00 PM',
-      stage: 'US Energy Stage'
+      stage: 'Main Stage'
     },
     {
       id: 4,
       name: 'Jason Scott & the High Heat',
       genre: 'Born and bred in Oklahoma City, Jas...',
       logo: '🔥',
-      image: '🎸',
+      image: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=800',
       description: 'Born and bred in Oklahoma City, Jason Scott & the High Heat bring high-energy performances and authentic country rock. Their passionate delivery and tight musicianship make them a festival favorite.',
       time: '6:00 PM',
       stage: 'US Energy Stage'
@@ -167,7 +167,7 @@ const JimmyJamApp = () => {
       name: 'Ellis Bullard',
       genre: '"In the wake of 2024\'s Honky Tonk Ai...',
       logo: '⭐',
-      image: '🎤',
+      image: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&q=80&w=800',
       description: 'Ellis Bullard is making waves in the country music scene with his fresh approach to honky-tonk traditions. His rising popularity and distinctive sound have earned him spots at major festivals nationwide.',
       time: '5:00 PM',
       stage: 'Ranch Stage'
@@ -177,7 +177,7 @@ const JimmyJamApp = () => {
       name: 'The Broken Spokes',
       genre: 'The Broken Spokes are a beloved Tex...',
       logo: '🚲',
-      image: '🎸',
+      image: 'https://images.unsplash.com/photo-1516280440502-628d098a58e6?auto=format&fit=crop&q=80&w=800',
       description: 'The Broken Spokes are a beloved St Augustine, Florida band bringing classic country rock to audiences across the state. Their timeless sound and connection with fans make every show memorable.',
       time: '4:00 PM',
       stage: 'Ranch Stage'
@@ -187,7 +187,7 @@ const JimmyJamApp = () => {
       name: 'Weldon Henson',
       genre: 'Rising country artist with authentic...',
       logo: '🤠',
-      image: '🎤',
+      image: 'https://images.unsplash.com/photo-1496664444929-8c75efb9546f?auto=format&fit=crop&q=80&w=800',
       description: 'Weldon Henson is a rising star in country music, bringing authentic storytelling and genuine emotion to his performances. His deep connection to St Augustine, Florida roots shine through in every song.',
       time: '3:00 PM',
       stage: 'St Augustine Stage'
@@ -197,7 +197,7 @@ const JimmyJamApp = () => {
       name: 'The Horseshoe Collective',
       genre: 'Dynamic ensemble delivering country...',
       logo: '🎭',
-      image: '🎺',
+      image: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&q=80&w=800',
       description: 'The Horseshoe Collective brings a dynamic, energetic approach to traditional country music. Their ensemble performance style creates an exciting, engaging live experience.',
       time: '2:00 PM',
       stage: 'St Augustine Stage'
@@ -1192,8 +1192,13 @@ const JimmyJamApp = () => {
             </button>
 
             {/* HERO IMAGE */}
-            <div className="w-full h-64 bg-gradient-to-br from-gray-700 to-gray-600 rounded-lg flex items-center justify-center text-6xl shadow-lg">
-              {selectedArtist.image}
+            <div className="w-full h-64 bg-black rounded-lg overflow-hidden shadow-lg relative">
+              <img 
+                src={selectedArtist.image} 
+                alt={selectedArtist.name} 
+                className="w-full h-full object-cover" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
             </div>
 
             {/* ARTIST NAME */}
