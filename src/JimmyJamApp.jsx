@@ -679,26 +679,36 @@ const JimmyJamApp = () => {
         {activeNav === 'tickets' && (
           <div className="space-y-6">
             {/* POSTER */}
-            <div className="bg-gradient-to-b from-blue-900 to-blue-800 rounded-lg p-8 text-center text-white relative overflow-hidden">
-              <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle at 20% 50%, white, transparent), radial-gradient(circle at 80% 80%, white, transparent)'}}></div>
+            <div className="relative rounded-xl overflow-hidden shadow-2xl mb-8">
+              {/* POSTER BACKGROUND */}
+              <div className="absolute inset-0 z-0">
+                <img 
+                  src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=1200" 
+                  alt="BBQ Poster Background" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-blue-900/80 via-black/40 to-blue-950/90 z-10"></div>
+              </div>
               
-              <div className="relative space-y-4">
-                <p className="text-xs font-bold tracking-widest">JIMMY JAM COMMUNITY OUTREACH</p>
-                <h2 className="text-3xl font-bold">BBQ SLAM & BOURBON</h2>
-                <p className="text-sm text-red-300">& Music Festival</p>
+              <div className="relative z-20 p-8 text-center text-white space-y-4">
+                <p className="text-xs font-black tracking-[0.3em] text-blue-200">JIMMY JAM COMMUNITY OUTREACH</p>
+                <h2 className="text-4xl font-black italic tracking-tight drop-shadow-2xl">BBQ SLAM & BOURBON</h2>
+                <p className="text-lg text-red-400 font-bold uppercase tracking-widest">& Music Festival</p>
                 
-                <div className="my-6 text-5xl">🔥</div>
+                <div className="my-8 text-6xl drop-shadow-2xl animate-pulse">🔥</div>
                 
-                <div className="space-y-2 text-lg font-bold">
-                  <p>Weldon Henson</p>
-                  <p>The Broken Spokes</p>
-                  <p className="text-red-300">Amanda Shires</p>
-                  <p>Jason Scott</p>
-                  <p className="text-sm text-gray-300 mt-3">St Augustine, FL</p>
-                  <p className="text-sm text-gray-300">July 4-5, 2024</p>
+                <div className="space-y-3 text-2xl font-black drop-shadow-lg">
+                  <p className="hover:scale-105 transition-transform">Weldon Henson</p>
+                  <p className="hover:scale-105 transition-transform">The Broken Spokes</p>
+                  <p className="text-red-400 hover:scale-105 transition-transform italic">Amanda Shires</p>
+                  <p className="hover:scale-105 transition-transform">Jason Scott</p>
+                  <div className="pt-6">
+                    <p className="text-sm font-bold text-gray-100 mt-3 uppercase tracking-[0.2em]">St Augustine, FL</p>
+                    <p className="text-sm font-bold text-gray-200">July 4-5, 2024</p>
+                  </div>
                 </div>
                 
-                <p className="text-xs text-gray-400 mt-4">jimmyjamoutreach.com</p>
+                <p className="text-[10px] text-gray-400 mt-6 font-bold uppercase tracking-widest">jimmyjamoutreach.com</p>
               </div>
             </div>
 
@@ -1869,13 +1879,14 @@ const JimmyJamApp = () => {
                 { title: 'Pork Belly Burnt Ends', url: 'https://www.youtube.com/embed/f6UvV8M_n6k', category: 'HowToBBQRight', views: '8M' }
               ].map((video, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border-2 border-gray-200 hover:border-red-600 transition-all group">
-                  <div className="aspect-video bg-gray-900 relative">
+                  <div className="aspect-video bg-black relative">
                     <iframe 
                       className="w-full h-full"
                       src={video.url}
                       title={video.title}
                       frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
                       allowFullScreen
                     ></iframe>
                   </div>
