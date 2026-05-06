@@ -526,31 +526,17 @@ const JimmyJamApp = () => {
         {activeNav === 'home' && (
           <div className="space-y-8">
             {/* HERO */}
-            <div className="relative rounded-lg overflow-hidden h-96 bg-black flex items-center justify-center shadow-xl">
-              {/* VIDEO BACKGROUND */}
+            <div className="relative rounded-lg overflow-hidden h-[500px] bg-black flex items-center justify-center shadow-xl border-4 border-white">
+              {/* VIDEO BACKGROUND - ADJUSTED TO PREVENT CROPPING */}
               <video 
                 autoPlay 
                 loop 
                 muted 
                 playsInline 
-                className="absolute inset-0 w-full h-full object-cover opacity-60"
+                className="w-full h-full object-contain"
               >
                 <source src="/hero-video.mp4" type="video/mp4" />
               </video>
-
-              <div className="relative text-center text-white z-10">
-                <div className="mb-6">
-                  <div className="w-48 h-48 mx-auto flex items-center justify-center">
-                    <img 
-                      src="/logo-blend.png" 
-                      alt="Jimmy Jam Logo" 
-                      className="w-full h-full object-contain mix-blend-screen drop-shadow-xl" 
-                    />
-                  </div>
-                </div>
-                <h1 className="text-5xl font-bold mb-2">Jimmy Jam Outreach</h1>
-                <p className="text-xl text-red-100 font-medium">Offering a Hand Up, Not a Hand Out</p>
-              </div>
             </div>
 
             {/* MAIN FEATURE GRID */}
