@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Bell, Search, ChevronLeft, ChevronRight, Star, Filter, Upload } from 'lucide-react';
+import { Bell, Search, ChevronLeft, ChevronRight, Star, Upload } from 'lucide-react';
 
 const JimmyJamApp = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -398,17 +398,6 @@ const JimmyJamApp = () => {
     setCurrentPhotoIndex((prev) => (prev - 1 + galleryPhotos.length) % galleryPhotos.length);
   };
 
-  const NavButton = ({ section, label }) => (
-    <button
-      onClick={() => { setActiveNav(section); setActiveTab('overview'); setMobileMenuOpen(false); }}
-      className={`px-4 py-2 font-medium text-sm transition-all whitespace-nowrap ${
-        activeNav === section ? 'text-yellow-300 border-b-2 border-yellow-300' : 'text-red-100 hover:text-yellow-300'
-      }`}
-    >
-      {label}
-    </button>
-  );
-
   const mainFeatures = [
     { icon: '📅', title: 'SCHEDULE', desc: 'Event dates & times', action: 'schedule' },
     { icon: '🎫', title: 'TICKETS', desc: 'Buy event tickets', action: 'tickets' },
@@ -474,7 +463,7 @@ const JimmyJamApp = () => {
       <header className="sticky top-0 z-40 bg-red-700 text-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <button onClick={() => { setActiveNav('home'); setMobileMenuOpen(false); }} className="lg:hidden text-white text-2xl">
+            <button onClick={() => { setActiveNav('home'); }} className="lg:hidden text-white text-2xl">
               <ChevronLeft size={28} />
             </button>
 
