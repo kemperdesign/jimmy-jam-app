@@ -241,7 +241,7 @@ const JimmyJamApp = () => {
             <div className="mb-8">
               <div className="w-64 h-64 mx-auto flex items-center justify-center relative">
                 <img 
-                  src="/logo-white.png" 
+                  src="/logo-transparent.png" 
                   alt="Jimmy Jam BBQ Slam Logo" 
                   className="w-full h-full object-contain drop-shadow-2xl animate-pulse" 
                 />
@@ -492,7 +492,7 @@ const JimmyJamApp = () => {
                 <div className="mb-6">
                   <div className="w-48 h-48 mx-auto flex items-center justify-center">
                     <img 
-                      src="/logo-white.png" 
+                      src="/logo-transparent.png" 
                       alt="Jimmy Jam Logo" 
                       className="w-full h-full object-contain drop-shadow-xl" 
                     />
