@@ -1609,6 +1609,103 @@ const JimmyJamApp = () => {
             )}
           </div>
         )}
+        {/* TIDE CHART */}
+        {activeNav === 'tides' && (
+          <div className="space-y-6 pb-20">
+            <div className="bg-gradient-to-br from-blue-700 to-blue-900 text-white p-8 rounded-2xl shadow-lg text-center">
+              <h2 className="text-3xl font-bold mb-2">🌊 TIDE CHART</h2>
+              <p className="text-blue-100">Galveston Bay / Port Bolivar</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-md border-2 border-blue-200">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="font-bold text-xl text-blue-900">Today's Forecast</h3>
+                <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Live</span>
+              </div>
+              
+              <div className="space-y-4">
+                {[
+                  { time: '4:12 AM', level: '0.2 ft', type: 'Low' },
+                  { time: '10:45 AM', level: '1.4 ft', type: 'High' },
+                  { time: '4:58 PM', level: '0.1 ft', type: 'Low' },
+                  { time: '11:22 PM', level: '1.6 ft', type: 'High' }
+                ].map((tide, i) => (
+                  <div key={i} className="flex items-center justify-between p-4 bg-blue-50 rounded-lg border border-blue-100">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-3 h-3 rounded-full ${tide.type === 'High' ? 'bg-blue-600' : 'bg-blue-300'}`}></div>
+                      <span className="font-bold text-blue-900">{tide.time}</span>
+                    </div>
+                    <div className="text-right">
+                      <p className={`font-bold ${tide.type === 'High' ? 'text-blue-700' : 'text-blue-500'}`}>{tide.type}</p>
+                      <p className="text-xs text-blue-400">{tide.level}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-md border-2 border-blue-200">
+              <h3 className="font-bold text-lg text-blue-900 mb-4">24-Hour Cycle</h3>
+              <div className="h-40 bg-blue-50 rounded-lg flex items-end gap-1 p-2">
+                {Array.from({ length: 24 }).map((_, i) => (
+                  <div 
+                    key={i} 
+                    className="flex-1 bg-blue-400 rounded-t opacity-60 hover:opacity-100 transition-all cursor-pointer"
+                    style={{ height: `${Math.sin(i / 3) * 40 + 50}%` }}
+                    title={`Hour ${i}: Tide Level`}
+                  ></div>
+                ))}
+              </div>
+              <div className="flex justify-between text-xs text-blue-400 mt-2 font-bold">
+                <span>12 AM</span>
+                <span>6 AM</span>
+                <span>12 PM</span>
+                <span>6 PM</span>
+                <span>11 PM</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* BBQ VIDEO LIBRARY */}
+        {activeNav === 'videos' && (
+          <div className="space-y-6 pb-20">
+            <div className="bg-gradient-to-br from-orange-600 to-red-700 text-white p-8 rounded-2xl shadow-lg text-center">
+              <h2 className="text-3xl font-bold mb-2">📽️ BBQ ACADEMY</h2>
+              <p className="text-orange-100">Instructional Library</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                { title: 'The Perfect Brisket Trim', duration: '12:45', category: 'Prep', views: '2.4k' },
+                { title: 'Managing Your Firebox', duration: '15:20', category: 'Smoking', views: '1.8k' },
+                { title: 'Competition Rib Glazing', duration: '08:30', category: 'Finishing', views: '3.1k' },
+                { title: 'Homemade Rub Secrets', duration: '10:15', category: 'Flavor', views: '950' },
+                { title: 'Selecting the Right Wood', duration: '07:50', category: 'Basics', views: '1.2k' },
+                { title: 'Pulled Pork Masterclass', duration: '18:10', category: 'Meat', views: '4.2k' }
+              ].map((video, i) => (
+                <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border-2 border-gray-200 hover:border-red-600 transition-all group">
+                  <div className="aspect-video bg-gray-900 relative flex items-center justify-center text-4xl group-hover:scale-105 transition-all">
+                    🔥
+                    <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
+                      <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-xl pl-1">▶</div>
+                    </div>
+                    <span className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-[10px] px-2 py-1 rounded font-bold">
+                      {video.duration}
+                    </span>
+                  </div>
+                  <div className="p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-0.5 rounded">{video.category}</span>
+                      <span className="text-[10px] text-gray-400">👁️ {video.views}</span>
+                    </div>
+                    <h3 className="font-bold text-gray-800 leading-tight group-hover:text-red-700 transition-colors">{video.title}</h3>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
 
       {/* FOOTER - BOTTOM NAVIGATION */}
@@ -1682,6 +1779,16 @@ const JimmyJamApp = () => {
                   <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">💬</span>
                     <span className="font-semibold">Concert Concierge</span>
+                  </button>
+
+                  <button onClick={() => { setActiveNav('tides'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                    <span className="text-xl">🌊</span>
+                    <span className="font-semibold">Tide Chart</span>
+                  </button>
+
+                  <button onClick={() => { setActiveNav('videos'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                    <span className="text-xl">📽️</span>
+                    <span className="font-semibold">BBQ Video Library</span>
                   </button>
 
                   <button onClick={() => { setActiveNav('tickets'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all bg-red-700 text-white font-bold rounded-b-lg">
