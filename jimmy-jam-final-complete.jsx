@@ -412,7 +412,7 @@ const JimmyJamApp = () => {
     { icon: '📅', title: 'SCHEDULE', desc: 'Event dates & times', action: 'schedule' },
     { icon: '🎫', title: 'TICKETS', desc: 'Buy event tickets', action: 'tickets' },
     { icon: '📸', title: 'PHOTOS', desc: 'Event gallery', action: 'photos' },
-    { icon: '🍖', title: 'BBQ SLAM', desc: 'Competition info', action: 'bbq' },
+    { icon: '🏆', title: 'EVENTS', desc: 'Browse our festivals', action: 'events' },
     { icon: '🤝', title: 'SPONSORS', desc: 'Meet our partners', action: 'sponsors' },
     { icon: '👕', title: 'MERCH', desc: 'Shop swag store', action: 'swag' },
     { icon: '🥃', title: 'BOURBON', desc: 'Premium tasting', action: 'bourbon' },
@@ -923,65 +923,162 @@ const JimmyJamApp = () => {
           </div>
         )}
 
-        {/* BBQ SLAM */}
-        {activeNav === 'bbq' && (
-          <div className="space-y-8">
-            <h1 className="text-5xl font-bold text-center bg-gradient-to-r from-red-600 to-orange-600 text-white p-8 rounded-lg">🏆 BBQ SLAM</h1>
-            
-            <div className="flex gap-4 border-b-2 border-gray-300">
-              <button onClick={() => setActiveTab('overview')} className={`px-4 py-3 font-bold ${activeTab === 'overview' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}>Overview</button>
-              <button onClick={() => setActiveTab('leaderboard')} className={`px-4 py-3 font-bold ${activeTab === 'leaderboard' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}>Leaderboard</button>
+        {/* EVENTS SELECTION PAGE */}
+        {activeNav === 'events' && activeTab === 'overview' && (
+          <div className="space-y-8 pb-20">
+            <div className="text-center space-y-2">
+              <h1 className="text-4xl font-bold text-gray-900">OUR EVENTS</h1>
+              <p className="text-gray-600">Select an event to explore details and register</p>
             </div>
 
-            {activeTab === 'overview' && (
-              <div className="grid md:grid-cols-4 gap-4">
-                {[
-                  { num: '234', label: 'TEAMS' },
-                  { num: '1,200+', label: 'ATTENDEES' },
-                  { num: '42', label: 'VENDORS' },
-                  { num: '$15K', label: 'PRIZES' }
-                ].map((stat, i) => (
-                  <div key={i} className="bg-white p-6 rounded-lg border-t-4 border-red-700 text-center shadow-lg">
-                    <div className="text-4xl font-bold text-red-700">{stat.num}</div>
-                    <p className="text-gray-600 font-semibold text-sm">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="grid grid-cols-1 gap-6">
+              {/* BOURBON & BBQ CARD */}
+              <button 
+                onClick={() => setActiveTab('bourbon-event')}
+                className="group relative h-64 rounded-2xl overflow-hidden shadow-xl transition-all transform hover:scale-[1.02] border-4 border-white"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-800 opacity-90 group-hover:opacity-100 transition-all"></div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-6">
+                  <span className="text-6xl mb-4">🥃</span>
+                  <h2 className="text-3xl font-bold">Bourbon & Barbeque</h2>
+                  <p className="text-orange-100 mt-2">Premium Tasting & Feast</p>
+                  <div className="mt-4 bg-white text-orange-700 px-6 py-2 rounded-full font-bold text-sm">EXPLORE EVENT</div>
+                </div>
+              </button>
 
-            {activeTab === 'leaderboard' && (
-              <div className="space-y-4">
-                {bbqTeams.map((team) => (
-                  <div key={team.rank} className="bg-white rounded-lg p-6 border-l-4 border-red-700 shadow-lg">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <span className="text-4xl">{team.rank === 1 ? '🥇' : team.rank === 2 ? '🥈' : '🥉'}</span>
-                        <h3 className="text-2xl font-bold text-red-700">{team.name}</h3>
-                      </div>
-                      <div className="text-4xl font-bold text-orange-600">{team.score}</div>
+              {/* BBQ SLAM CARD */}
+              <button 
+                onClick={() => setActiveTab('bbq-slam-event')}
+                className="group relative h-64 rounded-2xl overflow-hidden shadow-xl transition-all transform hover:scale-[1.02] border-4 border-white"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-orange-600 opacity-90 group-hover:opacity-100 transition-all"></div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-6">
+                  <span className="text-6xl mb-4">🍖</span>
+                  <h2 className="text-3xl font-bold">BBQ Slam Event</h2>
+                  <p className="text-red-100 mt-2">World-Class Competition</p>
+                  <div className="mt-4 bg-white text-red-700 px-6 py-2 rounded-full font-bold text-sm">EXPLORE EVENT</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* BOURBON & BBQ EVENT DETAIL */}
+        {activeNav === 'events' && activeTab === 'bourbon-event' && (
+          <div className="space-y-8 pb-20">
+            <button onClick={() => setActiveTab('overview')} className="flex items-center gap-2 text-orange-700 font-bold mb-4">
+              <ChevronLeft size={24} /> Back to Events
+            </button>
+
+            <div className="bg-gradient-to-r from-orange-600 to-red-800 text-white p-10 rounded-2xl shadow-lg text-center">
+              <h1 className="text-4xl font-bold mb-2">Bourbon & Barbeque</h1>
+              <p className="text-orange-100 text-lg">The Ultimate Pairing Experience</p>
+            </div>
+
+            {/* MENU SECTION */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">The Menu</h2>
+              <div className="grid md:grid-cols-2 gap-4">
+                {bourbonMenu.bbq.map((item, i) => (
+                  <div key={i} className="bg-white p-5 rounded-xl shadow-md border border-orange-100 flex justify-between items-center">
+                    <div>
+                      <p className="font-bold text-gray-800">{item.name}</p>
+                      <p className="text-xs text-gray-500">{item.desc}</p>
                     </div>
-                    <div className="grid grid-cols-4 gap-2">
-                      <div className="bg-yellow-50 p-3 rounded text-center">
-                        <p className="text-xs font-bold text-yellow-700">Brisket</p>
-                        <p className="text-2xl font-bold text-yellow-600">{team.brisket}</p>
-                      </div>
-                      <div className="bg-orange-50 p-3 rounded text-center">
-                        <p className="text-xs font-bold text-orange-700">Ribs</p>
-                        <p className="text-2xl font-bold text-orange-600">{team.ribs}</p>
-                      </div>
-                      <div className="bg-red-50 p-3 rounded text-center">
-                        <p className="text-xs font-bold text-red-700">Chicken</p>
-                        <p className="text-2xl font-bold text-red-600">{team.chicken}</p>
-                      </div>
-                      <div className="bg-pink-50 p-3 rounded text-center">
-                        <p className="text-xs font-bold text-pink-700">Sauce</p>
-                        <p className="text-2xl font-bold text-pink-600">{team.sauce}</p>
-                      </div>
+                    <span className="text-orange-600 font-bold">{item.price}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* SPONSORS SECTION */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">Event Sponsors</h2>
+              <div className="grid grid-cols-3 gap-4">
+                {sponsorsData.slice(0, 3).map((sponsor) => (
+                  <div key={sponsor.id} className="bg-white p-4 rounded-xl shadow-md text-center border-2 border-transparent hover:border-orange-500 transition-all">
+                    <span className="text-4xl block mb-2">{sponsor.logo}</span>
+                    <p className="font-bold text-xs">{sponsor.name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* VIDEOS SECTION */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">Video Highlights</h2>
+              <div className="aspect-video bg-gray-900 rounded-2xl flex items-center justify-center text-6xl shadow-2xl relative overflow-hidden group">
+                🎬
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer">
+                  <div className="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center text-white text-3xl pl-2 shadow-xl">▶</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* BBQ SLAM EVENT DETAIL */}
+        {activeNav === 'events' && activeTab === 'bbq-slam-event' && (
+          <div className="space-y-8 pb-20">
+            <button onClick={() => setActiveTab('overview')} className="flex items-center gap-2 text-red-700 font-bold mb-4">
+              <ChevronLeft size={24} /> Back to Events
+            </button>
+
+            <div className="bg-gradient-to-r from-red-700 to-orange-600 text-white p-10 rounded-2xl shadow-lg text-center">
+              <h1 className="text-4xl font-bold mb-2">BBQ Slam Event</h1>
+              <p className="text-red-100 text-lg">Championship Competition</p>
+            </div>
+
+            {/* REGISTRATION FORMS */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Registrations</h2>
+              <div className="grid grid-cols-1 gap-3">
+                {[
+                  { title: 'BBQ Team Entry', icon: '🍖', color: 'red' },
+                  { title: 'Vendor Entry Form', icon: '⛺', color: 'orange' },
+                  { title: 'Car Show Entry', icon: '🚗', color: 'gray' }
+                ].map((form, i) => (
+                  <button key={i} className="bg-white p-6 rounded-xl shadow-md flex items-center justify-between border-2 border-transparent hover:border-red-700 transition-all">
+                    <div className="flex items-center gap-4">
+                      <span className="text-3xl">{form.icon}</span>
+                      <span className="font-bold text-lg text-gray-800">{form.title}</span>
+                    </div>
+                    <span className="text-red-700 font-bold">REGISTER →</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* CALENDAR SECTION */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Calendar of Events</h2>
+              <div className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-200">
+                {detailedSchedule[5].events.slice(0, 4).map((event, i) => (
+                  <div key={i} className="flex items-center gap-4 p-4 border-b last:border-b-0">
+                    <span className="text-xs font-bold text-red-700 w-20">{event.time}</span>
+                    <div className="flex-1">
+                      <p className="font-bold text-gray-800">{event.title}</p>
+                      <p className="text-[10px] text-gray-500">{event.location}</p>
                     </div>
                   </div>
                 ))}
               </div>
-            )}
+            </div>
+
+            {/* SPONSOR LOGOS */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Official Partners</h2>
+              <div className="bg-white p-6 rounded-xl shadow-md">
+                <div className="grid grid-cols-4 gap-6">
+                  {sponsorsData.map((sponsor) => (
+                    <div key={sponsor.id} className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all">
+                      <span className="text-3xl">{sponsor.logo}</span>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase text-center">{sponsor.name}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
