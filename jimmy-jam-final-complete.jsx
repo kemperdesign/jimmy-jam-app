@@ -239,13 +239,12 @@ const JimmyJamApp = () => {
         <div className="flex-1 flex items-center justify-center w-full">
           <div className="text-center">
             <div className="mb-8">
-              <div className="w-48 h-48 mx-auto rounded-full border-4 border-white flex items-center justify-center relative">
-                <div className="absolute inset-2 rounded-full border-2 border-white opacity-40"></div>
-                <div className="text-center z-10">
-                  <p className="text-white text-sm font-bold">JIMMY JAM</p>
-                  <p className="text-yellow-300 text-xs">OUTREACH</p>
-                  <p className="text-2xl mt-2">❤️</p>
-                </div>
+              <div className="w-64 h-64 mx-auto flex items-center justify-center relative">
+                <img 
+                  src="/logo-bbq.png" 
+                  alt="Jimmy Jam BBQ Slam Logo" 
+                  className="w-full h-full object-contain drop-shadow-2xl animate-pulse" 
+                />
               </div>
             </div>
           </div>
