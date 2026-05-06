@@ -1,0 +1,1865 @@
+### 1. People’s Choice Voting
+
+Let attendees vote for their favorite BBQ team from their phone.
+
+Features:
+
+* QR code at each team booth
+* One vote per phone/email
+* Live People’s Choice leaderboard
+* “Fan Favorite” badge
+* Optional donation tie-in: `$1 = 1 bonus vote`
+
+This would be one of the best interactive features because it gets the crowd involved.
+
+Yes. The current app already has a strong BBQ event foundation: team registration, vendors, car show, sponsors, leaderboard, bourbon menu, weather, tides, videos, and swag store are either present or planned.  The React file also already includes data structures for BBQ teams, sponsors, bourbon menu, videos, swag, leaderboard, weather, and tide info, so these new features can fit naturally into the existing layout. 
+
+Here are strong BBQ-related features worth adding.
+
+## Best “cool” BBQ features to add
+
+### 1. People’s Choice Voting
+
+Let attendees vote for their favorite BBQ team from their phone.
+
+Features:
+
+* QR code at each team booth
+* One vote per phone/email
+* Live People’s Choice leaderboard
+* “Fan Favorite” badge
+* Optional donation tie-in: `$1 = 1 bonus vote`
+
+This would be one of the best interactive features because it gets the crowd involved.
+
+---
+
+### 2. BBQ Team Profiles
+
+Each BBQ team gets a small profile card.
+
+Include:
+
+* Team name
+* Pitmaster name
+* Hometown
+* Smoker type
+* Signature meat
+* Team photo/logo
+* “Why we BBQ” story
+* Competition categories entered
+
+This makes the event feel more personal and gives attendees teams to root for.
+
+---
+
+### 3. Pitmaster Map / Vendor Map
+
+Add an interactive event map showing:
+
+* BBQ team booths
+* Food vendors
+* Bourbon tasting area
+* Car show area
+* Restrooms
+* First aid
+* Stage/music
+* Sponsor booths
+* Parking
+
+This is very useful for a real event and makes the app feel professional.
+
+---
+
+### 4. BBQ Schedule / “What’s Happening Now”
+
+Add a live event timeline.
+
+Example:
+
+```text
+8:00 AM — Gates Open
+9:00 AM — Team Meat Inspection
+10:00 AM — Chicken Turn-In
+11:00 AM — Ribs Turn-In
+12:00 PM — Brisket Turn-In
+1:00 PM — People’s Choice Opens
+3:00 PM — Awards Ceremony
+```
+
+You could also add a “Happening Now” highlight card at the top.
+
+---
+
+### 5. BBQ Judge Portal
+
+For the competition side, add a private judge scoring area.
+
+Features:
+
+* Judge login/PIN
+* Score brisket, ribs, chicken, sauce
+* Appearance, tenderness, taste, overall
+* Auto-calculate totals
+* Tie-breaker support
+* Export results
+
+This would make the leaderboard actually functional instead of manually entered.
+
+---
+
+### 6. BBQ Turn-In Timer
+
+Add countdown timers for competitors.
+
+Example:
+
+```text
+Chicken Turn-In: 00:42:18 remaining
+Ribs Turn-In: 01:42:18 remaining
+Brisket Turn-In: 02:42:18 remaining
+```
+
+Also useful:
+
+* Turn-in window warnings
+* “Next category due”
+* Color-coded urgency
+
+This would be very BBQ-specific and useful on event day.
+
+---
+
+### 7. Smoker Temperature Tracker
+
+A fun “Pitmaster Tools” section.
+
+Features:
+
+* Enter smoker temp
+* Enter meat temp
+* Select meat type
+* Show target temp range
+* Show estimated remaining cook time
+* Save notes
+
+Example categories:
+
+* Brisket
+* Pork shoulder
+* Ribs
+* Chicken
+* Turkey
+* Sausage
+
+This could be educational and fun for attendees, not just competitors.
+
+---
+
+### 8. BBQ Doneness Guide
+
+Simple visual guide:
+
+```text
+Brisket: 195–205°F
+Pork Shoulder: 195–205°F
+Chicken: 165°F
+Ribs: Bend test / 190–203°F
+Turkey: 165°F
+Sausage: 160°F
+```
+
+Add:
+
+* Resting time recommendations
+* Wood pairing suggestions
+* Common mistakes
+* Sauce pairing tips
+
+---
+
+### 9. Smoke Wood Pairing Guide
+
+Interactive selector:
+
+User chooses meat → app recommends wood.
+
+Example:
+
+```text
+Brisket → Oak, Hickory, Pecan
+Pork → Apple, Cherry, Hickory
+Chicken → Apple, Cherry, Maple
+Ribs → Cherry, Pecan, Hickory
+Fish → Alder, Apple
+```
+
+This would pair nicely with the existing BBQ video library.
+
+---
+
+### 10. Rub & Sauce Recipe Cards
+
+Add a recipe section for:
+
+* Dry rubs
+* BBQ sauces
+* Marinades
+* Mop sauces
+* Glazes
+* Side dishes
+
+You could include:
+
+* “Jimmy Jam House Rub”
+* “Sweet Heat BBQ Sauce”
+* “Bourbon BBQ Glaze”
+* “Competition Rib Rub”
+* “Carolina Mustard Sauce”
+
+This can also become a lead magnet: “Download the full BBQ recipe guide.”
+
+---
+
+## Sponsor-friendly features
+
+### 11. Sponsor Scavenger Hunt
+
+Attendees visit sponsor booths and collect digital stamps.
+
+Features:
+
+* QR code at each sponsor table
+* Unlock prize entry after visiting 5 booths
+* Sponsor engagement tracking
+* Grand prize raffle
+
+This gives sponsors more value and encourages people to walk the full event.
+
+---
+
+### 12. Digital Raffle / Prize Wheel
+
+Add a raffle system for:
+
+* BBQ gear
+* Bourbon baskets
+* Sponsor prizes
+* Swag store coupons
+* Free meal vouchers
+
+Could include:
+
+* Name
+* Phone/email
+* Prize selected
+* Winner draw screen
+
+This is great for fundraising.
+
+---
+
+### 13. Sponsor Spotlight Cards
+
+Instead of just logos, give sponsors mini pages:
+
+* Logo
+* Business description
+* Website
+* Offer/coupon
+* Booth location
+* “Visit Sponsor” button
+
+This helps justify higher sponsor pricing.
+
+---
+
+## Attendee experience features
+
+### 14. “Build Your BBQ Plate” Planner
+
+Let people create their ideal plate:
+
+* Meat
+* Sides
+* Sauce
+* Drink
+* Dessert
+
+Then show:
+
+* Estimated cost
+* Vendor location
+* Suggested bourbon pairing
+* Calories optional, probably not needed for BBQ
+
+---
+
+### 15. Bourbon & BBQ Pairing Recommender
+
+The app already has bourbon and BBQ content, so this would fit perfectly.
+
+Example:
+
+```text
+Brisket → Woodford Reserve or Old Fashioned
+Ribs → Maker’s Mark or Bourbon Lemonade
+Pulled Pork → Buffalo Trace
+Smoked Chicken → Four Roses
+Mac & Cheese → Wheated bourbon
+```
+
+This makes the Bourbon & BBQ section feel more interactive.
+
+---
+
+### 16. BBQ Bingo
+
+A fun event game.
+
+Squares could include:
+
+* Tried brisket
+* Voted People’s Choice
+* Took a picture with a pitmaster
+* Visited a sponsor booth
+* Watched a demo
+* Bought swag
+* Donated
+* Saw a classic car
+* Tried bourbon pairing
+
+Completed bingo could unlock a raffle entry.
+
+---
+
+### 17. Photo Wall / Social Feed
+
+Attendees upload or tag photos.
+
+Features:
+
+* Event hashtag
+* Moderated photo wall
+* Best BBQ photo contest
+* Sponsor photo frame
+* “Share your plate” section
+
+This helps create content for future marketing.
+
+---
+
+### 18. Live Announcements / Alerts
+
+Add an event alert banner.
+
+Examples:
+
+* “Rib turn-in starts in 15 minutes”
+* “People’s Choice voting is now open”
+* “Awards ceremony begins at 3 PM”
+* “Weather alert: hydrate and visit cooling stations”
+* “Visit the swag booth before 2 PM for a discount”
+
+This fits well because the app already has a notification/bell icon in the header. 
+
+---
+
+## Competition-focused features
+
+### 19. Competition Rules Section
+
+Add a dedicated rules tab:
+
+* Meat categories
+* Turn-in windows
+* Garnish rules
+* Sauce rules
+* Blind judging process
+* Disqualification rules
+* Prize structure
+
+This reduces questions for event staff.
+
+---
+
+### 20. Team Check-In Dashboard
+
+For admins:
+
+* Registered teams
+* Paid/unpaid status
+* Checked in/not checked in
+* Booth assignment
+* Categories entered
+* Waivers signed
+
+This is more admin-focused but extremely useful.
+
+---
+
+### 21. Booth Assignment System
+
+Each team/vendor/car gets an assigned spot.
+
+Show:
+
+* Booth number
+* Zone
+* Setup time
+* Power needed
+* Special notes
+
+This can connect to the map.
+
+---
+
+## Revenue and fundraising features
+
+### 22. “Sponsor a Family” Donation Cards
+
+Tie the BBQ event back to the outreach mission.
+
+Donation buttons:
+
+* `$25 provides gas assistance`
+* `$50 helps with groceries`
+* `$100 helps with utilities`
+* `$250 emergency family support`
+* Custom amount
+
+This makes the app more mission-centered instead of only event-centered.
+
+---
+
+### 23. BBQ Meal Preorder
+
+Let attendees preorder plates.
+
+Options:
+
+* Brisket plate
+* Rib plate
+* Pulled pork sandwich
+* Family pack
+* Bourbon pairing ticket
+* VIP BBQ tasting pass
+
+This could generate revenue before the event.
+
+---
+
+### 24. VIP Pass / Fast Lane
+
+Sell VIP upgrades:
+
+* Early entry
+* Reserved tasting session
+* Bourbon pairing
+* VIP seating
+* Swag bundle
+* Meet the pitmasters
+
+This pairs well with the Bourbon & BBQ event.
+
+---
+
+### 25. Limited-Time Swag Drops
+
+Make the swag store more exciting.
+
+Examples:
+
+* Event-only T-shirt
+* Pitmaster apron
+* Bourbon glass set
+* BBQ rub pack
+* “I survived the BBQ Slam” shirt
+* Sponsor-branded merch
+
+The current app already has a swag section with products and add-to-cart buttons, so this would be a natural enhancement. 
+
+---
+
+## My top 10 recommendations
+
+If we want the app to feel impressive without overbuilding it, I would add these first:
+
+1. People’s Choice Voting
+2. BBQ Team Profiles
+3. Interactive Event Map
+4. BBQ Turn-In Timer
+5. Judge Scoring Portal
+6. Sponsor Scavenger Hunt
+7. Bourbon & BBQ Pairing Recommender
+8. BBQ Bingo
+9. Live Announcements
+10. Sponsor a Family Donation Cards
+
+The most valuable feature combination would be:
+
+```text
+People’s Choice Voting + Team Profiles + Event Map + Sponsor Scavenger Hunt + Live Announcements
+```
+
+That would make the app feel like a real event companion, not just an informational website.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 2. BBQ Team Profiles
+
+Each BBQ team gets a small profile card.
+
+Include:
+
+* Team name
+* Pitmaster name
+* Hometown
+* Smoker type
+* Signature meat
+* Team photo/logo
+* “Why we BBQ” story
+* Competition categories entered
+
+This makes the event feel more personal and gives attendees teams to root for.
+
+Added **BBQ Team Profiles** to the app.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-team-profiles.jsx)
+
+Added:
+
+* New BBQ Slam tab: **👥 Team Profiles**
+* Team profile cards
+* Team name
+* Pitmaster name
+* Hometown
+* Booth number
+* Smoker type
+* Signature meat
+* Team photo/logo placeholder
+* “Why We BBQ” story
+* Competition categories entered
+* People’s Choice rank and vote count
+* Fan Favorite badge
+* Buttons to vote for a team or view the People’s Choice leaderboard
+
+I also connected the profile data into the existing People’s Choice voting screen so the selected team now shows competition categories too.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 3. Pitmaster Map / Vendor Map
+
+Add an interactive event map showing:
+
+* BBQ team booths
+* Food vendors
+* Bourbon tasting area
+* Car show area
+* Restrooms
+* First aid
+* Stage/music
+* Sponsor booths
+* Parking
+
+This is very useful for a real event and makes the app feel professional.
+
+Added the **Interactive Pitmaster Map / Vendor Map** as a real app feature, not a static image.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-map.jsx)
+
+Added:
+
+* New main navigation item: **🗺️ Map**
+* New BBQ Slam tab: **🗺️ Map**
+* Interactive event map with clickable zones
+* Category filters:
+
+  * BBQ Teams
+  * Food Vendors
+  * Bourbon Tasting
+  * Car Show
+  * Restrooms
+  * First Aid
+  * Stage/Music
+  * Sponsor Booths
+  * Parking
+* Selected-location detail panel
+* Location directory cards
+* Map legend
+* Home page **Event Map** button
+* Mobile menu **Map** button
+* Non-image map layout using positioned React elements and Tailwind styling
+
+I also ran a JSX transpile check successfully.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+### 4. BBQ Schedule / “What’s Happening Now”
+
+Add a live event timeline.
+
+Example:
+
+```text
+8:00 AM — Gates Open
+9:00 AM — Team Meat Inspection
+10:00 AM — Chicken Turn-In
+11:00 AM — Ribs Turn-In
+12:00 PM — Brisket Turn-In
+1:00 PM — People’s Choice Opens
+3:00 PM — Awards Ceremony
+```
+
+Add a “Happening Now” highlight card at the top.
+
+Added the **BBQ Schedule / “What’s Happening Now”** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-schedule.jsx)
+
+Added:
+
+* New main navigation item: **📅 Schedule**
+* New BBQ Slam tab: **⏱️ Live Schedule**
+* Home page button: **📅 What’s Happening**
+* “What’s Happening Now” highlight card
+* Live event timeline
+* Current app time display
+* Refresh live status button
+* “Next up” event display
+* Completed / happening now status labels
+* Competitor turn-in section
+* Crowd moments section
+* Live alert banner idea panel
+
+Schedule entries added:
+
+```text
+8:00 AM — Gates Open
+9:00 AM — Team Meat Inspection
+10:00 AM — Chicken Turn-In
+11:00 AM — Ribs Turn-In
+12:00 PM — Brisket Turn-In
+1:00 PM — People’s Choice Opens
+1:30 PM — Car Show Judging
+2:00 PM — Bourbon & BBQ Pairing Demo
+3:00 PM — Awards Ceremony
+4:00 PM — Live Music & Community Celebration
+```
+
+I also ran a JSX build check successfully.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 5. BBQ Judge Portal
+
+For the competition side, add a private judge scoring area.
+
+Features:
+
+* Judge login/PIN
+* Score brisket, ribs, chicken, sauce
+* Appearance, tenderness, taste, overall
+* Auto-calculate totals
+* Tie-breaker support
+* Export results
+
+This would make the leaderboard actually functional instead of manually entered.
+
+Added the **BBQ Judge Portal**.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-judge-portal.jsx)
+
+Added:
+
+* New main navigation item: **⚖️ Judges**
+* New BBQ Slam tab: **⚖️ Judges**
+* Private judge login screen
+* Demo judge PIN: **1776**
+* Category scoring for:
+
+  * Brisket
+  * Ribs
+  * Chicken
+  * Sauce
+* Scoring criteria:
+
+  * Appearance
+  * Tenderness
+  * Taste
+  * Overall
+* Auto-calculated category totals
+* Auto-calculated grand totals
+* Tie-breaker logic using combined **Taste + Tenderness**
+* Live competition results table
+* Current leader card
+* Export results to CSV
+* Score inputs from 0–10
+* Judge-only results view
+
+I also ran a JSX build/transpile check successfully. The only unresolved items were expected sandbox dependency warnings for `react`, `lucide-react`, and `react/jsx-runtime`, not syntax errors.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 6. BBQ Turn-In Timer
+
+Add countdown timers for competitors.
+
+Example:
+
+```text
+Chicken Turn-In: 00:42:18 remaining
+Ribs Turn-In: 01:42:18 remaining
+Brisket Turn-In: 02:42:18 remaining
+```
+
+Also useful:
+
+* Turn-in window warnings
+* “Next category due”
+* Color-coded urgency
+
+This would be very BBQ-specific and useful on event day.
+
+Added the **BBQ Turn-In Timer** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-turn-in-timer.jsx)
+
+Added:
+
+* New main navigation item: **⏲️ Timers**
+* New BBQ Slam tab: **⏲️ Turn-In Timers**
+* Live countdown timers that update every second
+* “Next Category Due” highlight card
+* Color-coded urgency:
+
+  * Green = plenty of time
+  * Yellow = due within 30 minutes
+  * Red = due within 15 minutes / urgent
+  * Orange = turn-in window currently open
+  * Gray = closed
+* Turn-in window warnings
+* “Window Open” status
+* “Closed” status
+* Competitor checklist
+* Manual refresh button
+* Turn-in categories:
+
+  * Chicken
+  * Ribs
+  * Brisket
+  * Sauce
+
+I also ran a JSX build/transpile check successfully with React and Lucide marked external, so the file syntax is clean.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+### 7. Smoker Temperature Tracker
+
+A fun “Pitmaster Tools” section.
+
+Features:
+
+* Enter smoker temp
+* Enter meat temp
+* Select meat type
+* Show target temp range
+* Show estimated remaining cook time
+* Save notes
+
+Example categories:
+
+* Brisket
+* Pork shoulder
+* Ribs
+* Chicken
+* Turkey
+* Sausage
+
+This could be educational and fun for attendees, not just competitors.
+
+Added the **Smoker Temperature Tracker / Pitmaster Tools** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-pitmaster-tools.jsx)
+
+Added:
+
+* New main navigation item: **🔥 Tools**
+* New BBQ Slam tab: **🔥 Pitmaster Tools**
+* Home page button: **🔥 Pitmaster Tools**
+* Meat selector for:
+
+  * Brisket
+  * Pork shoulder
+  * Ribs
+  * Chicken
+  * Turkey
+  * Sausage
+* Smoker temp input
+* Meat temp input
+* Target internal temperature range
+* Ideal smoker temperature range
+* Smoker status:
+
+  * Running cool
+  * In the zone
+  * Running hot
+* Meat status:
+
+  * Still cooking
+  * Stall zone
+  * Target range
+  * Past target
+* Estimated remaining cook time
+* Wood pairing recommendations
+* Resting guidance
+* Pitmaster tips per meat type
+* Cook notes section
+* Saved note history with meat type, smoker temp, meat temp, note, and timestamp
+
+I also ran a JSX/TypeScript parse check. The file syntax is clean; the only expected warnings are missing sandbox dependencies for `react`, `lucide-react`, and existing loose type warnings from the app state objects.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 8. BBQ Doneness Guide
+
+Simple visual guide:
+
+```text
+Brisket: 195–205°F
+Pork Shoulder: 195–205°F
+Chicken: 165°F
+Ribs: Bend test / 190–203°F
+Turkey: 165°F
+Sausage: 160°F
+```
+
+Add:
+
+* Resting time recommendations
+* Wood pairing suggestions
+* Common mistakes
+* Sauce pairing tips
+
+Added the **BBQ Doneness Guide** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-doneness-guide.jsx)
+
+Added:
+
+* New main navigation item: **🌡️ Guide**
+* New BBQ Slam tab: **🌡️ Doneness Guide**
+* Home page button: **🌡️ Doneness Guide**
+* Visual BBQ doneness cards for:
+
+  * Brisket
+  * Pork Shoulder
+  * Ribs
+  * Chicken
+  * Turkey
+  * Sausage
+* Target internal temperature ranges
+* Doneness check guidance
+* Resting time recommendations
+* Wood pairing suggestions
+* Common mistakes
+* Sauce pairing tips
+* Quick pitmaster rules section
+
+I also ran a JSX/TypeScript check. The remaining messages are expected sandbox dependency/type warnings for missing `react`, `lucide-react`, and existing loose state object typing, not new JSX syntax errors.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 9. Smoke Wood Pairing Guide
+
+Interactive selector:
+
+User chooses meat → app recommends wood.
+
+Example:
+
+```text
+Brisket → Oak, Hickory, Pecan
+Pork → Apple, Cherry, Hickory
+Chicken → Apple, Cherry, Maple
+Ribs → Cherry, Pecan, Hickory
+Fish → Alder, Apple
+```
+
+This would pair nicely with the existing BBQ video library.
+
+Added the **Smoke Wood Pairing Guide** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-wood-guide.jsx)
+
+Added:
+
+* New main navigation item: **🪵 Wood**
+* New BBQ Slam tab: **🪵 Wood Guide**
+* Home page button: **🪵 Wood Pairing Guide**
+* Interactive meat selector
+* Wood recommendations for:
+
+  * Brisket → Oak, Hickory, Pecan
+  * Pork / Pork Shoulder → Apple, Cherry, Hickory
+  * Chicken → Apple, Cherry, Maple
+  * Ribs → Cherry, Pecan, Hickory
+  * Fish → Alder, Apple
+  * Turkey → Apple, Cherry, Maple, Pecan
+  * Sausage → Hickory, Oak, Apple, Cherry
+* Best starting wood choice
+* Smoke strength indicator
+* Flavor profile notes
+* Beginner tips
+* “Avoid” warnings
+* Sauce / food pairing suggestions
+* Related BBQ video recommendations
+* Button to jump to the existing video library
+* Wood pairing rules of thumb
+
+I also ran a JSX/TypeScript check. The only remaining messages are expected project-level warnings for missing sandbox dependencies and existing loose state typing, not new JSX syntax errors.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 10. Rub & Sauce Recipe Cards
+
+Add a recipe section for:
+
+* Dry rubs
+* BBQ sauces
+* Marinades
+* Mop sauces
+* Glazes
+* Side dishes
+
+You could include:
+
+* “Jimmy Jam House Rub”
+* “Sweet Heat BBQ Sauce”
+* “Bourbon BBQ Glaze”
+* “Competition Rib Rub”
+* “Carolina Mustard Sauce”
+
+This can also become a lead magnet: “Download the full BBQ recipe guide.”
+
+Added the **Rub & Sauce Recipe Cards** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-recipes.jsx)
+
+Added:
+
+* New main navigation item: **📖 Recipes**
+* New BBQ Slam tab: **📖 Recipes**
+* Home page button: **📖 Recipe Cards**
+* Recipe category filters:
+
+  * Dry Rubs
+  * BBQ Sauces
+  * Marinades
+  * Mop Sauces
+  * Glazes
+  * Side Dishes
+* Recipe cards for:
+
+  * Jimmy Jam House Rub
+  * Competition Rib Rub
+  * Sweet Heat BBQ Sauce
+  * Carolina Mustard Sauce
+  * Bourbon BBQ Glaze
+  * Citrus Herb Chicken Marinade
+  * Apple Cider Pork Mop
+  * Smoked Mac & Cheese
+  * Pitmaster Baked Beans
+* Each recipe includes:
+
+  * Best use
+  * Difficulty
+  * Prep time
+  * Yield
+  * Ingredients
+  * Steps
+  * Pitmaster tip
+  * Pairing suggestion
+* Downloadable lead magnet:
+
+  * **“Download Full BBQ Recipe Guide”**
+  * Generates a Markdown file: `jimmy-jam-bbq-recipe-guide.md`
+
+I also ran a successful JSX build check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+## Sponsor-friendly features
+
+### 11. Sponsor Scavenger Hunt
+
+Attendees visit sponsor booths and collect digital stamps.
+
+Features:
+
+* QR code at each sponsor table
+* Unlock prize entry after visiting 5 booths
+* Sponsor engagement tracking
+* Grand prize raffle
+
+This gives sponsors more value and encourages people to walk the full event.
+
+Added the **Sponsor Scavenger Hunt** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-sponsor-hunt.jsx)
+
+Added:
+
+* New main navigation item: **🎯 Hunt**
+* New BBQ Slam tab: **🎯 Sponsor Hunt**
+* Home page button: **🎯 Sponsor Hunt**
+* Sponsor booth digital stamp system
+* QR-code placeholder codes for each sponsor booth
+* “Collect Stamp” scan simulation
+* Prize unlock after **5 sponsor visits**
+* Grand prize raffle entry form
+* Raffle validation requiring enough stamps
+* Sponsor engagement tracking
+* Top sponsor stops panel
+* Sponsor tier filters:
+
+  * All Sponsors
+  * Platinum
+  * Gold
+  * Silver
+  * Bronze
+* Sponsor cards with:
+
+  * Sponsor name
+  * Booth number
+  * Zone/location
+  * Sponsor tier
+  * Booth offer
+  * Prize contribution
+  * Visit count
+  * Stamp collected status
+* Reset demo stamps button
+
+I also ran a successful JSX build check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+### 12. Digital Raffle / Prize Wheel
+
+Add a raffle system for:
+
+* BBQ gear
+* Bourbon baskets
+* Sponsor prizes
+* Swag store coupons
+* Free meal vouchers
+
+Could include:
+
+* Name
+* Phone/email
+* Prize selected
+* Winner draw screen
+
+This is great for fundraising.
+
+Added the **Digital Raffle / Prize Wheel** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-raffle.jsx)
+
+Added:
+
+* New main navigation item: **🎡 Raffle**
+* New BBQ Slam tab: **🎡 Raffle**
+* Home page button: **🎡 Digital Raffle**
+* Raffle prize categories:
+
+  * BBQ Gear
+  * Bourbon Baskets
+  * Sponsor Prizes
+  * Swag Coupons
+  * Free Meal Vouchers
+* Digital raffle entry form:
+
+  * Name
+  * Phone
+  * Email
+  * Prize selected
+  * Ticket bundle / donation amount
+* Prize cards with:
+
+  * Prize name
+  * Sponsor
+  * Estimated value
+  * Description
+  * Entry count
+  * Ticket count
+* Winner draw screen
+* Weighted ticket drawing logic
+* Live winner display
+* Raffle entries table
+* Export raffle entries to CSV
+* Demo fundraising totals
+
+I also ran a successful JSX build check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 13. Sponsor Spotlight Cards
+
+Instead of just logos, give sponsors mini pages:
+
+* Logo
+* Business description
+* Website
+* Offer/coupon
+* Booth location
+* “Visit Sponsor” button
+
+This helps justify higher sponsor pricing.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+## Attendee experience features
+
+### 14. “Build Your BBQ Plate” Planner
+
+Let people create their ideal plate:
+
+* Meat
+* Sides
+* Sauce
+* Drink
+* Dessert
+
+Then show:
+
+* Estimated cost
+* Vendor location
+* Suggested bourbon pairing
+* Calories optional, probably not needed for BBQ
+
+Added the **Build Your BBQ Plate Planner** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-plate-planner.jsx)
+
+Added:
+
+* New main navigation item: **🍽️ Plate**
+* New BBQ Slam tab: **🍽️ Plate Planner**
+* Home page button: **🍽️ Build Your Plate**
+* Interactive plate builder with:
+
+  * Meat
+  * Side
+  * Sauce
+  * Drink
+  * Dessert
+* Estimated total cost
+* Vendor / booth pickup locations
+* Suggested bourbon pairing
+* Pitmaster note for the selected meat
+* Sauce pairing display
+* Pickup stop list
+* Button to open the interactive event map
+* Fundraising/preorder idea panel
+
+Plate options include:
+
+```text
+Smoked Brisket
+St. Louis Ribs
+Pulled Pork Sandwich
+Smoked Chicken
+Smoked Turkey Breast
+Tri-Meat Platter
+Smoked Mac & Cheese
+Pitmaster Baked Beans
+Honey Cornbread
+Creamy Coleslaw
+Sweet Heat BBQ Sauce
+Carolina Mustard Sauce
+Bourbon BBQ Glaze
+Sweet Tea
+Fresh Lemonade
+Bourbon Lemonade
+Old Fashioned
+Banana Pudding
+Smoked Peach Cobbler
+Bourbon Brownie
+```
+
+I also ran a successful JSX build check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 15. Bourbon & BBQ Pairing Recommender
+
+The app already has bourbon and BBQ content, so this would fit perfectly.
+
+Example:
+
+```text
+Brisket → Woodford Reserve or Old Fashioned
+Ribs → Maker’s Mark or Bourbon Lemonade
+Pulled Pork → Buffalo Trace
+Smoked Chicken → Four Roses
+Mac & Cheese → Wheated bourbon
+```
+
+This makes the Bourbon & BBQ section feel more interactive.
+
+Added the **Bourbon & BBQ Pairing Recommender** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-bourbon-pairing.jsx)
+
+Added:
+
+* New main navigation item: **🥃 Pair**
+* New BBQ Slam tab: **🥃 Pairings**
+* New Bourbon event tab: **Pairings**
+* Home page button: **🥃 BBQ Pairings**
+* Interactive food selector
+* Pairing recommendations for:
+
+  * Brisket → Woodford Reserve / Old Fashioned
+  * Ribs → Maker’s Mark / Bourbon Lemonade
+  * Pulled Pork → Buffalo Trace / Iced Bourbon Tea
+  * Smoked Chicken → Four Roses / Bourbon Peach Tea
+  * Mac & Cheese → Wheated Bourbon / Maker’s Mark
+  * Turkey → Bulleit Rye / Citrus Bourbon Spritz
+  * Tri-Meat Platter → Bourbon Tasting Flight
+  * Smoked Peach Cobbler → Bourbon Peach Tea
+* “Best Pick” highlight
+* Flavor match explanation
+* Sauce direction
+* “Avoid” pairing notes
+* Booth/vendor location
+* Quick pairing rules
+* Button to use the current plate from the **Build Your BBQ Plate** planner
+* Button from the plate planner to open detailed pairing guidance
+
+I also ran a successful JSX bundle check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 16. BBQ Bingo
+
+A fun event game.
+
+Squares could include:
+
+* Tried brisket
+* Voted People’s Choice
+* Took a picture with a pitmaster
+* Visited a sponsor booth
+* Watched a demo
+* Bought swag
+* Donated
+* Saw a classic car
+* Tried bourbon pairing
+
+Completed bingo could unlock a raffle entry.
+
+Added the **BBQ Bingo** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-bbq-bingo.jsx)
+
+Added:
+
+* New main navigation item: **🎲 Bingo**
+* New BBQ Slam tab: **🎲 BBQ Bingo**
+* Home page button: **🎲 BBQ Bingo**
+* Interactive 3x3 bingo board
+* Clickable completion squares
+* Bingo detection for:
+
+  * Horizontal rows
+  * Vertical columns
+  * Diagonals
+* Raffle entry unlock when bingo is completed
+* Progress counter
+* Winning-line highlight
+* Reset bingo card button
+* Demo complete-card button
+* Action buttons that connect to related app sections
+
+Bingo squares added:
+
+```text
+Tried brisket
+Voted People’s Choice
+Took a picture with a pitmaster
+Visited a sponsor booth
+Watched a BBQ demo
+Bought swag
+Donated to Jimmy Jam
+Saw a classic car
+Tried a bourbon pairing
+```
+
+I also ran a JSX/TypeScript parse check successfully with no syntax diagnostics.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 17. Photo Wall / Social Feed
+
+Attendees upload or tag photos.
+
+Features:
+
+* Event hashtag
+* Moderated photo wall
+* Best BBQ photo contest
+* Sponsor photo frame
+* “Share your plate” section
+
+This helps create content for future marketing.
+
+Added the **Photo Wall / Social Feed** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-photo-wall.jsx)
+
+Added:
+
+* New main navigation item: **📸 Photos**
+* New BBQ Slam tab: **📸 Photo Wall**
+* Home page button: **📸 Photo Wall**
+* Official event hashtag: **#JimmyJamBBQSlam**
+* Photo submission form
+* Moderation workflow:
+
+  * Pending submissions
+  * Approve photo
+  * Reject photo
+* Moderated public photo wall
+* Category filters:
+
+  * Share Your Plate
+  * Pitmaster Moments
+  * Sponsor Frame
+  * Car Show
+  * Bourbon & BBQ
+  * Behind the Scenes
+* Best BBQ Photo contest
+* Photo voting
+* Sponsor photo frame selector
+* “Share Your Plate” callout
+* Sponsor-frame marketing panel
+* Moderation queue panel for event staff
+
+I also ran a successful JSX bundle check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 18. Live Announcements / Alerts
+
+Add an event alert banner.
+
+Examples:
+
+* “Rib turn-in starts in 15 minutes”
+* “People’s Choice voting is now open”
+* “Awards ceremony begins at 3 PM”
+* “Weather alert: hydrate and visit cooling stations”
+* “Visit the swag booth before 2 PM for a discount”
+
+This fits well because the app already has a notification/bell icon in the header. 
+
+Added the **Live Announcements / Alerts** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-live-alerts.jsx)
+
+Added:
+
+* New main navigation item: **🔔 Alerts**
+* New BBQ Slam tab: **🔔 Alerts**
+* Header bell icon now opens the alerts center
+* Bell badge showing active alert count
+* Global live alert banner under the header
+* Dismissible active alert banner
+* Pinned “Live Alert” support
+* Event announcement board
+* Staff alert composer
+* Quick-post templates for:
+
+  * Rib turn-in starts in 15 minutes
+  * People’s Choice voting is now open
+  * Awards ceremony begins at 3 PM
+  * Weather alert: hydrate and visit cooling stations
+  * Visit the swag booth before 2 PM for a discount
+* Alert urgency levels:
+
+  * Info
+  * Warning
+  * Urgent
+  * Promo
+* Audience targeting labels
+* Location labels
+* Activate/deactivate controls
+* Pin/unpin controls
+* Home page **Live Alerts** button
+
+I also ran a successful JSX bundle check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+## Competition-focused features
+
+### 19. Competition Rules Section
+
+Add a dedicated rules tab:
+
+* Meat categories
+* Turn-in windows
+* Garnish rules
+* Sauce rules
+* Blind judging process
+* Disqualification rules
+* Prize structure
+
+This reduces questions for event staff.
+
+Added the **Competition Rules Section**.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-competition-rules.jsx)
+
+Added:
+
+* New main navigation item: **📜 Rules**
+* New BBQ Slam tab: **📜 Rules**
+* Home page button: **📜 Competition Rules**
+* Dedicated Competition Rules page
+* Meat category rules for:
+
+  * Brisket
+  * Ribs
+  * Chicken
+  * Sauce
+* Turn-in windows
+* Garnish rules
+* Sauce rules
+* Blind judging process
+* Disqualification rules
+* Prize structure table
+* Staff notes for teams, judges, and volunteers
+* Judging tent / rule desk callout
+
+I also ran a successful JSX bundle check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 20. Team Check-In Dashboard
+
+For admins:
+
+* Registered teams
+* Paid/unpaid status
+* Checked in/not checked in
+* Booth assignment
+* Categories entered
+* Waivers signed
+
+This is more admin-focused but extremely useful.
+
+Added the **Team Check-In Dashboard** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-team-checkin.jsx)
+
+Added:
+
+* New main navigation item: **✅ Check-In**
+* New BBQ Slam tab: **✅ Team Check-In**
+* Home page button: **✅ Team Check-In**
+* Admin dashboard for registered teams
+* Team list with:
+
+  * Team name
+  * Pitmaster
+  * Hometown
+  * Phone/email
+  * Booth assignment
+  * Categories entered
+  * Paid/unpaid status
+  * Checked in/not checked in
+  * Waiver signed/missing
+  * Packet picked up/not picked up
+  * Power needed yes/no
+  * Staff notes
+* Editable booth numbers
+* Search by team, pitmaster, booth, location, or category
+* Filters for:
+
+  * All teams
+  * Unpaid only
+  * Not checked in
+  * Missing waiver
+  * Needs power
+* Summary cards:
+
+  * Registered teams
+  * Paid teams
+  * Checked-in teams
+  * Waivers signed
+  * Packets picked up
+* Needs Attention panel
+* Check-in workflow panel
+* Packet checklist
+* Export team check-in data to CSV
+
+I also ran a JSX/TypeScript parse check. The remaining messages are existing project-level warnings from earlier generated sections and missing sandbox dependencies, not new JSX syntax errors.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+### 21. Booth Assignment System
+
+Each team/vendor/car gets an assigned spot.
+
+Show:
+
+* Booth number
+* Zone
+* Setup time
+* Power needed
+* Special notes
+
+This can connect to the map.
+
+Added the **Booth Assignment System**.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-booth-assignment.jsx)
+
+Added:
+
+* New main navigation item: **📍 Booths**
+* New BBQ Slam tab: **📍 Booths**
+* Home page button: **📍 Booth Assignments**
+* Assignment directory for:
+
+  * BBQ teams
+  * Food vendors
+  * Bourbon tasting area
+  * Car show rows
+  * Sponsor booths
+  * Swag / donation booth
+  * Parking
+* Each assignment shows:
+
+  * Booth number
+  * Zone
+  * Setup time
+  * Power needed / no power
+  * Categories
+  * Contact person
+  * Status
+  * Special notes
+* Search by name, booth, zone, type, category, or notes
+* Filters for:
+
+  * All assignments
+  * BBQ teams
+  * Food vendors
+  * Car show
+  * Sponsor booths
+  * Power needed
+* Summary cards for:
+
+  * Total assignments
+  * BBQ teams
+  * Vendors
+  * Car areas
+  * Power-needed locations
+  * Map zones
+* **View on Map** button that opens the interactive event map and highlights the related zone
+* **Open Check-In** button for admin workflow
+* Export booth assignments to CSV
+
+I also ran a successful JSX bundle check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+## Revenue and fundraising features
+
+### 22. “Sponsor a Family” Donation Cards
+
+Tie the BBQ event back to the outreach mission.
+
+Donation buttons:
+
+* `$25 provides gas assistance`
+* `$50 helps with groceries`
+* `$100 helps with utilities`
+* `$250 emergency family support`
+* Custom amount
+
+This makes the app more mission-centered instead of only event-centered.
+
+Added the **Sponsor a Family Donation Cards** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-sponsor-family.jsx)
+
+Added:
+
+* New main navigation item: **❤️ Donate**
+* New BBQ Slam tab: **❤️ Sponsor a Family**
+* Home page button: **❤️ Sponsor a Family**
+* Donation cards for:
+
+  * **$25** — Gas assistance
+  * **$50** — Groceries
+  * **$100** — Utilities
+  * **$250** — Emergency family support
+  * **Custom amount**
+* Donation form fields:
+
+  * Name / business / team name
+  * Phone
+  * Email
+  * Dedication field
+* Mission impact messaging
+* Demo campaign total tracker
+* Recent mission support table
+* Export donations to CSV
+* Payment processor placeholder note for Stripe, Square, PayPal, Clover, JotForm, or another donation workflow
+* BBQ event tie-in ideas for People’s Choice voting, raffles, bingo, teams, and sponsor-matched donation moments
+
+I also ran a JSX parse check successfully.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 23. BBQ Meal Preorder
+
+Let attendees preorder plates.
+
+Options:
+
+* Brisket plate
+* Rib plate
+* Pulled pork sandwich
+* Family pack
+* Bourbon pairing ticket
+* VIP BBQ tasting pass
+
+This could generate revenue before the event.
+
+Added the **BBQ Meal Preorder** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-meal-preorder.jsx)
+
+Added:
+
+* New main navigation item: **🍖 Preorder**
+* New BBQ Slam tab: **🍖 Preorder**
+* Home page button: **🍖 Meal Preorder**
+* Preorder options:
+
+  * Brisket Plate
+  * Rib Plate
+  * Pulled Pork Sandwich
+  * Family Pack
+  * Bourbon Pairing Ticket
+  * VIP BBQ Tasting Pass
+* Quantity selector for each item
+* Customer form:
+
+  * Name
+  * Phone
+  * Email
+  * Pickup window
+  * Special notes
+* Live cart summary
+* Estimated total
+* Pickup location per item
+* Suggested bourbon pairing per item
+* Preorder dashboard for staff
+* Demo preorder entries
+* Reserved revenue tracking
+* Export preorders to CSV
+* Payment processor placeholder for Stripe, Square, Clover, PayPal, or JotForm
+
+I also ran a successful JSX bundle check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 24. VIP Pass / Fast Lane
+
+Sell VIP upgrades:
+
+* Early entry
+* Reserved tasting session
+* Bourbon pairing
+* VIP seating
+* Swag bundle
+* Meet the pitmasters
+
+This pairs well with the Bourbon & BBQ event.
+
+Added the **VIP Pass / Fast Lane** feature.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-vip-pass.jsx)
+
+Added:
+
+* New main navigation item: **👑 VIP**
+* New BBQ Slam tab: **👑 VIP**
+* Home page button: **👑 VIP Passes**
+* VIP upgrade options:
+
+  * Early Entry Pass
+  * Reserved Tasting Session
+  * Bourbon Pairing Upgrade
+  * VIP Seating Upgrade
+  * VIP Swag Bundle
+  * Meet the Pitmasters
+  * Ultimate VIP Pass
+* Quantity selector for each VIP upgrade
+* Guest form:
+
+  * Name
+  * Phone
+  * Email
+  * Preferred session
+  * Special notes
+* Live VIP cart summary
+* Estimated total
+* VIP order dashboard
+* Reserved VIP revenue tracking
+* Export VIP passes to CSV
+* Fast Lane Check-In panel
+* Bourbon event tie-in panel
+* Revenue-before-event-day panel
+
+I also ran a successful JSX bundle check with React and Lucide marked external.
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+### 25. Limited-Time Swag Drops
+
+Make the swag store more exciting.
+
+Examples:
+
+* Event-only T-shirt
+* Pitmaster apron
+* Bourbon glass set
+* BBQ rub pack
+* “I survived the BBQ Slam” shirt
+* Sponsor-branded merch
+
+The current app already has a swag section with products and add-to-cart buttons, so this would be a natural enhancement. 
+
+Added the **Limited-Time Swag Drops** enhancement.
+
+Updated file:
+
+[Download the updated JSX file](sandbox:/mnt/data/jimmy-jam-ultimate-final-swag-drops.jsx)
+
+Added:
+
+* New BBQ Slam tab: **🛍️ Swag Drops**
+* Enhanced Swag Store with limited-time drops
+* Featured “Almost Gone” item card
+* Drop inventory tracking
+* Percent sold progress bars
+* Urgency labels
+* Reserve/drop cart system
+* Buyer form:
+
+  * Name
+  * Phone
+  * Email
+  * Pickup window
+  * Notes / size requests
+* Swag drop order dashboard
+* Reserved swag revenue tracking
+* Export swag drop orders to CSV
+* Payment placeholder for Stripe, Square, Clover, PayPal, JotForm, or onsite payment
+
+Limited-time drops added:
+
+```text
+Event-Only BBQ Slam T-Shirt
+Limited Pitmaster Apron
+Bourbon Glass Set
+BBQ Rub Pack
+I Survived the BBQ Slam Shirt
+Sponsor-Branded Merch Bundle
+```
+
+I also ran a successful JSX bundle check with React and Lucide marked external.
+
+---
+
+## My top 10 recommendations
+
+If we want the app to feel impressive without overbuilding it, I would add these first:
+
+1. People’s Choice Voting
+2. BBQ Team Profiles
+3. Interactive Event Map
+4. BBQ Turn-In Timer
+5. Judge Scoring Portal
+6. Sponsor Scavenger Hunt
+7. Bourbon & BBQ Pairing Recommender
+8. BBQ Bingo
+9. Live Announcements
+10. Sponsor a Family Donation Cards
+
+The most valuable feature combination would be:
+
+```text
+People’s Choice Voting + Team Profiles + Event Map + Sponsor Scavenger Hunt + Live Announcements
+```
+
+That would make the app feel like a real event companion, not just an informational website.
