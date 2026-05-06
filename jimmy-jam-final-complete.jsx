@@ -537,14 +537,14 @@ const JimmyJamApp = () => {
         {activeNav === 'home' && (
           <div className="space-y-8">
             {/* HERO */}
-            <div className="relative rounded-lg overflow-hidden h-[500px] bg-black flex items-center justify-center shadow-xl border-4 border-white">
-              {/* VIDEO BACKGROUND - ADJUSTED TO PREVENT CROPPING */}
+            <div className="relative rounded-lg overflow-hidden h-96 bg-black flex items-center justify-center shadow-xl">
+              {/* VIDEO BACKGROUND */}
               <video 
                 autoPlay 
                 loop 
                 muted 
                 playsInline 
-                className="w-full h-full object-contain"
+                className="absolute inset-0 w-full h-full object-cover"
               >
                 <source src="/hero-video.mp4" type="video/mp4" />
               </video>
