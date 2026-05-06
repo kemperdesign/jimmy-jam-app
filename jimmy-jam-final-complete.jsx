@@ -927,6 +927,65 @@ const JimmyJamApp = () => {
           </div>
         )}
 
+        {/* SPONSORS / OFFICIAL PARTNERS */}
+        {activeNav === 'sponsors' && (
+          <div className="space-y-8 pb-20">
+            <div className="text-center space-y-2">
+              <h1 className="text-4xl font-bold text-white">OFFICIAL PARTNERS</h1>
+              <p className="text-zinc-300">Thank you to our generous sponsors who make Jimmy Jam possible.</p>
+            </div>
+
+            <div className="space-y-6">
+              {/* PLATINUM / TITLE */}
+              <div className="bg-zinc-900 border-2 border-orange-500 rounded-xl p-8 flex flex-col items-center justify-center shadow-lg shadow-orange-500/20">
+                <span className="text-orange-500 font-bold tracking-widest text-sm mb-4 uppercase">Title Sponsor</span>
+                <div className="h-32 w-full bg-zinc-800 rounded-lg flex items-center justify-center overflow-hidden border border-zinc-700">
+                  <h2 className="text-4xl font-black text-zinc-100 tracking-tighter">BULLSEYE<span className="text-orange-500">BBQ</span></h2>
+                </div>
+              </div>
+
+              {/* GOLD */}
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { name: 'ST AUGUSTINE DISTILLERY', color: 'text-amber-400' },
+                  { name: 'FLORIDA HERITAGE BANK', color: 'text-blue-400' }
+                ].map((sponsor, idx) => (
+                  <div key={idx} className="bg-zinc-900 border border-zinc-700 rounded-xl p-4 flex flex-col items-center justify-center">
+                    <span className="text-zinc-500 font-bold text-[10px] mb-2 uppercase">Gold Sponsor</span>
+                    <div className="h-24 w-full bg-zinc-800 rounded flex items-center justify-center p-2 text-center">
+                      <h3 className={`text-sm md:text-xl font-bold ${sponsor.color}`}>{sponsor.name}</h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* SILVER */}
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  'Coastal Equipment',
+                  'Sunny Farms Meat',
+                  'Local 104 Radio',
+                  'Historic City Tours',
+                  'Oceanview Hotels',
+                  'St Augie Brewing'
+                ].map((name, idx) => (
+                  <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 flex flex-col items-center justify-center">
+                    <div className="h-16 w-full bg-zinc-800 rounded flex items-center justify-center text-center p-1">
+                      <h4 className="text-[10px] md:text-xs font-bold text-zinc-300">{name}</h4>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="mt-12 bg-zinc-800 p-6 rounded-xl text-center">
+              <h3 className="text-xl font-bold text-white mb-2">Become a Partner</h3>
+              <p className="text-sm text-zinc-300 mb-4">Join our community of sponsors and support local outreach.</p>
+              <button onClick={() => setActiveNav('connect')} className="px-6 py-2 bg-white text-black font-bold rounded hover:bg-zinc-200 transition-all">CONTACT US</button>
+            </div>
+          </div>
+        )}
+
         {/* RECIPE BOOK */}
         {activeNav === 'recipes' && (
           <div className="space-y-6 pb-20">
@@ -2110,7 +2169,7 @@ const JimmyJamApp = () => {
                     <span className="font-semibold">Recipe Book</span>
                   </button>
 
-                  <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
+                  <button onClick={() => { setActiveNav('sponsors'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-zinc-800 transition-all border-b border-zinc-800">
                     <span className="text-xl">🏆</span>
                     <span className="font-semibold">Official Partners</span>
                   </button>
