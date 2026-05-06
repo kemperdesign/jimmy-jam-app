@@ -14,6 +14,8 @@ const JimmyJamApp = () => {
   useEffect(() => {
     if (activeNav === 'weather') {
       setActiveTab('forecast');
+    } else if (activeNav === 'swag') {
+      setActiveTab('festival');
     } else if (activeNav === 'maps') {
       setActiveTab('gps');
     }
@@ -397,18 +399,18 @@ const JimmyJamApp = () => {
   ];
 
   const swagItems = [
-    { name: 'Buckle Up 2026 Lineup Tee', price: 45.00, icon: '👕' },
-    { name: 'Desert Rider 2026 Lineup Tee', price: 45.00, icon: '👕' },
-    { name: 'Jimmy Jam Logo Baseball Hat', price: 35.00, icon: '🧢' },
-    { name: 'Indigo Sunset Festival Hoodie', price: 65.00, icon: '🧥' },
-    { name: 'BBQ Championship Apron', price: 39.99, icon: '👗' },
-    { name: 'Premium Bandana Set (3-pack)', price: 24.99, icon: '🎀' },
-    { name: 'Bourbon & BBQ Trucker Hat', price: 42.00, icon: '🧢' },
-    { name: 'Festival Lineup Zip Hoodie', price: 75.00, icon: '🧥' },
-    { name: 'Jimmy Jam Coffee Mug', price: 16.99, icon: '☕' },
-    { name: 'Premium BBQ Rub Collection', price: 54.99, icon: '🧂' },
-    { name: 'Stainless Steel Tumbler', price: 28.00, icon: '🥤' },
-    { name: 'Festival Bourbon Glass Set', price: 34.99, icon: '🥃' }
+    { name: 'Buckle Up 2026 Lineup Tee', price: 45.00, image: '/jimmy_jam_merch_tees_1778038020125.png' },
+    { name: 'Desert Rider 2026 Lineup Tee', price: 45.00, image: '/jimmy_jam_merch_tees_1778038020125.png' },
+    { name: 'Jimmy Jam Logo Baseball Hat', price: 35.00, image: 'https://images.unsplash.com/photo-1588850567047-dc4b75d3d24c?auto=format&fit=crop&q=80&w=400' },
+    { name: 'Indigo Sunset Festival Hoodie', price: 65.00, image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=400' },
+    { name: 'BBQ Championship Apron', price: 39.99, image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=400' },
+    { name: 'Premium Bandana Set (3-pack)', price: 24.99, image: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&q=80&w=400' },
+    { name: 'Bourbon & BBQ Trucker Hat', price: 42.00, image: 'https://images.unsplash.com/photo-1596455607563-ad6193f76b17?auto=format&fit=crop&q=80&w=400' },
+    { name: 'Festival Lineup Zip Hoodie', price: 75.00, image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400' },
+    { name: 'Jimmy Jam Coffee Mug', price: 16.99, image: 'https://images.unsplash.com/photo-1514228742587-6b1558fbed20?auto=format&fit=crop&q=80&w=400' },
+    { name: 'Premium BBQ Rub Collection', price: 54.99, image: 'https://images.unsplash.com/photo-1532336411638-af7294273e8d?auto=format&fit=crop&q=80&w=400' },
+    { name: 'Stainless Steel Tumbler', price: 28.00, image: 'https://images.unsplash.com/photo-1517254456976-ee8682099819?auto=format&fit=crop&q=80&w=400' },
+    { name: 'Festival Bourbon Glass Set', price: 34.99, image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=400' }
   ];
 
   const handleAssistanceTypeToggle = (type) => {
@@ -1759,10 +1761,14 @@ const JimmyJamApp = () => {
                 {swagItems.map((item, i) => (
                   <div key={i} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
                     {/* PRODUCT IMAGE */}
-                    <div className="bg-gradient-to-br from-gray-700 to-gray-900 h-56 flex items-center justify-center text-6xl relative">
-                      {item.icon}
+                    <div className="bg-white h-56 flex items-center justify-center relative">
+                      <img 
+                        src={item.image} 
+                        alt={item.name} 
+                        className="w-full h-full object-cover" 
+                      />
                       {/* HEART ICON */}
-                      <button className="absolute top-3 right-3 bg-orange-400 hover:bg-orange-500 text-white rounded-full p-2.5 transition-all shadow-lg">
+                      <button className="absolute top-3 right-3 bg-white hover:bg-red-50 text-red-600 rounded-full p-2.5 transition-all shadow-lg border border-red-100">
                         ♡
                       </button>
                     </div>
