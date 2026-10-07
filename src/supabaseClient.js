@@ -329,6 +329,85 @@ export const emailTemplates = {
         </div>
       </div>
     `
+  }),
+
+  ticketConfirmation: (ticketData) => ({
+    subject: '🎫 Jimmy Jam - Ticket Purchase Confirmed',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0;">🎫 Ticket Order Confirmed</h1>
+        </div>
+        <div style="padding: 20px; background-color: #f9fafb;">
+          <p>Hello ${ticketData.name},</p>
+          <p>Thank you for purchasing your Jimmy Jam tickets!</p>
+
+          <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #b91c1c;">Order Details</h2>
+            <p><strong>Ticket Type:</strong> ${ticketData.ticketType === 'music' ? 'Music Festival' : ticketData.ticketType === 'bbq' ? 'BBQ Competition' : ticketData.ticketType === 'bourbon' ? 'Bourbon Tasting' : 'All-Access Pass'}</p>
+            <p><strong>Quantity:</strong> ${ticketData.quantity}</p>
+            <p><strong>Total Amount:</strong> $${ticketData.amount.toFixed(2)}</p>
+          </div>
+
+          <p>Your tickets are reserved. Check your email for ticket details and event information closer to the date.</p>
+          <p>If you have any questions, please don't hesitate to contact us.</p>
+
+          <p style="margin-top: 30px;">Best regards,<br><strong>Jimmy Jam Team</strong></p>
+        </div>
+      </div>
+    `
+  }),
+
+  merchConfirmation: (merchData) => ({
+    subject: '🛍️ Jimmy Jam - Merchandise Order Confirmed',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0;">🛍️ Merchandise Order Confirmed</h1>
+        </div>
+        <div style="padding: 20px; background-color: #f9fafb;">
+          <p>Hello ${merchData.name},</p>
+          <p>Thank you for your Jimmy Jam merchandise order!</p>
+
+          <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #b91c1c;">Order Details</h2>
+            <p><strong>Items:</strong> ${merchData.itemCount} item${merchData.itemCount !== 1 ? 's' : ''}</p>
+            <p><strong>Total Amount:</strong> $${merchData.amount.toFixed(2)}</p>
+          </div>
+
+          <p>Your order is being processed and will ship soon. You'll receive tracking information via email.</p>
+          <p>Thank you for supporting Jimmy Jam!</p>
+
+          <p style="margin-top: 30px;">Best regards,<br><strong>Jimmy Jam Team</strong></p>
+        </div>
+      </div>
+    `
+  }),
+
+  donationThank: (donationData) => ({
+    subject: '❤️ Jimmy Jam - Thank You for Your Donation',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0;">❤️ Thank You for Giving Back!</h1>
+        </div>
+        <div style="padding: 20px; background-color: #f9fafb;">
+          <p>Hello ${donationData.name},</p>
+          <p>Thank you so much for your generous donation to Jimmy Jam Community Outreach!</p>
+
+          <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #b91c1c;">Donation Details</h2>
+            <p><strong>Amount:</strong> $${donationData.amount.toFixed(2)}</p>
+            <p><strong>Purpose:</strong> Community Outreach</p>
+          </div>
+
+          <p>Your contribution will make a real difference in our community. We're committed to using these funds to support local initiatives and create meaningful impact.</p>
+          <p>A tax receipt has been attached to this email for your records (if applicable).</p>
+
+          <p style="margin-top: 30px;">With gratitude,<br><strong>Jimmy Jam Team</strong></p>
+        </div>
+      </div>
+    `
   })
 };
 
@@ -420,49 +499,3 @@ export const submitDonation = async (donationData) => {
 
   return { data, error };
 };
-
-export const updateOrderStatus = async (orderId, status, stripePaymentId) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .update({
-      status: status,
-      stripe_payment_id: stripePaymentId,
-      updated_at: new Date().toISOString()
-    })
-    .eq('id', orderId);
-
-  return { data, error };
-};
-
-// Payment confirmation email template
-export const paymentConfirmationEmail = (orderData) => ({
-  subject: '✅ Payment Confirmed - Jimmy Jam Order',
-  html: `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
-        <h1 style="margin: 0;">✅ Payment Received</h1>
-      </div>
-      <div style="padding: 20px; background-color: #f9fafb;">
-        <p>Hello ${orderData.name},</p>
-        <p>Thank you for your purchase! Your payment has been received and confirmed.</p>
-
-        <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
-          <h2 style="margin-top: 0; color: #b91c1c;">Order Details</h2>
-          <p><strong>Order ID:</strong> ${orderData.orderId}</p>
-          <p><strong>Order Type:</strong> ${orderData.orderType}</p>
-          <p><strong>Amount:</strong> $${orderData.amount.toFixed(2)}</p>
-          <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-        </div>
-
-        <p><strong>Next Steps:</strong></p>
-        <ul style="margin: 15px 0;">
-          <li>A confirmation email with your receipt has been sent</li>
-          <li>You will receive additional details about delivery/pickup soon</li>
-          <li>If you have questions, reply to this email or contact us</li>
-        </ul>
-
-        <p style="margin-top: 30px;">Best regards,<br><strong>Jimmy Jam Team</strong></p>
-      </div>
-    </div>
-  `
-});

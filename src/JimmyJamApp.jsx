@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Bell, Search, ChevronLeft, ChevronRight, Star, Filter, Upload, Play, MapPin, Clock, DollarSign, Users, Utensils, Car } from 'lucide-react';
+import { Menu, X, Bell, Search, ChevronLeft, ChevronRight, Upload } from 'lucide-react';
 import L from 'leaflet';
-import { submitBBQTeamEntry, submitVendorEntry, submitCarShowEntry, submitAssistanceApplication, submitNewsletterSignup, uploadPhoto, getPhotos, deletePhoto, sendEmail, submitTicketOrder, submitMerchOrder, submitDonation, updateOrderStatus, paymentConfirmationEmail } from './supabaseClient';
+import { submitBBQTeamEntry, submitVendorEntry, submitCarShowEntry, submitAssistanceApplication, submitNewsletterSignup, uploadPhoto, getPhotos, deletePhoto, sendEmail, submitTicketOrder, submitMerchOrder, submitDonation } from './supabaseClient';
 
 const JimmyJamApp = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -14,7 +14,9 @@ const JimmyJamApp = () => {
   const [appSubmitted, setAppSubmitted] = useState(false);
   const [selectedSponsor, setSelectedSponsor] = useState(null);
   const [selectedArtist, setSelectedArtist] = useState(null);
+  const [searchArtists, setSearchArtists] = useState('');
   const [searchSchedule, setSearchSchedule] = useState('');
+  const [searchSponsors, setSearchSponsors] = useState('');
   const [selectedDate, setSelectedDate] = useState('Oct 10');
   const [activeVideoTab, setActiveVideoTab] = useState('featured');
   const [activeSlamTab, setActiveSlamTab] = useState('overview');
@@ -65,7 +67,7 @@ const JimmyJamApp = () => {
   const [photoLoading, setPhotoLoading] = useState(false);
   const [photoError, setPhotoError] = useState('');
 
-  const [tideSubmitted, setTideSubmitted] = useState({});
+  const [slamTeamSubmitted, setSlamTeamSubmitted] = useState({});
   const [vendorSubmitted, setVendorSubmitted] = useState({});
   const [carSubmitted, setCarSubmitted] = useState({});
 
@@ -102,7 +104,6 @@ const JimmyJamApp = () => {
 
   // Map refs
   const gpsMapRef = useRef(null);
-  const venueMapRef = useRef(null);
   const [mapInstances, setMapInstances] = useState({});
 
   // Fetch weather data for Fort Worth, TX
@@ -274,7 +275,7 @@ const JimmyJamApp = () => {
 
       setSubmitSuccess(prev => ({ ...prev, team: true }));
       setSlamTeamForm({ teamName: '', contactName: '', email: '', phone: '', members: '', bbqStyle: '', experience: '' });
-      setTideSubmitted({ ...tideSubmitted, team: true });
+      setSlamTeamSubmitted({ ...slamTeamSubmitted, team: true });
       setSubmitting(prev => ({ ...prev, team: false }));
       setTimeout(() => setSubmitSuccess(prev => ({ ...prev, team: false })), 3000);
     }
@@ -1129,7 +1130,7 @@ const JimmyJamApp = () => {
                     <div className="p-4">
                       <h3 className="font-bold text-lg mb-1">Live from 2026 Event</h3>
                       <p className="text-sm text-gray-600">Experience the full event livestream</p>
-                      <a href="https://youtube.com" target="_blank" className="text-red-700 font-bold mt-2 block">Watch Now →</a>
+                      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-red-700 font-bold mt-2 block">Watch Now →</a>
                     </div>
                   </div>
                 </>
@@ -1479,13 +1480,18 @@ const JimmyJamApp = () => {
                 <input
                   type="text"
                   placeholder="Search artists..."
+                  value={searchArtists}
+                  onChange={(e) => setSearchArtists(e.target.value)}
                   className="w-full border-2 border-red-700 rounded p-3 pl-10"
                 />
                 <Search size={18} className="absolute left-3 top-3.5 text-gray-400" />
               </div>
 
               <div className="space-y-3">
-                {artistsData.map((artist, idx) => (
+                {artistsData.filter(artist =>
+                  artist.name.toLowerCase().includes(searchArtists.toLowerCase()) ||
+                  artist.genre.toLowerCase().includes(searchArtists.toLowerCase())
+                ).map((artist, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedArtist(artist)}
