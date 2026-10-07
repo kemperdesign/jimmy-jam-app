@@ -849,28 +849,93 @@ const JimmyJamApp = () => {
               <h2 className="flex-1 text-lg font-bold">Video Library 🎥</h2>
             </div>
 
-            <div className="border-b border-gray-300 flex">
+            <div className="border-b border-gray-300 flex overflow-x-auto">
+              <button
+                onClick={() => setActiveVideoTab('live')}
+                className={`flex-1 py-3 font-bold text-sm whitespace-nowrap ${activeVideoTab === 'live' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}
+              >
+                🔴 Live
+              </button>
               <button
                 onClick={() => setActiveVideoTab('featured')}
-                className={`flex-1 py-3 font-bold text-sm ${activeVideoTab === 'featured' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}
+                className={`flex-1 py-3 font-bold text-sm whitespace-nowrap ${activeVideoTab === 'featured' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}
               >
                 Featured
               </button>
               <button
                 onClick={() => setActiveVideoTab('instructional')}
-                className={`flex-1 py-3 font-bold text-sm ${activeVideoTab === 'instructional' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}
+                className={`flex-1 py-3 font-bold text-sm whitespace-nowrap ${activeVideoTab === 'instructional' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}
               >
                 Tutorials
               </button>
               <button
                 onClick={() => setActiveVideoTab('highlights')}
-                className={`flex-1 py-3 font-bold text-sm ${activeVideoTab === 'highlights' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}
+                className={`flex-1 py-3 font-bold text-sm whitespace-nowrap ${activeVideoTab === 'highlights' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}
               >
                 Highlights
               </button>
             </div>
 
             <div className="p-4 space-y-4">
+              {activeVideoTab === 'live' && (
+                <>
+                  <div className="bg-white border-2 border-red-700 rounded-lg overflow-hidden mb-4">
+                    <div className="bg-gradient-to-r from-red-700 to-red-900 text-white p-3 flex items-center gap-2">
+                      <span className="text-lg">🔴 LIVE</span>
+                      <span className="text-sm font-bold">Watch Jimmy Jam Now</span>
+                    </div>
+                  </div>
+
+                  {/* YouTube Live Embed */}
+                  <div className="bg-white border-2 border-gray-300 rounded-lg overflow-hidden">
+                    <div className="bg-gray-900 aspect-video flex flex-col items-center justify-center">
+                      <div className="text-6xl mb-3">▶️</div>
+                      <p className="text-white text-sm mb-3 px-4 text-center">YouTube Live Stream</p>
+                      <a
+                        href="https://youtube.com/jimmyjamoutreach"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded text-sm"
+                      >
+                        Watch on YouTube
+                      </a>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-bold text-sm mb-1">🎬 YouTube Live</h3>
+                      <p className="text-xs text-gray-600">Subscribe for live event coverage and behind-the-scenes content</p>
+                    </div>
+                  </div>
+
+                  {/* Twitch Live Embed */}
+                  <div className="bg-white border-2 border-gray-300 rounded-lg overflow-hidden">
+                    <div className="bg-gray-900 aspect-video flex flex-col items-center justify-center">
+                      <div className="text-6xl mb-3">💜</div>
+                      <p className="text-white text-sm mb-3 px-4 text-center">Twitch Live Stream</p>
+                      <a
+                        href="https://twitch.tv/jimmyjamoutreach"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-sm"
+                      >
+                        Watch on Twitch
+                      </a>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-bold text-sm mb-1">🎮 Twitch Live</h3>
+                      <p className="text-xs text-gray-600">Join the community chat and interactive coverage</p>
+                    </div>
+                  </div>
+
+                  {/* Offline Notice */}
+                  <div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4">
+                    <p className="text-sm text-yellow-800">
+                      <span className="font-bold">📡 Live streams are available during events</span><br/>
+                      <span className="text-xs text-yellow-700 mt-1 block">Check back during Jimmy Jam events for live coverage. Subscribe to stay updated on when we go live!</span>
+                    </p>
+                  </div>
+                </>
+              )}
+
               {activeVideoTab === 'featured' && (
                 <>
                   <div className="bg-white border-2 border-red-700 rounded-lg overflow-hidden">
