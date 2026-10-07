@@ -177,3 +177,190 @@ export const deletePhoto = async (filepath) => {
 
   return { data, error };
 };
+
+// Email templates and sending functions
+export const emailTemplates = {
+  bbqTeam: (teamData) => ({
+    subject: '✅ Jimmy Jam BBQ Slam - Team Registration Confirmed',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0;">🍖 BBQ Slam Registration Confirmed</h1>
+        </div>
+        <div style="padding: 20px; background-color: #f9fafb;">
+          <p>Hello ${teamData.contactName},</p>
+          <p>Thank you for registering your BBQ team for the Jimmy Jam BBQ Slam competition!</p>
+
+          <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #b91c1c;">Registration Details</h2>
+            <p><strong>Team Name:</strong> ${teamData.teamName}</p>
+            <p><strong>Contact:</strong> ${teamData.contactName}</p>
+            <p><strong>Email:</strong> ${teamData.email}</p>
+            <p><strong>Phone:</strong> ${teamData.phone}</p>
+            <p><strong>Team Members:</strong> ${teamData.members}</p>
+            <p><strong>BBQ Style:</strong> ${teamData.bbqStyle}</p>
+            <p><strong>Experience Level:</strong> ${teamData.experience}</p>
+          </div>
+
+          <p>We're excited to have you competing at Jimmy Jam! More details about the event will be sent soon.</p>
+          <p>If you have any questions, feel free to reach out to us.</p>
+
+          <p style="margin-top: 30px;">Best regards,<br><strong>Jimmy Jam Team</strong></p>
+        </div>
+      </div>
+    `
+  }),
+
+  vendor: (vendorData) => ({
+    subject: '✅ Jimmy Jam - Vendor Application Confirmed',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0;">🏪 Vendor Application Confirmed</h1>
+        </div>
+        <div style="padding: 20px; background-color: #f9fafb;">
+          <p>Hello ${vendorData.contactName},</p>
+          <p>Thank you for applying to be a vendor at the Jimmy Jam BBQ & Bourbon Event!</p>
+
+          <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #b91c1c;">Application Details</h2>
+            <p><strong>Business:</strong> ${vendorData.businessName}</p>
+            <p><strong>Category:</strong> ${vendorData.category}</p>
+            <p><strong>Contact:</strong> ${vendorData.contactName}</p>
+            <p><strong>Email:</strong> ${vendorData.email}</p>
+            <p><strong>Phone:</strong> ${vendorData.phone}</p>
+            <p><strong>Booth Size:</strong> ${vendorData.booth}</p>
+            <p><strong>Description:</strong> ${vendorData.description}</p>
+          </div>
+
+          <p>We've received your application and will review it shortly. You'll hear from us within 3-5 business days.</p>
+          <p>Questions? Reply to this email or call us!</p>
+
+          <p style="margin-top: 30px;">Best regards,<br><strong>Jimmy Jam Team</strong></p>
+        </div>
+      </div>
+    `
+  }),
+
+  carShow: (carData) => ({
+    subject: '✅ Jimmy Jam - Car Show Registration Confirmed',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0;">🚗 Car Show Registration Confirmed</h1>
+        </div>
+        <div style="padding: 20px; background-color: #f9fafb;">
+          <p>Hello ${carData.ownerName},</p>
+          <p>Thank you for registering your vehicle for the Jimmy Jam Car Show!</p>
+
+          <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #b91c1c;">Registration Details</h2>
+            <p><strong>Owner:</strong> ${carData.ownerName}</p>
+            <p><strong>Vehicle:</strong> ${carData.carYear} ${carData.carMake} ${carData.carModel}</p>
+            <p><strong>Category:</strong> ${carData.category}</p>
+            <p><strong>Email:</strong> ${carData.email}</p>
+            <p><strong>Phone:</strong> ${carData.phone}</p>
+          </div>
+
+          <p>Your vehicle has been registered for the show. More details about parking, setup times, and awards will be sent soon.</p>
+          <p>We look forward to seeing your beautiful ride!</p>
+
+          <p style="margin-top: 30px;">Best regards,<br><strong>Jimmy Jam Team</strong></p>
+        </div>
+      </div>
+    `
+  }),
+
+  assistance: (appData) => ({
+    subject: '✅ Jimmy Jam - Assistance Application Received',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0;">🤝 Application Received</h1>
+        </div>
+        <div style="padding: 20px; background-color: #f9fafb;">
+          <p>Hello ${appData.fullName},</p>
+          <p>Thank you for submitting your assistance application to Jimmy Jam!</p>
+
+          <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #b91c1c;">Application Details</h2>
+            <p><strong>Name:</strong> ${appData.fullName}</p>
+            <p><strong>Email:</strong> ${appData.email}</p>
+            <p><strong>Phone:</strong> ${appData.phone}</p>
+            <p><strong>Type:</strong> ${appData.assistanceType}</p>
+            <p><strong>Description:</strong> ${appData.description}</p>
+          </div>
+
+          <p>We've received your request and will be in touch soon to discuss how we can help.</p>
+          <p>Thank you for supporting our community!</p>
+
+          <p style="margin-top: 30px;">Best regards,<br><strong>Jimmy Jam Team</strong></p>
+        </div>
+      </div>
+    `
+  }),
+
+  newsletter: (email) => ({
+    subject: '✅ Welcome to Jimmy Jam Newsletter!',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
+          <h1 style="margin: 0;">📧 Welcome to Jimmy Jam!</h1>
+        </div>
+        <div style="padding: 20px; background-color: #f9fafb;">
+          <p>Hello!</p>
+          <p>Thank you for subscribing to the Jimmy Jam newsletter!</p>
+
+          <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
+            <p>You'll now receive updates about:</p>
+            <ul style="margin: 10px 0;">
+              <li>🍖 BBQ Slam Competition details and schedules</li>
+              <li>🥃 Bourbon & BBQ event information</li>
+              <li>🎤 Live entertainment and performers</li>
+              <li>📸 Behind-the-scenes photos and videos</li>
+              <li>🎫 Special ticket offers and promotions</li>
+            </ul>
+          </div>
+
+          <p>Stay tuned for exciting announcements!</p>
+          <p><em>You can unsubscribe at any time by replying to this email.</em></p>
+
+          <p style="margin-top: 30px;">Best regards,<br><strong>Jimmy Jam Team</strong></p>
+        </div>
+      </div>
+    `
+  })
+};
+
+// Send email function - integrate with your email service (Resend, SendGrid, etc.)
+export const sendEmail = async (to, templateType, templateData) => {
+  try {
+    // TODO: Configure with your preferred email service
+    // Options:
+    // 1. Resend: https://resend.com
+    // 2. SendGrid: https://sendgrid.com
+    // 3. Mailgun: https://mailgun.com
+    // 4. Custom backend endpoint
+
+    // Example with Resend (install: npm install resend):
+    // import { Resend } from 'resend';
+    // const resend = new Resend(process.env.REACT_APP_RESEND_API_KEY);
+    // const template = emailTemplates[templateType](templateData);
+    // await resend.emails.send({
+    //   from: 'Jimmy Jam <noreply@jimmyjamoutreach.com>',
+    //   to: to,
+    //   subject: template.subject,
+    //   html: template.html
+    // });
+
+    // For now, log the email that would be sent
+    const template = emailTemplates[templateType](templateData);
+    console.log(`📧 Email to ${to}:`, template);
+
+    // Return success for now (implement actual email service later)
+    return { success: true, message: 'Email sent successfully' };
+  } catch (error) {
+    console.error('Email sending error:', error);
+    return { success: false, error: error.message };
+  }
+};

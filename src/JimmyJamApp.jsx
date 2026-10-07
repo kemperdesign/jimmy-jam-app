@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Bell, Search, ChevronLeft, ChevronRight, Star, Filter, Upload, Play, MapPin, Clock, DollarSign, Users, Utensils, Car } from 'lucide-react';
 import L from 'leaflet';
-import { submitBBQTeamEntry, submitVendorEntry, submitCarShowEntry, submitAssistanceApplication, submitNewsletterSignup, uploadPhoto, getPhotos, deletePhoto } from './supabaseClient';
+import { submitBBQTeamEntry, submitVendorEntry, submitCarShowEntry, submitAssistanceApplication, submitNewsletterSignup, uploadPhoto, getPhotos, deletePhoto, sendEmail } from './supabaseClient';
 
 const JimmyJamApp = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -252,6 +252,9 @@ const JimmyJamApp = () => {
       setSubmitError(prev => ({ ...prev, team: error.message || 'Failed to submit. Please try again.' }));
       setSubmitting(prev => ({ ...prev, team: false }));
     } else {
+      // Send confirmation email
+      await sendEmail(slamTeamForm.email, 'bbqTeam', slamTeamForm);
+
       setSubmitSuccess(prev => ({ ...prev, team: true }));
       setSlamTeamForm({ teamName: '', contactName: '', email: '', phone: '', members: '', bbqStyle: '', experience: '' });
       setTideSubmitted({ ...tideSubmitted, team: true });
@@ -275,6 +278,9 @@ const JimmyJamApp = () => {
       setSubmitError(prev => ({ ...prev, vendor: error.message || 'Failed to submit. Please try again.' }));
       setSubmitting(prev => ({ ...prev, vendor: false }));
     } else {
+      // Send confirmation email
+      await sendEmail(vendorForm.email, 'vendor', vendorForm);
+
       setSubmitSuccess(prev => ({ ...prev, vendor: true }));
       setVendorForm({ businessName: '', category: '', contactName: '', email: '', phone: '', description: '', booth: '' });
       setVendorSubmitted({ ...vendorSubmitted, submitted: true });
@@ -298,6 +304,9 @@ const JimmyJamApp = () => {
       setSubmitError(prev => ({ ...prev, car: error.message || 'Failed to submit. Please try again.' }));
       setSubmitting(prev => ({ ...prev, car: false }));
     } else {
+      // Send confirmation email
+      await sendEmail(carShowForm.email, 'carShow', carShowForm);
+
       setSubmitSuccess(prev => ({ ...prev, car: true }));
       setCarShowForm({ ownerName: '', carMake: '', carModel: '', carYear: '', email: '', phone: '', category: '' });
       setCarSubmitted({ ...carSubmitted, submitted: true });
@@ -321,10 +330,14 @@ const JimmyJamApp = () => {
       setSubmitError(prev => ({ ...prev, assistance: error.message || 'Failed to submit. Please try again.' }));
       setSubmitting(prev => ({ ...prev, assistance: false }));
     } else {
+      // Send confirmation email
+      await sendEmail(assistanceForm.email, 'assistance', assistanceForm);
+
       setSubmitSuccess(prev => ({ ...prev, assistance: true }));
       setAssistanceForm({ fullName: '', email: '', phone: '', assistanceType: '', description: '' });
       setAppSubmitted(true);
       setSubmitting(prev => ({ ...prev, assistance: false }));
+      setTimeout(() => setSubmitSuccess(prev => ({ ...prev, assistance: false })), 3000);
     }
   };
 
@@ -343,6 +356,9 @@ const JimmyJamApp = () => {
       setSubmitError(prev => ({ ...prev, newsletter: error.message || 'Failed to subscribe. Please try again.' }));
       setSubmitting(prev => ({ ...prev, newsletter: false }));
     } else {
+      // Send welcome email
+      await sendEmail(newsletterEmail, 'newsletter', newsletterEmail);
+
       setSubmitSuccess(prev => ({ ...prev, newsletter: true }));
       setNewsletterEmail('');
       setSubmitting(prev => ({ ...prev, newsletter: false }));
