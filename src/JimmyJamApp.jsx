@@ -1219,12 +1219,6 @@ const JimmyJamApp = () => {
               >
                 Hourly
               </button>
-              <button
-                onClick={() => setActiveTab('map')}
-                className={`flex-1 py-3 font-bold text-sm ${activeTab === 'map' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}
-              >
-                Map
-              </button>
             </div>
 
             {activeTab === 'forecast' && (
@@ -1302,22 +1296,6 @@ const JimmyJamApp = () => {
               </div>
             )}
 
-            {activeTab === 'map' && (
-              <div className="p-4">
-                <div className="bg-gradient-to-b from-blue-100 to-blue-200 rounded-lg h-48 flex items-center justify-center mb-4">
-                  <span className="text-6xl">🗺️</span>
-                </div>
-                <div className="flex gap-2 mb-4">
-                  <button className="flex-1 px-3 py-2 bg-blue-100 text-blue-700 rounded font-bold text-sm">Rain</button>
-                  <button className="flex-1 px-3 py-2 bg-gray-200 text-gray-700 rounded font-bold text-sm">Ice</button>
-                  <button className="flex-1 px-3 py-2 bg-gray-200 text-gray-700 rounded font-bold text-sm">Mix</button>
-                  <button className="flex-1 px-3 py-2 bg-gray-200 text-gray-700 rounded font-bold text-sm">Snow</button>
-                </div>
-                <div className="bg-white border border-gray-300 rounded p-3">
-                  <p className="text-sm text-gray-600">Time Slider: 4:00 PM - 8:00 AM</p>
-                </div>
-              </div>
-            )}
           </div>
         );
 
@@ -1529,8 +1507,8 @@ const JimmyJamApp = () => {
                     <p className="text-sm"><strong>🌐 Website:</strong> {selectedSponsor.website}</p>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex-1 bg-blue-600 text-white p-2 rounded text-sm font-bold">📘 Facebook</button>
-                    <button className="flex-1 bg-pink-600 text-white p-2 rounded text-sm font-bold">📷 Instagram</button>
+                    <button onClick={() => window.open(selectedSponsor.facebookUrl, '_blank', 'rel=noopener noreferrer')} className="flex-1 bg-blue-600 text-white p-2 rounded text-sm font-bold">📘 Facebook</button>
+                    <button onClick={() => window.open(selectedSponsor.instagramUrl, '_blank', 'rel=noopener noreferrer')} className="flex-1 bg-pink-600 text-white p-2 rounded text-sm font-bold">📷 Instagram</button>
                   </div>
                 </div>
               </div>
@@ -1549,13 +1527,19 @@ const JimmyJamApp = () => {
                 <input
                   type="text"
                   placeholder="Search sponsors..."
+                  value={searchSponsors}
+                  onChange={(e) => setSearchSponsors(e.target.value)}
                   className="w-full border-2 border-red-700 rounded p-3 pl-10"
                 />
                 <Search size={18} className="absolute left-3 top-3.5 text-gray-400" />
               </div>
 
               <div className="space-y-3">
-                {sponsorsData.map((sponsor, idx) => (
+                {sponsorsData.filter(sponsor =>
+                  sponsor.name.toLowerCase().includes(searchSponsors.toLowerCase()) ||
+                  sponsor.tagline.toLowerCase().includes(searchSponsors.toLowerCase()) ||
+                  sponsor.description.toLowerCase().includes(searchSponsors.toLowerCase())
+                ).map((sponsor, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedSponsor(sponsor)}
@@ -1608,7 +1592,11 @@ const JimmyJamApp = () => {
                 ))}
               </div>
 
-              {scheduleData.find(d => d.date === selectedDate)?.events.map((event, idx) => (
+              {scheduleData.find(d => d.date === selectedDate)?.events.filter(event =>
+                event.name.toLowerCase().includes(searchSchedule.toLowerCase()) ||
+                event.category.toLowerCase().includes(searchSchedule.toLowerCase()) ||
+                event.location.toLowerCase().includes(searchSchedule.toLowerCase())
+              ).map((event, idx) => (
                 <div key={idx} className="bg-white border-2 border-gray-300 rounded-lg p-4">
                   <div className="flex justify-between items-start mb-2">
                     <div>
@@ -1666,6 +1654,13 @@ const JimmyJamApp = () => {
                 </div>
               ) : (
                 <>
+                  {(() => {
+                    // Bounds check: reset index if it exceeds array length
+                    if (currentPhotoIndex >= uploadedPhotos.length) {
+                      setCurrentPhotoIndex(0);
+                    }
+                    return null;
+                  })()}
                   {/* Main Photo Display */}
                   <div className="bg-white border-2 border-red-700 rounded-lg overflow-hidden mb-4">
                     <img
