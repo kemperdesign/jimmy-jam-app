@@ -364,3 +364,105 @@ export const sendEmail = async (to, templateType, templateData) => {
     return { success: false, error: error.message };
   }
 };
+
+// Payment processing functions
+// Note: In production, payment intent creation should be done server-side for security
+// This frontend implementation is for demonstration purposes
+
+export const submitTicketOrder = async (orderData) => {
+  const { data, error } = await supabase
+    .from('orders')
+    .insert([{
+      order_type: 'tickets',
+      customer_name: orderData.name,
+      customer_email: orderData.email,
+      customer_phone: orderData.phone,
+      ticket_type: orderData.ticketType,
+      quantity: orderData.quantity,
+      amount: orderData.amount,
+      status: 'pending',
+      submitted_at: new Date().toISOString()
+    }]);
+
+  return { data, error };
+};
+
+export const submitMerchOrder = async (orderData) => {
+  const { data, error } = await supabase
+    .from('orders')
+    .insert([{
+      order_type: 'merchandise',
+      customer_name: orderData.name,
+      customer_email: orderData.email,
+      customer_phone: orderData.phone,
+      items: JSON.stringify(orderData.items),
+      amount: orderData.amount,
+      status: 'pending',
+      submitted_at: new Date().toISOString()
+    }]);
+
+  return { data, error };
+};
+
+export const submitDonation = async (donationData) => {
+  const { data, error } = await supabase
+    .from('orders')
+    .insert([{
+      order_type: 'donation',
+      customer_name: donationData.name,
+      customer_email: donationData.email,
+      customer_phone: donationData.phone,
+      amount: donationData.amount,
+      message: donationData.message,
+      status: 'pending',
+      submitted_at: new Date().toISOString()
+    }]);
+
+  return { data, error };
+};
+
+export const updateOrderStatus = async (orderId, status, stripePaymentId) => {
+  const { data, error } = await supabase
+    .from('orders')
+    .update({
+      status: status,
+      stripe_payment_id: stripePaymentId,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', orderId);
+
+  return { data, error };
+};
+
+// Payment confirmation email template
+export const paymentConfirmationEmail = (orderData) => ({
+  subject: '✅ Payment Confirmed - Jimmy Jam Order',
+  html: `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #b91c1c; color: white; padding: 20px; text-align: center;">
+        <h1 style="margin: 0;">✅ Payment Received</h1>
+      </div>
+      <div style="padding: 20px; background-color: #f9fafb;">
+        <p>Hello ${orderData.name},</p>
+        <p>Thank you for your purchase! Your payment has been received and confirmed.</p>
+
+        <div style="background-color: white; border-left: 4px solid #b91c1c; padding: 15px; margin: 20px 0;">
+          <h2 style="margin-top: 0; color: #b91c1c;">Order Details</h2>
+          <p><strong>Order ID:</strong> ${orderData.orderId}</p>
+          <p><strong>Order Type:</strong> ${orderData.orderType}</p>
+          <p><strong>Amount:</strong> $${orderData.amount.toFixed(2)}</p>
+          <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+        </div>
+
+        <p><strong>Next Steps:</strong></p>
+        <ul style="margin: 15px 0;">
+          <li>A confirmation email with your receipt has been sent</li>
+          <li>You will receive additional details about delivery/pickup soon</li>
+          <li>If you have questions, reply to this email or contact us</li>
+        </ul>
+
+        <p style="margin-top: 30px;">Best regards,<br><strong>Jimmy Jam Team</strong></p>
+      </div>
+    </div>
+  `
+});
