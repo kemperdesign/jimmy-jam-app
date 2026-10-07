@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Bell, Search, ChevronLeft, ChevronRight, Star, Filter, Upload, Play, MapPin, Clock, DollarSign, Users, Utensils, Car } from 'lucide-react';
 import L from 'leaflet';
+import { submitBBQTeamEntry, submitVendorEntry, submitCarShowEntry, submitAssistanceApplication, submitNewsletterSignup, uploadPhoto, getPhotos, deletePhoto } from './supabaseClient';
 
 const JimmyJamApp = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -49,9 +50,29 @@ const JimmyJamApp = () => {
     category: ''
   });
 
+  const [assistanceForm, setAssistanceForm] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    assistanceType: '',
+    description: ''
+  });
+
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+
+  // Photo gallery state
+  const [uploadedPhotos, setUploadedPhotos] = useState([]);
+  const [photoLoading, setPhotoLoading] = useState(false);
+  const [photoError, setPhotoError] = useState('');
+
   const [tideSubmitted, setTideSubmitted] = useState({});
   const [vendorSubmitted, setVendorSubmitted] = useState({});
   const [carSubmitted, setCarSubmitted] = useState({});
+
+  // Loading states for form submissions
+  const [submitting, setSubmitting] = useState({});
+  const [submitError, setSubmitError] = useState({});
+  const [submitSuccess, setSubmitSuccess] = useState({});
 
   // Weather state
   const [weatherData, setWeatherData] = useState({
@@ -194,6 +215,179 @@ const JimmyJamApp = () => {
     if (activeNav === 'weather') setActiveTab('forecast');
     if (activeNav === 'maps') setActiveTab('gps');
   }, [activeNav]);
+
+  // Load photos when photos page is accessed
+  useEffect(() => {
+    if (activeNav === 'photos') {
+      loadPhotos();
+    }
+  }, [activeNav]);
+
+  const loadPhotos = async () => {
+    setPhotoLoading(true);
+    setPhotoError('');
+    const { data, error } = await getPhotos('event-photos');
+    if (error) {
+      setPhotoError('Failed to load photos');
+    } else {
+      setUploadedPhotos(data);
+    }
+    setPhotoLoading(false);
+  };
+
+  // Form submission handlers
+  const handleBBQTeamSubmit = async () => {
+    // Validate required fields
+    if (!slamTeamForm.teamName || !slamTeamForm.contactName || !slamTeamForm.email || !slamTeamForm.phone) {
+      setSubmitError(prev => ({ ...prev, team: 'Please fill in all required fields' }));
+      return;
+    }
+
+    setSubmitting(prev => ({ ...prev, team: true }));
+    setSubmitError(prev => ({ ...prev, team: '' }));
+
+    const { data, error } = await submitBBQTeamEntry(slamTeamForm);
+
+    if (error) {
+      setSubmitError(prev => ({ ...prev, team: error.message || 'Failed to submit. Please try again.' }));
+      setSubmitting(prev => ({ ...prev, team: false }));
+    } else {
+      setSubmitSuccess(prev => ({ ...prev, team: true }));
+      setSlamTeamForm({ teamName: '', contactName: '', email: '', phone: '', members: '', bbqStyle: '', experience: '' });
+      setTideSubmitted({ ...tideSubmitted, team: true });
+      setSubmitting(prev => ({ ...prev, team: false }));
+      setTimeout(() => setSubmitSuccess(prev => ({ ...prev, team: false })), 3000);
+    }
+  };
+
+  const handleVendorSubmit = async () => {
+    if (!vendorForm.businessName || !vendorForm.category || !vendorForm.contactName || !vendorForm.email || !vendorForm.phone) {
+      setSubmitError(prev => ({ ...prev, vendor: 'Please fill in all required fields' }));
+      return;
+    }
+
+    setSubmitting(prev => ({ ...prev, vendor: true }));
+    setSubmitError(prev => ({ ...prev, vendor: '' }));
+
+    const { data, error } = await submitVendorEntry(vendorForm);
+
+    if (error) {
+      setSubmitError(prev => ({ ...prev, vendor: error.message || 'Failed to submit. Please try again.' }));
+      setSubmitting(prev => ({ ...prev, vendor: false }));
+    } else {
+      setSubmitSuccess(prev => ({ ...prev, vendor: true }));
+      setVendorForm({ businessName: '', category: '', contactName: '', email: '', phone: '', description: '', booth: '' });
+      setVendorSubmitted({ ...vendorSubmitted, submitted: true });
+      setSubmitting(prev => ({ ...prev, vendor: false }));
+      setTimeout(() => setSubmitSuccess(prev => ({ ...prev, vendor: false })), 3000);
+    }
+  };
+
+  const handleCarShowSubmit = async () => {
+    if (!carShowForm.ownerName || !carShowForm.carMake || !carShowForm.carModel || !carShowForm.email || !carShowForm.phone) {
+      setSubmitError(prev => ({ ...prev, car: 'Please fill in all required fields' }));
+      return;
+    }
+
+    setSubmitting(prev => ({ ...prev, car: true }));
+    setSubmitError(prev => ({ ...prev, car: '' }));
+
+    const { data, error } = await submitCarShowEntry(carShowForm);
+
+    if (error) {
+      setSubmitError(prev => ({ ...prev, car: error.message || 'Failed to submit. Please try again.' }));
+      setSubmitting(prev => ({ ...prev, car: false }));
+    } else {
+      setSubmitSuccess(prev => ({ ...prev, car: true }));
+      setCarShowForm({ ownerName: '', carMake: '', carModel: '', carYear: '', email: '', phone: '', category: '' });
+      setCarSubmitted({ ...carSubmitted, submitted: true });
+      setSubmitting(prev => ({ ...prev, car: false }));
+      setTimeout(() => setSubmitSuccess(prev => ({ ...prev, car: false })), 3000);
+    }
+  };
+
+  const handleAssistanceSubmit = async () => {
+    if (!assistanceForm.fullName || !assistanceForm.email || !assistanceForm.phone || !assistanceForm.assistanceType) {
+      setSubmitError(prev => ({ ...prev, assistance: 'Please fill in all required fields' }));
+      return;
+    }
+
+    setSubmitting(prev => ({ ...prev, assistance: true }));
+    setSubmitError(prev => ({ ...prev, assistance: '' }));
+
+    const { data, error } = await submitAssistanceApplication(assistanceForm);
+
+    if (error) {
+      setSubmitError(prev => ({ ...prev, assistance: error.message || 'Failed to submit. Please try again.' }));
+      setSubmitting(prev => ({ ...prev, assistance: false }));
+    } else {
+      setSubmitSuccess(prev => ({ ...prev, assistance: true }));
+      setAssistanceForm({ fullName: '', email: '', phone: '', assistanceType: '', description: '' });
+      setAppSubmitted(true);
+      setSubmitting(prev => ({ ...prev, assistance: false }));
+    }
+  };
+
+  const handleNewsletterSubmit = async () => {
+    if (!newsletterEmail || !newsletterEmail.includes('@')) {
+      setSubmitError(prev => ({ ...prev, newsletter: 'Please enter a valid email' }));
+      return;
+    }
+
+    setSubmitting(prev => ({ ...prev, newsletter: true }));
+    setSubmitError(prev => ({ ...prev, newsletter: '' }));
+
+    const { data, error } = await submitNewsletterSignup(newsletterEmail);
+
+    if (error) {
+      setSubmitError(prev => ({ ...prev, newsletter: error.message || 'Failed to subscribe. Please try again.' }));
+      setSubmitting(prev => ({ ...prev, newsletter: false }));
+    } else {
+      setSubmitSuccess(prev => ({ ...prev, newsletter: true }));
+      setNewsletterEmail('');
+      setSubmitting(prev => ({ ...prev, newsletter: false }));
+      setTimeout(() => setSubmitSuccess(prev => ({ ...prev, newsletter: false })), 3000);
+    }
+  };
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setPhotoLoading(true);
+    setPhotoError('');
+
+    const { data, error } = await uploadPhoto(file, 'event-photos');
+
+    if (error) {
+      setPhotoError(error.message || 'Failed to upload photo');
+      setPhotoLoading(false);
+    } else {
+      setSubmitSuccess(prev => ({ ...prev, photo: true }));
+      setTimeout(() => setSubmitSuccess(prev => ({ ...prev, photo: false })), 3000);
+      // Reload photos to show the new upload
+      await loadPhotos();
+    }
+  };
+
+  const handlePhotoDelete = async (filepath) => {
+    if (!window.confirm('Are you sure you want to delete this photo?')) return;
+
+    setPhotoLoading(true);
+    setPhotoError('');
+
+    const { error } = await deletePhoto(filepath);
+
+    if (error) {
+      setPhotoError(error.message || 'Failed to delete photo');
+      setPhotoLoading(false);
+    } else {
+      setSubmitSuccess(prev => ({ ...prev, photo: true }));
+      setTimeout(() => setSubmitSuccess(prev => ({ ...prev, photo: false })), 3000);
+      // Reload photos to update the gallery
+      await loadPhotos();
+    }
+  };
 
   if (showSplash) {
     return (
@@ -489,11 +683,14 @@ const JimmyJamApp = () => {
                       <option value="semi-pro">Semi-Pro</option>
                       <option value="pro">Professional</option>
                     </select>
+                    {submitError.team && <p className="text-red-600 text-sm mb-2">{submitError.team}</p>}
+                    {submitSuccess.team && <p className="text-green-600 text-sm mb-2">✓ Team registered successfully!</p>}
                     <button
-                      onClick={() => setTideSubmitted({...tideSubmitted, team: true})}
-                      className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2 rounded"
+                      onClick={handleBBQTeamSubmit}
+                      disabled={submitting.team}
+                      className="w-full bg-red-700 hover:bg-red-800 disabled:bg-gray-400 text-white font-bold py-2 rounded"
                     >
-                      {tideSubmitted.team ? '✓ Team Registered!' : 'Register Team'}
+                      {submitting.team ? '⏳ Submitting...' : (tideSubmitted.team ? '✓ Team Registered!' : 'Register Team')}
                     </button>
                   </div>
 
@@ -545,11 +742,14 @@ const JimmyJamApp = () => {
                       className="w-full border border-gray-300 rounded p-2 mb-2"
                       rows="3"
                     />
+                    {submitError.vendor && <p className="text-red-600 text-sm mb-2">{submitError.vendor}</p>}
+                    {submitSuccess.vendor && <p className="text-green-600 text-sm mb-2">✓ Vendor registered successfully!</p>}
                     <button
-                      onClick={() => setVendorSubmitted({...vendorSubmitted, submitted: true})}
-                      className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 rounded"
+                      onClick={handleVendorSubmit}
+                      disabled={submitting.vendor}
+                      className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-bold py-2 rounded"
                     >
-                      {vendorSubmitted.submitted ? '✓ Vendor Registered!' : 'Register as Vendor'}
+                      {submitting.vendor ? '⏳ Submitting...' : (vendorSubmitted.submitted ? '✓ Vendor Registered!' : 'Register as Vendor')}
                     </button>
                   </div>
 
@@ -609,11 +809,14 @@ const JimmyJamApp = () => {
                       <option value="exotic">Exotic/Sports</option>
                       <option value="motorcycle">Motorcycles</option>
                     </select>
+                    {submitError.car && <p className="text-red-600 text-sm mb-2">{submitError.car}</p>}
+                    {submitSuccess.car && <p className="text-green-600 text-sm mb-2">✓ Car registered successfully!</p>}
                     <button
-                      onClick={() => setCarSubmitted({...carSubmitted, submitted: true})}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded"
+                      onClick={handleCarShowSubmit}
+                      disabled={submitting.car}
+                      className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold py-2 rounded"
                     >
-                      {carSubmitted.submitted ? '✓ Car Registered!' : 'Register Car'}
+                      {submitting.car ? '⏳ Submitting...' : (carSubmitted.submitted ? '✓ Car Registered!' : 'Register Car')}
                     </button>
                   </div>
                 </div>
@@ -1159,40 +1362,89 @@ const JimmyJamApp = () => {
             </div>
 
             <div className="p-4">
-              <div className="bg-white border-2 border-red-700 rounded-lg overflow-hidden mb-4">
-                <div className="aspect-square bg-gray-200 flex items-center justify-center text-7xl">
-                  {photos[currentPhotoIndex].src}
-                </div>
-                <div className="p-4">
-                  <p className="font-bold mb-3">{photos[currentPhotoIndex].label}</p>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setCurrentPhotoIndex(prev => prev === 0 ? photos.length - 1 : prev - 1)}
-                      className="flex-1 bg-gray-200 hover:bg-gray-300 p-2 rounded font-bold"
-                    >
-                      ← Prev
-                    </button>
-                    <button
-                      onClick={() => setCurrentPhotoIndex(prev => prev === photos.length - 1 ? 0 : prev + 1)}
-                      className="flex-1 bg-red-700 hover:bg-red-800 text-white p-2 rounded font-bold"
-                    >
-                      Next →
-                    </button>
+              {/* Photo Upload Section */}
+              <div className="bg-white border-2 border-red-700 rounded-lg p-4 mb-4">
+                <label className="block mb-2">
+                  <div className="flex items-center gap-2 mb-2 font-bold text-red-700">
+                    <Upload size={20} />
+                    Upload Photo
                   </div>
-                </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoUpload}
+                    disabled={photoLoading}
+                    className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-red-700 file:text-white file:font-bold hover:file:bg-red-800 disabled:opacity-50"
+                  />
+                </label>
+                {photoLoading && <p className="text-sm text-blue-600 font-bold">⏳ Uploading...</p>}
+                {photoError && <p className="text-sm text-red-600 font-bold">❌ {photoError}</p>}
+                {submitSuccess.photo && <p className="text-sm text-green-600 font-bold">✅ Photo uploaded successfully!</p>}
               </div>
 
-              <div className="grid grid-cols-4 gap-2">
-                {photos.map((photo, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentPhotoIndex(idx)}
-                    className={`aspect-square rounded text-3xl flex items-center justify-center ${currentPhotoIndex === idx ? 'border-4 border-red-700' : 'border-2 border-gray-300'}`}
-                  >
-                    {photo.src}
-                  </button>
-                ))}
-              </div>
+              {/* Photo Gallery */}
+              {photoLoading && uploadedPhotos.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-600">⏳ Loading photos...</p>
+                </div>
+              ) : uploadedPhotos.length === 0 ? (
+                <div className="text-center py-8 bg-gray-100 rounded-lg">
+                  <p className="text-gray-600">📸 No photos uploaded yet. Be the first to share!</p>
+                </div>
+              ) : (
+                <>
+                  {/* Main Photo Display */}
+                  <div className="bg-white border-2 border-red-700 rounded-lg overflow-hidden mb-4">
+                    <img
+                      src={uploadedPhotos[currentPhotoIndex]?.url}
+                      alt={uploadedPhotos[currentPhotoIndex]?.name}
+                      className="w-full aspect-square object-cover bg-gray-200"
+                    />
+                    <div className="p-4">
+                      <p className="font-bold mb-2 truncate">{uploadedPhotos[currentPhotoIndex]?.name}</p>
+                      <p className="text-xs text-gray-600 mb-3">{new Date(uploadedPhotos[currentPhotoIndex]?.created_at).toLocaleDateString()}</p>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setCurrentPhotoIndex(prev => prev === 0 ? uploadedPhotos.length - 1 : prev - 1)}
+                          className="flex-1 bg-gray-200 hover:bg-gray-300 p-2 rounded font-bold"
+                        >
+                          ← Prev
+                        </button>
+                        <button
+                          onClick={() => handlePhotoDelete(uploadedPhotos[currentPhotoIndex]?.path)}
+                          disabled={photoLoading}
+                          className="flex-1 bg-red-600 hover:bg-red-700 text-white p-2 rounded font-bold disabled:opacity-50"
+                        >
+                          🗑️ Delete
+                        </button>
+                        <button
+                          onClick={() => setCurrentPhotoIndex(prev => prev === uploadedPhotos.length - 1 ? 0 : prev + 1)}
+                          className="flex-1 bg-red-700 hover:bg-red-800 text-white p-2 rounded font-bold"
+                        >
+                          Next →
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Photo Thumbnails */}
+                  <div className="grid grid-cols-4 gap-2">
+                    {uploadedPhotos.map((photo, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentPhotoIndex(idx)}
+                        className={`aspect-square rounded overflow-hidden border-4 ${currentPhotoIndex === idx ? 'border-red-700' : 'border-gray-300'}`}
+                      >
+                        <img
+                          src={photo.url}
+                          alt={photo.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         );
@@ -1391,41 +1643,71 @@ const JimmyJamApp = () => {
                 <form className="space-y-4">
                   <div>
                     <label className="block font-bold mb-2 text-gray-700">Full Name</label>
-                    <input type="text" className="w-full border-2 border-gray-300 rounded p-3" placeholder="Your name" />
+                    <input
+                      type="text"
+                      value={assistanceForm.fullName}
+                      onChange={(e) => setAssistanceForm({...assistanceForm, fullName: e.target.value})}
+                      className="w-full border-2 border-gray-300 rounded p-3"
+                      placeholder="Your name"
+                    />
                   </div>
 
                   <div>
                     <label className="block font-bold mb-2 text-gray-700">Email</label>
-                    <input type="email" className="w-full border-2 border-gray-300 rounded p-3" placeholder="your@email.com" />
+                    <input
+                      type="email"
+                      value={assistanceForm.email}
+                      onChange={(e) => setAssistanceForm({...assistanceForm, email: e.target.value})}
+                      className="w-full border-2 border-gray-300 rounded p-3"
+                      placeholder="your@email.com"
+                    />
                   </div>
 
                   <div>
                     <label className="block font-bold mb-2 text-gray-700">Phone</label>
-                    <input type="tel" className="w-full border-2 border-gray-300 rounded p-3" placeholder="(XXX) XXX-XXXX" />
+                    <input
+                      type="tel"
+                      value={assistanceForm.phone}
+                      onChange={(e) => setAssistanceForm({...assistanceForm, phone: e.target.value})}
+                      className="w-full border-2 border-gray-300 rounded p-3"
+                      placeholder="(XXX) XXX-XXXX"
+                    />
                   </div>
 
                   <div>
                     <label className="block font-bold mb-2 text-gray-700">Type of Assistance Needed</label>
-                    <select className="w-full border-2 border-gray-300 rounded p-3">
-                      <option>Select assistance type...</option>
-                      <option>Emergency Repair</option>
-                      <option>Medical Emergency</option>
-                      <option>Unexpected Loss</option>
-                      <option>Temporary Financial Crisis</option>
-                      <option>Other</option>
+                    <select
+                      value={assistanceForm.assistanceType}
+                      onChange={(e) => setAssistanceForm({...assistanceForm, assistanceType: e.target.value})}
+                      className="w-full border-2 border-gray-300 rounded p-3"
+                    >
+                      <option value="">Select assistance type...</option>
+                      <option value="emergency_repair">Emergency Repair</option>
+                      <option value="medical_emergency">Medical Emergency</option>
+                      <option value="unexpected_loss">Unexpected Loss</option>
+                      <option value="financial_crisis">Temporary Financial Crisis</option>
+                      <option value="other">Other</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block font-bold mb-2 text-gray-700">Please Describe Your Situation</label>
-                    <textarea className="w-full border-2 border-gray-300 rounded p-3" placeholder="Tell us more..." rows="5" />
+                    <textarea
+                      value={assistanceForm.description}
+                      onChange={(e) => setAssistanceForm({...assistanceForm, description: e.target.value})}
+                      className="w-full border-2 border-gray-300 rounded p-3"
+                      placeholder="Tell us more..."
+                      rows="5"
+                    />
                   </div>
 
+                  {submitError.assistance && <p className="text-red-600 text-sm">{submitError.assistance}</p>}
                   <button
-                    onClick={() => setAppSubmitted(true)}
-                    className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-3 rounded"
+                    onClick={handleAssistanceSubmit}
+                    disabled={submitting.assistance}
+                    className="w-full bg-red-700 hover:bg-red-800 disabled:bg-gray-400 text-white font-bold py-3 rounded"
                   >
-                    Submit Application
+                    {submitting.assistance ? '⏳ Submitting...' : 'Submit Application'}
                   </button>
                 </form>
               </div>
@@ -1498,8 +1780,22 @@ const JimmyJamApp = () => {
 
               <div className="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-lg p-4">
                 <h3 className="font-bold text-orange-700 mb-2">📰 Newsletter</h3>
-                <input type="email" placeholder="Your email" className="w-full border-2 border-yellow-200 rounded p-2 mb-2" />
-                <button className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 rounded">Subscribe</button>
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  className="w-full border-2 border-yellow-200 rounded p-2 mb-2"
+                />
+                {submitError.newsletter && <p className="text-red-600 text-xs mb-2">{submitError.newsletter}</p>}
+                {submitSuccess.newsletter && <p className="text-green-600 text-xs mb-2">✓ Subscribed successfully!</p>}
+                <button
+                  onClick={handleNewsletterSubmit}
+                  disabled={submitting.newsletter}
+                  className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-bold py-2 rounded"
+                >
+                  {submitting.newsletter ? '⏳ Subscribing...' : 'Subscribe'}
+                </button>
               </div>
             </div>
           </div>
