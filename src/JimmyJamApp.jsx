@@ -52,6 +52,98 @@ const JimmyJamApp = () => {
   const [vendorSubmitted, setVendorSubmitted] = useState({});
   const [carSubmitted, setCarSubmitted] = useState({});
 
+  // Weather state
+  const [weatherData, setWeatherData] = useState({
+    current: { temp: 78, condition: 'Partly Cloudy', humidity: 55, windSpeed: 8 },
+    forecast: [],
+    hourly: [],
+    loading: false,
+    error: null
+  });
+
+  // Fetch weather data for Fort Worth, TX
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        setWeatherData(prev => ({ ...prev, loading: true }));
+        // Using Open-Meteo (free, no API key required)
+        const response = await fetch(
+          'https://api.open-meteo.com/v1/forecast?latitude=32.7555&longitude=-97.3308&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability&hourly=temperature_2m,weather_code&timezone=America/Chicago'
+        );
+        const data = await response.json();
+
+        // Parse weather code to condition
+        const getCondition = (code) => {
+          if (code === 0) return 'Clear';
+          if (code === 1 || code === 2) return 'Partly Cloudy';
+          if (code === 3) return 'Overcast';
+          if (code === 45 || code === 48) return 'Foggy';
+          if (code >= 51 && code <= 67) return 'Drizzle';
+          if (code >= 80 && code <= 82) return 'Rain';
+          if (code >= 85 && code <= 86) return 'Showers';
+          if (code >= 71 && code <= 77) return 'Snow';
+          return 'Cloudy';
+        };
+
+        const getWeatherEmoji = (code) => {
+          if (code === 0) return '☀️';
+          if (code === 1 || code === 2) return '🌤️';
+          if (code === 3) return '☁️';
+          if (code >= 51 && code <= 82) return '🌧️';
+          if (code >= 71 && code <= 86) return '❄️';
+          return '🌤️';
+        };
+
+        const currentTemp = Math.round(data.current.temperature_2m);
+        const currentCondition = getCondition(data.current.weather_code);
+        const currentHumidity = data.current.relative_humidity_2m;
+        const currentWind = Math.round(data.current.wind_speed_10m);
+
+        // Process 7-day forecast
+        const days = ['Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'];
+        const forecast = data.daily.time.slice(0, 7).map((date, idx) => ({
+          day: days[idx],
+          high: Math.round(data.daily.temperature_2m_max[idx]),
+          low: Math.round(data.daily.temperature_2m_min[idx]),
+          chance: data.daily.precipitation_probability[idx] || 0,
+          emoji: getWeatherEmoji(data.daily.weather_code[idx])
+        }));
+
+        // Process hourly forecast (next 12 hours)
+        const hourly = data.hourly.time.slice(0, 12).map((time, idx) => {
+          const date = new Date(time);
+          const hour = date.getHours();
+          const ampm = hour >= 12 ? 'PM' : 'AM';
+          const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+          return {
+            time: `${displayHour}${ampm}`,
+            temp: Math.round(data.hourly.temperature_2m[idx]),
+            emoji: getWeatherEmoji(data.hourly.weather_code[idx]),
+            humidity: data.current.relative_humidity_2m
+          };
+        });
+
+        setWeatherData({
+          current: {
+            temp: currentTemp,
+            condition: currentCondition,
+            humidity: currentHumidity,
+            windSpeed: currentWind
+          },
+          forecast,
+          hourly,
+          loading: false,
+          error: null
+        });
+      } catch (err) {
+        console.error('Weather fetch error:', err);
+        setWeatherData(prev => ({ ...prev, loading: false, error: 'Could not load weather' }));
+      }
+    };
+
+    fetchWeather();
+  }, []);
+
   useEffect(() => {
     if (showSplash) {
       const timer = setInterval(() => {
@@ -637,74 +729,76 @@ const JimmyJamApp = () => {
 
             {activeTab === 'forecast' && (
               <div className="p-4">
-                <div className="bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-lg p-6 mb-4">
-                  <div className="text-5xl font-bold mb-2">78°F</div>
-                  <p className="text-blue-100 mb-4">Partly Cloudy</p>
-                  <p className="text-sm text-blue-100">Fort Worth, TX</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 mb-4">
-                  <div className="bg-white border border-gray-300 rounded p-2 text-center">
-                    <div className="text-sm text-gray-600">Humidity</div>
-                    <div className="font-bold">55%</div>
+                {weatherData.loading ? (
+                  <div className="text-center py-8">
+                    <p className="text-gray-600">Loading weather...</p>
                   </div>
-                  <div className="bg-white border border-gray-300 rounded p-2 text-center">
-                    <div className="text-sm text-gray-600">Wind</div>
-                    <div className="font-bold">8 mph</div>
+                ) : weatherData.error ? (
+                  <div className="text-center py-8">
+                    <p className="text-red-600">{weatherData.error}</p>
                   </div>
-                </div>
-
-                <div className="space-y-2">
-                  {['Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'].map((day, idx) => (
-                    <div key={idx} className="bg-white border border-gray-300 rounded p-3 flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <span className="w-8 text-center">🌤️</span>
-                        <span className="font-bold">{day}</span>
-                      </div>
-                      <div className="text-sm text-gray-600">72°/62° • 20%</div>
+                ) : (
+                  <>
+                    <div className="bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-lg p-6 mb-4">
+                      <div className="text-5xl font-bold mb-2">{weatherData.current.temp}°F</div>
+                      <p className="text-blue-100 mb-4">{weatherData.current.condition}</p>
+                      <p className="text-sm text-blue-100">Fort Worth, TX</p>
                     </div>
-                  ))}
-                </div>
+
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      <div className="bg-white border border-gray-300 rounded p-2 text-center">
+                        <div className="text-sm text-gray-600">Humidity</div>
+                        <div className="font-bold">{weatherData.current.humidity}%</div>
+                      </div>
+                      <div className="bg-white border border-gray-300 rounded p-2 text-center">
+                        <div className="text-sm text-gray-600">Wind</div>
+                        <div className="font-bold">{weatherData.current.windSpeed} mph</div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      {weatherData.forecast.map((day, idx) => (
+                        <div key={idx} className="bg-white border border-gray-300 rounded p-3 flex justify-between items-center">
+                          <div className="flex items-center gap-2">
+                            <span className="w-8 text-center">{day.emoji}</span>
+                            <span className="font-bold">{day.day}</span>
+                          </div>
+                          <div className="text-sm text-gray-600">{day.high}°/{day.low}° • {day.chance}%</div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             )}
 
             {activeTab === 'hourly' && (
               <div className="p-4">
-                <div className="mb-6">
-                  <h3 className="font-bold text-lg mb-3">Today</h3>
-                  <div className="space-y-2 overflow-x-auto">
-                    {['4PM', '5PM', '6PM', '7PM'].map((time, idx) => (
-                      <div key={idx} className="bg-white border border-gray-300 rounded p-3 flex justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xl">🌤️</span>
-                          <span className="font-bold">{time}</span>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-bold">76°</div>
-                          <div className="text-sm text-gray-600">55% humidity</div>
-                        </div>
-                      </div>
-                    ))}
+                {weatherData.loading ? (
+                  <div className="text-center py-8">
+                    <p className="text-gray-600">Loading hourly forecast...</p>
                   </div>
-                </div>
-
-                <div>
-                  <h3 className="font-bold text-lg mb-3">Tomorrow</h3>
+                ) : weatherData.error ? (
+                  <div className="text-center py-8">
+                    <p className="text-red-600">{weatherData.error}</p>
+                  </div>
+                ) : (
                   <div className="space-y-2">
-                    {['12AM', '1AM', '2AM'].map((time, idx) => (
+                    <h3 className="font-bold text-lg mb-3">Next 12 Hours</h3>
+                    {weatherData.hourly.map((hour, idx) => (
                       <div key={idx} className="bg-white border border-gray-300 rounded p-3 flex justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="text-xl">🌙</span>
-                          <span className="font-bold">{time}</span>
+                          <span className="text-xl">{hour.emoji}</span>
+                          <span className="font-bold">{hour.time}</span>
                         </div>
                         <div className="text-right">
-                          <div className="font-bold">62°</div>
-                          <div className="text-sm text-gray-600">65% humidity</div>
+                          <div className="font-bold">{hour.temp}°</div>
+                          <div className="text-sm text-gray-600">{hour.humidity}% humidity</div>
                         </div>
                       </div>
                     ))}
                   </div>
-                </div>
+                )}
               </div>
             )}
 
