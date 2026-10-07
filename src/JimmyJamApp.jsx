@@ -571,6 +571,30 @@ const JimmyJamApp = () => {
               </button>
             </div>
 
+            {/* Social Media Promotion */}
+            <div className="px-4 mb-4">
+              <div className="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-lg p-4">
+                <h3 className="font-bold text-red-700 text-center mb-3">Follow Us On Social Media</h3>
+                <div className="flex justify-center gap-3 flex-wrap">
+                  <a href="https://facebook.com/jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition duration-200" title="Facebook">
+                    <span className="text-lg">f</span>
+                  </a>
+                  <a href="https://instagram.com/jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="bg-pink-600 hover:bg-pink-700 text-white p-3 rounded-full transition duration-200" title="Instagram">
+                    <span className="text-lg">📷</span>
+                  </a>
+                  <a href="https://twitter.com/jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="bg-sky-400 hover:bg-sky-500 text-white p-3 rounded-full transition duration-200" title="Twitter/X">
+                    <span className="text-lg">𝕏</span>
+                  </a>
+                  <a href="https://youtube.com/jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="bg-red-600 hover:bg-red-700 text-white p-3 rounded-full transition duration-200" title="YouTube">
+                    <span className="text-lg">▶️</span>
+                  </a>
+                  <a href="https://tiktok.com/@jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="bg-black hover:bg-gray-800 text-white p-3 rounded-full transition duration-200" title="TikTok">
+                    <span className="text-lg">♫</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <div className="p-4">
               <button
                 onClick={() => setActiveNav('assistance')}
@@ -1823,21 +1847,21 @@ const JimmyJamApp = () => {
               </div>
 
               <div className="space-y-3">
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded flex items-center justify-center gap-2">
+                <a href="https://facebook.com/jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded flex items-center justify-center gap-2 transition duration-200">
                   <span>📘</span> Facebook
-                </button>
-                <button className="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 rounded flex items-center justify-center gap-2">
+                </a>
+                <a href="https://instagram.com/jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 rounded flex items-center justify-center gap-2 transition duration-200">
                   <span>📷</span> Instagram
-                </button>
-                <button className="w-full bg-sky-400 hover:bg-sky-500 text-white font-bold py-3 rounded flex items-center justify-center gap-2">
+                </a>
+                <a href="https://twitter.com/jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="w-full bg-sky-400 hover:bg-sky-500 text-white font-bold py-3 rounded flex items-center justify-center gap-2 transition duration-200">
                   <span>𝕏</span> Twitter/X
-                </button>
-                <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded flex items-center justify-center gap-2">
+                </a>
+                <a href="https://youtube.com/jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded flex items-center justify-center gap-2 transition duration-200">
                   <span>▶️</span> YouTube
-                </button>
-                <button className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 rounded flex items-center justify-center gap-2">
+                </a>
+                <a href="https://tiktok.com/@jimmyjamoutreach" target="_blank" rel="noopener noreferrer" className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 rounded flex items-center justify-center gap-2 transition duration-200">
                   <span>♫</span> TikTok
-                </button>
+                </a>
               </div>
 
               <div className="bg-white border-2 border-red-700 rounded-lg p-4">
