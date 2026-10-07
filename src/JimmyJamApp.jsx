@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Bell, Search, ChevronLeft, ChevronRight, Star, Filter, Upload, Play, MapPin, Clock, DollarSign, Users, Utensils, Car } from 'lucide-react';
+import L from 'leaflet';
 
 const JimmyJamApp = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -60,6 +61,11 @@ const JimmyJamApp = () => {
     loading: false,
     error: null
   });
+
+  // Map refs
+  const gpsMapRef = useRef(null);
+  const venueMapRef = useRef(null);
+  const [mapInstances, setMapInstances] = useState({});
 
   // Fetch weather data for Fort Worth, TX
   useEffect(() => {
@@ -159,6 +165,29 @@ const JimmyJamApp = () => {
       return () => clearInterval(timer);
     }
   }, [showSplash]);
+
+  // Initialize maps when maps nav is active
+  useEffect(() => {
+    if (activeNav === 'maps' && activeTab === 'gps' && gpsMapRef.current && !mapInstances.gpsMap) {
+      // Fort Worth event coordinates
+      const map = L.map(gpsMapRef.current).setView([32.7555, -97.3308], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19
+      }).addTo(map);
+
+      // Add venue marker
+      L.marker([32.7555, -97.3308], {
+        icon: L.icon({
+          iconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDQwIj48cGF0aCBmaWxsPSIjZGMyNjI2IiBkPSJNMTIgMEM2LjQ4IDAgMiA0LjQ4IDIgMTBjMCA0LjM5IDMuNTggOCA4IDhzOC0zLjYxIDgtOGMwLTUuNTItNC40OC0xMC0xMC0xMHptMCAxNWMtMi43NiAwLTUtMi4yNC01LTVzMi4yNC01IDUtNSA1IDIuMjQgNSA1LTIuMjQgNS01IDV6Ii8+PC9zdmc+',
+          iconSize: [24, 40],
+          iconAnchor: [12, 40]
+        })
+      }).addTo(map).bindPopup('<strong>Jimmy Jam Event</strong><br>Fort Worth, TX');
+
+      setMapInstances(prev => ({ ...prev, gpsMap: map }));
+    }
+  }, [activeNav, activeTab, mapInstances]);
 
   // Set default tabs on mount
   useEffect(() => {
@@ -851,17 +880,22 @@ const JimmyJamApp = () => {
             </div>
 
             {activeTab === 'gps' && (
-              <div className="p-4">
-                <div className="bg-gradient-to-b from-blue-200 to-blue-300 rounded-lg h-48 flex items-center justify-center mb-4 relative">
-                  <span className="text-8xl absolute">📍</span>
-                </div>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded mb-4">
-                  Get Directions
-                </button>
-                <div className="bg-white border-2 border-blue-600 rounded-lg p-4">
-                  <h3 className="font-bold mb-2">Fort Worth Event Center</h3>
-                  <p className="text-sm text-gray-600 mb-3">123 Main Street, Fort Worth, TX 76102</p>
-                  <button className="text-blue-600 font-bold text-sm">📞 (817) 555-JAZZ</button>
+              <div>
+                <div
+                  ref={gpsMapRef}
+                  className="w-full h-96 rounded-lg mb-4"
+                  style={{ position: 'relative' }}
+                />
+                <div className="p-4">
+                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded mb-4">
+                    🧭 Get Directions
+                  </button>
+                  <div className="bg-white border-2 border-blue-600 rounded-lg p-4">
+                    <h3 className="font-bold mb-2">📍 Jimmy Jam Event</h3>
+                    <p className="text-sm text-gray-600 mb-3">Fort Worth, TX 76102</p>
+                    <p className="text-xs text-gray-600 mb-3">Coordinates: 32.7555°N, 97.3308°W</p>
+                    <button className="text-blue-600 font-bold text-sm">📞 (817) 555-HELP</button>
+                  </div>
                 </div>
               </div>
             )}
