@@ -1409,12 +1409,14 @@ const JimmyJamApp = () => {
               <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Registrations</h2>
               <div className="grid grid-cols-1 gap-3">
                 {[
-                  { title: 'BBQ Team Entry', icon: '🍖', url: 'https://pci.jotform.com/form/260406069565157' },
-                  { title: 'Chili Cook-Off Entry', icon: '🌶️', url: 'https://form.jotform.com/253364854082158' },
-                  { title: 'Food Vendor Entry', icon: '🍔', url: 'https://form.jotform.com/251346106526149' },
-                  { title: 'Retail Vendor Entry', icon: '⛺', url: 'https://form.jotform.com/JJ2026/vendor-application-form' },
-                  { title: 'Car Show Entry', icon: '🚗', url: 'https://form.jotform.com/jimmyjammarketing1/car-show-entry-form' },
-                  { title: 'Pizza Cook-Off Entry', icon: '🍕', url: 'https://www.pizzacook-off.com' }
+                  { title: 'BBQ Slam Events', icon: '🏆', url: 'https://jimmyjambbqslam.com/bbq-slam-events' },
+                  { title: 'BBQ Competition', icon: '🍖', url: 'https://jimmyjambbqslam.com/bbq-competition' },
+                  { title: 'Chili Cook Off', icon: '🌶️', url: 'https://jimmyjambbqslam.com/chili-cook-off' },
+                  { title: 'Car Show', icon: '🚗', url: 'https://jimmyjambbqslam.com/car-show' },
+                  { title: 'Retail Vendors', icon: '⛺', url: 'https://jimmyjambbqslam.com/retail-vendors' },
+                  { title: 'Food Vendors', icon: '🍔', url: 'https://jimmyjambbqslam.com/food-vendors' },
+                  { title: 'Amenities', icon: '🏕️', url: 'https://jimmyjambbqslam.com/amenities' },
+                  { title: 'Pizza Ancillary', icon: '🍕', url: 'https://jimmyjambbqslam.com/pizza-ancillary' }
                 ].map((form, i) => (
                   <a
                     key={i}
@@ -1427,11 +1429,11 @@ const JimmyJamApp = () => {
                       <span className="text-3xl">{form.icon}</span>
                       <span className="font-bold text-lg text-gray-800">{form.title}</span>
                     </div>
-                    <span className="text-red-700 font-bold">REGISTER →</span>
+                    <span className="text-red-700 font-bold">VIEW →</span>
                   </a>
                 ))}
               </div>
-              <p className="text-xs text-gray-500 text-center">Registration status (open/closed) changes by season — the link always takes you to the current form.</p>
+              <p className="text-xs text-gray-500 text-center">Opens the matching page on jimmyjambbqslam.com, which always has the current registration status and forms.</p>
             </div>
 
             {/* CALENDAR SECTION */}
