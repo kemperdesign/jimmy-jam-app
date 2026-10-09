@@ -141,6 +141,7 @@ const JimmyJamApp = () => {
       genre: 'Performing at the 3rd Annual Bourbon & BBQ Event',
       logo: '🎸',
       image: null,
+      website: 'https://brianfutch.com/',
       description: 'The Futch Brothers Band performs on the patio immediately following the evening program at the 3rd Annual Bourbon & BBQ Event, Saturday October 17th at The Tringali Barn.',
       time: 'After dinner',
       stage: 'Bourbon & BBQ Event (Tringali Barn)'
@@ -1416,10 +1417,32 @@ const JimmyJamApp = () => {
             {/* ARTIST NAME */}
             <h1 className="text-3xl font-bold text-red-700">{selectedArtist.name}</h1>
 
-            {/* SHARE BUTTON */}
-            <button className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2 w-fit">
-              📤 Share
-            </button>
+            {/* WEBSITE / SHARE BUTTONS */}
+            <div className="flex gap-2 flex-wrap">
+              {selectedArtist.website && (
+                <a
+                  href={selectedArtist.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
+                >
+                  🌐 Website
+                </a>
+              )}
+              <button
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({ title: selectedArtist.name, text: selectedArtist.description, url: selectedArtist.website });
+                  } else {
+                    navigator.clipboard.writeText(selectedArtist.website || selectedArtist.name);
+                    alert('Copied to clipboard!');
+                  }
+                }}
+                className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
+              >
+                📤 Share
+              </button>
+            </div>
 
             {/* DESCRIPTION */}
             <div className="bg-white rounded-lg p-4 border-2 border-gray-300">
