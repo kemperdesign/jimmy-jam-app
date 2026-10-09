@@ -8,6 +8,8 @@
     "@capacitor/cli": "^8.5.3",
     "@capacitor/core": "^8.5.3",
     "@capacitor/ios": "^8.5.3",
+    "@stripe/react-stripe-js": "^2.1.1",
+    "@stripe/stripe-js": "^2.1.8",
     "@supabase/supabase-js": "^2.117.3",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.263.1",

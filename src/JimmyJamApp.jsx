@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Bell, Search, ChevronLeft, ChevronRight, Star, Upload } from 'lucide-react';
 import { supabase } from './supabaseClient';
 import VenueMap from './VenueMap';
