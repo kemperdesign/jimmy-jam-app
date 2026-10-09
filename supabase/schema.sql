@@ -41,7 +41,7 @@ create policy "Anyone can submit an application"
 create table if not exists public.venue_pins (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
-  name text not null,
+  name text not null unique,
   category text not null, -- parking | restroom | table | vendor | attraction | other
   lat double precision not null,
   lng double precision not null
@@ -62,22 +62,29 @@ create policy "Logged-in admins can manage pins"
   using (true)
   with check (true);
 
--- Seed pins, approximated from the venue's aerial site map (parking lots,
--- chili team row, vendors, kid zone, etc.) — adjust exact placement from the
--- Admin page once you can verify them on the ground with a phone GPS.
+-- Seed pins, repositioned to match the relative layout shown on the venue's
+-- aerial site map (VIP Parking at the north end, the Chili Teams grid in the
+-- center, Vendors/Kid Zone/Car Show along the west and south edges, etc).
+-- Absolute GPS is still approximate — these are correct RELATIVE TO EACH
+-- OTHER based on the site map, but should be fine-tuned from the Admin page
+-- once someone can walk the grounds with a phone GPS. Safe to re-run: this
+-- upserts by name instead of creating duplicates.
 insert into public.venue_pins (name, category, lat, lng) values
-  ('VIP Parking', 'parking', 29.772000, -81.454200),
-  ('Team Parking', 'parking', 29.771300, -81.452600),
-  ('Judges Parking', 'parking', 29.771500, -81.453400),
-  ('Handicap Parking', 'parking', 29.771100, -81.452500),
-  ('Vendor / Volunteer & Band Parking', 'parking', 29.770600, -81.454400),
-  ('Food Trucks', 'vendor', 29.770900, -81.452900),
-  ('Chili Teams', 'table', 29.770400, -81.452800),
-  ('BBQ Turn-In / Judges Tent', 'table', 29.771000, -81.453000),
-  ('Vendors', 'vendor', 29.770500, -81.454100),
-  ('Kid Zone', 'attraction', 29.770200, -81.454000),
-  ('BMX Show', 'attraction', 29.769900, -81.454100),
-  ('K9 Show', 'attraction', 29.769900, -81.453700),
-  ('Car Show', 'attraction', 29.769800, -81.452900),
-  ('Side by Sides', 'attraction', 29.769600, -81.452800)
-on conflict do nothing;
+  ('VIP Parking', 'parking', 29.7715310, -81.4534230),
+  ('Judges Parking', 'parking', 29.7711460, -81.4533910),
+  ('Team Parking', 'parking', 29.7711190, -81.4531070),
+  ('Handicap Parking', 'parking', 29.7709270, -81.4530430),
+  ('Vendor / Volunteer & Band Parking', 'parking', 29.7707620, -81.4538030),
+  ('Food Trucks', 'vendor', 29.7708990, -81.4532960),
+  ('BBQ Turn-In / Judges Tent', 'table', 29.7708720, -81.4533600),
+  ('Chili Teams', 'table', 29.7706520, -81.4533600),
+  ('Vendors', 'vendor', 29.7706790, -81.4536760),
+  ('Kid Zone', 'attraction', 29.7705420, -81.4535490),
+  ('BMX Show', 'attraction', 29.7704050, -81.4535490),
+  ('K9 Show', 'attraction', 29.7704050, -81.4534230),
+  ('Car Show', 'attraction', 29.7703500, -81.4532960),
+  ('Side by Sides', 'attraction', 29.7702670, -81.4533600)
+on conflict (name) do update set
+  category = excluded.category,
+  lat = excluded.lat,
+  lng = excluded.lng;

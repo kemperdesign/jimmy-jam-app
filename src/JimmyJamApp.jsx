@@ -104,18 +104,20 @@ const JimmyJamApp = () => {
   // Logo images use GoDaddy CSS backgrounds we couldn't extract programmatically,
   // so these use a generic badge icon until real logo files are supplied.
   const sponsorsData = [
-    { id: 1, name: 'Evans Automotive', tier: "People's Choice — Chili & Chowder", logo: '🌶️', website: 'https://www.evans-automotive.com/', description: 'Sponsor of the Chili & Chowder People’s Choice competition at the Jimmy Jam BBQ Slam.' },
+    { id: 0, name: 'The Shee Family', tier: 'Title Sponsor', logo: '🏆', logoImage: '/sponsor-logos/shee-family-title-sponsor.svg', website: null, description: 'Title Sponsor of the 10th Annual Jimmy Jam BBQ Slam. The Shee Family also performed live at the 2026 event.' },
+    { id: 1, name: 'Evans Automotive', tier: "People's Choice — Chili & Chowder", logo: '🌶️', logoImage: '/sponsor-logos/evans-automotive.jpg', website: 'https://www.evans-automotive.com/', description: 'Sponsor of the Chili & Chowder People’s Choice competition at the Jimmy Jam BBQ Slam.' },
     { id: 2, name: 'Steelhead Plumbing', tier: "People's Choice — BBQ", logo: '🍖', website: 'https://steelheadplumbing.com/', description: 'Sponsor of the BBQ People’s Choice competition at the Jimmy Jam BBQ Slam.' },
-    { id: 3, name: 'My DUI Guy Law', tier: 'Community Sponsor', logo: '🤝', website: 'https://www.myduiguy.law/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
-    { id: 4, name: 'Glacier HVAC', tier: 'Community Sponsor', logo: '🤝', website: 'https://glacier-hvac.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
-    { id: 5, name: 'Saint Augustine Slabs & Sawmill', tier: 'Community Sponsor', logo: '🤝', website: 'https://saintaugustineslabsandsawmill.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
-    { id: 6, name: 'St. Johns Culture', tier: 'Community Sponsor', logo: '🤝', website: 'https://stjohnsculture.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
-    { id: 7, name: 'Mastercraft Builder Group', tier: 'Community Sponsor', logo: '🤝', website: 'https://mastercraftbuildergroup.com/clays-for-a-cause-celebrates-10-years/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam, also behind Clays for a Cause.' },
-    { id: 8, name: 'BNS Signs', tier: 'Community Sponsor', logo: '🤝', website: 'https://bnssigns.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
-    { id: 9, name: 'Dynamic Reel', tier: 'Community Sponsor', logo: '🤝', website: 'https://www.dynamicreel.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
-    { id: 10, name: 'Sonny’s BBQ', tier: 'Community Sponsor', logo: '🤝', website: 'https://www.sonnysbbq.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
-    { id: 11, name: 'United Rentals', tier: 'Community Sponsor', logo: '🤝', website: 'https://www.unitedrentals.com/locations/fl/jacksonville/power-hvac-rentals/g80', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
-    { id: 12, name: 'Bozard Ford', tier: 'Community Sponsor', logo: '🤝', website: 'https://bozardford.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 3, name: 'My DUI Guy Law', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/my-dui-guy-law.png', website: 'https://www.myduiguy.law/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 4, name: 'Glacier HVAC', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/glacier-hvac.jpg', website: 'https://glacier-hvac.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 5, name: 'Saint Augustine Slabs & Sawmill', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/saint-augustine-slabs.svg', website: 'https://saintaugustineslabsandsawmill.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 6, name: 'St. Johns Cultural Council', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/st-johns-culture.png', website: 'https://stjohnsculture.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 6.5, name: 'St. Johns County Tourist Development Council', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/st-johns-tdc.jpg', website: 'https://www.floridashistoriccoast.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 7, name: 'Mastercraft Builder Group', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/mastercraft-builder-group.webp', website: 'https://mastercraftbuildergroup.com/clays-for-a-cause-celebrates-10-years/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam, also behind Clays for a Cause.' },
+    { id: 8, name: 'BNS Signs', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/bns-signs.png', website: 'https://bnssigns.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 9, name: 'Dynamic Reel', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/dynamic-reel.png', website: 'https://www.dynamicreel.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 10, name: 'Sonny’s BBQ', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/sonnys-bbq.png', website: 'https://www.sonnysbbq.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 11, name: 'United Rentals', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/united-rentals.png', website: 'https://www.unitedrentals.com/locations/fl/jacksonville/power-hvac-rentals/g80', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 12, name: 'Bozard Ford', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/bozard-ford.svg', website: 'https://bozardford.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
     { id: 13, name: 'Hometech Pest Control', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://hometechpest.com/', description: 'Proud 2027 Banner Sponsor of the Jimmy Jam BBQ Slam.' },
     { id: 14, name: 'Perfect Promo Solutions', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://www.perfectpromosolutions.com/', description: 'Proud 2027 Banner Sponsor of the Jimmy Jam BBQ Slam.' },
     { id: 15, name: 'MySALL.org', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://mysall.org/', description: 'Proud 2027 Banner Sponsor of the Jimmy Jam BBQ Slam.' },
@@ -390,16 +392,39 @@ const JimmyJamApp = () => {
 
 
 
+  // Real photos from the 10th Annual Jimmy Jam BBQ Slam, January 2026.
   const galleryPhotos = [
-    { id: 9, isPoster: true, title: 'BBQ SLAM & BOURBON', desc: 'Official Festival Poster' },
-    { id: 1, src: '/images/event 1.webp', title: 'BBQ Competition 2023', desc: 'Teams competing for prizes' },
-    { id: 2, src: '/images/event 2.webp', title: 'Smoking Brisket', desc: '14-hour St Augustine, Florida style' },
-    { id: 3, src: '/images/event 3.webp', title: 'Prize Winners', desc: 'Championship teams' },
-    { id: 4, src: '/images/event 4.webp', title: 'Bourbon Tasting', desc: 'Premium selection' },
-    { id: 5, src: '/images/event 5.webp', title: 'Community Gathering', desc: 'Families together' },
-    { id: 6, src: '/images/event 6.webp', title: 'Awards Ceremony', desc: 'Celebration moment' },
-    { id: 7, src: '/images/481974352_947902437529671_1263519369693082133_n.jpg', title: 'Food Vendors', desc: 'Local businesses' },
-    { id: 8, src: '/images/482024108_947900074196574_2207116397592462971_n.jpg', title: 'Live Music', desc: 'Entertainment stage' }
+    { id: 'poster', isPoster: true, title: 'BBQ SLAM & BOURBON', desc: 'Official Festival Poster' },
+    { id: 'dji1', src: '/images/event-photos/dji_20260110112149_0919_d.jpg', title: 'Car Show', desc: 'Aerial view of the car show grounds' },
+    { id: 'dji2', src: '/images/event-photos/dji_20260110141907_0933_d.jpg', title: 'Event Grounds', desc: 'Aerial view of the fairgrounds' },
+    { id: 'dji3', src: '/images/event-photos/dji_20260110141945_0934_d.jpg', title: 'Event Grounds', desc: 'Aerial view of the fairgrounds' },
+    { id: 'dji4', src: '/images/event-photos/dji_20260110142150_0939_d.jpg', title: 'Event Grounds', desc: 'Aerial view of the fairgrounds' },
+    { id: 'p387', src: '/images/event-photos/dsc08387.jpg', title: 'Car Show', desc: 'Classic cars and hot rods on display' },
+    { id: 'p388', src: '/images/event-photos/dsc08388.jpg', title: 'Car Show', desc: 'Classic cars and hot rods on display' },
+    { id: 'p394', src: '/images/event-photos/dsc08394.jpg', title: 'Car Show', desc: 'Classic cars and hot rods on display' },
+    { id: 'p399', src: '/images/event-photos/dsc08399.jpg', title: 'Vendors & Community', desc: 'Guests browsing vendor booths' },
+    { id: 'p401', src: '/images/event-photos/dsc08401.jpg', title: 'Vendors & Community', desc: 'Guests browsing vendor booths' },
+    { id: 'p402', src: '/images/event-photos/dsc08402.jpg', title: 'Vendors & Community', desc: 'Guests browsing vendor booths' },
+    { id: 'p404', src: '/images/event-photos/dsc08404.jpg', title: 'Vendors & Community', desc: 'Guests browsing vendor booths' },
+    { id: 'p406', src: '/images/event-photos/dsc08406.jpg', title: 'Vendors & Community', desc: 'Guests browsing vendor booths' },
+    { id: 'p408', src: '/images/event-photos/dsc08408.jpg', title: 'Vendors & Community', desc: 'Guests browsing vendor booths' },
+    { id: 'p414', src: '/images/event-photos/dsc08414.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p416', src: '/images/event-photos/dsc08416.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p417', src: '/images/event-photos/dsc08417.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p418', src: '/images/event-photos/dsc08418.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p427', src: '/images/event-photos/dsc08427.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p429', src: '/images/event-photos/dsc08429.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p432', src: '/images/event-photos/dsc08432.jpg', title: 'BBQ Pitmasters', desc: 'Smokin’ Spencer’s Q & Kings BBQ' },
+    { id: 'p435', src: '/images/event-photos/dsc08435.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p438', src: '/images/event-photos/dsc08438.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p443', src: '/images/event-photos/dsc08443.jpg', title: 'Competition BBQ', desc: 'Championship-worthy ribs' },
+    { id: 'p450', src: '/images/event-photos/dsc08450.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p454', src: '/images/event-photos/dsc08454.jpg', title: 'BBQ Pitmasters', desc: 'Competition BBQ teams at work' },
+    { id: 'p463', src: '/images/event-photos/dsc08463.jpg', title: 'Live Music', desc: 'Entertainment on the main stage' },
+    { id: 'p465', src: '/images/event-photos/dsc08465.jpg', title: 'Live Music', desc: 'The Shee Family performing for the crowd' },
+    { id: 'p471', src: '/images/event-photos/dsc08471.jpg', title: 'Live Music', desc: 'Entertainment on the main stage' },
+    { id: 'p478', src: '/images/event-photos/dsc08478.jpg', title: 'Live Music', desc: 'Entertainment on the main stage' },
+    { id: 'p479', src: '/images/event-photos/dsc08479.jpg', title: 'Pro Reserve Grand Champion', desc: '10th Annual Jimmy Jam BBQ Slam 2026 award, sponsored by The Shee Family' }
   ];
 
   const bourbonMenu = {
@@ -1244,7 +1269,11 @@ const JimmyJamApp = () => {
               <div className="grid grid-cols-3 gap-4">
                 {sponsorsData.slice(0, 3).map((sponsor) => (
                   <div key={sponsor.id} className="bg-white p-4 rounded-xl shadow-md text-center border-2 border-transparent hover:border-orange-500 transition-all">
-                    <span className="text-4xl block mb-2">{sponsor.logo}</span>
+                    {sponsor.logoImage ? (
+                      <img src={sponsor.logoImage} alt={sponsor.name} className="h-12 w-full object-contain mb-2" />
+                    ) : (
+                      <span className="text-4xl block mb-2">{sponsor.logo}</span>
+                    )}
                     <p className="font-bold text-xs">{sponsor.name}</p>
                   </div>
                 ))}
@@ -1336,7 +1365,11 @@ const JimmyJamApp = () => {
                       }}
                       className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all group"
                     >
-                      <span className="text-3xl group-hover:scale-110 transition-transform">{sponsor.logo}</span>
+                      {sponsor.logoImage ? (
+                        <img src={sponsor.logoImage} alt={sponsor.name} className="h-8 object-contain group-hover:scale-110 transition-transform" />
+                      ) : (
+                        <span className="text-3xl group-hover:scale-110 transition-transform">{sponsor.logo}</span>
+                      )}
                       <p className="text-[10px] font-bold text-gray-400 uppercase text-center group-hover:text-red-700">{sponsor.name}</p>
                     </button>
                   ))}
@@ -1501,8 +1534,12 @@ const JimmyJamApp = () => {
                 >
                   <div className="flex items-start gap-4">
                     {/* LOGO */}
-                    <div className="w-12 h-12 bg-gradient-to-br from-red-100 to-orange-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
-                      {sponsor.logo}
+                    <div className="w-12 h-12 bg-white border border-gray-200 rounded-lg flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden p-1">
+                      {sponsor.logoImage ? (
+                        <img src={sponsor.logoImage} alt={sponsor.name} className="w-full h-full object-contain" />
+                      ) : (
+                        sponsor.logo
+                      )}
                     </div>
 
                     {/* TEXT */}
@@ -1533,8 +1570,12 @@ const JimmyJamApp = () => {
             </button>
 
             {/* LOGO SECTION */}
-            <div className="w-full h-40 bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg flex items-center justify-center text-6xl shadow-lg">
-              {selectedSponsor.logo}
+            <div className="w-full h-40 bg-white border-2 border-gray-200 rounded-lg flex items-center justify-center shadow-lg p-4">
+              {selectedSponsor.logoImage ? (
+                <img src={selectedSponsor.logoImage} alt={selectedSponsor.name} className="max-w-full max-h-full object-contain" />
+              ) : (
+                <span className="text-6xl">{selectedSponsor.logo}</span>
+              )}
             </div>
 
             {/* TITLE & TIER */}
@@ -1545,27 +1586,31 @@ const JimmyJamApp = () => {
 
             {/* WEBSITE & SHARE BUTTONS */}
             <div className="flex gap-2 flex-wrap">
-              <a
-                href={selectedSponsor.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
-              >
-                🌐 Website
-              </a>
-              <button
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({ title: selectedSponsor.name, url: selectedSponsor.website });
-                  } else {
-                    navigator.clipboard.writeText(selectedSponsor.website);
-                    alert('Website link copied to clipboard!');
-                  }
-                }}
-                className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
-              >
-                📤 Share
-              </button>
+              {selectedSponsor.website && (
+                <a
+                  href={selectedSponsor.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
+                >
+                  🌐 Website
+                </a>
+              )}
+              {selectedSponsor.website && (
+                <button
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator.share({ title: selectedSponsor.name, url: selectedSponsor.website });
+                    } else {
+                      navigator.clipboard.writeText(selectedSponsor.website);
+                      alert('Website link copied to clipboard!');
+                    }
+                  }}
+                  className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
+                >
+                  📤 Share
+                </button>
+              )}
             </div>
 
             {/* DESCRIPTION */}
