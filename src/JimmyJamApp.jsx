@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bell, Search, ChevronLeft, ChevronRight, Star, Upload } from 'lucide-react';
 import { supabase } from './supabaseClient';
 import VenueMap from './VenueMap';
@@ -19,7 +19,6 @@ const JimmyJamApp = () => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
   const [mapFilters, setMapFilters] = useState(['stage', 'food', 'bar', 'restroom', 'firstaid', 'parking']);
-  const [showFilters, setShowFilters] = useState(false);
   const [openInfoSection, setOpenInfoSection] = useState(null);
   const [openRecipe, setOpenRecipe] = useState(null);
   const [cart, setCart] = useState(() => {
