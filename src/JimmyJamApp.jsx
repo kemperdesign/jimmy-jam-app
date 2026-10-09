@@ -543,7 +543,7 @@ const JimmyJamApp = () => {
         'Chili & Chowder People’s Choice tasting tokens $1 each (11am–3pm)',
         'BBQ People’s Choice tasting tokens $1 each (2pm–4pm)'
       ],
-      url: 'https://pci.jotform.com/form/253157513794160'
+      url: 'https://pci.jotform.com/form/260406377587163'
     },
     {
       icon: '🌽',
@@ -555,7 +555,7 @@ const JimmyJamApp = () => {
         'Sign-ups open at 10:00am',
         'Tournament starts at 11:00am'
       ],
-      url: 'https://pci.jotform.com/form/253157513794160'
+      url: 'https://pci.jotform.com/form/260406377587163'
     },
     {
       icon: '🚗',
@@ -773,7 +773,7 @@ const JimmyJamApp = () => {
 
             {/* BUY BUTTON */}
             <a
-              href="https://pci.jotform.com/form/253157513794160"
+              href="https://pci.jotform.com/form/260406377587163"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full block text-center bg-blue-900 hover:bg-blue-950 text-white py-4 rounded-full font-bold text-lg transition-all"
