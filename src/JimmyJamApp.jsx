@@ -640,7 +640,7 @@ const JimmyJamApp = () => {
     { icon: '🏆', title: 'EVENTS', desc: 'Browse our festivals', action: 'events' },
     { icon: '🤝', title: 'SPONSORS', desc: 'Meet our partners', action: 'sponsors' },
     { icon: '👕', title: 'MERCH', desc: 'Shop swag store', action: 'swag' },
-    { icon: '🥃', title: 'BOURBON', desc: 'Premium tasting', action: 'bourbon' },
+    { icon: '🙋', title: 'VOLUNTEER', desc: 'Help make it happen', externalUrl: 'https://jimmyjambbqslam.com/volunteer' },
     { icon: '🌤️', title: 'WEATHER', desc: 'Event forecast', action: 'weather' },
     { icon: '💬', title: 'STORIES', desc: 'Real testimonials', action: 'testimonials' }
   ];
@@ -751,7 +751,7 @@ const JimmyJamApp = () => {
                 {mainFeatures.map((feature, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setActiveNav(feature.action)}
+                    onClick={() => feature.externalUrl ? window.open(feature.externalUrl, '_blank', 'noopener,noreferrer') : setActiveNav(feature.action)}
                     className="group bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-all transform hover:scale-105 border-2 border-gray-200 hover:border-red-700"
                   >
                     <div className="flex flex-col items-center gap-3">
@@ -2553,9 +2553,9 @@ const JimmyJamApp = () => {
                     <span className="font-semibold">Official Partners</span>
                   </button>
 
-                  <button onClick={() => { setActiveNav('connect'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">🔗</span>
-                    <span className="font-semibold">Connect</span>
+                  <button onClick={() => { window.open('https://jimmyjambbqslam.com/faq', '_blank', 'noopener,noreferrer'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                    <span className="text-xl">❓</span>
+                    <span className="font-semibold">FAQs</span>
                   </button>
 
 
