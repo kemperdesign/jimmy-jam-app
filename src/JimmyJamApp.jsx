@@ -10,6 +10,7 @@ const JimmyJamApp = () => {
   const EVENT_LON = -81.4533597;
   const EVENT_VENUE_NAME = 'St. Johns County Fairgrounds';
   const EVENT_VENUE_ADDRESS = '5840 State Rd. 207, Elkton, FL 32145';
+  const EVENT_DATE_LABEL = 'January 9, 2027';
 
   const [showSplash, setShowSplash] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -21,6 +22,11 @@ const JimmyJamApp = () => {
   const [mapFilters, setMapFilters] = useState(['stage', 'food', 'bar', 'restroom', 'firstaid', 'parking']);
   const [openInfoSection, setOpenInfoSection] = useState(null);
   const [openRecipe, setOpenRecipe] = useState(null);
+  const [seasonView, setSeasonView] = useState('list');
+  const [calendarMonth, setCalendarMonth] = useState(() => {
+    const d = new Date();
+    return new Date(d.getFullYear(), d.getMonth(), 1);
+  });
   const [cart, setCart] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('jj_cart') || '[]');
@@ -373,11 +379,11 @@ const JimmyJamApp = () => {
   }
 
   // DETAILED SCHEDULE WITH TIMES
-  // The real site (jimmyjambbqslam.com) says the full 2027 itinerary is "Coming Soon" —
-  // these are only the specific day-of windows actually confirmed there. We don't invent
-  // a fake hour-by-hour schedule or deadline dates that haven't been announced.
+  // The real site (jimmyjambbqslam.com) confirms the main event date (Jan 9, 2027) but the
+  // full hour-by-hour itinerary is still "Coming Soon" — these are only the specific day-of
+  // windows actually confirmed there. We don't invent a fake schedule beyond that.
   const detailedSchedule = [
-    { date: 'BBQ Slam (date TBA)', dateStr: 'Main Event', events: [
+    { date: EVENT_DATE_LABEL, dateStr: 'Main Event', events: [
       { time: '10:00 AM', title: 'Cornhole Sign-Ups Open ($25/person, blind draw)', location: EVENT_VENUE_NAME, icon: '🌽' },
       { time: '11:00 AM', title: 'Cornhole Tournament Starts', location: EVENT_VENUE_NAME, icon: '🌽' },
       { time: '11:00 AM – 3:00 PM', title: 'Chili & Chowder People’s Choice Tasting (15+ Teams)', location: EVENT_VENUE_NAME, icon: '🌶️' },
@@ -391,6 +397,88 @@ const JimmyJamApp = () => {
   ];
 
 
+
+  const pastWinnersData = [
+    { year: '2026', category: 'Pro Grand Champion', team: 'Maya Jane BBQ Co.', photo: '/winners/maya-jane-bbq-co-pro-grand-champion-2026.jpg', logo: '/winners/maya-jane-bbq-co-logo.jpg' },
+    { year: '2026', category: 'Backyard Reserve Grand Champion', team: "Mike's Backyard BBQ", photo: '/winners/mikes-backyard-bbq-backyard-reserve-grand-champion-2026.jpg', logo: '/winners/mikes-backyard-bbq-logo.jpg' },
+    { year: '2026', category: "People's Choice", team: 'So So BBQ', photo: '/winners/so-so-bbq-peoples-choice-2026.jpg', logo: null }
+  ];
+
+  const recipesData = [
+    {
+      title: 'Smoked Brisket Rub',
+      time: '10 min prep',
+      desc: 'A classic Florida-style rub with salt, pepper, garlic, and paprika.',
+      icon: '🥩',
+      ingredients: [
+        '1/4 cup coarse kosher salt',
+        '1/4 cup coarse black pepper',
+        '2 tbsp garlic powder',
+        '2 tbsp smoked paprika',
+        '1 tbsp onion powder',
+        '1 tbsp light brown sugar',
+        '1 tsp cayenne pepper (optional, for heat)'
+      ],
+      steps: [
+        'Whisk all ingredients together in a bowl until evenly combined.',
+        'Pat the brisket completely dry with paper towels, then trim the fat cap to about 1/4 inch.',
+        'Apply a thin layer of yellow mustard or oil as a binder, then coat the brisket generously on all sides with the rub.',
+        'Let the brisket rest, uncovered, in the fridge for at least 1 hour (overnight is best) so the rub can set.',
+        'Smoke low and slow at 225–250°F until the internal temperature reaches 203°F, wrapping in butcher paper once the bark sets (around 165°F internal).',
+        'Rest the brisket for at least 30–45 minutes before slicing against the grain.'
+      ]
+    },
+    {
+      title: 'Bourbon BBQ Sauce',
+      time: '20 min prep',
+      desc: 'Sweet and tangy sauce infused with premium bourbon.',
+      icon: '🍯',
+      ingredients: [
+        '1 cup ketchup',
+        '1/2 cup bourbon',
+        '1/4 cup apple cider vinegar',
+        '1/4 cup brown sugar',
+        '2 tbsp molasses',
+        '2 tbsp Worcestershire sauce',
+        '1 tbsp Dijon mustard',
+        '2 cloves garlic, minced',
+        '1/2 tsp smoked paprika',
+        'Salt and black pepper to taste'
+      ],
+      steps: [
+        'Combine the bourbon and minced garlic in a saucepan over medium heat and simmer for 2–3 minutes to cook off some of the alcohol.',
+        'Whisk in the ketchup, vinegar, brown sugar, molasses, Worcestershire, mustard, and smoked paprika.',
+        'Bring to a gentle simmer, stirring occasionally, and cook for 15–20 minutes until thickened enough to coat the back of a spoon.',
+        'Season with salt and pepper to taste, then let cool before serving or bottling.',
+        'Brush onto ribs, chicken, or pulled pork in the last 10–15 minutes of cooking so the sugars caramelize without burning.'
+      ]
+    },
+    {
+      title: 'Pitmaster Baked Beans',
+      time: '2 hours slow-cook',
+      desc: 'Slow-cooked beans with bacon, brown sugar, and molasses.',
+      icon: '🥘',
+      ingredients: [
+        '6 slices thick-cut bacon, chopped',
+        '1 small yellow onion, diced',
+        '1/2 green bell pepper, diced',
+        '3 (15 oz) cans pinto or navy beans, drained and rinsed',
+        '1/2 cup ketchup',
+        '1/3 cup brown sugar',
+        '1/4 cup molasses',
+        '2 tbsp yellow mustard',
+        '1 tbsp apple cider vinegar',
+        'Chopped smoked brisket or pulled pork (optional, for a heartier dish)'
+      ],
+      steps: [
+        'In a large oven-safe pot or Dutch oven, cook the bacon over medium heat until crisp. Remove bacon, leaving the drippings in the pot.',
+        'Sauté the onion and bell pepper in the bacon drippings until softened, about 5 minutes.',
+        'Stir in the beans, ketchup, brown sugar, molasses, mustard, and vinegar along with the cooked bacon. Mix well.',
+        'Cover and bake at 300°F for about 2 hours, stirring occasionally, until thick and bubbling.',
+        'Stir in chopped smoked brisket or pulled pork in the last 20 minutes if using, and adjust sweetness/tang to taste before serving.'
+      ]
+    }
+  ];
 
   // Real photos from the 10th Annual Jimmy Jam BBQ Slam, January 2026.
   const galleryPhotos = [
@@ -483,7 +571,8 @@ const JimmyJamApp = () => {
   const impactStories = [
     { title: 'Covering Insurance During Treatment', body: 'A single mother of two battling stage 4 breast cancer had her insurance premiums covered so she could focus on healing.' },
     { title: 'Keeping a Family Housed', body: 'A hardworking mom juggling two jobs was struggling with rent. We stepped in to cover her balance for two months so she could get back on track.' },
-    { title: 'Rebuilding After Losing a Home', body: 'A family of four who lost their home received financial assistance to help rebuild their lives.' }
+    { title: 'Rebuilding After Losing a Home', body: 'A family of four who lost their home received financial assistance to help rebuild their lives.' },
+    { title: 'A New Walker for Dad', body: '"Because of Jimmy Jam, they have given that gift of accessibility to him in order to enjoy life with his grandson, and that means the world to us." — Sarah Felker, whose father Stanley Reigger (who has Parkinson’s disease) received a brand-new walker after his broke. She shared the story publicly on Facebook (as reported by St. Johns Citizen, Jan. 23, 2026).' }
   ];
 
   const swagItems = [
@@ -696,8 +785,8 @@ const JimmyJamApp = () => {
         {activeNav === 'schedule' && (
           <div className="space-y-4">
             <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 text-center">
-              <p className="font-bold text-blue-900">Stay Tuned for 2027!</p>
-              <p className="text-sm text-blue-700">The full 2027 BBQ Slam itinerary will be posted here once announced. What's confirmed so far is below.</p>
+              <p className="font-bold text-blue-900">11th Annual Jimmy Jam BBQ Slam — {EVENT_DATE_LABEL}</p>
+              <p className="text-sm text-blue-700">The full hour-by-hour itinerary will be posted here closer to the date. What's confirmed so far is below.</p>
             </div>
 
             {/* TABS */}
@@ -788,7 +877,7 @@ const JimmyJamApp = () => {
                   <p>Live Music featuring Local & Regional Artists</p>
                   <div className="pt-6">
                     <p className="text-sm font-bold text-gray-100 mt-3 uppercase tracking-[0.2em]">{EVENT_VENUE_NAME}</p>
-                    <p className="text-sm font-bold text-gray-200">Stay Tuned for 2027 Dates!</p>
+                    <p className="text-sm font-bold text-gray-200">{EVENT_DATE_LABEL}</p>
                   </div>
                 </div>
 
@@ -847,7 +936,7 @@ const JimmyJamApp = () => {
               
               <div>
                 <p className="font-bold text-gray-800 mb-2">When</p>
-                <p className="text-gray-700">Stay tuned for 2027 dates! (3rd Annual Bourbon & BBQ Event: Saturday, October 17th)</p>
+                <p className="text-gray-700">11th Annual Jimmy Jam BBQ Slam: {EVENT_DATE_LABEL}. (3rd Annual Bourbon & BBQ Event: October 2027, exact date TBA)</p>
               </div>
 
               <div>
@@ -982,7 +1071,7 @@ const JimmyJamApp = () => {
                       title: '📋 General',
                       qa: [
                         { q: 'What is the Jimmy Jam BBQ Slam?', a: 'A nonprofit event dedicated to celebrating BBQ, classic cars, live music, and community giving. All proceeds go toward helping individuals and families in need.' },
-                        { q: 'When and where is the event?', a: `${EVENT_VENUE_NAME}, ${EVENT_VENUE_ADDRESS}. Stay tuned for 2027 dates!` },
+                        { q: 'When and where is the event?', a: `${EVENT_VENUE_NAME}, ${EVENT_VENUE_ADDRESS}. The 11th Annual Jimmy Jam BBQ Slam is ${EVENT_DATE_LABEL}.` },
                         { q: 'Is there an entry fee?', a: 'General admission is free. There are fees for tastings, competition entries, and vendor participation (see Registrations).' },
                         { q: 'What can I expect at the event?', a: 'BBQ & Chili Cook-Offs, Live Music, Cornhole Tournament, Car Show, Food Vendors & Shopping, and Family-Friendly Activities.' },
                         { q: 'Is there a cost for the live music?', a: 'No, live music is included with your event admission!' },
@@ -1095,14 +1184,10 @@ const JimmyJamApp = () => {
           <div className="space-y-6 pb-20">
             <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">Jimmy Jam Recipe Book</h1>
             <div className="grid gap-6">
-              {[
-                { title: 'Smoked Brisket Rub', time: '10 min prep', desc: 'A classic Florida-style rub with salt, pepper, garlic, and paprika.', icon: '🥩' },
-                { title: 'Bourbon BBQ Sauce', time: '20 min prep', desc: 'Sweet and tangy sauce infused with premium bourbon.', icon: '🍯' },
-                { title: 'Pitmaster Baked Beans', time: '2 hours slow-cook', desc: 'Slow-cooked beans with bacon, brown sugar, and molasses.', icon: '🥘' }
-              ].map((recipe, idx) => (
+              {recipesData.map((recipe, idx) => (
                 <div key={idx} className="bg-white rounded-xl border-2 border-gray-200 p-6 shadow-lg flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left hover:border-red-300 transition-all">
                   <div className="text-6xl bg-red-50 p-6 rounded-full border border-red-100">{recipe.icon}</div>
-                  <div className="flex-1 space-y-2">
+                  <div className="flex-1 space-y-2 w-full">
                     <h2 className="text-2xl font-bold text-gray-900">{recipe.title}</h2>
                     <p className="text-sm font-bold text-red-600 uppercase tracking-widest">{recipe.time}</p>
                     <p className="text-gray-600 leading-relaxed">{recipe.desc}</p>
@@ -1113,9 +1198,20 @@ const JimmyJamApp = () => {
                       {openRecipe === idx ? 'HIDE RECIPE' : 'VIEW RECIPE'}
                     </button>
                     {openRecipe === idx && (
-                      <p className="text-sm text-gray-500 pt-2 border-t border-gray-100">
-                        Full ingredients and step-by-step instructions for this recipe are coming soon.
-                      </p>
+                      <div className="text-left pt-4 mt-2 border-t border-gray-100 space-y-4">
+                        <div>
+                          <h3 className="font-bold text-gray-900 mb-2">Ingredients</h3>
+                          <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            {recipe.ingredients.map((ing, i) => <li key={i}>{ing}</li>)}
+                          </ul>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 mb-2">Instructions</h3>
+                          <ol className="list-decimal list-inside text-sm text-gray-700 space-y-2">
+                            {recipe.steps.map((step, i) => <li key={i}>{step}</li>)}
+                          </ol>
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -1141,7 +1237,7 @@ const JimmyJamApp = () => {
                     </div>
                     <div className="text-xs text-blue-100 space-y-2 font-bold tracking-wider">
                       <p>{EVENT_VENUE_NAME}</p>
-                      <p>Stay Tuned for 2027 Dates!</p>
+                      <p>{EVENT_DATE_LABEL}</p>
                       <p className="mt-6 opacity-75 lowercase font-normal tracking-normal text-[10px]">jimmyjambbqslam.com</p>
                     </div>
                   </div>
@@ -1283,12 +1379,15 @@ const JimmyJamApp = () => {
             {/* VIDEOS SECTION */}
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">Video Highlights</h2>
-              <div className="aspect-video bg-gray-900 rounded-2xl flex items-center justify-center text-6xl shadow-2xl relative overflow-hidden group">
+              <button
+                onClick={() => setActiveNav('videos')}
+                className="w-full aspect-video bg-gray-900 rounded-2xl flex items-center justify-center text-6xl shadow-2xl relative overflow-hidden group"
+              >
                 🎬
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer">
                   <div className="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center text-white text-3xl pl-2 shadow-xl">▶</div>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         )}
@@ -1345,6 +1444,27 @@ const JimmyJamApp = () => {
                     <div className="flex-1">
                       <p className="font-bold text-gray-800">{event.title}</p>
                       <p className="text-[10px] text-gray-500">{event.location}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* PAST WINNERS */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Past Winners</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {pastWinnersData.map((winner, i) => (
+                  <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border-2 border-gray-200">
+                    <img src={winner.photo} alt={`${winner.team} — ${winner.year} ${winner.category}`} className="w-full h-48 object-cover" />
+                    <div className="p-4 flex items-center gap-3">
+                      {winner.logo && (
+                        <img src={winner.logo} alt={`${winner.team} logo`} className="w-12 h-12 object-contain rounded-lg bg-white border border-gray-100 flex-shrink-0" />
+                      )}
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-0.5 rounded">{winner.year} {winner.category}</span>
+                        <h3 className="font-bold text-gray-900 mt-1">{winner.team}</h3>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1790,7 +1910,7 @@ const JimmyJamApp = () => {
             {/* IMPACT STORIES */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Real Impact Stories</h2>
-              <p className="text-sm text-gray-500 mb-4">Every dollar raised goes directly to helping families in our community. These stories are shared anonymously to protect privacy.</p>
+              <p className="text-sm text-gray-500 mb-4">Every dollar raised goes directly to helping families in our community. Most stories are shared anonymously to protect privacy; some families choose to share their story publicly.</p>
               <div className="space-y-4">
                 {impactStories.map((story, i) => (
                   <div key={i} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
@@ -2143,41 +2263,35 @@ const JimmyJamApp = () => {
           </div>
         )}
 
-        {/* BBQ VIDEO LIBRARY */}
+        {/* SPONSOR & VENDOR VIDEOS */}
         {activeNav === 'videos' && (
           <div className="space-y-6 pb-20">
             <div className="bg-gradient-to-br from-orange-600 to-red-700 text-white p-8 rounded-2xl shadow-lg text-center">
-              <h2 className="text-3xl font-bold mb-2">📽️ BBQ ACADEMY</h2>
-              <p className="text-orange-100">Instructional Library</p>
+              <h2 className="text-3xl font-bold mb-2">📽️ SPONSOR SPOTLIGHT</h2>
+              <p className="text-orange-100">Messages from our Sponsors & Vendors</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { title: 'The Perfect Brisket Masterclass', url: 'https://www.youtube.com/embed/VmH-vT7Z2fI', category: 'Aaron Franklin', views: '12M' },
-                { title: 'Competition Ribs Tutorial', url: 'https://www.youtube.com/embed/kXp-o-OayJ4', category: 'Myron Mixon', views: '5M' },
-                { title: 'Ultimate Pulled Pork Guide', url: 'https://www.youtube.com/embed/0H3M0E9z_3E', category: 'Meat Church', views: '3M' },
-                { title: 'Brisket Trimming Secrets', url: 'https://www.youtube.com/embed/m-0Uv8T2pYI', category: 'Mad Scientist BBQ', views: '2M' },
-                { title: 'St Augustine, Florida Style BBQ Chicken', url: 'https://www.youtube.com/embed/n3f-k7Jj-Hk', category: 'Chuds BBQ', views: '1.5M' },
-                { title: 'Pork Belly Burnt Ends', url: 'https://www.youtube.com/embed/f6UvV8M_n6k', category: 'HowToBBQRight', views: '8M' }
+                { title: 'Steelhead Plumbing', category: 'Sponsor Message', src: '/sponsor-videos/steelhead-plumbing-sponsor-message.mp4' },
+                { title: "Melvin's Auto & Truck Repair", category: 'Sponsor Testimonial', src: '/sponsor-videos/melvins-auto-sponsor-testimonial.mp4' },
+                { title: 'Shores Nutrition', category: 'Vendor Testimonial', src: '/sponsor-videos/shores-nutrition-vendor-testimonial.mp4' },
+                { title: 'Edwards Law Firm', category: 'Sponsor Testimonial', src: '/sponsor-videos/edwards-law-sponsor-testimonial.mp4' },
+                { title: 'Hager Inflatables', category: 'Sponsor Message', src: '/sponsor-videos/hager-inflatables-sponsor-message.mp4' }
               ].map((video, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border-2 border-gray-200 hover:border-red-600 transition-all group">
                   <div className="aspect-video bg-black relative">
-                    <iframe 
-                      className="w-full h-full"
-                      src={video.url}
-                      title={video.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    ></iframe>
+                    <video
+                      className="w-full h-full object-contain"
+                      src={video.src}
+                      controls
+                      preload="metadata"
+                      playsInline
+                    />
                   </div>
                   <div className="p-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-0.5 rounded">{video.category}</span>
-                      <span className="text-[10px] text-gray-400">👁️ {video.views}</span>
-                    </div>
-                    <h3 className="font-bold text-gray-800 leading-tight group-hover:text-red-700 transition-colors">{video.title}</h3>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-0.5 rounded">{video.category}</span>
+                    <h3 className="font-bold text-gray-800 leading-tight group-hover:text-red-700 transition-colors mt-2">{video.title}</h3>
                   </div>
                 </div>
               ))}
@@ -2192,6 +2306,92 @@ const JimmyJamApp = () => {
               <p className="text-green-100">St. Johns County, FL — Hunting (Zone C) & Freshwater Fishing</p>
             </div>
 
+            {/* VIEW TOGGLE */}
+            <div className="flex gap-3">
+              <button onClick={() => setSeasonView('list')} className={`px-6 py-2 rounded-full font-bold transition-all ${seasonView === 'list' ? 'bg-yellow-400 text-black' : 'bg-gray-300 text-gray-700'}`}>
+                List
+              </button>
+              <button onClick={() => setSeasonView('calendar')} className={`px-6 py-2 rounded-full font-bold transition-all ${seasonView === 'calendar' ? 'bg-yellow-400 text-black' : 'bg-gray-300 text-gray-700'}`}>
+                Calendar
+              </button>
+            </div>
+
+            {seasonView === 'calendar' && (() => {
+              const seasonColors = ['bg-amber-500', 'bg-orange-500', 'bg-red-500', 'bg-rose-500', 'bg-purple-500', 'bg-emerald-600'];
+              const huntingItems = seasonTrackerData.find(g => !g.items.some(it => it.yearRound))?.items || [];
+              const coloredItems = huntingItems.map((item, idx) => ({
+                ...item,
+                color: seasonColors[idx % seasonColors.length],
+                windows: item.windows.map(([s, e]) => ({ start: new Date(s + 'T00:00:00'), end: new Date(e + 'T23:59:59') }))
+              }));
+
+              const year = calendarMonth.getFullYear();
+              const month = calendarMonth.getMonth();
+              const firstDay = new Date(year, month, 1);
+              const daysInMonth = new Date(year, month + 1, 0).getDate();
+              const leadingBlanks = firstDay.getDay();
+              const today = new Date();
+              const isToday = (d) => d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+
+              const activeItemsForDay = (d) => {
+                const date = new Date(year, month, d, 12);
+                return coloredItems.filter(item => item.windows.some(w => date >= w.start && date <= w.end));
+              };
+
+              return (
+                <div className="bg-white rounded-xl border-2 border-gray-200 p-4 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between">
+                    <button onClick={() => setCalendarMonth(new Date(year, month - 1, 1))} className="p-2 rounded-lg hover:bg-gray-100">
+                      <ChevronLeft size={20} />
+                    </button>
+                    <h3 className="font-bold text-lg text-gray-900">{firstDay.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h3>
+                    <button onClick={() => setCalendarMonth(new Date(year, month + 1, 1))} className="p-2 rounded-lg hover:bg-gray-100">
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gray-400 uppercase">
+                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => <div key={d}>{d}</div>)}
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-1">
+                    {Array.from({ length: leadingBlanks }).map((_, i) => <div key={`b${i}`} />)}
+                    {Array.from({ length: daysInMonth }).map((_, i) => {
+                      const d = i + 1;
+                      const active = activeItemsForDay(d);
+                      return (
+                        <div
+                          key={d}
+                          title={active.length ? active.map(a => a.name).join(', ') : ''}
+                          className={`aspect-square rounded-lg flex flex-col items-center justify-center gap-0.5 text-xs ${
+                            isToday(d) ? 'bg-green-100 border-2 border-green-600 font-bold' : 'bg-gray-50 border border-gray-100'
+                          }`}
+                        >
+                          <span className="text-gray-700">{d}</span>
+                          <div className="flex gap-0.5 flex-wrap justify-center max-w-full px-0.5">
+                            {active.slice(0, 4).map((a, ai) => (
+                              <span key={ai} className={`w-1.5 h-1.5 rounded-full ${a.color}`} />
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex flex-wrap gap-3 pt-2 border-t border-gray-100">
+                    {coloredItems.map((item, i) => (
+                      <div key={i} className="flex items-center gap-1.5 text-xs text-gray-600">
+                        <span className={`w-2.5 h-2.5 rounded-full ${item.color}`} />
+                        {item.icon} {item.name}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] text-gray-400">Freshwater species (bass, crappie, catfish) are open year-round and not shown as dots above.</p>
+                </div>
+              );
+            })()}
+
+            {seasonView === 'list' && (
             <div className="space-y-4">
               {seasonTrackerData.map((group, i) => (
                 <div key={i} className="space-y-3">
@@ -2243,6 +2443,7 @@ const JimmyJamApp = () => {
                 </div>
               ))}
             </div>
+            )}
 
             <p className="text-xs text-gray-500 text-center">
               Source: Florida Fish and Wildlife Conservation Commission (FWC), Zone C / DMU C6.
