@@ -75,6 +75,10 @@ export default function AdminPins({ venueLat, venueLon }) {
   const [newCategory, setNewCategory] = useState('parking');
   const [saveError, setSaveError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [editName, setEditName] = useState('');
+  const [editCategory, setEditCategory] = useState('parking');
+  const [moveNotice, setMoveNotice] = useState('');
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -126,6 +130,43 @@ export default function AdminPins({ venueLat, venueLon }) {
     fetchPins();
   };
 
+  const handleDragEnd = async (pin, newLatLng) => {
+    const { lat, lng } = newLatLng;
+    setPins(prev => prev.map(p => p.id === pin.id ? { ...p, lat, lng } : p));
+    const { error } = await supabase.from('venue_pins').update({ lat, lng }).eq('id', pin.id);
+    if (error) {
+      setMoveNotice(`Could not save new position for "${pin.name}" — reverting.`);
+      fetchPins();
+    } else {
+      setMoveNotice(`Moved "${pin.name}".`);
+    }
+    setTimeout(() => setMoveNotice(''), 3000);
+  };
+
+  const startEditing = (pin) => {
+    setEditingId(pin.id);
+    setEditName(pin.name);
+    setEditCategory(pin.category);
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditName('');
+    setEditCategory('parking');
+  };
+
+  const handleSaveEdit = async (id) => {
+    if (!editName.trim()) return;
+    const { error } = await supabase
+      .from('venue_pins')
+      .update({ name: editName.trim(), category: editCategory })
+      .eq('id', id);
+    if (!error) {
+      cancelEditing();
+      fetchPins();
+    }
+  };
+
   if (checkingSession) {
     return <p className="text-center text-gray-500 py-8">Checking login...</p>;
   }
@@ -146,7 +187,9 @@ export default function AdminPins({ venueLat, venueLon }) {
         </button>
       </div>
 
-      <p className="text-sm text-gray-600">Tap the map where you want a pin, then name it below.</p>
+      <p className="text-sm text-gray-600">Tap the map where you want a pin, then name it below. Drag an existing pin to reposition it — it saves automatically.</p>
+
+      {moveNotice && <p className="text-sm font-semibold text-blue-700">{moveNotice}</p>}
 
       <div className="w-full h-72 rounded-lg overflow-hidden border-2 border-blue-300 shadow-lg">
         <MapContainer center={[venueLat, venueLon]} zoom={17} style={{ height: '100%', width: '100%' }}>
@@ -156,7 +199,14 @@ export default function AdminPins({ venueLat, venueLon }) {
           />
           <ClickToPlace onPick={setPendingLocation} />
           {pins.map(pin => (
-            <Marker key={pin.id} position={[pin.lat, pin.lng]} />
+            <Marker
+              key={pin.id}
+              position={[pin.lat, pin.lng]}
+              draggable
+              eventHandlers={{
+                dragend: (e) => handleDragEnd(pin, e.target.getLatLng())
+              }}
+            />
           ))}
           {pendingLocation && (
             <Marker position={[pendingLocation.lat, pendingLocation.lng]} />
@@ -209,12 +259,41 @@ export default function AdminPins({ venueLat, venueLon }) {
       <div className="space-y-2">
         <h3 className="font-bold text-gray-800">Existing Pins ({pins.length})</h3>
         {pins.map(pin => (
-          <div key={pin.id} className="flex items-center justify-between bg-white rounded-lg border border-gray-200 p-3">
-            <div>
-              <p className="font-bold text-sm text-gray-900">{categoryMeta(pin.category).icon} {pin.name}</p>
-              <p className="text-xs text-gray-500">{categoryMeta(pin.category).label} — {pin.lat.toFixed(5)}, {pin.lng.toFixed(5)}</p>
-            </div>
-            <button onClick={() => handleDelete(pin.id)} className="text-red-600 font-bold text-sm">Delete</button>
+          <div key={pin.id} className="bg-white rounded-lg border border-gray-200 p-3">
+            {editingId === pin.id ? (
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  className="w-full p-2 border-2 border-blue-300 rounded-lg text-sm"
+                />
+                <select
+                  value={editCategory}
+                  onChange={(e) => setEditCategory(e.target.value)}
+                  className="w-full p-2 border-2 border-blue-300 rounded-lg text-sm"
+                >
+                  {PIN_CATEGORIES.map(cat => (
+                    <option key={cat.id} value={cat.id}>{cat.icon} {cat.label}</option>
+                  ))}
+                </select>
+                <div className="flex gap-2">
+                  <button onClick={() => handleSaveEdit(pin.id)} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1.5 rounded-lg font-bold text-sm">Save</button>
+                  <button onClick={cancelEditing} className="px-3 py-1.5 border-2 border-gray-300 rounded-lg font-bold text-gray-600 text-sm">Cancel</button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-bold text-sm text-gray-900">{categoryMeta(pin.category).icon} {pin.name}</p>
+                  <p className="text-xs text-gray-500">{categoryMeta(pin.category).label} — {pin.lat.toFixed(5)}, {pin.lng.toFixed(5)}</p>
+                </div>
+                <div className="flex gap-3">
+                  <button onClick={() => startEditing(pin)} className="text-blue-600 font-bold text-sm">Edit</button>
+                  <button onClick={() => handleDelete(pin.id)} className="text-red-600 font-bold text-sm">Delete</button>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
