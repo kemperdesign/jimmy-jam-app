@@ -19,7 +19,6 @@ const JimmyJamApp = () => {
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
-  const [mapFilters, setMapFilters] = useState(['stage', 'food', 'bar', 'restroom', 'firstaid', 'parking']);
   const [openInfoSection, setOpenInfoSection] = useState(null);
   const [openRecipe, setOpenRecipe] = useState(null);
   const [seasonView, setSeasonView] = useState('list');
@@ -982,47 +981,14 @@ const JimmyJamApp = () => {
             {/* VENUE MAP TAB */}
             {activeTab === 'venue' && (
               <div className="space-y-4">
-                <div className="w-full h-96 bg-white rounded-lg overflow-hidden border-2 border-gray-300 shadow-lg relative">
-                  <img 
-                    src="https://images.unsplash.com/photo-1569336415962-a4bd9f6dfc0f?auto=format&fit=crop&q=80&w=1200" 
-                    alt="Festival Map" 
-                    className="w-full h-full object-cover opacity-80"
+                <div className="w-full bg-white rounded-lg overflow-hidden border-2 border-gray-300 shadow-lg relative">
+                  <img
+                    src="/map.png"
+                    alt="Official site map of VIP Parking, Judges Parking, Team Parking, Handicap Parking, Food Trucks, Chili Teams, Vendors, Kid Zone, BMX Show, K9 Show, Car Show, and Side by Sides"
+                    className="w-full h-auto"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="bg-white/90 p-4 rounded-xl shadow-xl text-center border-2 border-red-700">
-                      <p className="text-4xl mb-2">🎪</p>
-                      <p className="text-gray-900 font-bold text-lg leading-tight uppercase tracking-widest">{EVENT_VENUE_NAME}<br/>Official Festival Map</p>
-                    </div>
-                  </div>
                 </div>
-
-                {/* LEGEND */}
-                <div className="bg-white rounded-lg p-4 border-2 border-gray-300 space-y-3">
-                  <div className="flex justify-between items-center mb-3">
-                    <h3 className="font-bold text-gray-900">Map Legend</h3>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase">Click to toggle</p>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    {[
-                      { id: 'stage', label: 'BBQ Stage', color: 'bg-red-500' },
-                      { id: 'food', label: 'Food Vendors', color: 'bg-green-500' },
-                      { id: 'bar', label: 'Bourbon Bar', color: 'bg-blue-500' },
-                      { id: 'restroom', label: 'Restrooms', color: 'bg-yellow-500' },
-                      { id: 'firstaid', label: 'First Aid', color: 'bg-purple-500' },
-                      { id: 'parking', label: 'Parking', color: 'bg-orange-500' }
-                    ].map(item => (
-                      <button 
-                        key={item.id}
-                        onClick={() => setMapFilters(prev => prev.includes(item.id) ? prev.filter(f => f !== item.id) : [...prev, item.id])}
-                        className={`flex items-center gap-2 p-1 rounded transition-all ${mapFilters.includes(item.id) ? 'opacity-100' : 'opacity-40 scale-95'}`}
-                      >
-                        <div className={`w-6 h-6 ${item.color} rounded shadow-sm`}></div>
-                        <span className="text-sm font-semibold text-gray-700">{item.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                <p className="text-xs text-gray-500 text-center">For turn-by-turn walking directions to any of these areas, use the GPS Map tab.</p>
               </div>
             )}
 
