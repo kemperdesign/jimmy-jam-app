@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, ImageOverlay, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { supabase } from './supabaseClient';
-import { distanceMeters, bearingDegrees, formatDistance, categoryMeta, PIN_CATEGORIES } from './geo';
+import { distanceMeters, bearingDegrees, formatDistance, categoryMeta, PIN_CATEGORIES, SITE_MAP_BOUNDS } from './geo';
 
 // Leaflet's default marker icons reference image files that don't survive
 // webpack bundling unless re-pointed at the CDN copies.
@@ -61,6 +61,7 @@ export default function VenueMap({ venueLat, venueLon }) {
   const [pins, setPins] = useState([]);
   const [loadError, setLoadError] = useState('');
   const [activeCategories, setActiveCategories] = useState(PIN_CATEGORIES.map(c => c.id));
+  const [showSiteMap, setShowSiteMap] = useState(true);
   const [selectedPin, setSelectedPin] = useState(null);
   const [navigating, setNavigating] = useState(false);
   const [userPos, setUserPos] = useState(null);
@@ -207,6 +208,16 @@ export default function VenueMap({ venueLat, venueLon }) {
 
       {loadError && <p className="text-red-700 font-semibold text-sm">{loadError}</p>}
 
+      {/* SITE MAP TOGGLE */}
+      <button
+        onClick={() => setShowSiteMap(prev => !prev)}
+        className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-2 text-xs font-bold transition-all ${
+          showSiteMap ? 'bg-gray-800 text-white border-gray-800' : 'bg-gray-50 border-gray-200 text-gray-500'
+        }`}
+      >
+        🗺️ {showSiteMap ? 'Hide Site Map' : 'Show Site Map'}
+      </button>
+
       {/* MAP */}
       <div className="w-full h-80 rounded-lg overflow-hidden border-2 border-blue-300 shadow-lg">
         <MapContainer center={[venueLat, venueLon]} zoom={17} style={{ height: '100%', width: '100%' }}>
@@ -214,6 +225,9 @@ export default function VenueMap({ venueLat, venueLon }) {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          {showSiteMap && (
+            <ImageOverlay url="/map.png" bounds={SITE_MAP_BOUNDS} opacity={0.85} />
+          )}
           {filteredPins.map(pin => (
             <Marker
               key={pin.id}

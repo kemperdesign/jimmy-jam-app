@@ -57,3 +57,14 @@ export const PIN_CATEGORIES = [
 export function categoryMeta(categoryId) {
   return PIN_CATEGORIES.find(c => c.id === categoryId) || PIN_CATEGORIES[PIN_CATEGORIES.length - 1];
 }
+
+// GPS bounds for /map.png (the venue's aerial site-map graphic), fitted by
+// matching labeled features in the image (VIP Parking, Chili Teams, etc.)
+// against the pin coordinates already calibrated to that same layout.
+// It's a simple axis-aligned rectangle, so it won't perfectly correct for
+// any rotation/skew in the source image — close enough to use as a visual
+// placement guide, not survey-grade.
+export const SITE_MAP_BOUNDS = [
+  [29.77000561922684, -81.45395537354639], // south-west
+  [29.7719895440666, -81.45288660024333]   // north-east
+];

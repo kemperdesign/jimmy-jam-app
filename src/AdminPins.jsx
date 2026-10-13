@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, ImageOverlay, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { supabase } from './supabaseClient';
-import { PIN_CATEGORIES, categoryMeta } from './geo';
+import { PIN_CATEGORIES, categoryMeta, SITE_MAP_BOUNDS } from './geo';
 
 function ClickToPlace({ onPick }) {
   useMapEvents({
@@ -79,6 +79,8 @@ export default function AdminPins({ venueLat, venueLon }) {
   const [editName, setEditName] = useState('');
   const [editCategory, setEditCategory] = useState('parking');
   const [moveNotice, setMoveNotice] = useState('');
+  const [showSiteMap, setShowSiteMap] = useState(true);
+  const [siteMapOpacity, setSiteMapOpacity] = useState(0.85);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -191,12 +193,39 @@ export default function AdminPins({ venueLat, venueLon }) {
 
       {moveNotice && <p className="text-sm font-semibold text-blue-700">{moveNotice}</p>}
 
+      <div className="flex items-center gap-3 flex-wrap">
+        <button
+          onClick={() => setShowSiteMap(prev => !prev)}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-2 text-xs font-bold transition-all ${
+            showSiteMap ? 'bg-gray-800 text-white border-gray-800' : 'bg-gray-50 border-gray-200 text-gray-500'
+          }`}
+        >
+          🗺️ {showSiteMap ? 'Hide Site Map' : 'Show Site Map'}
+        </button>
+        {showSiteMap && (
+          <label className="flex items-center gap-2 text-xs text-gray-600">
+            Opacity
+            <input
+              type="range"
+              min="0.2"
+              max="1"
+              step="0.05"
+              value={siteMapOpacity}
+              onChange={(e) => setSiteMapOpacity(Number(e.target.value))}
+            />
+          </label>
+        )}
+      </div>
+
       <div className="w-full h-72 rounded-lg overflow-hidden border-2 border-blue-300 shadow-lg">
         <MapContainer center={[venueLat, venueLon]} zoom={17} style={{ height: '100%', width: '100%' }}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          {showSiteMap && (
+            <ImageOverlay url="/map.png" bounds={SITE_MAP_BOUNDS} opacity={siteMapOpacity} />
+          )}
           <ClickToPlace onPick={setPendingLocation} />
           {pins.map(pin => (
             <Marker
