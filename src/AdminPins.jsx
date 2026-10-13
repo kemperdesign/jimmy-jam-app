@@ -164,6 +164,25 @@ export default function AdminPins({ venueLat, venueLon }) {
     });
   };
 
+  const handleNudgeOverlay = (direction) => {
+    setMapBounds(prev => {
+      const stepLat = (prev.north - prev.south) * 0.02;
+      const stepLng = (prev.east - prev.west) * 0.02;
+      const d = {
+        up: { lat: stepLat, lng: 0 },
+        down: { lat: -stepLat, lng: 0 },
+        left: { lat: 0, lng: -stepLng },
+        right: { lat: 0, lng: stepLng }
+      }[direction];
+      return {
+        south: prev.south + d.lat,
+        north: prev.north + d.lat,
+        west: prev.west + d.lng,
+        east: prev.east + d.lng
+      };
+    });
+  };
+
   const handleSaveCalibration = async () => {
     const { error } = await supabase.from('site_map_calibration').upsert({ id: 1, ...mapBounds });
     setCalibrationNotice(error ? 'Could not save — make sure you’re still logged in.' : 'Site map alignment saved.');
@@ -300,11 +319,31 @@ export default function AdminPins({ venueLat, venueLon }) {
       </div>
 
       {calibrating && (
-        <div className="bg-green-50 border-2 border-green-300 rounded-lg p-3 space-y-2">
-          <p className="text-sm text-green-900 font-semibold">Drag the green handle to move the image. Use the buttons to resize it.</p>
+        <div className="bg-green-50 border-2 border-green-300 rounded-lg p-3 space-y-3">
+          <p className="text-sm text-green-900 font-semibold">Drag the green handle, or use the arrows, to move the image. Use the buttons to resize it.</p>
+
+          <div className="flex items-center gap-6">
+            {/* D-PAD */}
+            <div className="grid grid-cols-3 grid-rows-3 gap-1 w-32">
+              <div />
+              <button onClick={() => handleNudgeOverlay('up')} className="bg-white border-2 border-green-400 rounded-lg py-2 font-bold">⬆️</button>
+              <div />
+              <button onClick={() => handleNudgeOverlay('left')} className="bg-white border-2 border-green-400 rounded-lg py-2 font-bold">⬅️</button>
+              <div className="flex items-center justify-center text-green-600">✥</div>
+              <button onClick={() => handleNudgeOverlay('right')} className="bg-white border-2 border-green-400 rounded-lg py-2 font-bold">➡️</button>
+              <div />
+              <button onClick={() => handleNudgeOverlay('down')} className="bg-white border-2 border-green-400 rounded-lg py-2 font-bold">⬇️</button>
+              <div />
+            </div>
+
+            {/* SCALE */}
+            <div className="flex flex-col gap-2">
+              <button onClick={() => handleScaleOverlay(1.05)} className="px-3 py-1.5 bg-white border-2 border-green-400 rounded-lg font-bold text-sm">➕ Bigger</button>
+              <button onClick={() => handleScaleOverlay(0.95)} className="px-3 py-1.5 bg-white border-2 border-green-400 rounded-lg font-bold text-sm">➖ Smaller</button>
+            </div>
+          </div>
+
           <div className="flex items-center gap-2 flex-wrap">
-            <button onClick={() => handleScaleOverlay(1.05)} className="px-3 py-1.5 bg-white border-2 border-green-400 rounded-lg font-bold text-sm">➕ Bigger</button>
-            <button onClick={() => handleScaleOverlay(0.95)} className="px-3 py-1.5 bg-white border-2 border-green-400 rounded-lg font-bold text-sm">➖ Smaller</button>
             <button onClick={handleResetCalibration} className="px-3 py-1.5 bg-white border-2 border-gray-300 rounded-lg font-bold text-sm text-gray-600">Reset</button>
             <button onClick={handleSaveCalibration} className="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold text-sm">💾 Save Alignment</button>
           </div>
