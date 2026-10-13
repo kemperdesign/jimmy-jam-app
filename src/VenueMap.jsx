@@ -62,6 +62,7 @@ export default function VenueMap({ venueLat, venueLon }) {
   const [loadError, setLoadError] = useState('');
   const [activeCategories, setActiveCategories] = useState(PIN_CATEGORIES.map(c => c.id));
   const [showSiteMap, setShowSiteMap] = useState(true);
+  const [siteMapBounds, setSiteMapBounds] = useState(SITE_MAP_BOUNDS);
   const [selectedPin, setSelectedPin] = useState(null);
   const [navigating, setNavigating] = useState(false);
   const [userPos, setUserPos] = useState(null);
@@ -83,6 +84,14 @@ export default function VenueMap({ venueLat, venueLon }) {
       setPins(data || []);
     };
     fetchPins();
+
+    const fetchCalibration = async () => {
+      const { data, error } = await supabase.from('site_map_calibration').select('*').eq('id', 1).maybeSingle();
+      if (!error && data) {
+        setSiteMapBounds([[data.south, data.west], [data.north, data.east]]);
+      }
+    };
+    fetchCalibration();
   }, []);
 
   const filteredPins = useMemo(
@@ -226,7 +235,7 @@ export default function VenueMap({ venueLat, venueLon }) {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {showSiteMap && (
-            <ImageOverlay url="/map.png" bounds={SITE_MAP_BOUNDS} opacity={0.85} />
+            <ImageOverlay url="/map.png" bounds={siteMapBounds} opacity={0.85} />
           )}
           {filteredPins.map(pin => (
             <Marker

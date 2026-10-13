@@ -1,16 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, ImageOverlay, Marker, useMapEvents } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { supabase } from './supabaseClient';
 import { PIN_CATEGORIES, categoryMeta, SITE_MAP_BOUNDS } from './geo';
 
-function ClickToPlace({ onPick }) {
+function ClickToPlace({ onPick, disabled }) {
   useMapEvents({
     click(e) {
-      onPick({ lat: e.latlng.lat, lng: e.latlng.lng });
+      if (!disabled) onPick({ lat: e.latlng.lat, lng: e.latlng.lng });
     }
   });
   return null;
+}
+
+const moveHandleIcon = L.divIcon({
+  className: 'calibration-handle',
+  html: `<div style="
+    width:36px;height:36px;border-radius:50%;background:#16a34a;border:3px solid white;
+    box-shadow:0 2px 8px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;
+    font-size:18px;cursor:move;
+  ">✥</div>`,
+  iconSize: [36, 36],
+  iconAnchor: [18, 18]
+});
+
+function boundsToObj(bounds) {
+  const [[south, west], [north, east]] = bounds;
+  return { south, west, north, east };
+}
+
+function objToBounds(obj) {
+  return [[obj.south, obj.west], [obj.north, obj.east]];
 }
 
 function LoginForm({ onSignedIn }) {
@@ -81,6 +102,9 @@ export default function AdminPins({ venueLat, venueLon }) {
   const [moveNotice, setMoveNotice] = useState('');
   const [showSiteMap, setShowSiteMap] = useState(true);
   const [siteMapOpacity, setSiteMapOpacity] = useState(0.85);
+  const [calibrating, setCalibrating] = useState(false);
+  const [mapBounds, setMapBounds] = useState(boundsToObj(SITE_MAP_BOUNDS));
+  const [calibrationNotice, setCalibrationNotice] = useState('');
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -98,9 +122,57 @@ export default function AdminPins({ venueLat, venueLon }) {
     if (!error) setPins(data || []);
   };
 
+  const fetchCalibration = async () => {
+    const { data, error } = await supabase.from('site_map_calibration').select('*').eq('id', 1).maybeSingle();
+    if (!error && data) {
+      setMapBounds({ south: data.south, west: data.west, north: data.north, east: data.east });
+    }
+  };
+
   useEffect(() => {
-    if (session) fetchPins();
+    if (session) {
+      fetchPins();
+      fetchCalibration();
+    }
   }, [session]);
+
+  const centerOf = (b) => ({ lat: (b.south + b.north) / 2, lng: (b.west + b.east) / 2 });
+
+  const handleMoveOverlay = (newCenter) => {
+    const oldCenter = centerOf(mapBounds);
+    const dLat = newCenter.lat - oldCenter.lat;
+    const dLng = newCenter.lng - oldCenter.lng;
+    setMapBounds(prev => ({
+      south: prev.south + dLat,
+      north: prev.north + dLat,
+      west: prev.west + dLng,
+      east: prev.east + dLng
+    }));
+  };
+
+  const handleScaleOverlay = (factor) => {
+    setMapBounds(prev => {
+      const c = centerOf(prev);
+      const halfLat = ((prev.north - prev.south) / 2) * factor;
+      const halfLng = ((prev.east - prev.west) / 2) * factor;
+      return {
+        south: c.lat - halfLat,
+        north: c.lat + halfLat,
+        west: c.lng - halfLng,
+        east: c.lng + halfLng
+      };
+    });
+  };
+
+  const handleSaveCalibration = async () => {
+    const { error } = await supabase.from('site_map_calibration').upsert({ id: 1, ...mapBounds });
+    setCalibrationNotice(error ? 'Could not save — make sure you’re still logged in.' : 'Site map alignment saved.');
+    setTimeout(() => setCalibrationNotice(''), 3000);
+  };
+
+  const handleResetCalibration = () => {
+    setMapBounds(boundsToObj(SITE_MAP_BOUNDS));
+  };
 
   const handleAddPin = async (e) => {
     e.preventDefault();
@@ -203,19 +275,42 @@ export default function AdminPins({ venueLat, venueLon }) {
           🗺️ {showSiteMap ? 'Hide Site Map' : 'Show Site Map'}
         </button>
         {showSiteMap && (
-          <label className="flex items-center gap-2 text-xs text-gray-600">
-            Opacity
-            <input
-              type="range"
-              min="0.2"
-              max="1"
-              step="0.05"
-              value={siteMapOpacity}
-              onChange={(e) => setSiteMapOpacity(Number(e.target.value))}
-            />
-          </label>
+          <>
+            <label className="flex items-center gap-2 text-xs text-gray-600">
+              Opacity
+              <input
+                type="range"
+                min="0.2"
+                max="1"
+                step="0.05"
+                value={siteMapOpacity}
+                onChange={(e) => setSiteMapOpacity(Number(e.target.value))}
+              />
+            </label>
+            <button
+              onClick={() => setCalibrating(prev => !prev)}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-2 text-xs font-bold transition-all ${
+                calibrating ? 'bg-green-600 text-white border-green-600' : 'bg-gray-50 border-gray-200 text-gray-500'
+              }`}
+            >
+              📐 {calibrating ? 'Done Aligning' : 'Align Site Map'}
+            </button>
+          </>
         )}
       </div>
+
+      {calibrating && (
+        <div className="bg-green-50 border-2 border-green-300 rounded-lg p-3 space-y-2">
+          <p className="text-sm text-green-900 font-semibold">Drag the green handle to move the image. Use the buttons to resize it.</p>
+          <div className="flex items-center gap-2 flex-wrap">
+            <button onClick={() => handleScaleOverlay(1.05)} className="px-3 py-1.5 bg-white border-2 border-green-400 rounded-lg font-bold text-sm">➕ Bigger</button>
+            <button onClick={() => handleScaleOverlay(0.95)} className="px-3 py-1.5 bg-white border-2 border-green-400 rounded-lg font-bold text-sm">➖ Smaller</button>
+            <button onClick={handleResetCalibration} className="px-3 py-1.5 bg-white border-2 border-gray-300 rounded-lg font-bold text-sm text-gray-600">Reset</button>
+            <button onClick={handleSaveCalibration} className="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold text-sm">💾 Save Alignment</button>
+          </div>
+          {calibrationNotice && <p className="text-sm font-semibold text-green-800">{calibrationNotice}</p>}
+        </div>
+      )}
 
       <div className="w-full h-72 rounded-lg overflow-hidden border-2 border-blue-300 shadow-lg">
         <MapContainer center={[venueLat, venueLon]} zoom={17} style={{ height: '100%', width: '100%' }}>
@@ -224,14 +319,24 @@ export default function AdminPins({ venueLat, venueLon }) {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {showSiteMap && (
-            <ImageOverlay url="/map.png" bounds={SITE_MAP_BOUNDS} opacity={siteMapOpacity} />
+            <ImageOverlay url="/map.png" bounds={objToBounds(mapBounds)} opacity={siteMapOpacity} />
           )}
-          <ClickToPlace onPick={setPendingLocation} />
+          {calibrating && (
+            <Marker
+              position={[centerOf(mapBounds).lat, centerOf(mapBounds).lng]}
+              icon={moveHandleIcon}
+              draggable
+              eventHandlers={{
+                dragend: (e) => handleMoveOverlay(e.target.getLatLng())
+              }}
+            />
+          )}
+          <ClickToPlace onPick={setPendingLocation} disabled={calibrating} />
           {pins.map(pin => (
             <Marker
               key={pin.id}
               position={[pin.lat, pin.lng]}
-              draggable
+              draggable={!calibrating}
               eventHandlers={{
                 dragend: (e) => handleDragEnd(pin, e.target.getLatLng())
               }}

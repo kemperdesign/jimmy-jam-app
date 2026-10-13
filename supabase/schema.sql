@@ -88,3 +88,42 @@ on conflict (name) do update set
   category = excluded.category,
   lat = excluded.lat,
   lng = excluded.lng;
+
+
+-- ============================================================
+-- SITE MAP CALIBRATION (aerial map.png overlay position/size)
+-- ============================================================
+-- A single-row table holding the GPS bounding box the admin has dragged
+-- /scaled the site-map image to on the Admin page. Public visitors read
+-- this (so the GPS Map tab's overlay matches), only logged-in admins can
+-- update it. Seeded with the original best-guess bounds; the admin's
+-- "Save Alignment" button overwrites this row going forward.
+
+create table if not exists public.site_map_calibration (
+  id int primary key default 1,
+  south double precision not null,
+  north double precision not null,
+  west double precision not null,
+  east double precision not null,
+  updated_at timestamptz not null default now(),
+  constraint site_map_calibration_single_row check (id = 1)
+);
+
+alter table public.site_map_calibration enable row level security;
+
+create policy "Anyone can view site map calibration"
+  on public.site_map_calibration
+  for select
+  to anon, authenticated
+  using (true);
+
+create policy "Logged-in admins can update site map calibration"
+  on public.site_map_calibration
+  for all
+  to authenticated
+  using (true)
+  with check (true);
+
+insert into public.site_map_calibration (id, south, north, west, east) values
+  (1, 29.77000561922684, 29.7719895440666, -81.45395537354639, -81.45288660024333)
+on conflict (id) do nothing;
