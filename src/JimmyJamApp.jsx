@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, Search, ChevronLeft, ChevronRight, Star, Upload, Calendar, Ticket, Camera, Trophy, Users, Shirt, HeartHandshake, CloudSun, MessageCircle, Heart } from 'lucide-react';
+import { Bell, Search, ChevronLeft, ChevronRight, Star, Upload, Calendar, Ticket, Camera, Trophy, Users, Shirt, HeartHandshake, CloudSun, MessageCircle, Heart, X } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
 import { supabase } from './supabaseClient';
@@ -32,6 +32,7 @@ const JimmyJamApp = () => {
   const [appSubmitted, setAppSubmitted] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [openInfoSection, setOpenInfoSection] = useState(null);
   const [openRecipe, setOpenRecipe] = useState(null);
@@ -1665,9 +1666,12 @@ const JimmyJamApp = () => {
                   </div>
                 </div>
               ) : (
-                <div className="relative bg-gradient-to-br from-red-600 to-orange-600 h-[500px] flex items-center justify-center overflow-hidden">
+                <button
+                  onClick={() => setLightboxOpen(true)}
+                  className="relative bg-gradient-to-br from-red-600 to-orange-600 h-[500px] w-full flex items-center justify-center overflow-hidden cursor-zoom-in"
+                >
                   <img src={galleryPhotos[currentPhotoIndex].src} alt={galleryPhotos[currentPhotoIndex].title} className="w-full h-full object-cover" />
-                </div>
+                </button>
               )}
               <div className="p-8">
                 <h3 className="text-3xl font-bold text-red-700 mb-2">{galleryPhotos[currentPhotoIndex].title}</h3>
@@ -1693,7 +1697,7 @@ const JimmyJamApp = () => {
                 {galleryPhotos.map((photo, idx) => (
                   <button
                     key={photo.id}
-                    onClick={() => setCurrentPhotoIndex(idx)}
+                    onClick={() => { setCurrentPhotoIndex(idx); if (!photo.isPoster) setLightboxOpen(true); }}
                     className={`aspect-square rounded-lg flex items-center justify-center transition-all transform hover:scale-110 border-4 ${
                       idx === currentPhotoIndex ? 'border-red-700 shadow-lg' : 'border-gray-300 hover:border-red-400'
                     } bg-gradient-to-br from-red-100 to-orange-100 overflow-hidden`}
@@ -1710,6 +1714,45 @@ const JimmyJamApp = () => {
                 ))}
               </div>
             </div>
+
+            {/* LIGHTBOX */}
+            {lightboxOpen && !galleryPhotos[currentPhotoIndex].isPoster && (
+              <div
+                className="fixed inset-0 z-50 bg-black/95 flex flex-col"
+                onClick={() => setLightboxOpen(false)}
+              >
+                <button
+                  onClick={() => setLightboxOpen(false)}
+                  className="absolute top-4 right-4 z-10 text-white bg-black/50 rounded-full p-2 hover:bg-black/70"
+                >
+                  <X size={28} />
+                </button>
+                <div className="flex-1 flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+                  <button
+                    onClick={prevPhoto}
+                    className="absolute left-2 md:left-6 text-white bg-black/50 rounded-full p-2 hover:bg-black/70"
+                  >
+                    <ChevronLeft size={28} />
+                  </button>
+                  <img
+                    src={galleryPhotos[currentPhotoIndex].src}
+                    alt={galleryPhotos[currentPhotoIndex].title}
+                    className="max-w-full max-h-full object-contain"
+                  />
+                  <button
+                    onClick={nextPhoto}
+                    className="absolute right-2 md:right-6 text-white bg-black/50 rounded-full p-2 hover:bg-black/70"
+                  >
+                    <ChevronRight size={28} />
+                  </button>
+                </div>
+                <div className="text-center text-white pb-6 px-4" onClick={(e) => e.stopPropagation()}>
+                  <h3 className="text-xl font-bold">{galleryPhotos[currentPhotoIndex].title}</h3>
+                  <p className="text-gray-300 text-sm">{galleryPhotos[currentPhotoIndex].desc}</p>
+                  <p className="text-gray-400 text-xs mt-1">{currentPhotoIndex + 1} of {galleryPhotos.length}</p>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
