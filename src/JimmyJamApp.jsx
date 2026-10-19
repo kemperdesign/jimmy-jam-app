@@ -127,8 +127,6 @@ const JimmyJamApp = () => {
   // so these use a generic badge icon until real logo files are supplied.
   const sponsorsData = [
     { id: 0, name: 'The Shee Family', tier: 'Title Sponsor', logo: '🏆', logoImage: '/sponsor-logos/shee-family-title-sponsor.svg', website: null, description: 'Title Sponsor of the 10th Annual Jimmy Jam BBQ Slam. The Shee Family also performed live at the 2026 event.' },
-    { id: 1, name: 'Evans Automotive', tier: "People's Choice — Chili & Chowder", logo: '🌶️', logoImage: '/sponsor-logos/evans-automotive.jpg', website: 'https://www.evans-automotive.com/', description: 'Sponsor of the Chili & Chowder People’s Choice competition at the Jimmy Jam BBQ Slam.' },
-    { id: 2, name: 'Steelhead Plumbing', tier: "People's Choice — BBQ", logo: '🍖', website: 'https://steelheadplumbing.com/', description: 'Sponsor of the BBQ People’s Choice competition at the Jimmy Jam BBQ Slam.' },
     { id: 3, name: 'My DUI Guy Law', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/my-dui-guy-law.png', website: 'https://www.myduiguy.law/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
     { id: 4, name: 'Glacier HVAC', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/glacier-hvac.jpg', website: 'https://glacier-hvac.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
     { id: 5, name: 'Saint Augustine Slabs & Sawmill', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/saint-augustine-slabs.svg', website: 'https://saintaugustineslabsandsawmill.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
@@ -140,6 +138,8 @@ const JimmyJamApp = () => {
     { id: 10, name: 'Sonny’s BBQ', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/sonnys-bbq.png', website: 'https://www.sonnysbbq.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
     { id: 11, name: 'United Rentals', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/united-rentals.png', website: 'https://www.unitedrentals.com/locations/fl/jacksonville/power-hvac-rentals/g80', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
     { id: 12, name: 'Bozard Ford', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/bozard-ford.svg', website: 'https://bozardford.com/', description: 'Proud 2027 Community Sponsor of the Jimmy Jam BBQ Slam.' },
+    { id: 1, name: 'Evans Automotive', tier: "People's Choice — Chili & Chowder", logo: '🌶️', logoImage: '/sponsor-logos/evans-automotive.jpg', website: 'https://www.evans-automotive.com/', description: 'Sponsor of the Chili & Chowder People’s Choice competition at the Jimmy Jam BBQ Slam.' },
+    { id: 2, name: 'Steelhead Plumbing', tier: "People's Choice — BBQ", logo: '🍖', website: 'https://steelheadplumbing.com/', description: 'Sponsor of the BBQ People’s Choice competition at the Jimmy Jam BBQ Slam.' },
     { id: 13, name: 'Hometech Pest Control', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://hometechpest.com/', description: 'Proud 2027 Banner Sponsor of the Jimmy Jam BBQ Slam.' },
     { id: 14, name: 'Perfect Promo Solutions', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://www.perfectpromosolutions.com/', description: 'Proud 2027 Banner Sponsor of the Jimmy Jam BBQ Slam.' },
     { id: 15, name: 'MySALL.org', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://mysall.org/', description: 'Proud 2027 Banner Sponsor of the Jimmy Jam BBQ Slam.' },
