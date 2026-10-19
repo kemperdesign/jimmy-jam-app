@@ -954,15 +954,15 @@ const JimmyJamApp = () => {
 
         {/* HOME */}
         {activeNav === 'home' && (
-          <div className="space-y-8">
+          <div className="space-y-8 -mx-4 px-4 pb-4 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
             {/* HERO */}
-            <div className="relative rounded-lg overflow-hidden h-96 bg-black flex items-center justify-center shadow-xl">
+            <div className="relative rounded-lg overflow-hidden h-96 bg-black flex items-center justify-center shadow-xl -mx-4 md:mx-0">
               {/* VIDEO BACKGROUND */}
-              <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="absolute inset-0 w-full h-full object-cover"
               >
                 <source src="/hero-video.mp4" type="video/mp4" />
@@ -971,23 +971,27 @@ const JimmyJamApp = () => {
 
             {/* MAIN FEATURE GRID */}
             <div className="space-y-4">
-              <h2 className="text-3xl font-bold text-gray-800 text-center">EXPLORE</h2>
-              
+              <h2 className="font-display text-4xl tracking-wide text-center" style={{ color: 'var(--text-primary)' }}>EXPLORE</h2>
+
               <div className="grid grid-cols-3 gap-4">
                 {mainFeatures.map((feature, idx) => (
                   <button
                     key={idx}
                     onClick={() => feature.externalUrl ? openExternal(feature.externalUrl) : setActiveNav(feature.action)}
-                    className="group bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-all transform hover:scale-105 border-2 border-gray-200 hover:border-red-700"
+                    className="group rounded-lg p-6 shadow-card transition-all transform hover:scale-105 border"
+                    style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}
                   >
                     <div className="flex flex-col items-center gap-3">
-                      <div className="w-20 h-20 rounded-full border-4 border-red-700 flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-50 group-hover:bg-red-700 transition-all">
+                      <div
+                        className="w-20 h-20 rounded-full border-4 flex items-center justify-center transition-all"
+                        style={{ borderColor: 'var(--color-primary)', backgroundColor: 'var(--bg-surface-elevated)' }}
+                      >
                         <span className="text-4xl group-hover:hidden">{feature.icon}</span>
-                        <span className="text-white text-3xl hidden group-hover:block">→</span>
+                        <span className="text-3xl hidden group-hover:block" style={{ color: 'var(--color-primary)' }}>→</span>
                       </div>
                       <div className="text-center">
-                        <p className="font-bold text-gray-800 text-sm">{feature.title}</p>
-                        <p className="text-gray-600 text-xs">{feature.desc}</p>
+                        <p className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>{feature.title}</p>
+                        <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{feature.desc}</p>
                       </div>
                     </div>
                   </button>
@@ -999,7 +1003,8 @@ const JimmyJamApp = () => {
             <div className="text-center">
               <button
                 onClick={() => setActiveNav('assistance')}
-                className="bg-gradient-to-r from-red-700 to-orange-600 hover:from-red-800 hover:to-orange-700 text-white px-12 py-4 rounded-lg font-bold text-lg shadow-lg transform hover:scale-105 transition-all"
+                className="px-12 py-4 rounded-md font-bold text-lg shadow-card transition-all transform hover:scale-105"
+                style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', height: '48px', boxShadow: 'var(--shadow-card)' }}
               >
                 ❤️ APPLY FOR HELP
               </button>
@@ -1182,36 +1187,44 @@ const JimmyJamApp = () => {
 
         {/* MAPS & INFO PAGE */}
         {activeNav === 'maps' && (
-          <div className="space-y-4 pb-20">
+          <div className="space-y-4 pb-20 -mx-4 px-4 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
             {/* HEADER */}
-            <div className="bg-blue-600 text-white p-4 rounded-lg mb-4">
-              <h1 className="text-3xl font-bold">Maps & Info</h1>
+            <div className="p-4 pt-6 -mx-4 px-8">
+              <h1 className="font-display text-4xl tracking-wide" style={{ color: 'var(--text-primary)' }}>MAPS & INFO</h1>
             </div>
 
             {/* TABS */}
-            <div className="flex gap-3 border-b-2 border-gray-300">
-              <button onClick={() => setActiveTab('venue')} className={`px-4 py-3 font-bold transition-all flex items-center gap-2 ${activeTab === 'venue' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
-                📍 Map
-              </button>
-              <button onClick={() => setActiveTab('gps')} className={`px-4 py-3 font-bold transition-all flex items-center gap-2 ${activeTab === 'gps' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
-                🧭 GPS Map
-              </button>
-              <button onClick={() => setActiveTab('info')} className={`px-4 py-3 font-bold transition-all flex items-center gap-2 ${activeTab === 'info' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
-                ℹ️ Info
-              </button>
+            <div className="flex gap-3 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
+              {[
+                { id: 'venue', icon: '📍', label: 'Map' },
+                { id: 'gps', icon: '🧭', label: 'GPS Map' },
+                { id: 'info', icon: 'ℹ️', label: 'Info' }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className="px-4 py-3 font-bold transition-all flex items-center gap-2 border-b-4"
+                  style={{
+                    borderColor: activeTab === tab.id ? 'var(--color-primary)' : 'transparent',
+                    color: activeTab === tab.id ? 'var(--color-primary)' : 'var(--text-secondary)'
+                  }}
+                >
+                  {tab.icon} {tab.label}
+                </button>
+              ))}
             </div>
 
             {/* VENUE MAP TAB */}
             {activeTab === 'venue' && (
               <div className="space-y-4">
-                <div className="w-full bg-white rounded-lg overflow-hidden border-2 border-gray-300 shadow-lg relative">
+                <div className="w-full rounded-lg overflow-hidden border shadow-card relative" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
                   <img
                     src="/map.png"
                     alt="Official site map of VIP Parking, Judges Parking, Team Parking, Handicap Parking, Food Trucks, Chili Teams, Vendors, Kid Zone, BMX Show, K9 Show, Car Show, and Side by Sides"
                     className="w-full h-auto"
                   />
                 </div>
-                <p className="text-xs text-gray-500 text-center">For turn-by-turn walking directions to any of these areas, use the GPS Map tab.</p>
+                <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>For turn-by-turn walking directions to any of these areas, use the GPS Map tab.</p>
               </div>
             )}
 
@@ -1221,18 +1234,19 @@ const JimmyJamApp = () => {
                 <VenueMap venueLat={EVENT_LAT} venueLon={EVENT_LON} />
 
                 {/* LOCATION INFO */}
-                <div className="bg-white rounded-lg p-4 border-2 border-blue-300 space-y-3 shadow-lg">
+                <div className="rounded-lg p-4 border space-y-3 shadow-card" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)', boxShadow: 'var(--shadow-card)' }}>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-red-700 rounded-lg flex items-center justify-center text-xl">📍</div>
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xl" style={{ backgroundColor: 'var(--color-primary)' }}>📍</div>
                     <div>
-                      <h3 className="font-bold text-gray-900 leading-tight">{EVENT_VENUE_NAME}</h3>
-                      <p className="text-xs text-gray-500 italic">Official Jimmy Jam Venue</p>
+                      <h3 className="font-bold leading-tight" style={{ color: 'var(--text-primary)' }}>{EVENT_VENUE_NAME}</h3>
+                      <p className="text-xs italic" style={{ color: 'var(--text-secondary)' }}>Official Jimmy Jam Venue</p>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600">{EVENT_VENUE_ADDRESS}</p>
+                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{EVENT_VENUE_ADDRESS}</p>
                   <button
                     onClick={() => openExternal(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(EVENT_VENUE_NAME + ', ' + EVENT_VENUE_ADDRESS)}`)}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold shadow-lg transform active:scale-95 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-lg font-bold shadow-card transform active:scale-95 transition-all flex items-center justify-center gap-2"
+                    style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', boxShadow: 'var(--shadow-card)' }}
                   >
                     🧭 GET DIRECTIONS
                   </button>
