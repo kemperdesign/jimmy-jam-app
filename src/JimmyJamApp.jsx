@@ -834,7 +834,7 @@ const JimmyJamApp = () => {
     { icon: '🏆', title: 'EVENTS', desc: 'Browse our festivals', action: 'events' },
     { icon: '🤝', title: 'SPONSORS', desc: 'Meet our partners', action: 'sponsors' },
     { icon: '👕', title: 'MERCH', desc: 'Shop swag store', action: 'swag' },
-    { icon: '🙋', title: 'VOLUNTEER', desc: 'Help make it happen', externalUrl: 'https://jimmyjambbqslam.com/volunteer' },
+    { icon: '🙋', title: 'VOLUNTEER', desc: 'Help make it happen', action: 'volunteer' },
     { icon: '🌤️', title: 'WEATHER', desc: 'Event forecast', action: 'weather' },
     { icon: '💬', title: 'STORIES', desc: 'Real testimonials', action: 'testimonials' }
   ];
@@ -1282,6 +1282,51 @@ const JimmyJamApp = () => {
               <h3 className="text-xl font-bold text-red-800 mb-2">Partner With Us</h3>
               <p className="text-sm text-red-600 mb-4">Interested in becoming an official partner? Let's connect.</p>
               <button onClick={() => setActiveNav('connect')} className="px-6 py-2 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition-all shadow-md">CONTACT US</button>
+            </div>
+          </div>
+        )}
+
+        {/* VOLUNTEER */}
+        {activeNav === 'volunteer' && (
+          <div className="space-y-6 pb-20">
+            <div className="bg-gradient-to-br from-orange-600 to-red-700 text-white p-8 rounded-2xl shadow-lg text-center">
+              <h2 className="text-3xl font-bold mb-2">🙋 Be a Volunteer</h2>
+              <p className="text-orange-100">Help make the Jimmy Jam BBQ Slam a success</p>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-md border-2 border-gray-200 space-y-4">
+              <p className="text-gray-700 leading-relaxed">
+                As a nonprofit event, Jimmy Jam relies on dedicated volunteers to bring the whole experience to life. Whether you love BBQ, cars, live music, or just want to give back to the community, there's a role for you.
+              </p>
+
+              <div>
+                <h3 className="font-bold text-gray-900 mb-2">Volunteer Opportunities Include</h3>
+                <ul className="text-sm text-gray-700 space-y-1.5">
+                  <li>✅ Event setup & breakdown</li>
+                  <li>✅ Assisting with competitions (Chili Cook-Off, BBQ, Cornhole, Car Show)</li>
+                  <li>✅ Ticket & token sales</li>
+                  <li>✅ Guest assistance & information booth</li>
+                  <li>✅ Kids' activities & family fun zone support</li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-bold text-gray-900 mb-2">Why Volunteer</h3>
+                <ul className="text-sm text-gray-700 space-y-1.5">
+                  <li>🤝 Give back to the community and support those in need</li>
+                  <li>🎟️ Gain event experience and meet great people</li>
+                  <li>🔥 Enjoy the energy and excitement of the event up close</li>
+                  <li>❤️ Be part of Jimmy Jam's legacy of kindness and generosity</li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() => openExternal('https://jimmyjambbqslam.com/volunteer')}
+                className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-full font-bold text-lg transition-all"
+              >
+                Sign Up to Volunteer →
+              </button>
+              <p className="text-xs text-gray-500 text-center">Opens the volunteer sign-up form on jimmyjambbqslam.com, which always shows current open positions.</p>
             </div>
           </div>
         )}
