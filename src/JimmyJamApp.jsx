@@ -2216,6 +2216,27 @@ const JimmyJamApp = () => {
         {/* CONNECT - SOCIALS PAGE */}
         {activeNav === 'connect' && (
           <div className="space-y-4 pb-20">
+            {/* CONTACT US */}
+            <div className="bg-white rounded-xl p-6 shadow-md border-2 border-gray-200 text-center space-y-3">
+              <h2 className="text-2xl font-bold text-gray-900">Contact Us</h2>
+              <p className="text-gray-700 font-semibold">{EVENT_VENUE_NAME}</p>
+              <p className="text-gray-600 text-sm">{EVENT_VENUE_ADDRESS}</p>
+              <button
+                onClick={() => openExternal(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(EVENT_VENUE_NAME + ', ' + EVENT_VENUE_ADDRESS)}`)}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold shadow-md transition-all"
+              >
+                🧭 Get Directions
+              </button>
+              <div className="flex gap-2 pt-1">
+                <a href="mailto:jimmyjaminfo@gmail.com" className="flex-1 bg-red-700 hover:bg-red-800 text-white py-2.5 rounded-lg font-bold text-sm transition-all">
+                  ✉️ General Info
+                </a>
+                <a href="mailto:jimmyjammarketing1@gmail.com" className="flex-1 border-2 border-red-700 text-red-700 hover:bg-red-50 py-2.5 rounded-lg font-bold text-sm transition-all">
+                  ✉️ Competitions & Vendors
+                </a>
+              </div>
+            </div>
+
             {/* DIVIDER */}
             <div className="border-t-4 border-yellow-500 mb-6"></div>
 
