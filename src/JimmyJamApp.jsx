@@ -969,31 +969,39 @@ const JimmyJamApp = () => {
               </video>
             </div>
 
-            {/* MAIN FEATURE GRID */}
-            <div className="space-y-4">
+            {/* MAIN FEATURE NAV */}
+            <div className="space-y-3">
               <h2 className="font-display text-4xl tracking-wide text-center" style={{ color: 'var(--text-primary)' }}>EXPLORE</h2>
 
-              <div className="grid grid-cols-3 gap-4">
-                {mainFeatures.map((feature, idx) => (
+              {/* TOP 3 — FULL-WIDTH PRIORITY BARS */}
+              <div className="space-y-2">
+                {mainFeatures.slice(0, 3).map((feature, idx) => {
+                  const barColors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-info)'];
+                  const bg = barColors[idx % barColors.length];
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => feature.externalUrl ? openExternal(feature.externalUrl) : setActiveNav(feature.action)}
+                      className="w-full flex items-center justify-between px-5 py-4 rounded-md font-bold uppercase tracking-wide text-sm shadow-card transition-all transform hover:scale-[1.02]"
+                      style={{ backgroundColor: bg, color: '#FFFFFF', boxShadow: 'var(--shadow-card)' }}
+                    >
+                      <span className="flex items-center gap-3"><span className="text-xl">{feature.icon}</span>{feature.title}</span>
+                      <span>›</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* REST — TWO-COLUMN PILL GRID */}
+              <div className="grid grid-cols-2 gap-2">
+                {mainFeatures.slice(3).map((feature, idx) => (
                   <button
                     key={idx}
                     onClick={() => feature.externalUrl ? openExternal(feature.externalUrl) : setActiveNav(feature.action)}
-                    className="group rounded-lg p-6 shadow-card transition-all transform hover:scale-105 border"
-                    style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-pill font-bold uppercase tracking-wide text-xs border transition-all"
+                    style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
                   >
-                    <div className="flex flex-col items-center gap-3">
-                      <div
-                        className="w-20 h-20 rounded-full border-4 flex items-center justify-center transition-all"
-                        style={{ borderColor: 'var(--color-primary)', backgroundColor: 'var(--bg-surface-elevated)' }}
-                      >
-                        <span className="text-4xl group-hover:hidden">{feature.icon}</span>
-                        <span className="text-3xl hidden group-hover:block" style={{ color: 'var(--color-primary)' }}>→</span>
-                      </div>
-                      <div className="text-center">
-                        <p className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>{feature.title}</p>
-                        <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{feature.desc}</p>
-                      </div>
-                    </div>
+                    <span>{feature.icon}</span>{feature.title}
                   </button>
                 ))}
               </div>
@@ -1014,18 +1022,29 @@ const JimmyJamApp = () => {
 
         {/* SCHEDULE */}
         {activeNav === 'schedule' && (
-          <div className="space-y-4">
-            <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 text-center">
-              <p className="font-bold text-blue-900">11th Annual Jimmy Jam BBQ Slam — {EVENT_DATE_LABEL}</p>
-              <p className="text-sm text-blue-700">The full hour-by-hour itinerary will be posted here closer to the date. What's confirmed so far is below.</p>
+          <div className="space-y-4 -mx-4 px-4 pb-4 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
+            <div className="pt-2">
+              <h1 className="font-display text-4xl tracking-wide" style={{ color: 'var(--text-primary)' }}>SCHEDULE</h1>
+            </div>
+            <div className="rounded-lg p-4 border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)' }}>
+              <p className="font-bold" style={{ color: 'var(--text-primary)' }}>11th Annual Jimmy Jam BBQ Slam — {EVENT_DATE_LABEL}</p>
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>The full hour-by-hour itinerary will be posted here closer to the date. What's confirmed so far is below.</p>
             </div>
 
             {/* TABS */}
             <div className="flex gap-3 mb-4">
-              <button onClick={() => setActiveTab('all')} className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'all' ? 'bg-yellow-400 text-black' : 'bg-gray-300 text-gray-700'}`}>
+              <button
+                onClick={() => setActiveTab('all')}
+                className="px-6 py-2 rounded-pill font-bold transition-all"
+                style={activeTab === 'all' ? { backgroundColor: 'var(--color-secondary)', color: '#1E1C1A' } : { backgroundColor: 'var(--bg-surface-elevated)', color: 'var(--text-secondary)' }}
+              >
                 All Events
               </button>
-              <button onClick={() => setActiveTab('my')} className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'my' ? 'bg-yellow-400 text-black' : 'bg-gray-300 text-gray-700'}`}>
+              <button
+                onClick={() => setActiveTab('my')}
+                className="px-6 py-2 rounded-pill font-bold transition-all"
+                style={activeTab === 'my' ? { backgroundColor: 'var(--color-secondary)', color: '#1E1C1A' } : { backgroundColor: 'var(--bg-surface-elevated)', color: 'var(--text-secondary)' }}
+              >
                 My Schedule ({mySchedule.length})
               </button>
             </div>
@@ -1040,34 +1059,34 @@ const JimmyJamApp = () => {
                 return (
                   <div key={dateGroup.date} className="space-y-2">
                     {/* DATE HEADER */}
-                    <div className="bg-black text-white px-4 py-2 font-bold text-sm rounded">
+                    <div className="px-4 py-2 font-bold text-sm rounded" style={{ backgroundColor: 'var(--color-dark-accent)', color: 'var(--text-primary)' }}>
                       {dateGroup.dateStr.toUpperCase()}, {dateGroup.date}
                     </div>
 
                     {/* EVENT CARDS */}
                     {events.map((event, idx) => (
-                      <div key={idx} className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all border-b-2 border-gray-200">
+                      <div key={idx} className="rounded-lg p-4 shadow-card transition-all border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
                         <div className="flex gap-3">
                           {/* LEFT SIDE - INFO */}
                           <div className="flex-1">
-                            <p className="text-xs font-bold text-gray-500 mb-1">{event.time}</p>
-                            <h3 className="text-base font-bold text-gray-900">{event.title}</h3>
-                            <p className="text-xs text-gray-600 mt-1">{event.location}</p>
+                            <p className="text-xs font-bold mb-1" style={{ color: 'var(--text-muted)' }}>{event.time}</p>
+                            <h3 className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>{event.title}</h3>
+                            <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>{event.location}</p>
                           </div>
 
                           {/* RIGHT SIDE - ICON */}
-                          <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-red-200 to-red-100 flex items-center justify-center text-2xl flex-shrink-0">
+                          <div className="w-16 h-16 rounded-lg flex items-center justify-center text-2xl flex-shrink-0" style={{ backgroundColor: 'var(--bg-surface-elevated)' }}>
                             {event.icon}
                           </div>
                         </div>
 
                         {/* ACTION BUTTONS */}
-                        <div className="flex gap-3 justify-end mt-3 pt-3 border-t border-gray-200">
-                          <button onClick={() => shareEvent(event)} className="p-1.5 hover:bg-gray-100 rounded-lg transition-all">
-                            <Upload size={16} className="text-gray-600" />
+                        <div className="flex gap-3 justify-end mt-3 pt-3 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
+                          <button onClick={() => shareEvent(event)} className="p-1.5 rounded-lg transition-all" style={{ backgroundColor: 'transparent' }}>
+                            <Upload size={16} style={{ color: 'var(--text-secondary)' }} />
                           </button>
-                          <button onClick={() => toggleMySchedule(event.title)} className="p-1.5 hover:bg-gray-100 rounded-lg transition-all">
-                            <Star size={16} className={mySchedule.includes(event.title) ? 'text-yellow-500 fill-yellow-500' : 'text-gray-600'} />
+                          <button onClick={() => toggleMySchedule(event.title)} className="p-1.5 rounded-lg transition-all">
+                            <Star size={16} style={{ color: mySchedule.includes(event.title) ? 'var(--color-secondary)' : 'var(--text-secondary)' }} fill={mySchedule.includes(event.title) ? 'var(--color-secondary)' : 'none'} />
                           </button>
                         </div>
                       </div>
@@ -1076,7 +1095,7 @@ const JimmyJamApp = () => {
                 );
               })}
               {activeTab === 'my' && mySchedule.length === 0 && (
-                <p className="text-center text-gray-500 py-8">Tap the star on any event to add it to your schedule.</p>
+                <p className="text-center py-8" style={{ color: 'var(--text-muted)' }}>Tap the star on any event to add it to your schedule.</p>
               )}
             </div>
           </div>
@@ -1084,42 +1103,43 @@ const JimmyJamApp = () => {
 
         {/* TICKETS */}
         {activeNav === 'tickets' && (
-          <div className="space-y-6">
+          <div className="space-y-6 -mx-4 px-4 pb-4 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
             {/* POSTER */}
-            <div className="relative rounded-xl overflow-hidden shadow-2xl mb-8">
+            <div className="relative rounded-xl overflow-hidden shadow-2xl mb-8 -mx-4 md:mx-0">
               {/* POSTER BACKGROUND */}
               <div className="absolute inset-0 z-0">
-                <img 
-                  src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=1200" 
-                  alt="BBQ Poster Background" 
+                <img
+                  src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=1200"
+                  alt="BBQ Poster Background"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-blue-900/80 via-black/40 to-blue-950/90 z-10"></div>
+                <div className="absolute inset-0 z-10" style={{ background: 'linear-gradient(to bottom, rgba(14,13,12,0.85), rgba(14,13,12,0.5), rgba(14,13,12,0.95))' }}></div>
               </div>
-              
-              <div className="relative z-20 p-8 text-center text-white space-y-4">
-                <p className="text-xs font-black tracking-[0.3em] text-blue-200">JIMMY JAM COMMUNITY OUTREACH</p>
-                <h2 className="text-4xl font-black italic tracking-tight drop-shadow-2xl">BBQ SLAM & BOURBON</h2>
-                <p className="text-lg text-red-400 font-bold uppercase tracking-widest">& Music Festival</p>
+
+              <div className="relative z-20 p-8 text-center space-y-4" style={{ color: 'var(--text-primary)' }}>
+                <p className="text-xs font-black tracking-[0.3em]" style={{ color: 'var(--text-secondary)' }}>JIMMY JAM COMMUNITY OUTREACH</p>
+                <h2 className="font-display text-5xl tracking-wide drop-shadow-2xl">BBQ SLAM & BOURBON</h2>
+                <p className="text-lg font-bold uppercase tracking-widest" style={{ color: 'var(--color-primary)' }}>& Music Festival</p>
 
                 <div className="my-8 text-6xl drop-shadow-2xl animate-pulse">🔥</div>
 
                 <div className="space-y-3 text-xl font-bold drop-shadow-lg">
                   <p>Live Music featuring Local & Regional Artists</p>
                   <div className="pt-6">
-                    <p className="text-sm font-bold text-gray-100 mt-3 uppercase tracking-[0.2em]">{EVENT_VENUE_NAME}</p>
-                    <p className="text-sm font-bold text-gray-200">{EVENT_DATE_LABEL}</p>
+                    <p className="text-sm font-bold mt-3 uppercase tracking-[0.2em]" style={{ color: 'var(--text-primary)' }}>{EVENT_VENUE_NAME}</p>
+                    <p className="text-sm font-bold" style={{ color: 'var(--text-secondary)' }}>{EVENT_DATE_LABEL}</p>
                   </div>
                 </div>
 
-                <p className="text-[10px] text-gray-400 mt-6 font-bold uppercase tracking-widest">jimmyjambbqslam.com</p>
+                <p className="text-[10px] mt-6 font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>jimmyjambbqslam.com</p>
               </div>
             </div>
 
             {/* BUY BUTTON */}
             <button
               onClick={() => openExternal('https://pci.jotform.com/form/260406377587163')}
-              className="w-full block text-center bg-blue-900 hover:bg-blue-950 text-white py-4 rounded-full font-bold text-lg transition-all"
+              className="w-full block text-center py-4 rounded-pill font-bold text-lg transition-all"
+              style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', height: '48px' }}
             >
               🎫 Buy Jimmy Jam Tickets
             </button>
@@ -1127,21 +1147,21 @@ const JimmyJamApp = () => {
             {/* TICKET OPTIONS */}
             <div className="space-y-4">
               {ticketTypes.map((ticket, idx) => (
-                <div key={idx} className="bg-white rounded-lg p-6 border-2 border-gray-300 shadow-lg hover:shadow-xl transition-all">
+                <div key={idx} className="rounded-lg p-6 border shadow-card transition-all" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-3">
                       <span className="text-3xl">{ticket.icon}</span>
-                      <h3 className="font-bold text-gray-800">{ticket.title}</h3>
+                      <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>{ticket.title}</h3>
                     </div>
                     <div className="text-right">
-                      <p className="text-xl font-bold text-red-700">{ticket.priceLabel}</p>
+                      <p className="text-xl font-bold" style={{ color: 'var(--color-secondary)' }}>{ticket.priceLabel}</p>
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     {ticket.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                        <span className="text-red-700 font-bold">•</span>
+                      <div key={i} className="flex items-start gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                        <span className="font-bold" style={{ color: 'var(--color-primary)' }}>•</span>
                         <span>{feature}</span>
                       </div>
                     ))}
@@ -1149,7 +1169,8 @@ const JimmyJamApp = () => {
 
                   <button
                     onClick={() => openExternal(ticket.url)}
-                    className="w-full mt-4 block text-center bg-red-700 hover:bg-red-800 text-white py-2 rounded-lg font-bold text-sm transition-all"
+                    className="w-full mt-4 block text-center py-2 rounded-md font-bold text-sm transition-all"
+                    style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}
                   >
                     BUY / REGISTER
                   </button>
@@ -1158,22 +1179,22 @@ const JimmyJamApp = () => {
             </div>
 
             {/* INFO SECTION */}
-            <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-6 space-y-4">
-              <h3 className="text-lg font-bold text-blue-900">Event Information</h3>
-              
+            <div className="rounded-lg p-6 space-y-4 border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)' }}>
+              <h3 className="font-display text-2xl tracking-wide" style={{ color: 'var(--text-primary)' }}>EVENT INFORMATION</h3>
+
               <div>
-                <p className="font-bold text-gray-800 mb-2">When</p>
-                <p className="text-gray-700">11th Annual Jimmy Jam BBQ Slam: {EVENT_DATE_LABEL}. (3rd Annual Bourbon & BBQ Event: October 2027, exact date TBA)</p>
+                <p className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>When</p>
+                <p style={{ color: 'var(--text-secondary)' }}>11th Annual Jimmy Jam BBQ Slam: {EVENT_DATE_LABEL}. (3rd Annual Bourbon & BBQ Event: October 2027, exact date TBA)</p>
               </div>
 
               <div>
-                <p className="font-bold text-gray-800 mb-2">Where</p>
-                <p className="text-gray-700">{EVENT_VENUE_NAME}<br />{EVENT_VENUE_ADDRESS}</p>
+                <p className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Where</p>
+                <p style={{ color: 'var(--text-secondary)' }}>{EVENT_VENUE_NAME}<br />{EVENT_VENUE_ADDRESS}</p>
               </div>
 
               <div>
-                <p className="font-bold text-gray-800 mb-2">What's Included</p>
-                <ul className="space-y-1 text-sm text-gray-700">
+                <p className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>What's Included</p>
+                <ul className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
                   <li>✓ World-class BBQ competition</li>
                   <li>✓ Premium bourbon tasting</li>
                   <li>✓ Live music performances</li>
