@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Bell, Search, ChevronLeft, ChevronRight, Star, Upload } from 'lucide-react';
+import { Capacitor } from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
 import { supabase } from './supabaseClient';
 import VenueMap from './VenueMap';
 import AdminPins from './AdminPins';
+
+// Capacitor's WKWebView doesn't reliably handle <a target="_blank"> or
+// window.open() for external links — this opens them in the system's
+// in-app Safari view on native iOS/Android, and falls back to a normal
+// new tab on the web.
+const openExternal = async (url) => {
+  if (Capacitor.isNativePlatform()) {
+    await Browser.open({ url });
+  } else {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+};
 
 const JimmyJamApp = () => {
   // St. Johns County Fairgrounds, 5840 State Rd. 207, Elkton, FL 32145 (real event venue)
@@ -750,7 +764,7 @@ const JimmyJamApp = () => {
                 {mainFeatures.map((feature, idx) => (
                   <button
                     key={idx}
-                    onClick={() => feature.externalUrl ? window.open(feature.externalUrl, '_blank', 'noopener,noreferrer') : setActiveNav(feature.action)}
+                    onClick={() => feature.externalUrl ? openExternal(feature.externalUrl) : setActiveNav(feature.action)}
                     className="group bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-all transform hover:scale-105 border-2 border-gray-200 hover:border-red-700"
                   >
                     <div className="flex flex-col items-center gap-3">
@@ -885,14 +899,12 @@ const JimmyJamApp = () => {
             </div>
 
             {/* BUY BUTTON */}
-            <a
-              href="https://pci.jotform.com/form/260406377587163"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => openExternal('https://pci.jotform.com/form/260406377587163')}
               className="w-full block text-center bg-blue-900 hover:bg-blue-950 text-white py-4 rounded-full font-bold text-lg transition-all"
             >
               🎫 Buy Jimmy Jam Tickets
-            </a>
+            </button>
 
             {/* TICKET OPTIONS */}
             <div className="space-y-4">
@@ -917,14 +929,12 @@ const JimmyJamApp = () => {
                     ))}
                   </div>
 
-                  <a
-                    href={ticket.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => openExternal(ticket.url)}
                     className="w-full mt-4 block text-center bg-red-700 hover:bg-red-800 text-white py-2 rounded-lg font-bold text-sm transition-all"
                   >
                     BUY / REGISTER
-                  </a>
+                  </button>
                 </div>
               ))}
             </div>
@@ -1008,7 +1018,7 @@ const JimmyJamApp = () => {
                   </div>
                   <p className="text-sm text-gray-600">{EVENT_VENUE_ADDRESS}</p>
                   <button
-                    onClick={() => window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(EVENT_VENUE_NAME + ', ' + EVENT_VENUE_ADDRESS)}`, '_blank')}
+                    onClick={() => openExternal(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(EVENT_VENUE_NAME + ', ' + EVENT_VENUE_ADDRESS)}`)}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold shadow-lg transform active:scale-95 transition-all flex items-center justify-center gap-2"
                   >
                     🧭 GET DIRECTIONS
@@ -1384,11 +1394,9 @@ const JimmyJamApp = () => {
                   { title: 'Amenities', icon: '🏕️', url: 'https://jimmyjambbqslam.com/amenities' },
                   { title: 'Pizza Ancillary', icon: '🍕', url: 'https://jimmyjambbqslam.com/pizza-ancillary' }
                 ].map((form, i) => (
-                  <a
+                  <button
                     key={i}
-                    href={form.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    onClick={() => openExternal(form.url)}
                     className="bg-white p-6 rounded-xl shadow-md flex items-center justify-between border-2 border-transparent hover:border-red-700 transition-all"
                   >
                     <div className="flex items-center gap-4">
@@ -1396,7 +1404,7 @@ const JimmyJamApp = () => {
                       <span className="font-bold text-lg text-gray-800">{form.title}</span>
                     </div>
                     <span className="text-red-700 font-bold">VIEW →</span>
-                  </a>
+                  </button>
                 ))}
               </div>
               <p className="text-xs text-gray-500 text-center">Opens the matching page on jimmyjambbqslam.com, which always has the current registration status and forms.</p>
@@ -1541,14 +1549,12 @@ const JimmyJamApp = () => {
             {/* WEBSITE / SHARE BUTTONS */}
             <div className="flex gap-2 flex-wrap">
               {selectedArtist.website && (
-                <a
-                  href={selectedArtist.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => openExternal(selectedArtist.website)}
                   className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
                 >
                   🌐 Website
-                </a>
+                </button>
               )}
               <button
                 onClick={() => {
@@ -1675,14 +1681,12 @@ const JimmyJamApp = () => {
             {/* WEBSITE & SHARE BUTTONS */}
             <div className="flex gap-2 flex-wrap">
               {selectedSponsor.website && (
-                <a
-                  href={selectedSponsor.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => openExternal(selectedSponsor.website)}
                   className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
                 >
                   🌐 Website
-                </a>
+                </button>
               )}
               {selectedSponsor.website && (
                 <button
@@ -1964,11 +1968,9 @@ const JimmyJamApp = () => {
                 { key: 'spotify', label: 'SPOTIFY', icon: '🎧', handle: 'PLAYLIST', url: 'https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda' },
                 { key: 'website', label: 'WEBSITE', icon: '🌐', handle: 'JIMMYJAMOUTREACH.COM', url: 'https://jimmyjamoutreach.com/' }
               ].map(social => (
-                <a
+                <button
                   key={social.key}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => openExternal(social.url)}
                   className="w-full bg-gray-800 p-4 rounded-lg flex items-center justify-between border-b-2 border-yellow-500"
                 >
                   <div className="flex items-center gap-3">
@@ -1976,7 +1978,7 @@ const JimmyJamApp = () => {
                     <span className="text-white font-bold">{social.label}</span>
                   </div>
                   <span className="text-yellow-400 font-bold text-sm">{social.handle}</span>
-                </a>
+                </button>
               ))}
             </div>
 
@@ -1987,8 +1989,8 @@ const JimmyJamApp = () => {
               </p>
               <button
                 onClick={() => {
-                  window.open('https://www.instagram.com/jimmyjamoutreach/', '_blank');
-                  window.open('https://www.facebook.com/jimmy.jam.843909', '_blank');
+                  openExternal('https://www.instagram.com/jimmyjamoutreach/');
+                  openExternal('https://www.facebook.com/jimmy.jam.843909');
                 }}
                 className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 py-3 rounded-lg font-bold transition-all"
               >
@@ -2415,7 +2417,7 @@ const JimmyJamApp = () => {
 
             <p className="text-xs text-gray-500 text-center">
               Source: Florida Fish and Wildlife Conservation Commission (FWC), Zone C / DMU C6.
-              {' '}<a href="https://myfwc.com/hunting/season-dates/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Full regulations & licenses at myfwc.com</a>.
+              {' '}<button onClick={() => openExternal('https://myfwc.com/hunting/season-dates/')} className="text-blue-600 underline">Full regulations & licenses at myfwc.com</button>.
               Always verify current rules before hunting or fishing — seasons and regulations can change.
             </p>
           </div>
@@ -2435,12 +2437,10 @@ const JimmyJamApp = () => {
                 { name: 'YouTube Music', icon: '📽️', color: 'bg-[#FF0000]', link: 'https://music.youtube.com' },
                 { name: 'Pandora', icon: '🦋', color: 'bg-[#00A0EE]', link: 'https://www.pandora.com' }
               ].map((platform, i) => (
-                <a 
-                  key={i} 
-                  href={platform.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className={`${platform.color} p-6 rounded-2xl flex items-center justify-between shadow-lg text-white transition-all transform hover:scale-[1.02]`}
+                <button
+                  key={i}
+                  onClick={() => openExternal(platform.link)}
+                  className={`${platform.color} p-6 rounded-2xl flex items-center justify-between shadow-lg text-white transition-all transform hover:scale-[1.02] w-full`}
                 >
                   <div className="flex items-center gap-4">
                     <span className="text-4xl">{platform.icon}</span>
@@ -2450,7 +2450,7 @@ const JimmyJamApp = () => {
                     </div>
                   </div>
                   <ChevronRight size={28} />
-                </a>
+                </button>
               ))}
             </div>
 
@@ -2521,9 +2521,14 @@ const JimmyJamApp = () => {
                     <span className="font-semibold">Official Partners</span>
                   </button>
 
-                  <button onClick={() => { window.open('https://jimmyjambbqslam.com/faq', '_blank', 'noopener,noreferrer'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                  <button onClick={() => { openExternal('https://jimmyjambbqslam.com/faq'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">❓</span>
                     <span className="font-semibold">FAQs</span>
+                  </button>
+
+                  <button onClick={() => { openExternal('https://jimmy-jam-app.vercel.app/privacy.html'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                    <span className="text-xl">🔒</span>
+                    <span className="font-semibold">Privacy Policy</span>
                   </button>
 
 
@@ -2537,7 +2542,7 @@ const JimmyJamApp = () => {
                     <span className="font-semibold">Season Tracker</span>
                   </button>
 
-                  <button onClick={() => { window.open('https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda', '_blank'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                  <button onClick={() => { openExternal('https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">🎵</span>
                     <span className="font-semibold">Festival Playlists</span>
                   </button>
