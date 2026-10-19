@@ -918,9 +918,9 @@ const JimmyJamApp = () => {
   };
 
   const mainFeatures = [
-    { Icon: Calendar, title: 'SCHEDULE', desc: 'Event dates & times', action: 'schedule' },
-    { Icon: Ticket, title: 'TICKETS', desc: 'Buy event tickets', action: 'tickets' },
-    { Icon: Camera, title: 'PHOTOS', desc: 'Event gallery', action: 'photos' },
+    { Icon: Calendar, customIcon: '/icons/schedule.webp', title: 'SCHEDULE', desc: 'Event dates & times', action: 'schedule' },
+    { Icon: Ticket, customIcon: '/icons/tickets.svg', title: 'TICKETS', desc: 'Buy event tickets', action: 'tickets' },
+    { Icon: Camera, customIcon: '/icons/camera.svg', title: 'PHOTOS', desc: 'Event gallery', action: 'photos' },
     { Icon: Trophy, title: 'EVENTS', desc: 'Browse our festivals', action: 'events' },
     { Icon: Users, title: 'SPONSORS', desc: 'Meet our partners', action: 'sponsors' },
     { Icon: Shirt, title: 'MERCH', desc: 'Shop swag store', action: 'swag' },
@@ -1032,8 +1032,8 @@ const JimmyJamApp = () => {
             <div className="space-y-3">
               <h2 className="font-display text-4xl tracking-wide text-center" style={{ color: 'var(--text-primary)' }}>EXPLORE</h2>
 
-              {/* TOP 3 — FULL-WIDTH PRIORITY BARS */}
-              <div className="space-y-2">
+              {/* TOP 3 — FULL-WIDTH PRIORITY TILES */}
+              <div className="grid grid-cols-3 gap-2">
                 {mainFeatures.slice(0, 3).map((feature, idx) => {
                   const barColors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-info)'];
                   const bg = barColors[idx % barColors.length];
@@ -1041,26 +1041,35 @@ const JimmyJamApp = () => {
                     <button
                       key={idx}
                       onClick={() => feature.externalUrl ? openExternal(feature.externalUrl) : setActiveNav(feature.action)}
-                      className="w-full flex items-center justify-between px-5 py-4 rounded-md font-bold uppercase tracking-wide text-sm shadow-card transition-all transform hover:scale-[1.02]"
+                      className="flex flex-col items-center justify-center gap-2 px-3 py-5 rounded-md font-bold uppercase tracking-wide text-xs shadow-card transition-all transform hover:scale-[1.02]"
                       style={{ backgroundColor: bg, color: '#FFFFFF', boxShadow: 'var(--shadow-card)' }}
                     >
-                      <span className="flex items-center gap-3"><feature.Icon size={20} strokeWidth={2.25} />{feature.title}</span>
-                      <span>›</span>
+                      {feature.customIcon ? (
+                        <img src={feature.customIcon} alt="" className="w-9 h-9 object-contain" />
+                      ) : (
+                        <feature.Icon size={28} strokeWidth={2} />
+                      )}
+                      {feature.title}
                     </button>
                   );
                 })}
               </div>
 
-              {/* REST — TWO-COLUMN PILL GRID */}
+              {/* REST — TWO-COLUMN TILE GRID */}
               <div className="grid grid-cols-2 gap-2">
                 {mainFeatures.slice(3).map((feature, idx) => (
                   <button
                     key={idx}
                     onClick={() => feature.externalUrl ? openExternal(feature.externalUrl) : setActiveNav(feature.action)}
-                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-pill font-bold uppercase tracking-wide text-xs border transition-all"
+                    className="flex flex-col items-center justify-center gap-2 px-4 py-4 rounded-md font-bold uppercase tracking-wide text-xs border transition-all"
                     style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
                   >
-                    <feature.Icon size={16} strokeWidth={2.25} style={{ color: 'var(--color-secondary)' }} />{feature.title}
+                    {feature.customIcon ? (
+                      <img src={feature.customIcon} alt="" className="w-7 h-7 object-contain" />
+                    ) : (
+                      <feature.Icon size={22} strokeWidth={2} style={{ color: 'var(--color-secondary)' }} />
+                    )}
+                    {feature.title}
                   </button>
                 ))}
               </div>

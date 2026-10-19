@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- back ticket, tilted -->
+  <g transform="rotate(-8 100 95)" opacity="0.55">
+    <path d="M36 70
+      a10 10 0 0 1 10 -10
+      h88
+      a10 10 0 0 1 10 10
+      v16
+      a9 9 0 0 0 0 18
+      v16
+      a10 10 0 0 1 -10 10
+      h-88
+      a10 10 0 0 1 -10 -10
+      v-16
+      a9 9 0 0 0 0 -18
+      z"
+      stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round"/>
+  </g>
+
+  <!-- front ticket -->
+  <path d="M28 82
+    a10 10 0 0 1 10 -10
+    h100
+    a10 10 0 0 1 10 10
+    v14
+    a9 9 0 0 0 0 18
+    v14
+    a10 10 0 0 1 -10 10
+    h-100
+    a10 10 0 0 1 -10 -10
+    v-14
+    a9 9 0 0 0 0 -18
+    z"
+    stroke="#FFFFFF" stroke-width="7" stroke-linejoin="round"/>
+
+  <!-- perforation holes down the ticket -->
+  <circle cx="58" cy="78" r="3.5" fill="#FFFFFF"/>
+  <circle cx="58" cy="95" r="3.5" fill="#FFFFFF"/>
+  <circle cx="58" cy="112" r="3.5" fill="#FFFFFF"/>
+
+  <!-- flame -->
+  <path d="M112 78
+    c6 10 14 14 14 24
+    c0 9 -7 16 -16 16
+    c-10 0 -17 -7 -17 -16
+    c0 -6 3 -10 6 -14
+    c1 5 4 6 5 3
+    c1 -5 -2 -9 -1 -14
+    c3 3 6 -1 9 1 z"
+    stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- crossed fork + spatula -->
+  <g stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="94" y1="100" x2="120" y2="138"/>
+    <line x1="98" y1="100" x2="98" y2="110"/>
+    <line x1="104" y1="100" x2="104" y2="110"/>
+    <circle cx="120" cy="140" r="2.5" fill="#FFFFFF"/>
+
+    <path d="M130 102 l-26 36" />
+    <path d="M118 100 l14 4 a3 3 0 0 1 2 4 l-6 14 a3 3 0 0 1 -4 1 l-12 -6 z" />
+    <circle cx="104" cy="138" r="2.5" fill="#FFFFFF"/>
+  </g>
+</svg>
