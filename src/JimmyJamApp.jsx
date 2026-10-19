@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, Search, ChevronLeft, ChevronRight, Star, Upload, Calendar, Ticket, Camera, Trophy, Users, Shirt, HeartHandshake, CloudSun, MessageCircle, Heart, X } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Star, Upload, Calendar, Ticket, Camera, Trophy, Users, Shirt, HeartHandshake, CloudSun, MessageCircle, X, Menu } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
 import { supabase } from './supabaseClient';
 import VenueMap from './VenueMap';
 import AdminPins from './AdminPins';
+import FestivalHome from './FestivalHome';
 
 // Capacitor's WKWebView doesn't reliably handle <a target="_blank"> or
 // window.open() for external links — this opens them in the system's
@@ -988,21 +989,38 @@ const JimmyJamApp = () => {
       <header className="sticky top-0 z-40 bg-red-700 text-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            {activeNav !== 'home' && (
-              <button onClick={() => { setActiveNav('home'); }} className="lg:hidden text-white text-2xl">
+            {activeNav !== 'home' ? (
+              <button
+                onClick={() => { setActiveNav('home'); }}
+                className="text-white p-1 hover:bg-red-800 rounded-lg transition-colors"
+                aria-label="Back to Home"
+              >
                 <ChevronLeft size={28} />
+              </button>
+            ) : (
+              <button
+                onClick={() => setShowMoreMenu(true)}
+                className="text-white p-1.5 hover:bg-red-800 rounded-lg transition-colors"
+                aria-label="Open Festival Menu"
+              >
+                <Menu size={24} />
               </button>
             )}
 
-            <div className="text-center flex-1 lg:text-center">
-              <h1 className="font-bold text-xl text-white">{activeNav.toUpperCase()}</h1>
+            <div className="text-center flex-1">
+              <h1 className="font-bold text-lg md:text-xl text-white tracking-wide">
+                {activeNav === 'home' ? 'JIMMY JAM FESTIVAL' : activeNav.toUpperCase()}
+              </h1>
             </div>
 
-            <div className="hidden lg:flex items-center gap-2">
-              <button className="p-2 hover:bg-red-600 rounded-lg">
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setActiveNav('faq')}
+                className="p-2 hover:bg-red-600 rounded-lg text-white transition-colors"
+                aria-label="Search and FAQs"
+              >
                 <Search size={20} />
               </button>
-              <Bell size={20} />
             </div>
           </div>
         </div>
@@ -1013,79 +1031,14 @@ const JimmyJamApp = () => {
 
         {/* HOME */}
         {activeNav === 'home' && (
-          <div className="space-y-8 -mx-4 px-4 pb-4 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
-            {/* HERO */}
-            <div className="relative rounded-lg overflow-hidden h-96 bg-black flex items-center justify-center shadow-xl -mx-4 md:mx-0">
-              {/* VIDEO BACKGROUND */}
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover"
-              >
-                <source src="/hero-video.mp4" type="video/mp4" />
-              </video>
-            </div>
-
-            {/* MAIN FEATURE NAV */}
-            <div className="space-y-3">
-              <h2 className="font-display text-4xl tracking-wide text-center" style={{ color: 'var(--text-primary)' }}>EXPLORE</h2>
-
-              {/* TOP 3 — FULL-WIDTH PRIORITY TILES */}
-              <div className="grid grid-cols-3 gap-2">
-                {mainFeatures.slice(0, 3).map((feature, idx) => {
-                  const barColors = ['var(--color-primary)', 'var(--color-secondary)', 'var(--color-info)'];
-                  const bg = barColors[idx % barColors.length];
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => feature.externalUrl ? openExternal(feature.externalUrl) : setActiveNav(feature.action)}
-                      className="flex flex-col items-center justify-center gap-2 px-3 py-5 rounded-md font-bold uppercase tracking-wide text-xs shadow-card transition-all transform hover:scale-[1.02]"
-                      style={{ backgroundColor: bg, color: '#FFFFFF', boxShadow: 'var(--shadow-card)' }}
-                    >
-                      {feature.customIcon ? (
-                        <img src={feature.customIcon} alt="" className="w-9 h-9 object-contain" />
-                      ) : (
-                        <feature.Icon size={28} strokeWidth={2} />
-                      )}
-                      {feature.title}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* REST — TWO-COLUMN TILE GRID */}
-              <div className="grid grid-cols-2 gap-2">
-                {mainFeatures.slice(3).map((feature, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => feature.externalUrl ? openExternal(feature.externalUrl) : setActiveNav(feature.action)}
-                    className="flex flex-col items-center justify-center gap-2 px-4 py-4 rounded-md font-bold uppercase tracking-wide text-xs border transition-all"
-                    style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
-                  >
-                    {feature.customIcon ? (
-                      <img src={feature.customIcon} alt="" className="w-7 h-7 object-contain" />
-                    ) : (
-                      <feature.Icon size={22} strokeWidth={2} style={{ color: 'var(--color-secondary)' }} />
-                    )}
-                    {feature.title}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div className="text-center">
-              <button
-                onClick={() => setActiveNav('assistance')}
-                className="px-12 py-4 rounded-md font-bold text-lg shadow-card transition-all transform hover:scale-105 flex items-center justify-center gap-2 mx-auto"
-                style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', boxShadow: 'var(--shadow-card)' }}
-              >
-                <Heart size={20} fill="#FFFFFF" />APPLY FOR HELP
-              </button>
-            </div>
-          </div>
+          <FestivalHome
+            setActiveNav={setActiveNav}
+            openExternal={openExternal}
+            EVENT_DATE_LABEL={EVENT_DATE_LABEL}
+            EVENT_VENUE_NAME={EVENT_VENUE_NAME}
+            setShowMoreMenu={setShowMoreMenu}
+            mainFeatures={mainFeatures}
+          />
         )}
 
         {/* SCHEDULE */}
@@ -3069,106 +3022,162 @@ const JimmyJamApp = () => {
 
       {/* FOOTER - BOTTOM NAVIGATION */}
       <footer className="fixed bottom-0 left-0 right-0 bg-red-700 text-white shadow-lg z-30">
-        <div className="max-w-6xl mx-auto px-4 py-2 relative">
-          <div className="flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-2 py-1.5 relative">
+          <div className="flex items-center justify-around">
             {/* HOME */}
-            <button onClick={() => { setActiveNav('home'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all flex-1">
-              <span className="text-2xl">🏠</span>
-              <span className="text-xs font-semibold">Home</span>
+            <button
+              onClick={() => { setActiveNav('home'); setShowMoreMenu(false); }}
+              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${activeNav === 'home' ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
+            >
+              <span className="text-xl">🏠</span>
+              <span className="text-[11px]">Home</span>
             </button>
 
             {/* ARTISTS */}
-            <button onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all flex-1">
-              <span className="text-2xl">🎤</span>
-              <span className="text-xs font-semibold">Artists</span>
+            <button
+              onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }}
+              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${activeNav === 'artists' ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
+            >
+              <span className="text-xl">🎤</span>
+              <span className="text-[11px]">Artists</span>
             </button>
 
             {/* SCHEDULE */}
-            <button onClick={() => { setActiveNav('schedule'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all flex-1">
-              <span className="text-2xl">📅</span>
-              <span className="text-xs font-semibold">Schedule</span>
+            <button
+              onClick={() => { setActiveNav('schedule'); setShowMoreMenu(false); }}
+              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${activeNav === 'schedule' ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
+            >
+              <span className="text-xl">📅</span>
+              <span className="text-[11px]">Schedule</span>
             </button>
 
             {/* MAPS */}
-            <button onClick={() => { setActiveNav('maps'); setShowMoreMenu(false); }} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all flex-1">
-              <span className="text-2xl">📍</span>
-              <span className="text-xs font-semibold">Maps</span>
+            <button
+              onClick={() => { setActiveNav('maps'); setShowMoreMenu(false); }}
+              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${activeNav === 'maps' ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
+            >
+              <span className="text-xl">📍</span>
+              <span className="text-[11px]">Maps</span>
             </button>
 
             {/* MORE MENU */}
-            <div className="relative flex-1">
-              <button onClick={() => setShowMoreMenu(!showMoreMenu)} className="flex flex-col items-center gap-1 py-3 px-4 hover:bg-red-800 rounded-lg transition-all w-full">
-                <span className="text-2xl">☰</span>
-                <span className="text-xs font-semibold">More</span>
-              </button>
-
-              {/* MORE MENU DROPDOWN */}
-              {showMoreMenu && (
-                <>
-                  <div className="fixed inset-0 bg-black/5 z-40" onClick={() => setShowMoreMenu(false)}></div>
-                  <div className="absolute bottom-full right-0 mb-2 bg-white text-gray-800 rounded-lg shadow-2xl w-56 py-2 z-50">
-                  <button onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">🎤</span>
-                    <span className="font-semibold">View the Full Lineup</span>
-                  </button>
-
-                  <button onClick={() => { setActiveNav('recipes'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">📖</span>
-                    <span className="font-semibold">Recipe Book</span>
-                  </button>
-
-                  <button onClick={() => { setActiveNav('official-partners'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">🏆</span>
-                    <span className="font-semibold">Official Partners</span>
-                  </button>
-
-                  <button onClick={() => { setActiveNav('faq'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">❓</span>
-                    <span className="font-semibold">FAQs</span>
-                  </button>
-
-                  <button onClick={() => { openExternal('https://jimmy-jam-app.vercel.app/privacy.html'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">🔒</span>
-                    <span className="font-semibold">Privacy Policy</span>
-                  </button>
-
-
-                  <button onClick={() => { setActiveNav('tides'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">🌊</span>
-                    <span className="font-semibold">Tide Chart</span>
-                  </button>
-
-                  <button onClick={() => { setActiveNav('seasons'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">🦌</span>
-                    <span className="font-semibold">Season Tracker</span>
-                  </button>
-
-                  <button onClick={() => { openExternal('https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">🎵</span>
-                    <span className="font-semibold">Festival Playlists</span>
-                  </button>
-
-                  <button onClick={() => { setActiveNav('videos'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
-                    <span className="text-xl">📽️</span>
-                    <span className="font-semibold">BBQ Video Library</span>
-                  </button>
-
-                  <button onClick={() => { setActiveNav('tickets'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all bg-red-700 text-white font-bold">
-                    <span className="text-xl">🎫</span>
-                    <span>BUY TICKETS</span>
-                  </button>
-
-                  <button onClick={() => { setActiveNav('admin'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition-all rounded-b-lg text-gray-500 text-xs">
-                    <span className="text-base">⚙️</span>
-                    <span className="font-semibold">Staff: Manage Map Pins</span>
-                  </button>
-                </div>
-                </>
-              )}
-            </div>
+            <button
+              onClick={() => setShowMoreMenu(!showMoreMenu)}
+              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${showMoreMenu ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
+            >
+              <span className="text-xl">☰</span>
+              <span className="text-[11px]">More</span>
+            </button>
           </div>
         </div>
       </footer>
+
+      {/* FESTIVAL SLIDE-OVER MENU DRAWER */}
+      {showMoreMenu && (
+        <div className="fixed inset-0 z-50 flex">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setShowMoreMenu(false)}
+          />
+
+          {/* Drawer content */}
+          <div className="relative w-80 max-w-[85vw] bg-white text-gray-800 shadow-2xl flex flex-col h-full z-10 animate-in slide-in-from-left duration-200">
+            {/* Drawer Header */}
+            <div className="bg-red-700 text-white p-4 flex items-center justify-between shadow-md">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🔥</span>
+                <div>
+                  <h3 className="font-display text-xl tracking-wider uppercase leading-none">JIMMY JAM</h3>
+                  <p className="text-[10px] text-amber-200 font-semibold tracking-wider uppercase">BBQ Slam & Bourbon</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowMoreMenu(false)}
+                className="p-1 hover:bg-red-800 rounded-lg text-white"
+                aria-label="Close Menu"
+              >
+                <X size={22} />
+              </button>
+            </div>
+
+            {/* Drawer Links */}
+            <div className="flex-1 overflow-y-auto divide-y divide-gray-100 py-2">
+              <div className="px-3 py-2">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-2 mb-1">Festival Highlights</p>
+                <button onClick={() => { setActiveNav('tickets'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-red-50 text-red-700 font-bold text-sm mb-1 hover:bg-red-100 transition-colors">
+                  <span className="text-lg">🎟️</span>
+                  <span className="font-display tracking-wider text-base">BUY EVENT TICKETS</span>
+                </button>
+                <button onClick={() => { setActiveNav('ballot'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">⭐</span>
+                  <span className="font-medium">BBQ People's Choice Ballot</span>
+                </button>
+                <button onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">🎤</span>
+                  <span className="font-medium">Performers Lineup</span>
+                </button>
+                <button onClick={() => { setActiveNav('schedule'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">📅</span>
+                  <span className="font-medium">Full Event Schedule</span>
+                </button>
+                <button onClick={() => { setActiveNav('maps'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">📍</span>
+                  <span className="font-medium">Interactive Venue Map</span>
+                </button>
+                <button onClick={() => { setActiveNav('photos'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">📸</span>
+                  <span className="font-medium">Photo Gallery</span>
+                </button>
+              </div>
+
+              <div className="px-3 py-2">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-2 mb-1">Community & Support</p>
+                <button onClick={() => { setActiveNav('assistance'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-orange-700 font-semibold hover:bg-orange-50 rounded-lg transition-colors">
+                  <span className="text-lg">❤️</span>
+                  <span>Apply for Assistance</span>
+                </button>
+                <button onClick={() => { setActiveNav('volunteer'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">🤝</span>
+                  <span>Volunteer at Festival</span>
+                </button>
+                <button onClick={() => { setActiveNav('sponsors'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">🏆</span>
+                  <span>Official Sponsors</span>
+                </button>
+              </div>
+
+              <div className="px-3 py-2">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-2 mb-1">Info & Merch</p>
+                <button onClick={() => { setActiveNav('swag'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">👕</span>
+                  <span>Swag Store</span>
+                </button>
+                <button onClick={() => { setActiveNav('weather'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">☀️</span>
+                  <span>Weather Forecast</span>
+                </button>
+                <button onClick={() => { setActiveNav('recipes'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">📖</span>
+                  <span>Pitmaster Recipes</span>
+                </button>
+                <button onClick={() => { setActiveNav('faq'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">❓</span>
+                  <span>FAQs</span>
+                </button>
+                <button onClick={() => { openExternal('https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">🎵</span>
+                  <span>Spotify Festival Playlist</span>
+                </button>
+                <button onClick={() => { setActiveNav('admin'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-xs text-gray-400 hover:bg-gray-50 rounded-lg transition-colors">
+                  <span className="text-base">⚙️</span>
+                  <span>Staff: Map Pins</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* PADDING FOR FOOTER */}
       <div className="h-20"></div>
