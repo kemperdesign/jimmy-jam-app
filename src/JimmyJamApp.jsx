@@ -36,6 +36,7 @@ const JimmyJamApp = () => {
   const [openInfoSection, setOpenInfoSection] = useState(null);
   const [openRecipe, setOpenRecipe] = useState(null);
   const [openRegistration, setOpenRegistration] = useState(null);
+  const [openFaqSection, setOpenFaqSection] = useState(null);
   const [showSponsorTiers, setShowSponsorTiers] = useState(false);
   const [openSponsorTier, setOpenSponsorTier] = useState(null);
   const [seasonView, setSeasonView] = useState('list');
@@ -473,6 +474,58 @@ const JimmyJamApp = () => {
         '10 tasting tickets',
         'VIP parking'
       ]
+    }
+  ];
+
+  const faqData = [
+    {
+      title: '📋 General',
+      qa: [
+        { q: 'What is the Jimmy Jam BBQ Slam?', a: 'A nonprofit event dedicated to celebrating BBQ, classic cars, live music, and community giving. All proceeds go toward helping individuals and families in need.' },
+        { q: 'When and where is the event?', a: `${EVENT_VENUE_NAME}, ${EVENT_VENUE_ADDRESS}. The 11th Annual Jimmy Jam BBQ Slam is ${EVENT_DATE_LABEL}.` },
+        { q: 'Is there an entry fee?', a: 'General admission is free. There are fees for tastings, competition entries, and vendor participation (see Registrations).' },
+        { q: 'What can I expect at the event?', a: 'BBQ & Chili Cook-Offs, Live Music, Cornhole Tournament, Car Show, Food Vendors & Shopping, and Family-Friendly Activities.' },
+        { q: 'Is there a cost for the live music?', a: 'No, live music is included with your event admission!' },
+        { q: 'Is the event family-friendly?', a: 'Absolutely! We offer activities for all ages, including games, food, and entertainment.' },
+        { q: 'Is parking available?', a: 'VIP parking available for VIP passholders and free parking to general admission patrons.' },
+        { q: 'Are pets allowed?', a: 'Pets are welcome and must be leashed at all times.' }
+      ],
+      contact: 'jimmyjaminfo@gmail.com'
+    },
+    {
+      title: '🍖 BBQ & Chili Competition',
+      qa: [
+        { q: 'How do I sign up for the Chili Cook-Off or BBQ Competition?', a: 'Registration is open to all interested competitors — see the Registrations section of this app.' },
+        { q: 'How does the People’s Choice voting work?', a: 'Guests purchase $1 tasting tokens and receive voting tokens based on amount spent: Chili & Chowder (11am–3pm) is 1 voting token per $10 spent, BBQ (2pm–4pm) is 1 voting token per $20 spent.' },
+        { q: 'Are there prizes for competition winners?', a: 'Yes! Trophies and bragging rights go to the top competitors in both judge-selected and People’s Choice categories.' }
+      ],
+      contact: 'jimmyjammarketing1@gmail.com'
+    },
+    {
+      title: '🚗 Car Show',
+      qa: [
+        { q: 'How do I register my car for the show?', a: 'Car registration is $20 per vehicle if registered in advance, $25 on the day of the show (non-refundable). See the Registrations section.' },
+        { q: 'What types of vehicles can enter?', a: 'Categories include Classic Cars, Trucks, and Motorcycles.' },
+        { q: 'Will trophies be awarded?', a: 'Yes, trophies will be given out in multiple categories.' },
+        { q: 'Can I register my car on the day of the event?', a: 'Yes, but the entry fee increases to $25 and spots are limited.' }
+      ],
+      contact: 'jimmyjammarketing1@gmail.com'
+    },
+    {
+      title: '🅿️ Parking & Accommodations',
+      qa: [
+        { q: 'Where can I park?', a: 'VIP parking for VIP passholders; free general admission parking. Judges, team, vendor/volunteer/band, and handicap parking are all separately zoned on-site.' },
+        { q: 'Where can I stay nearby?', a: 'Hampton Inn and Best Western Historical Inn both have a block of rooms reserved for Jimmy Jam BBQ Slam. Sun Outdoor Campground/RV Park is also nearby.' },
+        { q: 'What amenities are available on-site?', a: 'Firewood, hot showers, and ice are available at the fairgrounds.' }
+      ],
+      contact: 'jimmyjaminfo@gmail.com'
+    },
+    {
+      title: '♿ Services for People with Disabilities',
+      qa: [
+        { q: 'Is the event accessible?', a: 'Yes — handicap parking is available on-site. Email us to let us know what accommodations you need and we’ll do our best to help.' }
+      ],
+      contact: 'jimmyjaminfo@gmail.com'
     }
   ];
 
@@ -1170,57 +1223,7 @@ const JimmyJamApp = () => {
 
                 {/* INFO SECTIONS */}
                 <div className="space-y-2">
-                  {[
-                    {
-                      title: '📋 General',
-                      qa: [
-                        { q: 'What is the Jimmy Jam BBQ Slam?', a: 'A nonprofit event dedicated to celebrating BBQ, classic cars, live music, and community giving. All proceeds go toward helping individuals and families in need.' },
-                        { q: 'When and where is the event?', a: `${EVENT_VENUE_NAME}, ${EVENT_VENUE_ADDRESS}. The 11th Annual Jimmy Jam BBQ Slam is ${EVENT_DATE_LABEL}.` },
-                        { q: 'Is there an entry fee?', a: 'General admission is free. There are fees for tastings, competition entries, and vendor participation (see Registrations).' },
-                        { q: 'What can I expect at the event?', a: 'BBQ & Chili Cook-Offs, Live Music, Cornhole Tournament, Car Show, Food Vendors & Shopping, and Family-Friendly Activities.' },
-                        { q: 'Is there a cost for the live music?', a: 'No, live music is included with your event admission!' },
-                        { q: 'Is the event family-friendly?', a: 'Absolutely! We offer activities for all ages, including games, food, and entertainment.' },
-                        { q: 'Is parking available?', a: 'VIP parking available for VIP passholders and free parking to general admission patrons.' },
-                        { q: 'Are pets allowed?', a: 'Pets are welcome and must be leashed at all times.' }
-                      ],
-                      contact: 'jimmyjaminfo@gmail.com'
-                    },
-                    {
-                      title: '🍖 BBQ & Chili Competition',
-                      qa: [
-                        { q: 'How do I sign up for the Chili Cook-Off or BBQ Competition?', a: 'Registration is open to all interested competitors — see the Registrations section of this app.' },
-                        { q: 'How does the People’s Choice voting work?', a: 'Guests purchase $1 tasting tokens and receive voting tokens based on amount spent: Chili & Chowder (11am–3pm) is 1 voting token per $10 spent, BBQ (2pm–4pm) is 1 voting token per $20 spent.' },
-                        { q: 'Are there prizes for competition winners?', a: 'Yes! Trophies and bragging rights go to the top competitors in both judge-selected and People’s Choice categories.' }
-                      ],
-                      contact: 'jimmyjammarketing1@gmail.com'
-                    },
-                    {
-                      title: '🚗 Car Show',
-                      qa: [
-                        { q: 'How do I register my car for the show?', a: 'Car registration is $20 per vehicle if registered in advance, $25 on the day of the show (non-refundable). See the Registrations section.' },
-                        { q: 'What types of vehicles can enter?', a: 'Categories include Classic Cars, Trucks, and Motorcycles.' },
-                        { q: 'Will trophies be awarded?', a: 'Yes, trophies will be given out in multiple categories.' },
-                        { q: 'Can I register my car on the day of the event?', a: 'Yes, but the entry fee increases to $25 and spots are limited.' }
-                      ],
-                      contact: 'jimmyjammarketing1@gmail.com'
-                    },
-                    {
-                      title: '🅿️ Parking & Accommodations',
-                      qa: [
-                        { q: 'Where can I park?', a: 'VIP parking for VIP passholders; free general admission parking. Judges, team, vendor/volunteer/band, and handicap parking are all separately zoned on-site.' },
-                        { q: 'Where can I stay nearby?', a: 'Hampton Inn and Best Western Historical Inn both have a block of rooms reserved for Jimmy Jam BBQ Slam. Sun Outdoor Campground/RV Park is also nearby.' },
-                        { q: 'What amenities are available on-site?', a: 'Firewood, hot showers, and ice are available at the fairgrounds.' }
-                      ],
-                      contact: 'jimmyjaminfo@gmail.com'
-                    },
-                    {
-                      title: '♿ Services for People with Disabilities',
-                      qa: [
-                        { q: 'Is the event accessible?', a: 'Yes — handicap parking is available on-site. Email us to let us know what accommodations you need and we’ll do our best to help.' }
-                      ],
-                      contact: 'jimmyjaminfo@gmail.com'
-                    }
-                  ].map((item, idx) => (
+                  {faqData.map((item, idx) => (
                     <div key={idx} className="bg-yellow-50 border-b-2 border-blue-600">
                       <button
                         onClick={() => setOpenInfoSection(openInfoSection === idx ? null : idx)}
@@ -1279,6 +1282,39 @@ const JimmyJamApp = () => {
               <h3 className="text-xl font-bold text-red-800 mb-2">Partner With Us</h3>
               <p className="text-sm text-red-600 mb-4">Interested in becoming an official partner? Let's connect.</p>
               <button onClick={() => setActiveNav('connect')} className="px-6 py-2 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition-all shadow-md">CONTACT US</button>
+            </div>
+          </div>
+        )}
+
+        {/* FAQ */}
+        {activeNav === 'faq' && (
+          <div className="space-y-4 pb-20">
+            <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Frequently Asked Questions</h1>
+            <div className="space-y-2">
+              {faqData.map((item, idx) => (
+                <div key={idx} className="bg-yellow-50 border-b-2 border-blue-600">
+                  <button
+                    onClick={() => setOpenFaqSection(openFaqSection === idx ? null : idx)}
+                    className="w-full hover:bg-yellow-100 p-4 text-left transition-all flex items-center justify-between group"
+                  >
+                    <p className="font-bold text-lg text-gray-900 group-hover:text-blue-600">{item.title}</p>
+                    <span className={`text-2xl text-gray-400 group-hover:text-blue-600 transition-transform ${openFaqSection === idx ? 'rotate-90' : ''}`}>›</span>
+                  </button>
+                  {openFaqSection === idx && (
+                    <div className="px-4 pb-4 space-y-3">
+                      {item.qa.map((pair, qi) => (
+                        <div key={qi}>
+                          <p className="font-bold text-gray-900 text-sm">{pair.q}</p>
+                          <p className="text-gray-700 text-sm">{pair.a}</p>
+                        </div>
+                      ))}
+                      <p className="text-xs text-gray-500 pt-2 border-t border-yellow-200">
+                        Question not answered here? Email <a href={`mailto:${item.contact}`} className="text-blue-600 underline">{item.contact}</a>.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -2699,7 +2735,7 @@ const JimmyJamApp = () => {
                     <span className="font-semibold">Official Partners</span>
                   </button>
 
-                  <button onClick={() => { openExternal('https://jimmyjambbqslam.com/faq'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
+                  <button onClick={() => { setActiveNav('faq'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 transition-all border-b border-gray-200">
                     <span className="text-xl">❓</span>
                     <span className="font-semibold">FAQs</span>
                   </button>
