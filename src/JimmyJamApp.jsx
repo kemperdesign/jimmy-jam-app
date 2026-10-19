@@ -1657,38 +1657,40 @@ const JimmyJamApp = () => {
 
         {/* EVENTS SELECTION PAGE */}
         {activeNav === 'events' && activeTab === 'overview' && (
-          <div className="space-y-8 pb-20">
+          <div className="space-y-8 pb-20 -mx-4 px-4 pt-2 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
             <div className="text-center space-y-2">
-              <h1 className="text-4xl font-bold text-gray-900">OUR EVENTS</h1>
-              <p className="text-gray-600">Select an event to explore details and register</p>
+              <h1 className="font-display text-5xl tracking-wide" style={{ color: 'var(--text-primary)' }}>OUR EVENTS</h1>
+              <p style={{ color: 'var(--text-secondary)' }}>Select an event to explore details and register</p>
             </div>
 
             <div className="grid grid-cols-1 gap-6">
               {/* BOURBON & BBQ CARD */}
-              <button 
+              <button
                 onClick={() => setActiveTab('bourbon-event')}
-                className="group relative h-64 rounded-2xl overflow-hidden shadow-xl transition-all transform hover:scale-[1.02] border-4 border-white"
+                className="group relative h-64 rounded-2xl overflow-hidden shadow-2xl transition-all transform hover:scale-[1.02]"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-800 opacity-90 group-hover:opacity-100 transition-all"></div>
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-6">
+                <img src="/images/event-photos/dsc08443.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(14,13,12,0.95), rgba(14,13,12,0.4))' }}></div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-6" style={{ color: 'var(--text-primary)' }}>
                   <span className="text-6xl mb-4">🥃</span>
-                  <h2 className="text-3xl font-bold">Bourbon & Barbeque</h2>
-                  <p className="text-orange-100 mt-2">Premium Tasting & Feast</p>
-                  <div className="mt-4 bg-white text-orange-700 px-6 py-2 rounded-full font-bold text-sm">EXPLORE EVENT</div>
+                  <h2 className="font-display text-4xl tracking-wide">BOURBON & BARBEQUE</h2>
+                  <p className="mt-2" style={{ color: 'var(--text-secondary)' }}>Premium Tasting & Feast</p>
+                  <div className="mt-4 px-6 py-2 rounded-pill font-bold text-sm uppercase tracking-wide" style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}>Explore Event</div>
                 </div>
               </button>
 
               {/* BBQ SLAM CARD */}
-              <button 
+              <button
                 onClick={() => setActiveTab('bbq-slam-event')}
-                className="group relative h-64 rounded-2xl overflow-hidden shadow-xl transition-all transform hover:scale-[1.02] border-4 border-white"
+                className="group relative h-64 rounded-2xl overflow-hidden shadow-2xl transition-all transform hover:scale-[1.02]"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-orange-600 opacity-90 group-hover:opacity-100 transition-all"></div>
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-6">
+                <img src="/images/event-photos/dsc08414.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(14,13,12,0.95), rgba(14,13,12,0.4))' }}></div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-6" style={{ color: 'var(--text-primary)' }}>
                   <span className="text-6xl mb-4">🍖</span>
-                  <h2 className="text-3xl font-bold">BBQ Slam Event</h2>
-                  <p className="text-red-100 mt-2">World-Class Competition</p>
-                  <div className="mt-4 bg-white text-red-700 px-6 py-2 rounded-full font-bold text-sm">EXPLORE EVENT</div>
+                  <h2 className="font-display text-4xl tracking-wide">BBQ SLAM EVENT</h2>
+                  <p className="mt-2" style={{ color: 'var(--text-secondary)' }}>World-Class Competition</p>
+                  <div className="mt-4 px-6 py-2 rounded-pill font-bold text-sm uppercase tracking-wide" style={{ backgroundColor: 'var(--color-secondary)', color: '#1E1C1A' }}>Explore Event</div>
                 </div>
               </button>
             </div>
@@ -1697,27 +1699,31 @@ const JimmyJamApp = () => {
 
         {/* BOURBON & BBQ EVENT DETAIL */}
         {activeNav === 'events' && activeTab === 'bourbon-event' && (
-          <div className="space-y-8 pb-20">
-            <button onClick={() => setActiveTab('overview')} className="flex items-center gap-2 text-orange-700 font-bold mb-4">
+          <div className="space-y-8 pb-20 -mx-4 px-4 pt-2 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
+            <button onClick={() => setActiveTab('overview')} className="flex items-center gap-2 font-bold mb-4" style={{ color: 'var(--color-primary)' }}>
               <ChevronLeft size={24} /> Back to Events
             </button>
 
-            <div className="bg-gradient-to-r from-orange-600 to-red-800 text-white p-10 rounded-2xl shadow-lg text-center">
-              <h1 className="text-4xl font-bold mb-2">Bourbon & Barbeque</h1>
-              <p className="text-orange-100 text-lg">The Ultimate Pairing Experience</p>
+            <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg">
+              <img src="/images/event-photos/dsc08443.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(14,13,12,0.9), rgba(14,13,12,0.3))' }}></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6" style={{ color: 'var(--text-primary)' }}>
+                <h1 className="font-display text-5xl tracking-wide">BOURBON & BARBEQUE</h1>
+                <p className="text-lg mt-1" style={{ color: 'var(--text-secondary)' }}>The Ultimate Pairing Experience</p>
+              </div>
             </div>
 
             {/* MENU SECTION */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">The Menu</h2>
+              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>THE MENU</h2>
               <div className="grid md:grid-cols-2 gap-4">
                 {bourbonMenu.bbq.map((item, i) => (
-                  <div key={i} className="bg-white p-5 rounded-xl shadow-md border border-orange-100 flex justify-between items-center">
+                  <div key={i} className="p-5 rounded-xl shadow-card border flex justify-between items-center" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
                     <div>
-                      <p className="font-bold text-gray-800">{item.name}</p>
-                      <p className="text-xs text-gray-500">{item.desc}</p>
+                      <p className="font-bold" style={{ color: 'var(--text-primary)' }}>{item.name}</p>
+                      <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
                     </div>
-                    <span className="text-orange-600 font-bold">{item.price}</span>
+                    <span className="font-bold" style={{ color: 'var(--color-secondary)' }}>{item.price}</span>
                   </div>
                 ))}
               </div>
@@ -1725,16 +1731,16 @@ const JimmyJamApp = () => {
 
             {/* SPONSORS SECTION */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">Event Sponsors</h2>
+              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>EVENT SPONSORS</h2>
               <div className="grid grid-cols-3 gap-4">
                 {sponsorsData.slice(0, 3).map((sponsor) => (
-                  <div key={sponsor.id} className="bg-white p-4 rounded-xl shadow-md text-center border-2 border-transparent hover:border-orange-500 transition-all">
+                  <div key={sponsor.id} className="p-4 rounded-xl shadow-card text-center border transition-all" style={{ backgroundColor: 'var(--bg-paper)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
                     {sponsor.logoImage ? (
                       <img src={sponsor.logoImage} alt={sponsor.name} className="h-12 w-full object-contain mb-2" />
                     ) : (
                       <span className="text-4xl block mb-2">{sponsor.logo}</span>
                     )}
-                    <p className="font-bold text-xs">{sponsor.name}</p>
+                    <p className="font-bold text-xs" style={{ color: 'var(--text-on-light)' }}>{sponsor.name}</p>
                   </div>
                 ))}
               </div>
@@ -1742,14 +1748,15 @@ const JimmyJamApp = () => {
 
             {/* VIDEOS SECTION */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-orange-600 pl-4">Video Highlights</h2>
+              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>VIDEO HIGHLIGHTS</h2>
               <button
                 onClick={() => setActiveNav('videos')}
-                className="w-full aspect-video bg-gray-900 rounded-2xl flex items-center justify-center text-6xl shadow-2xl relative overflow-hidden group"
+                className="w-full aspect-video rounded-2xl flex items-center justify-center text-6xl shadow-2xl relative overflow-hidden group"
+                style={{ backgroundColor: 'var(--bg-surface)' }}
               >
                 🎬
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer">
-                  <div className="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center text-white text-3xl pl-2 shadow-xl">▶</div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer" style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}>
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl pl-2 shadow-xl" style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}>▶</div>
                 </div>
               </button>
             </div>
@@ -1763,17 +1770,21 @@ const JimmyJamApp = () => {
               <ChevronLeft size={24} /> Back to Events
             </button>
 
-            <div className="bg-gradient-to-r from-red-700 to-orange-600 text-white p-10 rounded-2xl shadow-lg text-center">
-              <h1 className="text-4xl font-bold mb-2">BBQ Slam Event</h1>
-              <p className="text-red-100 text-lg">Championship Competition</p>
+            <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg">
+              <img src="/images/event-photos/dsc08414.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(14,13,12,0.9), rgba(14,13,12,0.3))' }}></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6" style={{ color: 'var(--text-primary)' }}>
+                <h1 className="font-display text-5xl tracking-wide">BBQ SLAM EVENT</h1>
+                <p className="text-lg mt-1" style={{ color: 'var(--text-secondary)' }}>Championship Competition</p>
+              </div>
             </div>
 
             {/* REGISTRATION FORMS */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Registrations</h2>
+              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>REGISTRATIONS</h2>
               <div className="grid grid-cols-1 gap-3">
                 {registrationDetails.map((form, i) => (
-                  <div key={i} className="bg-white rounded-xl shadow-md border-2 border-transparent hover:border-red-700 transition-all overflow-hidden">
+                  <div key={i} className="rounded-xl shadow-card border transition-all overflow-hidden" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
                     <button
                       onClick={() => setOpenRegistration(openRegistration === i ? null : i)}
                       className="w-full p-6 flex items-center justify-between text-left"
@@ -1781,23 +1792,24 @@ const JimmyJamApp = () => {
                       <div className="flex items-center gap-4">
                         <span className="text-3xl">{form.icon}</span>
                         <div>
-                          <p className="font-bold text-lg text-gray-800">{form.title}</p>
-                          {form.fee && <p className="text-xs text-gray-500">{form.fee}</p>}
+                          <p className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{form.title}</p>
+                          {form.fee && <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{form.fee}</p>}
                         </div>
                       </div>
-                      <span className="text-red-700 font-bold text-xl">{openRegistration === i ? '−' : '+'}</span>
+                      <span className="font-bold text-xl" style={{ color: 'var(--color-primary)' }}>{openRegistration === i ? '−' : '+'}</span>
                     </button>
                     {openRegistration === i && (
-                      <div className="px-6 pb-6 space-y-3 border-t border-gray-100 pt-4">
-                        <p className="text-sm text-gray-700 leading-relaxed">{form.description}</p>
+                      <div className="px-6 pb-6 space-y-3 border-t pt-4" style={{ borderColor: 'var(--border-subtle)' }}>
+                        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{form.description}</p>
                         {form.details && (
-                          <ul className="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                          <ul className="text-sm space-y-1 list-disc list-inside" style={{ color: 'var(--text-secondary)' }}>
                             {form.details.map((d, di) => <li key={di}>{d}</li>)}
                           </ul>
                         )}
                         <button
                           onClick={() => openExternal(form.url)}
-                          className="w-full bg-red-700 hover:bg-red-800 text-white py-2.5 rounded-lg font-bold text-sm transition-all"
+                          className="w-full py-2.5 rounded-lg font-bold text-sm transition-all"
+                          style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}
                         >
                           View Current Status & Register →
                         </button>
@@ -1806,19 +1818,19 @@ const JimmyJamApp = () => {
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-gray-500 text-center">Tap a category for details. The register button always opens the matching live page on jimmyjambbqslam.com for current status and forms.</p>
+              <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>Tap a category for details. The register button always opens the matching live page on jimmyjambbqslam.com for current status and forms.</p>
             </div>
 
             {/* CALENDAR SECTION */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Calendar of Events</h2>
-              <div className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-200">
+              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>CALENDAR OF EVENTS</h2>
+              <div className="rounded-xl overflow-hidden shadow-card border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
                 {detailedSchedule[0].events.slice(0, 4).map((event, i) => (
-                  <div key={i} className="flex items-center gap-4 p-4 border-b last:border-b-0">
-                    <span className="text-xs font-bold text-red-700 w-20">{event.time}</span>
+                  <div key={i} className="flex items-center gap-4 p-4 border-b last:border-b-0" style={{ borderColor: 'var(--border-subtle)' }}>
+                    <span className="text-xs font-bold w-20" style={{ color: 'var(--color-primary)' }}>{event.time}</span>
                     <div className="flex-1">
-                      <p className="font-bold text-gray-800">{event.title}</p>
-                      <p className="text-[10px] text-gray-500">{event.location}</p>
+                      <p className="font-bold" style={{ color: 'var(--text-primary)' }}>{event.title}</p>
+                      <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{event.location}</p>
                     </div>
                   </div>
                 ))}
@@ -1827,18 +1839,18 @@ const JimmyJamApp = () => {
 
             {/* PAST WINNERS */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Past Winners</h2>
+              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>PAST WINNERS</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {pastWinnersData.map((winner, i) => (
-                  <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border-2 border-gray-200">
+                  <div key={i} className="rounded-xl overflow-hidden shadow-card border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
                     <img src={winner.photo} alt={`${winner.team} — ${winner.year} ${winner.category}`} className="w-full h-48 object-cover" />
                     <div className="p-4 flex items-center gap-3">
                       {winner.logo && (
-                        <img src={winner.logo} alt={`${winner.team} logo`} className="w-12 h-12 object-contain rounded-lg bg-white border border-gray-100 flex-shrink-0" />
+                        <img src={winner.logo} alt={`${winner.team} logo`} className="w-12 h-12 object-contain rounded-lg border flex-shrink-0" style={{ backgroundColor: 'var(--bg-paper)', borderColor: 'var(--border-subtle)' }} />
                       )}
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-0.5 rounded">{winner.year} {winner.category}</span>
-                        <h3 className="font-bold text-gray-900 mt-1">{winner.team}</h3>
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm" style={{ color: 'var(--color-secondary)', backgroundColor: 'var(--bg-surface-elevated)' }}>{winner.year} {winner.category}</span>
+                        <h3 className="font-bold mt-1" style={{ color: 'var(--text-primary)' }}>{winner.team}</h3>
                       </div>
                     </div>
                   </div>
@@ -1848,24 +1860,24 @@ const JimmyJamApp = () => {
 
             {/* SPONSOR LOGOS */}
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Official Partners</h2>
-              <div className="bg-white p-6 rounded-xl shadow-md">
+              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>OFFICIAL PARTNERS</h2>
+              <div className="p-6 rounded-xl shadow-card border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
                 <div className="grid grid-cols-4 gap-6">
                   {sponsorsData.map((sponsor) => (
-                    <button 
-                      key={sponsor.id} 
+                    <button
+                      key={sponsor.id}
                       onClick={() => {
                         setSelectedSponsor(sponsor);
                         setActiveNav('sponsors');
                       }}
-                      className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all group"
+                      className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-all group"
                     >
                       {sponsor.logoImage ? (
-                        <img src={sponsor.logoImage} alt={sponsor.name} className="h-8 object-contain group-hover:scale-110 transition-transform" />
+                        <img src={sponsor.logoImage} alt={sponsor.name} className="h-8 object-contain group-hover:scale-110 transition-transform bg-white rounded p-0.5" />
                       ) : (
                         <span className="text-3xl group-hover:scale-110 transition-transform">{sponsor.logo}</span>
                       )}
-                      <p className="text-[10px] font-bold text-gray-400 uppercase text-center group-hover:text-red-700">{sponsor.name}</p>
+                      <p className="text-[10px] font-bold uppercase text-center" style={{ color: 'var(--text-muted)' }}>{sponsor.name}</p>
                     </button>
                   ))}
                 </div>
@@ -2006,43 +2018,45 @@ const JimmyJamApp = () => {
 
         {/* SPONSORS - LIST VIEW */}
         {activeNav === 'sponsors' && !selectedSponsor && (
-          <div className="space-y-4">
+          <div className="space-y-4 -mx-4 px-4 pt-2 pb-4 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
+            <h1 className="font-display text-4xl tracking-wide" style={{ color: 'var(--text-primary)' }}>SPONSORS</h1>
             {/* SEARCH BAR */}
             <div className="relative">
-              <Search className="absolute left-4 top-3 text-gray-400" size={20} />
+              <Search className="absolute left-4 top-3" size={20} style={{ color: 'var(--text-muted)' }} />
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-full text-gray-700 placeholder-gray-400 focus:outline-none focus:border-red-700"
+                className="w-full pl-12 pr-4 py-3 rounded-full border focus:outline-none"
+                style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
               />
             </div>
 
             {/* BECOME A SPONSOR */}
-            <div className="bg-gradient-to-r from-red-700 to-orange-600 rounded-2xl p-5 text-white">
+            <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}>
               <button onClick={() => setShowSponsorTiers(prev => !prev)} className="w-full flex items-center justify-between text-left">
                 <div>
                   <p className="font-bold text-lg">🤝 Become a Sponsor</p>
-                  <p className="text-sm text-red-100">See our sponsorship packages & benefits</p>
+                  <p className="text-sm opacity-90">See our sponsorship packages & benefits</p>
                 </div>
                 <span className="text-2xl">{showSponsorTiers ? '−' : '+'}</span>
               </button>
               {showSponsorTiers && (
                 <div className="mt-4 space-y-2">
                   {sponsorTiers.map((tier, i) => (
-                    <div key={i} className="bg-white/10 rounded-xl overflow-hidden">
+                    <div key={i} className="rounded-xl overflow-hidden" style={{ backgroundColor: 'rgba(0,0,0,0.2)' }}>
                       <button onClick={() => setOpenSponsorTier(openSponsorTier === i ? null : i)} className="w-full p-4 flex items-center justify-between text-left">
                         <span className="font-bold">{tier.icon} {tier.name}</span>
                         <span>{openSponsorTier === i ? '−' : '+'}</span>
                       </button>
                       {openSponsorTier === i && (
                         <div className="px-4 pb-4 space-y-2">
-                          <ul className="text-sm text-red-50 space-y-1 list-disc list-inside">
+                          <ul className="text-sm opacity-90 space-y-1 list-disc list-inside">
                             {tier.perks.map((p, pi) => <li key={pi}>{p}</li>)}
                           </ul>
                           {tier.addOns && (
                             <div>
-                              <p className="text-xs font-bold uppercase tracking-wide text-red-100 mt-2">Optional Add-Ons</p>
-                              <ul className="text-sm text-red-50 space-y-1 list-disc list-inside">
+                              <p className="text-xs font-bold uppercase tracking-wide opacity-80 mt-2">Optional Add-Ons</p>
+                              <ul className="text-sm opacity-90 space-y-1 list-disc list-inside">
                                 {tier.addOns.map((a, ai) => <li key={ai}>{a}</li>)}
                               </ul>
                             </div>
@@ -2051,7 +2065,7 @@ const JimmyJamApp = () => {
                       )}
                     </div>
                   ))}
-                  <button onClick={() => setActiveNav('connect')} className="w-full bg-white text-red-700 py-2.5 rounded-lg font-bold text-sm mt-2">Contact Us to Sponsor</button>
+                  <button onClick={() => setActiveNav('connect')} className="w-full py-2.5 rounded-lg font-bold text-sm mt-2" style={{ backgroundColor: '#FFFFFF', color: 'var(--color-primary)' }}>Contact Us to Sponsor</button>
                 </div>
               )}
             </div>
@@ -2062,11 +2076,12 @@ const JimmyJamApp = () => {
                 <button
                   key={sponsor.id}
                   onClick={() => setSelectedSponsor(sponsor)}
-                  className="w-full bg-white rounded-2xl p-4 border-2 border-red-700 shadow-md hover:shadow-lg transition-all text-left hover:bg-red-50"
+                  className="w-full rounded-2xl p-4 border shadow-card transition-all text-left"
+                  style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}
                 >
                   <div className="flex items-start gap-4">
                     {/* LOGO */}
-                    <div className="w-12 h-12 bg-white border border-gray-200 rounded-lg flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden p-1">
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden p-1" style={{ backgroundColor: 'var(--bg-paper)' }}>
                       {sponsor.logoImage ? (
                         <img src={sponsor.logoImage} alt={sponsor.name} className="w-full h-full object-contain" />
                       ) : (
@@ -2076,12 +2091,12 @@ const JimmyJamApp = () => {
 
                     {/* TEXT */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-base font-bold text-gray-900">{sponsor.name}</h3>
-                      <p className="text-sm text-gray-600 truncate">{sponsor.tier}</p>
+                      <h3 className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>{sponsor.name}</h3>
+                      <p className="text-sm truncate" style={{ color: 'var(--text-secondary)' }}>{sponsor.tier}</p>
                     </div>
 
                     {/* ARROW */}
-                    <ChevronRight size={20} className="text-red-700 flex-shrink-0 mt-1" />
+                    <ChevronRight size={20} className="flex-shrink-0 mt-1" style={{ color: 'var(--color-primary)' }} />
                   </div>
                 </button>
               ))}
@@ -2095,14 +2110,15 @@ const JimmyJamApp = () => {
             {/* BACK BUTTON */}
             <button
               onClick={() => setSelectedSponsor(null)}
-              className="flex items-center gap-2 text-red-700 font-bold mb-4"
+              className="flex items-center gap-2 font-bold mb-4"
+              style={{ color: 'var(--color-primary)' }}
             >
               <ChevronLeft size={24} />
               Back
             </button>
 
             {/* LOGO SECTION */}
-            <div className="w-full h-40 bg-white border-2 border-gray-200 rounded-lg flex items-center justify-center shadow-lg p-4">
+            <div className="w-full h-40 rounded-lg flex items-center justify-center shadow-card p-4" style={{ backgroundColor: 'var(--bg-paper)', boxShadow: 'var(--shadow-card)' }}>
               {selectedSponsor.logoImage ? (
                 <img src={selectedSponsor.logoImage} alt={selectedSponsor.name} className="max-w-full max-h-full object-contain" />
               ) : (
@@ -2112,8 +2128,8 @@ const JimmyJamApp = () => {
 
             {/* TITLE & TIER */}
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold text-red-700">{selectedSponsor.name}</h1>
-              <p className="text-gray-600">{selectedSponsor.tier}</p>
+              <h1 className="font-display text-4xl tracking-wide" style={{ color: 'var(--text-primary)' }}>{selectedSponsor.name}</h1>
+              <p style={{ color: 'var(--text-secondary)' }}>{selectedSponsor.tier}</p>
             </div>
 
             {/* WEBSITE & SHARE BUTTONS */}
@@ -2121,7 +2137,8 @@ const JimmyJamApp = () => {
               {selectedSponsor.website && (
                 <button
                   onClick={() => openExternal(selectedSponsor.website)}
-                  className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
+                  className="px-4 py-2 border rounded-full font-semibold transition-all flex items-center gap-2"
+                  style={{ borderColor: 'var(--color-primary)', color: 'var(--color-primary)' }}
                 >
                   🌐 Website
                 </button>
@@ -2136,7 +2153,8 @@ const JimmyJamApp = () => {
                       alert('Website link copied to clipboard!');
                     }
                   }}
-                  className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
+                  className="px-4 py-2 border rounded-full font-semibold transition-all flex items-center gap-2"
+                  style={{ borderColor: 'var(--color-primary)', color: 'var(--color-primary)' }}
                 >
                   📤 Share
                 </button>
@@ -2144,9 +2162,9 @@ const JimmyJamApp = () => {
             </div>
 
             {/* DESCRIPTION */}
-            <div className="bg-white rounded-lg p-4 border-2 border-red-700">
-              <h3 className="font-bold text-gray-900 mb-2">About</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{selectedSponsor.description}</p>
+            <div className="rounded-lg p-4 border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)' }}>
+              <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>About</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{selectedSponsor.description}</p>
             </div>
           </div>
         )}
