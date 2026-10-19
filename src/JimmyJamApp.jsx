@@ -35,6 +35,9 @@ const JimmyJamApp = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [openInfoSection, setOpenInfoSection] = useState(null);
   const [openRecipe, setOpenRecipe] = useState(null);
+  const [openRegistration, setOpenRegistration] = useState(null);
+  const [showSponsorTiers, setShowSponsorTiers] = useState(false);
+  const [openSponsorTier, setOpenSponsorTier] = useState(null);
   const [seasonView, setSeasonView] = useState('list');
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const d = new Date();
@@ -410,6 +413,131 @@ const JimmyJamApp = () => {
   ];
 
 
+
+  const sponsorTiers = [
+    {
+      name: 'Whole Hog Sponsor',
+      icon: '🐷',
+      perks: [
+        'Large color vinyl banner at the event',
+        'Logo on the event t-shirt',
+        'Placement on the event website for 1 year',
+        'Several mentions (with link) on social media',
+        '12′×12′ vendor booth space',
+        '5 free admission passes',
+        '30 tasting tickets + 5 free beers',
+        'Appreciation plaque',
+        'VIP parking'
+      ],
+      addOns: ['Additional signage at designated attractions', '60-second company promo video filmed at the event', 'Mention in print advertising', 'Digital billboard at the event']
+    },
+    {
+      name: 'BBQ People’s Choice Sponsor',
+      icon: '🍖',
+      perks: [
+        'Large color vinyl banner at the BBQ People’s Choice ticket counter',
+        'Company logo on all voting containers for every participating team',
+        'Placement on the event website for 1 year',
+        'Several mentions (with link) on social media',
+        '5 free admission passes',
+        '30 tasting tickets + 5 free beers',
+        'Appreciation plaque',
+        'VIP parking'
+      ],
+      addOns: ['60-second company promo video filmed at the event', 'Mention in print advertising', 'Digital billboard at the event']
+    },
+    {
+      name: 'Chili People’s Choice Sponsor',
+      icon: '🌶️',
+      perks: [
+        'Large color vinyl banner at the Chili People’s Choice ticket counter',
+        'Company logo on all voting containers for every participating team',
+        'Placement on the event website for 1 year',
+        'Several mentions (with link) on social media',
+        '5 free admission passes',
+        '30 tasting tickets + 5 free beers',
+        'Appreciation plaque',
+        'VIP parking'
+      ],
+      addOns: ['60-second company promo video filmed at the event', 'Mention in print advertising', 'Digital billboard at the event']
+    },
+    {
+      name: 'Little Piggy Sponsor',
+      icon: '🐽',
+      perks: [
+        'Color banner at the entrance to the event',
+        'Placement on the event website for 1 year',
+        'One mention (with link) on social media',
+        '12′×12′ vendor booth space',
+        '5 free admission passes',
+        '10 tasting tickets',
+        'VIP parking'
+      ]
+    }
+  ];
+
+  const registrationDetails = [
+    {
+      title: 'BBQ Slam Events',
+      icon: '🏆',
+      url: 'https://jimmyjambbqslam.com/bbq-slam-events',
+      description: 'The main event day: People’s Choice chili/chowder and BBQ tastings, the Cornhole Tournament, and live music all day long. See the Schedule tab for exact times.'
+    },
+    {
+      title: 'BBQ Competition',
+      icon: '🍖',
+      url: 'https://jimmyjambbqslam.com/bbq-competition',
+      fee: 'Ancillary contests: $25/entry • Over $17,000 in total payouts',
+      description: 'An open BBQ competition with Backyard and Pro divisions (chicken, ribs, pork, brisket) plus a required People’s Choice category — every team gets free 30-amp power for it. Friday night also features ancillary contests: wings, Bloody Mary, best slider, best dessert, and best sauce.',
+      details: [
+        'Backyard division: Grand $1,000, Reserve Grand $500, plus per-category payouts',
+        'Pro division: Grand $2,000, Reserve Grand $1,500, plus per-category payouts',
+        'Friday ancillary contests pay $500 each, winner-takes-all'
+      ]
+    },
+    {
+      title: 'Chili Cook Off',
+      icon: '🌶️',
+      url: 'https://jimmyjambbqslam.com/chili-cook-off',
+      description: 'Over 15 teams compete head-to-head for the Chili & Chowder People’s Choice title. Guests sample with $1 tasting tokens and earn a voting token for every $10 spent.'
+    },
+    {
+      title: 'Car Show',
+      icon: '🚗',
+      url: 'https://jimmyjambbqslam.com/car-show',
+      fee: '$20/vehicle pre-registered • $25 day-of (no refunds)',
+      description: 'Classic cars, trucks, hot rods, and motorcycles on display all day, with trophies awarded across multiple categories and a People’s Choice vote.'
+    },
+    {
+      title: 'Retail Vendors',
+      icon: '⛺',
+      url: 'https://jimmyjambbqslam.com/retail-vendors',
+      fee: '$100 per 12′×12′ space • Payment due Dec 20',
+      description: 'Outdoor booth space — bring your own tent, tables, and chairs (no electricity on site). Setup opens at 7 AM; vendors should be ready to go by 10 AM. Chain vendors/independent consultants (e.g. Paparazzi, Color Street, Scentsy) should confirm availability by email first, since only one per brand is allowed.'
+    },
+    {
+      title: 'Food Vendors',
+      icon: '🍔',
+      url: 'https://jimmyjambbqslam.com/food-vendors',
+      fee: '$200 + 10% of sales • Payment due Dec 20',
+      description: 'Food truck vendor area, outdoors with no electricity or water on site. No beverage sales permitted. Setup opens at 7 AM; vendors should be ready to go by 10 AM.',
+      details: [
+        'Confirmed 2027 food vendors: Sapp Sucker BBQ Co., Ohana Italian Ice, Shores Nutrition, Pebble’s Pies, Kyle’s Camp Cookies, and King’s BBQ'
+      ]
+    },
+    {
+      title: 'Amenities',
+      icon: '🏕️',
+      url: 'https://jimmyjambbqslam.com/amenities',
+      description: 'Nearby lodging includes Hampton Inn, Best Western Historical Inn, and Sun Outdoor Campground/RV Park. On-site amenities include firewood, hot showers, and ice.'
+    },
+    {
+      title: 'Pizza Ancillary',
+      icon: '🍕',
+      url: 'https://jimmyjambbqslam.com/pizza-ancillary',
+      description: 'An open pizza cook-off hosted by the Pizza Cook-Off Association, welcoming home cooks and local shops alike. Full rules are posted at pizzacook-off.com.'
+    }
+  ];
 
   const pastWinnersData = [
     { year: '2026', category: 'Pro Grand Champion', team: 'Maya Jane BBQ Co.', photo: '/winners/maya-jane-bbq-co-pro-grand-champion-2026.jpg', logo: '/winners/maya-jane-bbq-co-logo.jpg' },
@@ -1384,30 +1512,41 @@ const JimmyJamApp = () => {
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-gray-800 border-l-4 border-red-700 pl-4">Registrations</h2>
               <div className="grid grid-cols-1 gap-3">
-                {[
-                  { title: 'BBQ Slam Events', icon: '🏆', url: 'https://jimmyjambbqslam.com/bbq-slam-events' },
-                  { title: 'BBQ Competition', icon: '🍖', url: 'https://jimmyjambbqslam.com/bbq-competition' },
-                  { title: 'Chili Cook Off', icon: '🌶️', url: 'https://jimmyjambbqslam.com/chili-cook-off' },
-                  { title: 'Car Show', icon: '🚗', url: 'https://jimmyjambbqslam.com/car-show' },
-                  { title: 'Retail Vendors', icon: '⛺', url: 'https://jimmyjambbqslam.com/retail-vendors' },
-                  { title: 'Food Vendors', icon: '🍔', url: 'https://jimmyjambbqslam.com/food-vendors' },
-                  { title: 'Amenities', icon: '🏕️', url: 'https://jimmyjambbqslam.com/amenities' },
-                  { title: 'Pizza Ancillary', icon: '🍕', url: 'https://jimmyjambbqslam.com/pizza-ancillary' }
-                ].map((form, i) => (
-                  <button
-                    key={i}
-                    onClick={() => openExternal(form.url)}
-                    className="bg-white p-6 rounded-xl shadow-md flex items-center justify-between border-2 border-transparent hover:border-red-700 transition-all"
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="text-3xl">{form.icon}</span>
-                      <span className="font-bold text-lg text-gray-800">{form.title}</span>
-                    </div>
-                    <span className="text-red-700 font-bold">VIEW →</span>
-                  </button>
+                {registrationDetails.map((form, i) => (
+                  <div key={i} className="bg-white rounded-xl shadow-md border-2 border-transparent hover:border-red-700 transition-all overflow-hidden">
+                    <button
+                      onClick={() => setOpenRegistration(openRegistration === i ? null : i)}
+                      className="w-full p-6 flex items-center justify-between text-left"
+                    >
+                      <div className="flex items-center gap-4">
+                        <span className="text-3xl">{form.icon}</span>
+                        <div>
+                          <p className="font-bold text-lg text-gray-800">{form.title}</p>
+                          {form.fee && <p className="text-xs text-gray-500">{form.fee}</p>}
+                        </div>
+                      </div>
+                      <span className="text-red-700 font-bold text-xl">{openRegistration === i ? '−' : '+'}</span>
+                    </button>
+                    {openRegistration === i && (
+                      <div className="px-6 pb-6 space-y-3 border-t border-gray-100 pt-4">
+                        <p className="text-sm text-gray-700 leading-relaxed">{form.description}</p>
+                        {form.details && (
+                          <ul className="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                            {form.details.map((d, di) => <li key={di}>{d}</li>)}
+                          </ul>
+                        )}
+                        <button
+                          onClick={() => openExternal(form.url)}
+                          className="w-full bg-red-700 hover:bg-red-800 text-white py-2.5 rounded-lg font-bold text-sm transition-all"
+                        >
+                          View Current Status & Register →
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
-              <p className="text-xs text-gray-500 text-center">Opens the matching page on jimmyjambbqslam.com, which always has the current registration status and forms.</p>
+              <p className="text-xs text-gray-500 text-center">Tap a category for details. The register button always opens the matching live page on jimmyjambbqslam.com for current status and forms.</p>
             </div>
 
             {/* CALENDAR SECTION */}
@@ -1616,6 +1755,45 @@ const JimmyJamApp = () => {
                 placeholder="Search"
                 className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-full text-gray-700 placeholder-gray-400 focus:outline-none focus:border-red-700"
               />
+            </div>
+
+            {/* BECOME A SPONSOR */}
+            <div className="bg-gradient-to-r from-red-700 to-orange-600 rounded-2xl p-5 text-white">
+              <button onClick={() => setShowSponsorTiers(prev => !prev)} className="w-full flex items-center justify-between text-left">
+                <div>
+                  <p className="font-bold text-lg">🤝 Become a Sponsor</p>
+                  <p className="text-sm text-red-100">See our sponsorship packages & benefits</p>
+                </div>
+                <span className="text-2xl">{showSponsorTiers ? '−' : '+'}</span>
+              </button>
+              {showSponsorTiers && (
+                <div className="mt-4 space-y-2">
+                  {sponsorTiers.map((tier, i) => (
+                    <div key={i} className="bg-white/10 rounded-xl overflow-hidden">
+                      <button onClick={() => setOpenSponsorTier(openSponsorTier === i ? null : i)} className="w-full p-4 flex items-center justify-between text-left">
+                        <span className="font-bold">{tier.icon} {tier.name}</span>
+                        <span>{openSponsorTier === i ? '−' : '+'}</span>
+                      </button>
+                      {openSponsorTier === i && (
+                        <div className="px-4 pb-4 space-y-2">
+                          <ul className="text-sm text-red-50 space-y-1 list-disc list-inside">
+                            {tier.perks.map((p, pi) => <li key={pi}>{p}</li>)}
+                          </ul>
+                          {tier.addOns && (
+                            <div>
+                              <p className="text-xs font-bold uppercase tracking-wide text-red-100 mt-2">Optional Add-Ons</p>
+                              <ul className="text-sm text-red-50 space-y-1 list-disc list-inside">
+                                {tier.addOns.map((a, ai) => <li key={ai}>{a}</li>)}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  <button onClick={() => setActiveNav('connect')} className="w-full bg-white text-red-700 py-2.5 rounded-lg font-bold text-sm mt-2">Contact Us to Sponsor</button>
+                </div>
+              )}
             </div>
 
             {/* SPONSORS LIST */}
