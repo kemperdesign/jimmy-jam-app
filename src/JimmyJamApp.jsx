@@ -76,6 +76,37 @@ const JimmyJamApp = () => {
     setMySchedule(prev => prev.includes(eventTitle) ? prev.filter(t => t !== eventTitle) : [...prev, eventTitle]);
   };
 
+  const [ballotEntries, setBallotEntries] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('jj_tasting_ballot') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const [ballotTeam, setBallotTeam] = useState('');
+  const [ballotCategory, setBallotCategory] = useState('BBQ');
+  const [ballotRating, setBallotRating] = useState(0);
+  const [ballotNotes, setBallotNotes] = useState('');
+
+  useEffect(() => {
+    try { localStorage.setItem('jj_tasting_ballot', JSON.stringify(ballotEntries)); } catch {}
+  }, [ballotEntries]);
+
+  const addBallotEntry = () => {
+    if (!ballotTeam.trim() || ballotRating === 0) return;
+    setBallotEntries(prev => [
+      { id: Date.now(), team: ballotTeam.trim(), category: ballotCategory, rating: ballotRating, notes: ballotNotes.trim() },
+      ...prev
+    ]);
+    setBallotTeam('');
+    setBallotRating(0);
+    setBallotNotes('');
+  };
+
+  const removeBallotEntry = (id) => {
+    setBallotEntries(prev => prev.filter(e => e.id !== id));
+  };
+
   const shareEvent = (event) => {
     if (navigator.share) {
       navigator.share({ title: event.title, text: `${event.title} — ${event.time} at ${event.location}` });
@@ -834,6 +865,7 @@ const JimmyJamApp = () => {
     { icon: '🏆', title: 'EVENTS', desc: 'Browse our festivals', action: 'events' },
     { icon: '🤝', title: 'SPONSORS', desc: 'Meet our partners', action: 'sponsors' },
     { icon: '👕', title: 'MERCH', desc: 'Shop swag store', action: 'swag' },
+    { icon: '⭐', title: 'TASTING BALLOT', desc: 'Rate teams as you go', action: 'ballot' },
     { icon: '🙋', title: 'VOLUNTEER', desc: 'Help make it happen', action: 'volunteer' },
     { icon: '🌤️', title: 'WEATHER', desc: 'Event forecast', action: 'weather' },
     { icon: '💬', title: 'STORIES', desc: 'Real testimonials', action: 'testimonials' }
@@ -1282,6 +1314,118 @@ const JimmyJamApp = () => {
               <h3 className="text-xl font-bold text-red-800 mb-2">Partner With Us</h3>
               <p className="text-sm text-red-600 mb-4">Interested in becoming an official partner? Let's connect.</p>
               <button onClick={() => setActiveNav('connect')} className="px-6 py-2 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition-all shadow-md">CONTACT US</button>
+            </div>
+          </div>
+        )}
+
+        {/* TASTING BALLOT */}
+        {activeNav === 'ballot' && (
+          <div className="space-y-6 pb-20 -mx-4 px-4 bg-canvas min-h-screen">
+            <div className="pt-6 text-center">
+              <h1 className="font-display text-4xl text-text-primary tracking-wide" style={{ color: 'var(--text-primary)' }}>MY TASTING BALLOT</h1>
+              <p className="text-text-secondary text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Rate teams as you taste, then cast your real vote with tokens</p>
+            </div>
+
+            <div className="bg-surface rounded-lg p-4 border border-border-subtle" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)' }}>
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                Official People's Choice voting uses paper tokens, not this app: buy $1 tasting tokens, earn voting tokens as you spend (1 per $10 for Chili & Chowder, 1 per $20 for BBQ), and drop them in your favorite team's jar. Use this ballot to jot down ratings and notes as you go, so you remember your favorites when it's time to vote for real.
+              </p>
+            </div>
+
+            {/* ADD ENTRY FORM */}
+            <div className="rounded-lg p-5 space-y-4 shadow-card" style={{ backgroundColor: 'var(--bg-surface)', boxShadow: 'var(--shadow-card)' }}>
+              <h2 className="font-display text-2xl tracking-wide" style={{ color: 'var(--text-primary)' }}>ADD A TASTING</h2>
+
+              <input
+                type="text"
+                value={ballotTeam}
+                onChange={(e) => setBallotTeam(e.target.value)}
+                placeholder="Team name or booth #"
+                className="w-full p-3 rounded-md bg-transparent border placeholder-text-muted"
+                style={{ borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
+              />
+
+              <div className="flex gap-2">
+                {['BBQ', 'Chili & Chowder'].map(cat => (
+                  <button
+                    key={cat}
+                    onClick={() => setBallotCategory(cat)}
+                    className="flex-1 py-2 rounded-pill text-xs font-bold uppercase tracking-wide border transition-all"
+                    style={
+                      ballotCategory === cat
+                        ? { backgroundColor: 'var(--color-primary)', borderColor: 'var(--color-primary)', color: '#FFFFFF' }
+                        : { backgroundColor: 'transparent', borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }
+                    }
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
+              {/* 5-STAR RATING CONTROL */}
+              <div className="flex items-center justify-center gap-2 py-2">
+                {[1, 2, 3, 4, 5].map(n => (
+                  <button
+                    key={n}
+                    onClick={() => setBallotRating(n)}
+                    className="transition-all"
+                    style={{
+                      fontSize: '30px',
+                      color: n <= ballotRating ? 'var(--color-secondary)' : 'var(--border-active)',
+                      filter: n <= ballotRating ? 'drop-shadow(0 0 6px rgba(255, 179, 0, 0.35))' : 'none',
+                      width: '44px', height: '44px'
+                    }}
+                  >
+                    {n <= ballotRating ? '★' : '☆'}
+                  </button>
+                ))}
+              </div>
+
+              <textarea
+                value={ballotNotes}
+                onChange={(e) => setBallotNotes(e.target.value)}
+                placeholder="Notes (optional) — smoke ring, sauce, texture..."
+                rows={2}
+                className="w-full p-3 rounded-md bg-transparent border placeholder-text-muted resize-none"
+                style={{ borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
+              />
+
+              <button
+                onClick={addBallotEntry}
+                disabled={!ballotTeam.trim() || ballotRating === 0}
+                className="w-full py-3 rounded-md font-bold text-sm uppercase tracking-wide transition-all disabled:opacity-40"
+                style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', height: '48px' }}
+              >
+                Add to Ballot
+              </button>
+            </div>
+
+            {/* BALLOT ENTRIES */}
+            <div className="space-y-3">
+              <h2 className="font-display text-2xl tracking-wide" style={{ color: 'var(--text-primary)' }}>
+                MY RATINGS ({ballotEntries.length})
+              </h2>
+              {ballotEntries.length === 0 && (
+                <p className="text-sm text-center py-8" style={{ color: 'var(--text-muted)' }}>No tastings logged yet — add one above as you sample each team.</p>
+              )}
+              {ballotEntries.map(entry => (
+                <div key={entry.id} className="rounded-lg p-4 flex items-start justify-between gap-3" style={{ backgroundColor: 'var(--bg-surface)', boxShadow: 'var(--shadow-card)' }}>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span
+                        className="text-[11px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-sm"
+                        style={{ backgroundColor: 'var(--bg-surface-elevated)', color: 'var(--text-secondary)', border: '1px solid var(--border-subtle)' }}
+                      >
+                        {entry.category}
+                      </span>
+                    </div>
+                    <p className="font-bold" style={{ color: 'var(--text-primary)' }}>{entry.team}</p>
+                    <p className="text-sm" style={{ color: 'var(--color-secondary)' }}>{'★'.repeat(entry.rating)}{'☆'.repeat(5 - entry.rating)}</p>
+                    {entry.notes && <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{entry.notes}</p>}
+                  </div>
+                  <button onClick={() => removeBallotEntry(entry.id)} className="text-xs font-bold flex-shrink-0" style={{ color: 'var(--color-danger)' }}>Remove</button>
+                </div>
+              ))}
             </div>
           </div>
         )}
