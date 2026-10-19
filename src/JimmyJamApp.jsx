@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, Search, ChevronLeft, ChevronRight, Star, Upload } from 'lucide-react';
+import { Bell, Search, ChevronLeft, ChevronRight, Star, Upload, Calendar, Ticket, Camera, Trophy, Users, Shirt, HeartHandshake, CloudSun, MessageCircle, Heart } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
 import { supabase } from './supabaseClient';
@@ -74,6 +74,58 @@ const JimmyJamApp = () => {
 
   const toggleMySchedule = (eventTitle) => {
     setMySchedule(prev => prev.includes(eventTitle) ? prev.filter(t => t !== eventTitle) : [...prev, eventTitle]);
+  };
+
+  const [favoriteArtists, setFavoriteArtists] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('jj_favorite_artists') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try { localStorage.setItem('jj_favorite_artists', JSON.stringify(favoriteArtists)); } catch {}
+  }, [favoriteArtists]);
+
+  const toggleFavoriteArtist = (artistId) => {
+    setFavoriteArtists(prev => prev.includes(artistId) ? prev.filter(id => id !== artistId) : [...prev, artistId]);
+  };
+
+  const addArtistToCalendar = (artist) => {
+    const toIcsDate = (dateStr, timeStr) => {
+      const d = new Date(`${dateStr}T${timeStr || '00:00'}:00`);
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+    };
+    const start = toIcsDate(artist.eventDate, artist.eventStartTime);
+    const endDate = new Date(`${artist.eventDate}T${artist.eventStartTime || '00:00'}:00`);
+    endDate.setHours(endDate.getHours() + 1);
+    const pad = (n) => String(n).padStart(2, '0');
+    const end = `${endDate.getFullYear()}${pad(endDate.getMonth() + 1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Jimmy Jam BBQ Slam//Artist Schedule//EN',
+      'BEGIN:VEVENT',
+      `UID:artist-${artist.id}@jimmyjambbqslam`,
+      `DTSTART:${start}`,
+      `DTEND:${end}`,
+      `SUMMARY:${artist.name} — Jimmy Jam BBQ Slam`,
+      `DESCRIPTION:${(artist.description || '').replace(/\n/g, ' ')}`,
+      `LOCATION:${artist.stage || ''}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${artist.name.replace(/[^a-z0-9]+/gi, '-')}.ics`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
   };
 
   const [ballotEntries, setBallotEntries] = useState(() => {
@@ -196,11 +248,13 @@ const JimmyJamApp = () => {
       name: 'The Futch Brothers Band',
       genre: 'Performing at the 3rd Annual Bourbon & BBQ Event',
       logo: '🎸',
-      image: null,
+      image: 'https://images.zoogletools.com/s:bzglfiles/u/188709/0fadb2caa1a76a2c326d930c9511749d8c4dbf86/original/photo-output-4.jpeg/!!/b%3AW1sicmVzaXplIiwxODAwXSxbIm1heCJdLFsid2UiXV0%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg',
       website: 'https://brianfutch.com/',
-      description: 'The Futch Brothers Band performs on the patio immediately following the evening program at the 3rd Annual Bourbon & BBQ Event, Saturday October 17th at The Tringali Barn.',
+      description: 'Led by singer-songwriter Brian Futch, Brothers Futch plays a genre-spanning mix described on their own site as "rock to country to blues to folk to Americana," with original songs about life and love. The band played more than 50 shows in 2025 and is working on an EP of original material. They perform on the patio immediately following the evening program at the 3rd Annual Bourbon & BBQ Event at The Tringali Barn.',
       time: 'After dinner',
-      stage: 'Bourbon & BBQ Event (Tringali Barn)'
+      stage: 'Bourbon & BBQ Event (Tringali Barn)',
+      eventDate: '2026-10-17',
+      eventStartTime: '20:00'
     },
     {
       id: 2,
@@ -210,7 +264,9 @@ const JimmyJamApp = () => {
       image: null,
       description: 'The Jimmy Jam BBQ Slam’s live music lineup features local and regional artists playing a mix of country, rock, blues, and classic favorites all day. Live music is included with event admission. The full lineup will be announced closer to the event date.',
       time: 'All day',
-      stage: `${EVENT_VENUE_NAME}`
+      stage: `${EVENT_VENUE_NAME}`,
+      eventDate: '2027-01-09',
+      eventStartTime: '10:00'
     }
   ];
 
@@ -635,6 +691,7 @@ const JimmyJamApp = () => {
       time: '10 min prep',
       desc: 'A classic Florida-style rub with salt, pepper, garlic, and paprika.',
       icon: '🥩',
+      image: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&q=80&w=800',
       ingredients: [
         '1/4 cup coarse kosher salt',
         '1/4 cup coarse black pepper',
@@ -658,6 +715,7 @@ const JimmyJamApp = () => {
       time: '20 min prep',
       desc: 'Sweet and tangy sauce infused with premium bourbon.',
       icon: '🍯',
+      image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800',
       ingredients: [
         '1 cup ketchup',
         '1/2 cup bourbon',
@@ -859,16 +917,16 @@ const JimmyJamApp = () => {
   };
 
   const mainFeatures = [
-    { icon: '📅', title: 'SCHEDULE', desc: 'Event dates & times', action: 'schedule' },
-    { icon: '🎫', title: 'TICKETS', desc: 'Buy event tickets', action: 'tickets' },
-    { icon: '📸', title: 'PHOTOS', desc: 'Event gallery', action: 'photos' },
-    { icon: '🏆', title: 'EVENTS', desc: 'Browse our festivals', action: 'events' },
-    { icon: '🤝', title: 'SPONSORS', desc: 'Meet our partners', action: 'sponsors' },
-    { icon: '👕', title: 'MERCH', desc: 'Shop swag store', action: 'swag' },
-    { icon: '⭐', title: 'TASTING BALLOT', desc: 'Rate teams as you go', action: 'ballot' },
-    { icon: '🙋', title: 'VOLUNTEER', desc: 'Help make it happen', action: 'volunteer' },
-    { icon: '🌤️', title: 'WEATHER', desc: 'Event forecast', action: 'weather' },
-    { icon: '💬', title: 'STORIES', desc: 'Real testimonials', action: 'testimonials' }
+    { Icon: Calendar, title: 'SCHEDULE', desc: 'Event dates & times', action: 'schedule' },
+    { Icon: Ticket, title: 'TICKETS', desc: 'Buy event tickets', action: 'tickets' },
+    { Icon: Camera, title: 'PHOTOS', desc: 'Event gallery', action: 'photos' },
+    { Icon: Trophy, title: 'EVENTS', desc: 'Browse our festivals', action: 'events' },
+    { Icon: Users, title: 'SPONSORS', desc: 'Meet our partners', action: 'sponsors' },
+    { Icon: Shirt, title: 'MERCH', desc: 'Shop swag store', action: 'swag' },
+    { Icon: Star, title: 'TASTING BALLOT', desc: 'Rate teams as you go', action: 'ballot' },
+    { Icon: HeartHandshake, title: 'VOLUNTEER', desc: 'Help make it happen', action: 'volunteer' },
+    { Icon: CloudSun, title: 'WEATHER', desc: 'Event forecast', action: 'weather' },
+    { Icon: MessageCircle, title: 'STORIES', desc: 'Real testimonials', action: 'testimonials' }
   ];
 
   // TICKET TYPES
@@ -985,7 +1043,7 @@ const JimmyJamApp = () => {
                       className="w-full flex items-center justify-between px-5 py-4 rounded-md font-bold uppercase tracking-wide text-sm shadow-card transition-all transform hover:scale-[1.02]"
                       style={{ backgroundColor: bg, color: '#FFFFFF', boxShadow: 'var(--shadow-card)' }}
                     >
-                      <span className="flex items-center gap-3"><span className="text-xl">{feature.icon}</span>{feature.title}</span>
+                      <span className="flex items-center gap-3"><feature.Icon size={20} strokeWidth={2.25} />{feature.title}</span>
                       <span>›</span>
                     </button>
                   );
@@ -1001,7 +1059,7 @@ const JimmyJamApp = () => {
                     className="flex items-center justify-center gap-2 px-4 py-3 rounded-pill font-bold uppercase tracking-wide text-xs border transition-all"
                     style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
                   >
-                    <span>{feature.icon}</span>{feature.title}
+                    <feature.Icon size={16} strokeWidth={2.25} style={{ color: 'var(--color-secondary)' }} />{feature.title}
                   </button>
                 ))}
               </div>
@@ -1011,10 +1069,10 @@ const JimmyJamApp = () => {
             <div className="text-center">
               <button
                 onClick={() => setActiveNav('assistance')}
-                className="px-12 py-4 rounded-md font-bold text-lg shadow-card transition-all transform hover:scale-105"
-                style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', height: '48px', boxShadow: 'var(--shadow-card)' }}
+                className="px-12 py-4 rounded-md font-bold text-lg shadow-card transition-all transform hover:scale-105 flex items-center justify-center gap-2 mx-auto"
+                style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', boxShadow: 'var(--shadow-card)' }}
               >
-                ❤️ APPLY FOR HELP
+                <Heart size={20} fill="#FFFFFF" />APPLY FOR HELP
               </button>
             </div>
           </div>
@@ -2001,16 +2059,30 @@ const JimmyJamApp = () => {
 
             {/* SOCIAL/ACTION BUTTONS */}
             <div className="flex gap-2 flex-wrap">
-              <button className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all">
-                ♥️ Favorite
+              <button
+                onClick={() => toggleFavoriteArtist(selectedArtist.id)}
+                className={`px-4 py-2 border-2 rounded-full font-semibold transition-all ${favoriteArtists.includes(selectedArtist.id) ? 'bg-red-700 text-white border-red-700' : 'border-red-700 text-red-700 hover:bg-red-50'}`}
+              >
+                {favoriteArtists.includes(selectedArtist.id) ? '♥ Favorited' : '♡ Favorite'}
               </button>
-              <button className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all">
-                🔔 Remind Me
+              <button
+                onClick={() => {
+                  toggleMySchedule(selectedArtist.name);
+                  if (!mySchedule.includes(selectedArtist.name)) {
+                    alert(`Added to My Schedule — you'll see "${selectedArtist.name}" starred on the Schedule tab.`);
+                  }
+                }}
+                className={`px-4 py-2 border-2 rounded-full font-semibold transition-all ${mySchedule.includes(selectedArtist.name) ? 'bg-red-700 text-white border-red-700' : 'border-red-700 text-red-700 hover:bg-red-50'}`}
+              >
+                {mySchedule.includes(selectedArtist.name) ? '🔔 On My Schedule' : '🔔 Remind Me'}
               </button>
             </div>
 
             {/* ADD TO CALENDAR */}
-            <button className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-bold transition-all">
+            <button
+              onClick={() => addArtistToCalendar(selectedArtist)}
+              className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-bold transition-all"
+            >
               📅 Add to Calendar
             </button>
           </div>
@@ -2106,7 +2178,7 @@ const JimmyJamApp = () => {
 
         {/* SPONSORS - DETAIL VIEW */}
         {activeNav === 'sponsors' && selectedSponsor && (
-          <div className="space-y-4 pb-20">
+          <div className="space-y-4 pb-20 -mx-4 px-4 pt-2 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
             {/* BACK BUTTON */}
             <button
               onClick={() => setSelectedSponsor(null)}
