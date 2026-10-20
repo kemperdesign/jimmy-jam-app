@@ -7,6 +7,7 @@ import VenueMap from './VenueMap';
 import AdminPins from './AdminPins';
 import FestivalHome from './FestivalHome';
 import FestivalSchedule from './FestivalSchedule';
+import FestivalArtists from './FestivalArtists';
 
 // Capacitor's WKWebView doesn't reliably handle <a target="_blank"> or
 // window.open() for external links — this opens them in the system's
@@ -759,7 +760,6 @@ const JimmyJamApp = () => {
 
   // Real photos from the 10th Annual Jimmy Jam BBQ Slam, January 2026.
   const galleryPhotos = [
-    { id: 'poster', isPoster: true, title: 'BBQ SLAM & BOURBON', desc: 'Official Festival Poster' },
     { id: 'dji1', src: '/images/event-photos/dji_20260110112149_0919_d.jpg', title: 'Car Show', desc: 'Aerial view of the car show grounds' },
     { id: 'dji2', src: '/images/event-photos/dji_20260110141907_0933_d.jpg', title: 'Event Grounds', desc: 'Aerial view of the fairgrounds' },
     { id: 'dji3', src: '/images/event-photos/dji_20260110141945_0934_d.jpg', title: 'Event Grounds', desc: 'Aerial view of the fairgrounds' },
@@ -1872,148 +1872,21 @@ const JimmyJamApp = () => {
           </div>
         )}
 
-        {/* ARTISTS - LIST VIEW */}
-        {activeNav === 'artists' && !selectedArtist && (
-          <div className="space-y-4">
-            {/* SEARCH BAR */}
-            <div className="relative">
-              <Search className="absolute left-4 top-3 text-gray-400" size={20} />
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-full text-gray-700 placeholder-gray-400 focus:outline-none focus:border-red-700"
-              />
-            </div>
-
-            {/* ARTISTS LIST */}
-            <div className="space-y-3">
-              {artistsData.map((artist) => (
-                <button
-                  key={artist.id}
-                  onClick={() => setSelectedArtist(artist)}
-                  className="w-full bg-white rounded-2xl p-4 border-2 border-red-700 shadow-md hover:shadow-lg transition-all text-left hover:bg-red-50"
-                >
-                  <div className="flex items-start gap-4">
-                    {/* LOGO */}
-                    <div className="w-12 h-12 bg-gradient-to-br from-red-100 to-orange-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
-                      {artist.logo}
-                    </div>
-
-                    {/* TEXT */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-base font-bold text-gray-900">{artist.name}</h3>
-                      <p className="text-sm text-gray-600 truncate">{artist.genre}</p>
-                    </div>
-
-                    {/* ARROW */}
-                    <ChevronRight size={20} className="text-red-700 flex-shrink-0 mt-1" />
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ARTISTS - DETAIL VIEW */}
-        {activeNav === 'artists' && selectedArtist && (
-          <div className="space-y-4 pb-20">
-            {/* BACK BUTTON */}
-            <button
-              onClick={() => setSelectedArtist(null)}
-              className="flex items-center gap-2 text-red-700 font-bold mb-2"
-            >
-              <ChevronLeft size={24} />
-              Back
-            </button>
-
-            {/* HERO IMAGE */}
-            <div className="w-full h-64 bg-gradient-to-br from-red-700 to-orange-600 rounded-lg overflow-hidden shadow-lg relative flex items-center justify-center">
-              {selectedArtist.image ? (
-                <img
-                  src={selectedArtist.image}
-                  alt={selectedArtist.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-8xl">{selectedArtist.logo}</span>
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            </div>
-
-            {/* ARTIST NAME */}
-            <h1 className="text-3xl font-bold text-red-700">{selectedArtist.name}</h1>
-
-            {/* WEBSITE / SHARE BUTTONS */}
-            <div className="flex gap-2 flex-wrap">
-              {selectedArtist.website && (
-                <button
-                  onClick={() => openExternal(selectedArtist.website)}
-                  className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
-                >
-                  🌐 Website
-                </button>
-              )}
-              <button
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({ title: selectedArtist.name, text: selectedArtist.description, url: selectedArtist.website });
-                  } else {
-                    navigator.clipboard.writeText(selectedArtist.website || selectedArtist.name);
-                    alert('Copied to clipboard!');
-                  }
-                }}
-                className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full font-semibold hover:bg-red-50 transition-all flex items-center gap-2"
-              >
-                📤 Share
-              </button>
-            </div>
-
-            {/* DESCRIPTION */}
-            <div className="bg-white rounded-lg p-4 border-2 border-gray-300">
-              <p className="text-gray-700 text-sm leading-relaxed">{selectedArtist.description}</p>
-            </div>
-
-            {/* PERFORMANCE INFO */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-red-50 rounded-lg p-4 border-2 border-red-700">
-                <p className="text-xs text-gray-600 font-semibold">Performance Time</p>
-                <p className="text-lg font-bold text-red-700 mt-1">⏰ {selectedArtist.time}</p>
-              </div>
-              <div className="bg-red-50 rounded-lg p-4 border-2 border-red-700">
-                <p className="text-xs text-gray-600 font-semibold">Stage</p>
-                <p className="text-lg font-bold text-red-700 mt-1">🎪 {selectedArtist.stage}</p>
-              </div>
-            </div>
-
-            {/* SOCIAL/ACTION BUTTONS */}
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => toggleFavoriteArtist(selectedArtist.id)}
-                className={`px-4 py-2 border-2 rounded-full font-semibold transition-all ${favoriteArtists.includes(selectedArtist.id) ? 'bg-red-700 text-white border-red-700' : 'border-red-700 text-red-700 hover:bg-red-50'}`}
-              >
-                {favoriteArtists.includes(selectedArtist.id) ? '♥ Favorited' : '♡ Favorite'}
-              </button>
-              <button
-                onClick={() => {
-                  toggleMySchedule(selectedArtist.name);
-                  if (!mySchedule.includes(selectedArtist.name)) {
-                    alert(`Added to My Schedule — you'll see "${selectedArtist.name}" starred on the Schedule tab.`);
-                  }
-                }}
-                className={`px-4 py-2 border-2 rounded-full font-semibold transition-all ${mySchedule.includes(selectedArtist.name) ? 'bg-red-700 text-white border-red-700' : 'border-red-700 text-red-700 hover:bg-red-50'}`}
-              >
-                {mySchedule.includes(selectedArtist.name) ? '🔔 On My Schedule' : '🔔 Remind Me'}
-              </button>
-            </div>
-
-            {/* ADD TO CALENDAR */}
-            <button
-              onClick={() => addArtistToCalendar(selectedArtist)}
-              className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-bold transition-all"
-            >
-              📅 Add to Calendar
-            </button>
-          </div>
+        {/* ARTISTS */}
+        {activeNav === 'artists' && (
+          <FestivalArtists
+            artistsData={artistsData}
+            selectedArtist={selectedArtist}
+            setSelectedArtist={setSelectedArtist}
+            favoriteArtists={favoriteArtists}
+            toggleFavoriteArtist={toggleFavoriteArtist}
+            mySchedule={mySchedule}
+            toggleMySchedule={toggleMySchedule}
+            addArtistToCalendar={addArtistToCalendar}
+            openExternal={openExternal}
+            setActiveNav={setActiveNav}
+            EVENT_VENUE_NAME={EVENT_VENUE_NAME}
+          />
         )}
 
         {/* SPONSORS - LIST VIEW */}
@@ -2442,7 +2315,7 @@ const JimmyJamApp = () => {
               {[
                 { key: 'instagram', label: 'INSTAGRAM', icon: '📷', handle: '@jimmyjamoutreach', url: 'https://www.instagram.com/jimmyjamoutreach/' },
                 { key: 'facebook', label: 'FACEBOOK', icon: 'f', handle: 'JIMMY JAM OUTREACH', url: 'https://www.facebook.com/jimmy.jam.843909' },
-                { key: 'spotify', label: 'SPOTIFY', icon: '🎧', handle: 'PLAYLIST', url: 'https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda' },
+                { key: 'spotify', label: 'SPOTIFY', icon: '🎧', handle: 'PLAYLIST', url: 'https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw' },
                 { key: 'website', label: 'WEBSITE', icon: '🌐', handle: 'JIMMYJAMOUTREACH.COM', url: 'https://jimmyjamoutreach.com/' }
               ].map(social => (
                 <button
@@ -2910,7 +2783,7 @@ const JimmyJamApp = () => {
 
             <div className="space-y-4">
               {[
-                { name: 'Spotify', icon: '🎧', color: 'bg-[#1DB954]', link: 'https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda' },
+                { name: 'Spotify', icon: '🎧', color: 'bg-[#1DB954]', link: 'https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw' },
                 { name: 'YouTube Music', icon: '📽️', color: 'bg-[#FF0000]', link: 'https://music.youtube.com' },
                 { name: 'Pandora', icon: '🦋', color: 'bg-[#00A0EE]', link: 'https://www.pandora.com' }
               ].map((platform, i) => (
@@ -3088,7 +2961,7 @@ const JimmyJamApp = () => {
                   <span className="text-lg">❓</span>
                   <span>FAQs</span>
                 </button>
-                <button onClick={() => { openExternal('https://open.spotify.com/playlist/37i9dQZF1DX1lVhptIYRda'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                <button onClick={() => { openExternal('https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
                   <span className="text-lg">🎵</span>
                   <span>Spotify Festival Playlist</span>
                 </button>
