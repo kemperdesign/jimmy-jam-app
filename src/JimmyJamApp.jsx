@@ -9,6 +9,7 @@ import FestivalHome from './FestivalHome';
 import FestivalSchedule from './FestivalSchedule';
 import FestivalArtists from './FestivalArtists';
 import FestivalFaq from './FestivalFaq';
+import FestivalRecipes from './FestivalRecipes';
 
 // Capacitor's WKWebView doesn't reliably handle <a target="_blank"> or
 // window.open() for external links — this opens them in the system's
@@ -39,7 +40,6 @@ const JimmyJamApp = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [openInfoSection, setOpenInfoSection] = useState(null);
-  const [openRecipe, setOpenRecipe] = useState(null);
   const [openRegistration, setOpenRegistration] = useState(null);
   const [showSponsorTiers, setShowSponsorTiers] = useState(false);
   const [openSponsorTier, setOpenSponsorTier] = useState(null);
@@ -686,84 +686,6 @@ const JimmyJamApp = () => {
     { year: '2026', category: 'Pro Grand Champion', team: 'Maya Jane BBQ Co.', photo: '/winners/maya-jane-bbq-co-pro-grand-champion-2026.jpg', logo: '/winners/maya-jane-bbq-co-logo.jpg' },
     { year: '2026', category: 'Backyard Reserve Grand Champion', team: "Mike's Backyard BBQ", photo: '/winners/mikes-backyard-bbq-backyard-reserve-grand-champion-2026.jpg', logo: '/winners/mikes-backyard-bbq-logo.jpg' },
     { year: '2026', category: "People's Choice", team: 'So So BBQ', photo: '/winners/so-so-bbq-peoples-choice-2026.jpg', logo: null }
-  ];
-
-  const recipesData = [
-    {
-      title: 'Smoked Brisket Rub',
-      time: '10 min prep',
-      desc: 'A classic Florida-style rub with salt, pepper, garlic, and paprika.',
-      icon: '🥩',
-      image: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&q=80&w=800',
-      ingredients: [
-        '1/4 cup coarse kosher salt',
-        '1/4 cup coarse black pepper',
-        '2 tbsp garlic powder',
-        '2 tbsp smoked paprika',
-        '1 tbsp onion powder',
-        '1 tbsp light brown sugar',
-        '1 tsp cayenne pepper (optional, for heat)'
-      ],
-      steps: [
-        'Whisk all ingredients together in a bowl until evenly combined.',
-        'Pat the brisket completely dry with paper towels, then trim the fat cap to about 1/4 inch.',
-        'Apply a thin layer of yellow mustard or oil as a binder, then coat the brisket generously on all sides with the rub.',
-        'Let the brisket rest, uncovered, in the fridge for at least 1 hour (overnight is best) so the rub can set.',
-        'Smoke low and slow at 225–250°F until the internal temperature reaches 203°F, wrapping in butcher paper once the bark sets (around 165°F internal).',
-        'Rest the brisket for at least 30–45 minutes before slicing against the grain.'
-      ]
-    },
-    {
-      title: 'Bourbon BBQ Sauce',
-      time: '20 min prep',
-      desc: 'Sweet and tangy sauce infused with premium bourbon.',
-      icon: '🍯',
-      image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800',
-      ingredients: [
-        '1 cup ketchup',
-        '1/2 cup bourbon',
-        '1/4 cup apple cider vinegar',
-        '1/4 cup brown sugar',
-        '2 tbsp molasses',
-        '2 tbsp Worcestershire sauce',
-        '1 tbsp Dijon mustard',
-        '2 cloves garlic, minced',
-        '1/2 tsp smoked paprika',
-        'Salt and black pepper to taste'
-      ],
-      steps: [
-        'Combine the bourbon and minced garlic in a saucepan over medium heat and simmer for 2–3 minutes to cook off some of the alcohol.',
-        'Whisk in the ketchup, vinegar, brown sugar, molasses, Worcestershire, mustard, and smoked paprika.',
-        'Bring to a gentle simmer, stirring occasionally, and cook for 15–20 minutes until thickened enough to coat the back of a spoon.',
-        'Season with salt and pepper to taste, then let cool before serving or bottling.',
-        'Brush onto ribs, chicken, or pulled pork in the last 10–15 minutes of cooking so the sugars caramelize without burning.'
-      ]
-    },
-    {
-      title: 'Pitmaster Baked Beans',
-      time: '2 hours slow-cook',
-      desc: 'Slow-cooked beans with bacon, brown sugar, and molasses.',
-      icon: '🥘',
-      ingredients: [
-        '6 slices thick-cut bacon, chopped',
-        '1 small yellow onion, diced',
-        '1/2 green bell pepper, diced',
-        '3 (15 oz) cans pinto or navy beans, drained and rinsed',
-        '1/2 cup ketchup',
-        '1/3 cup brown sugar',
-        '1/4 cup molasses',
-        '2 tbsp yellow mustard',
-        '1 tbsp apple cider vinegar',
-        'Chopped smoked brisket or pulled pork (optional, for a heartier dish)'
-      ],
-      steps: [
-        'In a large oven-safe pot or Dutch oven, cook the bacon over medium heat until crisp. Remove bacon, leaving the drippings in the pot.',
-        'Sauté the onion and bell pepper in the bacon drippings until softened, about 5 minutes.',
-        'Stir in the beans, ketchup, brown sugar, molasses, mustard, and vinegar along with the cooked bacon. Mix well.',
-        'Cover and bake at 300°F for about 2 hours, stirring occasionally, until thick and bubbling.',
-        'Stir in chopped smoked brisket or pulled pork in the last 20 minutes if using, and adjust sweetness/tang to taste before serving.'
-      ]
-    }
   ];
 
   // Real photos from the 10th Annual Jimmy Jam BBQ Slam, January 2026.
@@ -1475,43 +1397,7 @@ const JimmyJamApp = () => {
 
         {/* RECIPE BOOK */}
         {activeNav === 'recipes' && (
-          <div className="space-y-6 pb-20">
-            <h1 className="text-3xl font-bold text-center text-gray-900 mb-6">Jimmy Jam Recipe Book</h1>
-            <div className="grid gap-6">
-              {recipesData.map((recipe, idx) => (
-                <div key={idx} className="bg-white rounded-xl border-2 border-gray-200 p-6 shadow-lg flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left hover:border-red-300 transition-all">
-                  <div className="text-6xl bg-red-50 p-6 rounded-full border border-red-100">{recipe.icon}</div>
-                  <div className="flex-1 space-y-2 w-full">
-                    <h2 className="text-2xl font-bold text-gray-900">{recipe.title}</h2>
-                    <p className="text-sm font-bold text-red-600 uppercase tracking-widest">{recipe.time}</p>
-                    <p className="text-gray-600 leading-relaxed">{recipe.desc}</p>
-                    <button
-                      onClick={() => setOpenRecipe(openRecipe === idx ? null : idx)}
-                      className="mt-4 w-full md:w-auto px-6 py-2 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition-all shadow-md"
-                    >
-                      {openRecipe === idx ? 'HIDE RECIPE' : 'VIEW RECIPE'}
-                    </button>
-                    {openRecipe === idx && (
-                      <div className="text-left pt-4 mt-2 border-t border-gray-100 space-y-4">
-                        <div>
-                          <h3 className="font-bold text-gray-900 mb-2">Ingredients</h3>
-                          <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
-                            {recipe.ingredients.map((ing, i) => <li key={i}>{ing}</li>)}
-                          </ul>
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-gray-900 mb-2">Instructions</h3>
-                          <ol className="list-decimal list-inside text-sm text-gray-700 space-y-2">
-                            {recipe.steps.map((step, i) => <li key={i}>{step}</li>)}
-                          </ol>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <FestivalRecipes setActiveNav={setActiveNav} />
         )}
 
         {/* PHOTOS */}
