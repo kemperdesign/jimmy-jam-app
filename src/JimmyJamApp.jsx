@@ -265,13 +265,11 @@ const JimmyJamApp = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Splash screen effect
+  // Splash screen fallback timeout
   useEffect(() => {
     if (!showSplash) return;
-    
-    const timer = setInterval(() => {    }, 250);
-
-    return () => clearInterval(timer);
+    const fallback = setTimeout(() => setShowSplash(false), 9000);
+    return () => clearTimeout(fallback);
   }, [showSplash]);
 
   if (showSplash) {

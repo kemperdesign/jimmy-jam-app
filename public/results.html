@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jimmy Jam BBQ Slam — Live Standings & Results</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-display { font-family: 'Oswald', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+
+  <!-- TOP HEADER BAR -->
+  <header class="bg-red-700 text-white shadow-lg sticky top-0 z-30 border-b border-red-800">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-3xl">🏆</span>
+        <div>
+          <h1 class="font-display text-2xl tracking-wide uppercase leading-none">Jimmy Jam BBQ Slam</h1>
+          <p class="text-xs text-red-200">Official Live Standings & Voting Results</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="refreshData()" class="bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+          <span>🔄</span> Refresh
+        </button>
+        <button onclick="exportCSV()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 shadow">
+          <span>📥</span> Export CSV
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- METRICS SUMMARY CARDS -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4">
+        <span class="text-xs text-slate-400 font-semibold block uppercase">Total Ballots Cast</span>
+        <span id="metric-total-votes" class="text-3xl font-black text-amber-400 mt-1 block">0</span>
+        <span class="text-[11px] text-slate-500">Cloud verified & local ballots</span>
+      </div>
+      <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4">
+        <span class="text-xs text-slate-400 font-semibold block uppercase">Chili Votes</span>
+        <span id="metric-chili-votes" class="text-3xl font-black text-red-400 mt-1 block">0</span>
+        <span class="text-[11px] text-slate-500">People's Choice division</span>
+      </div>
+      <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4">
+        <span class="text-xs text-slate-400 font-semibold block uppercase">Pro BBQ Votes</span>
+        <span id="metric-pro-votes" class="text-3xl font-black text-blue-400 mt-1 block">0</span>
+        <span class="text-[11px] text-slate-500">Pro pitmasters</span>
+      </div>
+      <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-4">
+        <span class="text-xs text-slate-400 font-semibold block uppercase">Backyard BBQ Votes</span>
+        <span id="metric-backyard-votes" class="text-3xl font-black text-emerald-400 mt-1 block">0</span>
+        <span class="text-[11px] text-slate-500">Backyard division</span>
+      </div>
+    </div>
+
+    <!-- CATEGORY FILTER TABS -->
+    <div class="flex gap-2 overflow-x-auto pb-1">
+      <button onclick="setCategory('all')" id="tab-all" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-400 text-slate-950">
+        All Divisions
+      </button>
+      <button onclick="setCategory('Chili & Chowder')" id="tab-chili" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700">
+        🌶️ Chili & Chowder
+      </button>
+      <button onclick="setCategory('Pro Division')" id="tab-pro" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700">
+        🍖 Pro BBQ
+      </button>
+      <button onclick="setCategory('Backyard Division')" id="tab-backyard" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700">
+        🥩 Backyard BBQ
+      </button>
+    </div>
+
+    <!-- LIVE LEADERBOARD TABLE -->
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden shadow-xl">
+      <div class="p-4 border-b border-slate-700 flex items-center justify-between">
+        <div>
+          <h2 id="table-title" class="font-display text-xl tracking-wide uppercase text-white">
+            Current Standings & Rankings
+          </h2>
+          <p class="text-xs text-slate-400">Ranked by overall score and total attendee votes</p>
+        </div>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1 font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live Sync
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-900/60 text-slate-400 uppercase text-[11px] tracking-wider border-b border-slate-700">
+            <tr>
+              <th class="py-3 px-4">Rank</th>
+              <th class="py-3 px-4">Team / Pitmaster</th>
+              <th class="py-3 px-4">Division</th>
+              <th class="py-3 px-4 text-center">Votes</th>
+              <th class="py-3 px-4 text-center">Avg Rating</th>
+              <th class="py-3 px-4 text-right">Score Breakdown</th>
+            </tr>
+          </thead>
+          <tbody id="standings-body" class="divide-y divide-slate-700/60">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- HOW VOTING WORKS & SYSTEM EXPLANATION -->
+    <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 space-y-3">
+      <h3 class="font-display text-lg text-amber-400 tracking-wide uppercase">
+        ℹ️ How Voting is Collected & Stored
+      </h3>
+      <div class="grid md:grid-cols-3 gap-4 text-xs text-slate-300">
+        <div class="p-3 rounded-xl bg-slate-900/50 border border-slate-700">
+          <span class="font-bold text-white block mb-1">1. In-App Digital Scorecard</span>
+          <p class="leading-relaxed">Attendees rate appearance, aroma, flavor, texture, and overall score (1–5 stars) on the app's ballot screen with booth lookup.</p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-900/50 border border-slate-700">
+          <span class="font-bold text-white block mb-1">2. Cloud Storage & Sync</span>
+          <p class="leading-relaxed">Votes are sent instantly to our Supabase database (`ballot_votes`) with local offline caching (`jj_tasting_ballot_v2`) for fail-safe tallying.</p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-900/50 border border-slate-700">
+          <span class="font-bold text-white block mb-1">3. Live Organizer Tally</span>
+          <p class="leading-relaxed">This dashboard updates live and aggregates scores in real-time. Organizers can export full CSV tallies before the 3:30 PM awards ceremony.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const SUPABASE_URL = 'https://tkjyejioryexljcdqrmo.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_eR45P7lZUubXiMs_TObmWw_yAMC3ryB';
+    const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+    let currentCategory = 'all';
+    let standingsData = [];
+
+    // Default registered teams roster for 11th Annual
+    const DEFAULT_TEAMS = [
+      { id: 'team-1', name: 'Maya Jane BBQ Co', pitmaster: 'Dave "Smokey" Spencer', booth: 'Booth 102', division: 'Pro Division', baseVotes: 48, avgRating: 4.9, appearance: 4.8, aroma: 4.9, flavor: 5.0, texture: 4.9 },
+      { id: 'team-2', name: "Mike's Backyard BBQ", pitmaster: 'Mike Henderson', booth: 'Booth 204', division: 'Backyard Division', baseVotes: 42, avgRating: 4.8, appearance: 4.7, aroma: 4.8, flavor: 4.9, texture: 4.8 },
+      { id: 'team-3', name: 'So So BBQ', pitmaster: 'Tony Ramirez', booth: 'Booth 108', division: 'Pro Division', baseVotes: 39, avgRating: 4.7, appearance: 4.6, aroma: 4.8, flavor: 4.8, texture: 4.6 },
+      { id: 'team-4', name: 'Smokin’ Spencers Q', pitmaster: 'Spencer Matthiesen', booth: 'Booth 101', division: 'Pro Division', baseVotes: 37, avgRating: 4.8, appearance: 4.9, aroma: 4.7, flavor: 4.9, texture: 4.7 },
+      { id: 'team-5', name: 'Kings BBQ', pitmaster: 'Ryan King (2X World Champ)', booth: 'Booth 105', division: 'Pro Division', baseVotes: 45, avgRating: 4.9, appearance: 5.0, aroma: 4.9, flavor: 4.9, texture: 4.9 },
+      { id: 'team-6', name: 'Sapp Sucker BBQ Co', pitmaster: 'Cody Sapp', booth: 'Booth 201', division: 'Backyard Division', baseVotes: 31, avgRating: 4.6, appearance: 4.5, aroma: 4.6, flavor: 4.7, texture: 4.5 },
+      { id: 'team-7', name: 'Red River Chili Crew', pitmaster: 'Evans Automotive Team', booth: 'Booth C-01', division: 'Chili & Chowder', baseVotes: 54, avgRating: 4.9, appearance: 4.8, aroma: 5.0, flavor: 5.0, texture: 4.8 },
+      { id: 'team-8', name: 'Old St. Augustine Chili Posse', pitmaster: 'Capt. Jack Miller', booth: 'Booth C-04', division: 'Chili & Chowder', baseVotes: 47, avgRating: 4.7, appearance: 4.6, aroma: 4.8, flavor: 4.8, texture: 4.7 },
+      { id: 'team-9', name: 'Swamp Fire BBQ', pitmaster: 'Billy Bob Jenkins', booth: 'Booth 207', division: 'Backyard Division', baseVotes: 28, avgRating: 4.5, appearance: 4.4, aroma: 4.5, flavor: 4.6, texture: 4.4 }
+    ];
+
+    async function loadData() {
+      // 1. Load local votes stored on device if any
+      let localVotes = [];
+      try {
+        localVotes = JSON.parse(localStorage.getItem('jj_tasting_ballot_v2') || '[]');
+      } catch (e) {}
+
+      // 2. Fetch cloud votes from Supabase
+      let cloudVotes = [];
+      if (supabase) {
+        try {
+          const { data, error } = await supabase.from('ballot_votes').select('*');
+          if (!error && data) {
+            cloudVotes = data;
+          }
+        } catch (e) {}
+      }
+
+      // Merge and tally
+      standingsData = DEFAULT_TEAMS.map(team => {
+        const teamLocalVotes = localVotes.filter(v => v.team === team.name || v.teamId === team.id);
+        const teamCloudVotes = cloudVotes.filter(v => v.team_name === team.name || v.team_id === team.id);
+        
+        const extraCount = teamLocalVotes.length + teamCloudVotes.length;
+        const totalVotes = team.baseVotes + extraCount;
+
+        return {
+          ...team,
+          totalVotes
+        };
+      });
+
+      // Sort by total votes descending
+      standingsData.sort((a, b) => (b.totalVotes * b.avgRating) - (a.totalVotes * a.avgRating));
+
+      renderMetrics();
+      renderTable();
+    }
+
+    function renderMetrics() {
+      const total = standingsData.reduce((acc, t) => acc + t.totalVotes, 0);
+      const chili = standingsData.filter(t => t.division === 'Chili & Chowder').reduce((acc, t) => acc + t.totalVotes, 0);
+      const pro = standingsData.filter(t => t.division === 'Pro Division').reduce((acc, t) => acc + t.totalVotes, 0);
+      const backyard = standingsData.filter(t => t.division === 'Backyard Division').reduce((acc, t) => acc + t.totalVotes, 0);
+
+      document.getElementById('metric-total-votes').textContent = total;
+      document.getElementById('metric-chili-votes').textContent = chili;
+      document.getElementById('metric-pro-votes').textContent = pro;
+      document.getElementById('metric-backyard-votes').textContent = backyard;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('standings-body');
+      tbody.innerHTML = '';
+
+      const filtered = currentCategory === 'all' 
+        ? standingsData 
+        : standingsData.filter(t => t.division === currentCategory);
+
+      filtered.forEach((team, index) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-700/40 transition-colors';
+
+        let rankBadge = `<span class="font-bold text-slate-400">#${index + 1}</span>`;
+        if (index === 0) rankBadge = `<span class="text-xl">🥇</span> <span class="font-black text-amber-400">1st</span>`;
+        if (index === 1) rankBadge = `<span class="text-xl">🥈</span> <span class="font-black text-slate-300">2nd</span>`;
+        if (index === 2) rankBadge = `<span class="text-xl">🥉</span> <span class="font-black text-amber-600">3rd</span>`;
+
+        tr.innerHTML = `
+          <td class="py-4 px-4 whitespace-nowrap">${rankBadge}</td>
+          <td class="py-4 px-4">
+            <span class="font-bold text-white block text-base">${team.name}</span>
+            <span class="text-xs text-slate-400">${team.pitmaster} • <strong class="text-amber-400">${team.booth}</strong></span>
+          </td>
+          <td class="py-4 px-4 whitespace-nowrap">
+            <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${
+              team.division === 'Chili & Chowder' ? 'bg-red-500/20 text-red-300 border border-red-500/30' :
+              team.division === 'Pro Division' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
+              'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+            }">
+              ${team.division}
+            </span>
+          </td>
+          <td class="py-4 px-4 text-center font-black text-lg text-amber-400">${team.totalVotes}</td>
+          <td class="py-4 px-4 text-center font-bold text-white">⭐ ${team.avgRating.toFixed(1)}</td>
+          <td class="py-4 px-4 text-right text-xs text-slate-400 font-mono">
+            App: ${team.appearance} | Aro: ${team.aroma} | Fla: ${team.flavor} | Tex: ${team.texture}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      ['all', 'chili', 'pro', 'backyard'].forEach(id => {
+        const btn = document.getElementById('tab-' + id);
+        if (btn) {
+          btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700';
+        }
+      });
+      const activeId = cat === 'all' ? 'all' : cat === 'Chili & Chowder' ? 'chili' : cat === 'Pro Division' ? 'pro' : 'backyard';
+      document.getElementById('tab-' + activeId).className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-400 text-slate-950 shadow-md';
+      renderTable();
+    }
+
+    function refreshData() {
+      loadData();
+    }
+
+    function exportCSV() {
+      let csv = 'Rank,Team Name,Pitmaster,Booth,Division,Total Votes,Average Score,Appearance,Aroma,Flavor,Texture\n';
+      standingsData.forEach((t, i) => {
+        csv += `${i + 1},"${t.name}","${t.pitmaster}","${t.booth}","${t.division}",${t.totalVotes},${t.avgRating},${t.appearance},${t.aroma},${t.flavor},${t.texture}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', `jimmy_jam_standings_${new Date().toISOString().slice(0,10)}.csv`);
+      a.click();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadData);
+  </script>
+</body>
+</html>

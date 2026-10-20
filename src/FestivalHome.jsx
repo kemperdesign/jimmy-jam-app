@@ -53,17 +53,18 @@ export default function FestivalHome({
         <div className="pt-1 space-y-2">
           <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-white/90 bg-slate-950">
             {isVideoPlaying ? (
-              <div className="relative w-full aspect-video bg-black">
-                <video
-                  src="/jimmy-jam-new-intro.mp4"
-                  autoPlay
-                  controls
-                  playsInline
-                  className="w-full h-full object-cover"
+              <div className="relative w-full aspect-square bg-black">
+                <iframe
+                  src="https://player.vimeo.com/video/1149262629?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  className="absolute inset-0 w-full h-full border-0"
+                  title="Jimmy Jam BBQ Slam 2026 Promo"
                 />
                 <button
                   onClick={() => setIsVideoPlaying(false)}
-                  className="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-xs px-2.5 py-1 rounded-full font-bold z-20 backdrop-blur-sm flex items-center gap-1 cursor-pointer shadow-md"
+                  className="absolute top-2 right-2 bg-black/80 hover:bg-black text-white text-xs px-2.5 py-1 rounded-full font-bold z-20 backdrop-blur-sm flex items-center gap-1 cursor-pointer shadow-md"
                 >
                   <X size={13} /> Close
                 </button>
@@ -71,7 +72,7 @@ export default function FestivalHome({
             ) : (
               <div
                 onClick={() => setIsVideoPlaying(true)}
-                className="relative w-full aspect-video bg-black cursor-pointer group overflow-hidden"
+                className="relative w-full aspect-square bg-black cursor-pointer group overflow-hidden"
               >
                 {/* BBQ Video Preview Poster */}
                 <img
@@ -79,7 +80,7 @@ export default function FestivalHome({
                   alt="Jimmy Jam BBQ Slam Video Preview"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/35" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
 
                 {/* Central Play Button matching video screenshot */}
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -96,11 +97,11 @@ export default function FestivalHome({
                 </div>
 
                 {/* Title overlay at bottom of video card */}
-                <div className="absolute bottom-2.5 left-3 right-3 text-white">
-                  <p className="font-display text-lg tracking-wider text-white drop-shadow leading-none">
+                <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <p className="font-display text-xl tracking-wider text-white drop-shadow leading-none">
                     JIMMY JAM BBQ SLAM
                   </p>
-                  <p className="text-[11px] text-amber-300 font-semibold drop-shadow mt-0.5">
+                  <p className="text-xs text-amber-300 font-semibold drop-shadow mt-1">
                     11th Annual Festival • {EVENT_DATE_LABEL}
                   </p>
                 </div>
@@ -331,6 +332,74 @@ export default function FestivalHome({
               <span className="text-yellow-100 text-xs">★</span>
             </div>
           </button>
+        </div>
+
+        {/* 2026 DEFENDING CHAMPIONS SHOWCASE */}
+        <div className="pt-2">
+          <div className="flex items-center justify-between mb-2 px-1">
+            <h4 className="font-display text-lg tracking-wider text-slate-800 uppercase flex items-center gap-1.5">
+              <span>🏆</span> 2026 DEFENDING CHAMPIONS
+            </h4>
+            <span className="text-[11px] font-bold text-amber-700 uppercase">
+              10th Annual Winners
+            </span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2">
+            {/* Pro Grand Champion: Maya Jane BBQ Co */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col group">
+              <div className="relative aspect-square overflow-hidden bg-slate-900">
+                <img
+                  src="/winners/maya-jane-bbq-co-pro-grand-champion-2026.jpg"
+                  alt="Maya Jane BBQ Co - Pro Grand Champion"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+                <span className="absolute top-1 left-1 bg-amber-500 text-slate-950 font-black text-[9px] px-1.5 py-0.5 rounded shadow">
+                  PRO GRAND
+                </span>
+              </div>
+              <div className="p-2 text-center flex-1 flex flex-col justify-between">
+                <p className="font-bold text-xs text-slate-900 leading-tight">Maya Jane BBQ</p>
+                <p className="text-[10px] text-amber-700 font-semibold mt-0.5">Defending Champ</p>
+              </div>
+            </div>
+
+            {/* Backyard Reserve Champion: Mike's Backyard BBQ */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col group">
+              <div className="relative aspect-square overflow-hidden bg-slate-900">
+                <img
+                  src="/winners/mikes-backyard-bbq-backyard-reserve-grand-champion-2026.jpg"
+                  alt="Mike's Backyard BBQ - Backyard Reserve Champion"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+                <span className="absolute top-1 left-1 bg-blue-600 text-white font-black text-[9px] px-1.5 py-0.5 rounded shadow">
+                  BACKYARD
+                </span>
+              </div>
+              <div className="p-2 text-center flex-1 flex flex-col justify-between">
+                <p className="font-bold text-xs text-slate-900 leading-tight">Mike's Backyard</p>
+                <p className="text-[10px] text-blue-700 font-semibold mt-0.5">Reserve Champ</p>
+              </div>
+            </div>
+
+            {/* People's Choice: So So BBQ */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col group">
+              <div className="relative aspect-square overflow-hidden bg-slate-900">
+                <img
+                  src="/winners/so-so-bbq-peoples-choice-2026.jpg"
+                  alt="So So BBQ - People's Choice Winner"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+                <span className="absolute top-1 left-1 bg-red-600 text-white font-black text-[9px] px-1.5 py-0.5 rounded shadow">
+                  PEOPLE'S
+                </span>
+              </div>
+              <div className="p-2 text-center flex-1 flex flex-col justify-between">
+                <p className="font-bold text-xs text-slate-900 leading-tight">So So BBQ</p>
+                <p className="text-[10px] text-red-600 font-semibold mt-0.5">Public Favorite</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* 4. FESTIVAL TICKET BLOCKS (2-COLUMN GRID) */}

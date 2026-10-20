@@ -10,8 +10,11 @@ import {
   Info,
   CheckCircle2,
   X,
-  Edit3
+  Edit3,
+  BarChart3,
+  ExternalLink
 } from 'lucide-react';
+import { supabase } from './supabaseClient';
 
 // Contender teams list with booth numbers and divisions
 const COMPETING_TEAMS = [
@@ -247,6 +250,33 @@ export default function FestivalBallot({ setActiveNav }) {
       return [newEntry, ...filtered];
     });
 
+    // Cloud sync to Supabase for live standings leaderboard
+    if (supabase) {
+      supabase
+        .from('ballot_votes')
+        .insert([
+          {
+            team_name: newEntry.team,
+            category: newEntry.category,
+            score_appearance: newEntry.appearance,
+            score_aroma: newEntry.aroma,
+            score_flavor: newEntry.flavor,
+            score_texture: newEntry.texture,
+            score_overall: newEntry.overall,
+            total_score: newEntry.compositeScore,
+            notes: newEntry.notes
+          }
+        ])
+        .then(({ error }) => {
+          if (error) {
+            console.warn('Supabase vote sync notice:', error.message);
+          }
+        })
+        .catch(err => {
+          console.warn('Supabase offline or table pending:', err);
+        });
+    }
+
     setModalOpen(false);
   };
 
@@ -377,6 +407,34 @@ export default function FestivalBallot({ setActiveNav }) {
             </p>
           </div>
         )}
+
+        {/* LIVE STANDINGS & LEADERBOARD DASHBOARD LINK */}
+        <div className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-950/70 via-indigo-950/60 to-amber-950/40 border border-blue-500/30 backdrop-blur-md flex items-center justify-between gap-3 shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-400 shrink-0">
+              <BarChart3 size={20} />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-white">Live Results & Standings</span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Live
+                </span>
+              </div>
+              <p className="text-[10px] text-neutral-400">View real-time public leaderboard & judges tally</p>
+            </div>
+          </div>
+          <a
+            href="/results.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-1.5 rounded-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-bold text-[11px] flex items-center gap-1 shrink-0 transition-all shadow-md shadow-blue-600/30"
+          >
+            <span>Leaderboard</span>
+            <ExternalLink size={12} />
+          </a>
+        </div>
 
         {/* 3. CATEGORY PILL SELECTOR (BBQ / Chili / Car Show) */}
         <div className="flex items-center justify-between gap-1.5 p-1 rounded-2xl bg-[#0F172A]/80 border border-white/10 backdrop-blur-md">
@@ -603,6 +661,20 @@ export default function FestivalBallot({ setActiveNav }) {
               })}
             </div>
           )}
+
+          {/* View Full Standings Dashboard Link */}
+          <div className="text-center pt-2">
+            <a
+              href="/results.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-amber-300 hover:text-amber-200 transition-all"
+            >
+              <BarChart3 size={15} className="text-amber-400" />
+              <span>Open Full Official Standings Dashboard (/results.html)</span>
+              <ExternalLink size={12} />
+            </a>
+          </div>
         </div>
 
         {/* 6. CHARITY OUTREACH CALLOUT */}
