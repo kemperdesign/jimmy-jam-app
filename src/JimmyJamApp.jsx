@@ -8,6 +8,7 @@ import AdminPins from './AdminPins';
 import FestivalHome from './FestivalHome';
 import FestivalSchedule from './FestivalSchedule';
 import FestivalArtists from './FestivalArtists';
+import FestivalFaq from './FestivalFaq';
 
 // Capacitor's WKWebView doesn't reliably handle <a target="_blank"> or
 // window.open() for external links — this opens them in the system's
@@ -40,7 +41,6 @@ const JimmyJamApp = () => {
   const [openInfoSection, setOpenInfoSection] = useState(null);
   const [openRecipe, setOpenRecipe] = useState(null);
   const [openRegistration, setOpenRegistration] = useState(null);
-  const [openFaqSection, setOpenFaqSection] = useState(null);
   const [showSponsorTiers, setShowSponsorTiers] = useState(false);
   const [openSponsorTier, setOpenSponsorTier] = useState(null);
   const [seasonView, setSeasonView] = useState('list');
@@ -1465,35 +1465,12 @@ const JimmyJamApp = () => {
 
         {/* FAQ */}
         {activeNav === 'faq' && (
-          <div className="space-y-4 pb-20">
-            <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">Frequently Asked Questions</h1>
-            <div className="space-y-2">
-              {faqData.map((item, idx) => (
-                <div key={idx} className="bg-yellow-50 border-b-2 border-blue-600">
-                  <button
-                    onClick={() => setOpenFaqSection(openFaqSection === idx ? null : idx)}
-                    className="w-full hover:bg-yellow-100 p-4 text-left transition-all flex items-center justify-between group"
-                  >
-                    <p className="font-bold text-lg text-gray-900 group-hover:text-blue-600">{item.title}</p>
-                    <span className={`text-2xl text-gray-400 group-hover:text-blue-600 transition-transform ${openFaqSection === idx ? 'rotate-90' : ''}`}>›</span>
-                  </button>
-                  {openFaqSection === idx && (
-                    <div className="px-4 pb-4 space-y-3">
-                      {item.qa.map((pair, qi) => (
-                        <div key={qi}>
-                          <p className="font-bold text-gray-900 text-sm">{pair.q}</p>
-                          <p className="text-gray-700 text-sm">{pair.a}</p>
-                        </div>
-                      ))}
-                      <p className="text-xs text-gray-500 pt-2 border-t border-yellow-200">
-                        Question not answered here? Email <a href={`mailto:${item.contact}`} className="text-blue-600 underline">{item.contact}</a>.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+          <FestivalFaq
+            faqData={faqData}
+            setActiveNav={setActiveNav}
+            openInAppModal={openInAppModal}
+            openExternal={openExternal}
+          />
         )}
 
         {/* RECIPE BOOK */}
