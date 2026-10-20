@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronLeft, ChevronRight, Star, Upload, Calendar, Ticket, Camera, Trophy, Users, Shirt, HeartHandshake, CloudSun, MessageCircle, X, Menu } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Star, Calendar, Ticket, Camera, Trophy, Users, Shirt, HeartHandshake, CloudSun, MessageCircle, X, Menu } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
 import { supabase } from './supabaseClient';
 import VenueMap from './VenueMap';
 import AdminPins from './AdminPins';
 import FestivalHome from './FestivalHome';
+import FestivalSchedule from './FestivalSchedule';
 
 // Capacitor's WKWebView doesn't reliably handle <a target="_blank"> or
 // window.open() for external links — this opens them in the system's
@@ -159,15 +160,6 @@ const JimmyJamApp = () => {
 
   const removeBallotEntry = (id) => {
     setBallotEntries(prev => prev.filter(e => e.id !== id));
-  };
-
-  const shareEvent = (event) => {
-    if (navigator.share) {
-      navigator.share({ title: event.title, text: `${event.title} — ${event.time} at ${event.location}` });
-    } else {
-      navigator.clipboard.writeText(`${event.title} — ${event.time} at ${event.location}`);
-      alert('Event details copied to clipboard!');
-    }
   };
 
   useEffect(() => {
@@ -1043,83 +1035,14 @@ const JimmyJamApp = () => {
 
         {/* SCHEDULE */}
         {activeNav === 'schedule' && (
-          <div className="space-y-4 -mx-4 px-4 pb-4 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
-            <div className="pt-2">
-              <h1 className="font-display text-4xl tracking-wide" style={{ color: 'var(--text-primary)' }}>SCHEDULE</h1>
-            </div>
-            <div className="rounded-lg p-4 border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)' }}>
-              <p className="font-bold" style={{ color: 'var(--text-primary)' }}>11th Annual Jimmy Jam BBQ Slam — {EVENT_DATE_LABEL}</p>
-              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>The full hour-by-hour itinerary will be posted here closer to the date. What's confirmed so far is below.</p>
-            </div>
-
-            {/* TABS */}
-            <div className="flex gap-3 mb-4">
-              <button
-                onClick={() => setActiveTab('all')}
-                className="px-6 py-2 rounded-pill font-bold transition-all"
-                style={activeTab === 'all' ? { backgroundColor: 'var(--color-secondary)', color: '#1E1C1A' } : { backgroundColor: 'var(--bg-surface-elevated)', color: 'var(--text-secondary)' }}
-              >
-                All Events
-              </button>
-              <button
-                onClick={() => setActiveTab('my')}
-                className="px-6 py-2 rounded-pill font-bold transition-all"
-                style={activeTab === 'my' ? { backgroundColor: 'var(--color-secondary)', color: '#1E1C1A' } : { backgroundColor: 'var(--bg-surface-elevated)', color: 'var(--text-secondary)' }}
-              >
-                My Schedule ({mySchedule.length})
-              </button>
-            </div>
-
-            {/* EVENTS LIST */}
-            <div className="space-y-4">
-              {detailedSchedule.map((dateGroup) => {
-                const events = activeTab === 'my'
-                  ? dateGroup.events.filter(e => mySchedule.includes(e.title))
-                  : dateGroup.events;
-                if (events.length === 0) return null;
-                return (
-                  <div key={dateGroup.date} className="space-y-2">
-                    {/* DATE HEADER */}
-                    <div className="px-4 py-2 font-bold text-sm rounded" style={{ backgroundColor: 'var(--color-dark-accent)', color: 'var(--text-primary)' }}>
-                      {dateGroup.dateStr.toUpperCase()}, {dateGroup.date}
-                    </div>
-
-                    {/* EVENT CARDS */}
-                    {events.map((event, idx) => (
-                      <div key={idx} className="rounded-lg p-4 shadow-card transition-all border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
-                        <div className="flex gap-3">
-                          {/* LEFT SIDE - INFO */}
-                          <div className="flex-1">
-                            <p className="text-xs font-bold mb-1" style={{ color: 'var(--text-muted)' }}>{event.time}</p>
-                            <h3 className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>{event.title}</h3>
-                            <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>{event.location}</p>
-                          </div>
-
-                          {/* RIGHT SIDE - ICON */}
-                          <div className="w-16 h-16 rounded-lg flex items-center justify-center text-2xl flex-shrink-0" style={{ backgroundColor: 'var(--bg-surface-elevated)' }}>
-                            {event.icon}
-                          </div>
-                        </div>
-
-                        {/* ACTION BUTTONS */}
-                        <div className="flex gap-3 justify-end mt-3 pt-3 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
-                          <button onClick={() => shareEvent(event)} className="p-1.5 rounded-lg transition-all" style={{ backgroundColor: 'transparent' }}>
-                            <Upload size={16} style={{ color: 'var(--text-secondary)' }} />
-                          </button>
-                          <button onClick={() => toggleMySchedule(event.title)} className="p-1.5 rounded-lg transition-all">
-                            <Star size={16} style={{ color: mySchedule.includes(event.title) ? 'var(--color-secondary)' : 'var(--text-secondary)' }} fill={mySchedule.includes(event.title) ? 'var(--color-secondary)' : 'none'} />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
-              {activeTab === 'my' && mySchedule.length === 0 && (
-                <p className="text-center py-8" style={{ color: 'var(--text-muted)' }}>Tap the star on any event to add it to your schedule.</p>
-              )}
-            </div>
-          </div>
+          <FestivalSchedule
+            mySchedule={mySchedule}
+            toggleMySchedule={toggleMySchedule}
+            openExternal={openExternal}
+            setActiveNav={setActiveNav}
+            EVENT_DATE_LABEL={EVENT_DATE_LABEL}
+            EVENT_VENUE_NAME={EVENT_VENUE_NAME}
+          />
         )}
 
         {/* TICKETS */}
