@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Calendar,
   Camera,
@@ -8,7 +8,10 @@ import {
   Music,
   Heart,
   HelpCircle,
-  MapPin
+  MapPin,
+  BookOpen,
+  Play,
+  X
 } from 'lucide-react';
 import {
   BbqGrillBadge,
@@ -27,6 +30,8 @@ export default function FestivalHome({
   EVENT_VENUE_NAME = 'St. Johns County Fairgrounds',
   setShowMoreMenu
 }) {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+
   return (
     <div className="relative -mx-4 -mt-8 px-4 pt-4 pb-12 overflow-hidden"
       style={{
@@ -44,27 +49,73 @@ export default function FestivalHome({
 
       <div className="max-w-md mx-auto space-y-6 relative z-10">
 
-        {/* 1. TOP FESTIVAL LOGO & DATE BADGE */}
-        <div className="text-center pt-2 space-y-2">
-          {/* Main Event Logo */}
-          <div className="relative inline-block mx-auto transform hover:scale-105 transition-transform duration-300">
-            <img
-              src="/jimmy-jam-logo.png"
-              alt="Jimmy Jam BBQ Slam & Bourbon Event Logo"
-              className="w-64 max-w-[85vw] mx-auto object-contain drop-shadow-xl"
-              onError={(e) => {
-                // Fallback to text banner if image file isn't found
-                e.target.style.display = 'none';
-              }}
-            />
+        {/* 1. HERO VIDEO SECTION (Replacing old static badge with official video player) */}
+        <div className="pt-1 space-y-2">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-white/90 bg-slate-950">
+            {isVideoPlaying ? (
+              <div className="relative w-full aspect-video bg-black">
+                <video
+                  src="/jimmy-jam-new-intro.mp4"
+                  autoPlay
+                  controls
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  onClick={() => setIsVideoPlaying(false)}
+                  className="absolute top-2 right-2 bg-black/75 hover:bg-black text-white text-xs px-2.5 py-1 rounded-full font-bold z-20 backdrop-blur-sm flex items-center gap-1 cursor-pointer shadow-md"
+                >
+                  <X size={13} /> Close
+                </button>
+              </div>
+            ) : (
+              <div
+                onClick={() => setIsVideoPlaying(true)}
+                className="relative w-full aspect-video bg-black cursor-pointer group overflow-hidden"
+              >
+                {/* BBQ Video Preview Poster */}
+                <img
+                  src="/hero-bbq-video.png"
+                  alt="Jimmy Jam BBQ Slam Video Preview"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/35" />
+
+                {/* Central Play Button matching video screenshot */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-red-600/90 text-white flex items-center justify-center pl-1 shadow-[0_0_25px_rgba(220,38,38,0.7)] border-2 border-white group-hover:scale-110 active:scale-95 transition-all">
+                    <Play size={26} fill="#FFFFFF" />
+                  </div>
+                </div>
+
+                {/* Watch Promo pill in top corner */}
+                <div className="absolute top-2.5 right-2.5">
+                  <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-amber-300 font-black text-[10px] tracking-wider uppercase border border-amber-400/40">
+                    ▶ Watch Promo
+                  </span>
+                </div>
+
+                {/* Title overlay at bottom of video card */}
+                <div className="absolute bottom-2.5 left-3 right-3 text-white">
+                  <p className="font-display text-lg tracking-wider text-white drop-shadow leading-none">
+                    JIMMY JAM BBQ SLAM
+                  </p>
+                  <p className="text-[11px] text-amber-300 font-semibold drop-shadow mt-0.5">
+                    11th Annual Festival • {EVENT_DATE_LABEL}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Festival Date & Venue Pill */}
-          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-sm shadow-sm border border-amber-200/80 text-xs font-semibold tracking-wide text-amber-950">
-            <MapPin size={13} className="text-red-600 flex-shrink-0" />
-            <span>{EVENT_DATE_LABEL}</span>
-            <span className="text-amber-400">•</span>
-            <span>{EVENT_VENUE_NAME}</span>
+          <div className="flex justify-center">
+            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-sm shadow-sm border border-amber-200/80 text-xs font-semibold tracking-wide text-amber-950">
+              <MapPin size={13} className="text-red-600 flex-shrink-0" />
+              <span>{EVENT_DATE_LABEL}</span>
+              <span className="text-amber-400">•</span>
+              <span>{EVENT_VENUE_NAME}</span>
+            </div>
           </div>
         </div>
 
@@ -289,12 +340,29 @@ export default function FestivalHome({
             <h4 className="font-display text-lg tracking-wider text-slate-700 uppercase">
               EXPLORE MORE
             </h4>
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-              FESTIVAL GUIDE
-            </span>
+            <button
+              onClick={() => setActiveNav('guide')}
+              className="text-[11px] font-bold text-amber-700 hover:text-amber-900 underline uppercase tracking-wider flex items-center gap-1 cursor-pointer"
+            >
+              FESTIVAL GUIDE →
+            </button>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5">
+            {/* OFFICIAL FESTIVAL GUIDE */}
+            <button
+              onClick={() => setActiveNav('guide')}
+              className="group flex flex-col items-center justify-center p-3.5 rounded-xl bg-white/95 border border-slate-200/90 shadow-sm hover:shadow-md hover:border-red-400 active:scale-95 transition-all text-center col-span-2 bg-gradient-to-r from-red-50 to-amber-50"
+            >
+              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center mb-1.5 group-hover:scale-110 transition-transform">
+                <BookOpen className="w-5 h-5 text-red-700" />
+              </div>
+              <span className="font-display text-base tracking-wider text-slate-900 uppercase block leading-none">
+                OFFICIAL FESTIVAL GUIDE
+              </span>
+              <span className="text-[10px] text-slate-600 font-medium mt-1">Hours, tokens, parking, rules & A–Z info</span>
+            </button>
+
             {/* SPONSORS / PARTNERS */}
             <button
               onClick={() => setActiveNav('sponsors')}
@@ -365,9 +433,9 @@ export default function FestivalHome({
               <span className="text-[10px] text-slate-500 font-medium mt-1">Pitmaster secrets</span>
             </button>
 
-            {/* FESTIVAL SOUNDS / PLAYLISTS */}
+            {/* FESTIVAL SOUNDS / SPOTIFY PLAYLIST */}
             <button
-              onClick={() => setActiveNav('playlists')}
+              onClick={() => openExternal('https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw')}
               className="group flex flex-col items-center justify-center p-3.5 rounded-xl bg-white/95 border border-slate-200/90 shadow-sm hover:shadow-md hover:border-purple-400 active:scale-95 transition-all text-center"
             >
               <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center mb-1.5 group-hover:bg-purple-100 transition-colors">

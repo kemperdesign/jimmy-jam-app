@@ -480,12 +480,11 @@ export default function VenueMap({ venueLat = 29.7711, venueLon = -81.4526 }) {
           style={{ height: '100%', width: '100%' }}
           zoomControl={false}
         >
-          {/* CartoDB Voyager Clean Architectural Tile Layer (Proximi.io style) */}
+          {/* Pristine Light Gray Architectural Tile Layer (No API Key Required, No Watermarks) */}
           <TileLayer
-            attribution='&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-            subdomains={['a', 'b', 'c', 'd']}
-            maxZoom={20}
+            attribution='Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+            maxZoom={19}
           />
 
           {/* Optional Official Aerial Festival Site Map Overlay */}

@@ -2,14 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Search, ChevronLeft, ChevronRight, Star, Calendar, Ticket, Camera, Trophy, Users, Shirt, HeartHandshake, CloudSun, MessageCircle, X, Menu } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
-import { supabase } from './supabaseClient';
-import VenueMap from './VenueMap';
 import AdminPins from './AdminPins';
 import FestivalHome from './FestivalHome';
 import FestivalSchedule from './FestivalSchedule';
 import FestivalArtists from './FestivalArtists';
 import FestivalFaq from './FestivalFaq';
 import FestivalRecipes from './FestivalRecipes';
+import FestivalBottomNav from './FestivalBottomNav';
+import FestivalBallot from './FestivalBallot';
+import FestivalAssistance from './FestivalAssistance';
+import FestivalVolunteer from './FestivalVolunteer';
+import FestivalWeather from './FestivalWeather';
+import FestivalSwag from './FestivalSwag';
+import FestivalMapsAndInfo from './FestivalMapsAndInfo';
+import FestivalSponsors from './FestivalSponsors';
+import FestivalGuide from './FestivalGuide';
 
 // Capacitor's WKWebView doesn't reliably handle <a target="_blank"> or
 // window.open() for external links — this opens them in the system's
@@ -31,39 +38,14 @@ const JimmyJamApp = () => {
   const EVENT_VENUE_ADDRESS = '5840 State Rd. 207, Elkton, FL 32145';
   const EVENT_DATE_LABEL = 'January 9, 2027';
 
-  const [showSplash, setShowSplash] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [activeNav, setActiveNav] = useState('home');
-  const [appSubmitted, setAppSubmitted] = useState(false);
-  const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);  const [activeNav, setActiveNav] = useState('home');  const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
-  const [openInfoSection, setOpenInfoSection] = useState(null);
-  const [openRegistration, setOpenRegistration] = useState(null);
-  const [showSponsorTiers, setShowSponsorTiers] = useState(false);
-  const [openSponsorTier, setOpenSponsorTier] = useState(null);
-  const [seasonView, setSeasonView] = useState('list');
+  const [activeTab, setActiveTab] = useState('overview');  const [openRegistration, setOpenRegistration] = useState(null);  const [seasonView, setSeasonView] = useState('list');
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const d = new Date();
     return new Date(d.getFullYear(), d.getMonth(), 1);
-  });
-  const [cart, setCart] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('jj_cart') || '[]');
-    } catch {
-      return [];
-    }
-  });
-  const [wishlist, setWishlist] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('jj_wishlist') || '[]');
-    } catch {
-      return [];
-    }
-  });
-  const [showCart, setShowCart] = useState(false);
-  const [swagSearch, setSwagSearch] = useState('');
+  });
   const [mySchedule, setMySchedule] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('jj_my_schedule') || '[]');
@@ -71,6 +53,8 @@ const JimmyJamApp = () => {
       return [];
     }
   });
+  const [tideData, setTideData] = useState(null);
+  const [tideError, setTideError] = useState('');
 
   useEffect(() => {
     try { localStorage.setItem('jj_my_schedule', JSON.stringify(mySchedule)); } catch {}
@@ -130,63 +114,7 @@ const JimmyJamApp = () => {
     a.click();
     document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 2000);
-  };
-
-  const [ballotEntries, setBallotEntries] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('jj_tasting_ballot') || '[]');
-    } catch {
-      return [];
-    }
-  });
-  const [ballotTeam, setBallotTeam] = useState('');
-  const [ballotCategory, setBallotCategory] = useState('BBQ');
-  const [ballotRating, setBallotRating] = useState(0);
-  const [ballotNotes, setBallotNotes] = useState('');
-
-  useEffect(() => {
-    try { localStorage.setItem('jj_tasting_ballot', JSON.stringify(ballotEntries)); } catch {}
-  }, [ballotEntries]);
-
-  const addBallotEntry = () => {
-    if (!ballotTeam.trim() || ballotRating === 0) return;
-    setBallotEntries(prev => [
-      { id: Date.now(), team: ballotTeam.trim(), category: ballotCategory, rating: ballotRating, notes: ballotNotes.trim() },
-      ...prev
-    ]);
-    setBallotTeam('');
-    setBallotRating(0);
-    setBallotNotes('');
-  };
-
-  const removeBallotEntry = (id) => {
-    setBallotEntries(prev => prev.filter(e => e.id !== id));
-  };
-
-  useEffect(() => {
-    try { localStorage.setItem('jj_cart', JSON.stringify(cart)); } catch {}
-  }, [cart]);
-
-  useEffect(() => {
-    try { localStorage.setItem('jj_wishlist', JSON.stringify(wishlist)); } catch {}
-  }, [wishlist]);
-
-  const addToCart = (itemName) => {
-    setCart(prev => {
-      const existing = prev.find(c => c.name === itemName);
-      if (existing) return prev.map(c => c.name === itemName ? { ...c, qty: c.qty + 1 } : c);
-      return [...prev, { name: itemName, qty: 1 }];
-    });
-  };
-
-  const removeFromCart = (itemName) => {
-    setCart(prev => prev.filter(c => c.name !== itemName));
-  };
-
-  const toggleWishlist = (itemName) => {
-    setWishlist(prev => prev.includes(itemName) ? prev.filter(n => n !== itemName) : [...prev, itemName]);
-  };
-
+  };
   // Set default tabs when navigating to specific pages
   useEffect(() => {
     if (activeNav === 'weather') {
@@ -265,114 +193,14 @@ const JimmyJamApp = () => {
     }
   ];
 
-  const [selectedArtist, setSelectedArtist] = useState(null);
-  const [selectedSponsor, setSelectedSponsor] = useState(null);
-  const [activeEmbeddedUrl, setActiveEmbeddedUrl] = useState(null);
+  const [selectedArtist, setSelectedArtist] = useState(null);  const [activeEmbeddedUrl, setActiveEmbeddedUrl] = useState(null);
   const [embeddedTitle, setEmbeddedTitle] = useState('Register & Tickets');
 
   const openInAppModal = (url, title = 'Register & Tickets') => {
     if (!url) return;
     setActiveEmbeddedUrl(url);
     setEmbeddedTitle(title);
-  };
-
-  const [assistanceForm, setAssistanceForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    assistanceType: [],
-    description: '',
-    agree: false
-  });
-
-  const WEATHER_CODE_ICON = {
-    0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
-    45: '🌫️', 48: '🌫️',
-    51: '🌦️', 53: '🌦️', 55: '🌧️',
-    61: '🌧️', 63: '🌧️', 65: '🌧️',
-    71: '🌨️', 73: '🌨️', 75: '🌨️',
-    80: '🌧️', 81: '🌧️', 82: '⛈️',
-    95: '⛈️', 96: '⛈️', 99: '⛈️'
-  };
-  const WEATHER_CODE_LABEL = {
-    0: 'Clear', 1: 'Mostly Clear', 2: 'Partly Cloudy', 3: 'Cloudy',
-    45: 'Fog', 48: 'Fog',
-    51: 'Light Drizzle', 53: 'Drizzle', 55: 'Heavy Drizzle',
-    61: 'Light Rain', 63: 'Rain', 65: 'Heavy Rain',
-    71: 'Light Snow', 73: 'Snow', 75: 'Heavy Snow',
-    80: 'Rain Showers', 81: 'Rain Showers', 82: 'Violent Showers',
-    95: 'Thunderstorm', 96: 'Thunderstorm', 99: 'Thunderstorm'
-  };
-
-  const [weatherData, setWeatherData] = useState(null);
-  const [weatherError, setWeatherError] = useState('');
-  const [tideData, setTideData] = useState(null);
-  const [tideError, setTideError] = useState('');
-  const [assistanceSubmitting, setAssistanceSubmitting] = useState(false);
-  const [assistanceError, setAssistanceError] = useState('');
-
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const res = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${EVENT_LAT}&longitude=${EVENT_LON}` +
-          `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code` +
-          `&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,precipitation_probability` +
-          `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max` +
-          `&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York`
-        );
-        if (!res.ok) throw new Error('Weather request failed');
-        const data = await res.json();
-
-        const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        const forecast = data.daily.time.slice(0, 7).map((dateStr, i) => {
-          const d = new Date(dateStr + 'T12:00:00');
-          return {
-            day: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : dayNames[d.getDay()],
-            high: Math.round(data.daily.temperature_2m_max[i]),
-            low: Math.round(data.daily.temperature_2m_min[i]),
-            icon: WEATHER_CODE_ICON[data.daily.weather_code[i]] || '⛅',
-            rain: data.daily.precipitation_probability_max[i]
-          };
-        });
-
-        const nowIndex = data.hourly.time.findIndex(t => t === data.current.time.slice(0, 13) + ':00');
-        const startIdx = nowIndex >= 0 ? nowIndex : 0;
-        const hourly = data.hourly.time.slice(startIdx, startIdx + 12).map((t, i) => {
-          const idx = startIdx + i;
-          const d = new Date(t);
-          return {
-            time: d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
-            icon: WEATHER_CODE_ICON[data.hourly.weather_code[idx]] || '⛅',
-            temp: Math.round(data.hourly.temperature_2m[idx]),
-            humidity: data.hourly.relative_humidity_2m[idx],
-            wind: `${Math.round(data.hourly.wind_speed_10m[idx])} mph`
-          };
-        });
-
-        setWeatherData({
-          current: {
-            temp: Math.round(data.current.temperature_2m),
-            condition: WEATHER_CODE_LABEL[data.current.weather_code] || 'Unknown',
-            icon: WEATHER_CODE_ICON[data.current.weather_code] || '⛅',
-            humidity: data.current.relative_humidity_2m,
-            wind: Math.round(data.current.wind_speed_10m)
-          },
-          forecast,
-          hourly
-        });
-      } catch (err) {
-        setWeatherError('Unable to load live weather right now.');
-      }
-    };
-
-    fetchWeather();
-    const interval = setInterval(fetchWeather, 15 * 60 * 1000); // refresh every 15 min
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  };
   // NOAA station 8720576 — St. Augustine, City Dock, FL (nearest tide station to the venue)
   const TIDE_STATION_ID = '8720576';
   const TIDE_STATION_NAME = 'St. Augustine, City Dock, FL';
@@ -441,46 +269,30 @@ const JimmyJamApp = () => {
   useEffect(() => {
     if (!showSplash) return;
     
-    const timer = setInterval(() => {
-      setLoadingProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(() => setShowSplash(false), 300);
-          return 100;
-        }
-        return prev + Math.random() * 25;
-      });
-    }, 250);
+    const timer = setInterval(() => {    }, 250);
 
     return () => clearInterval(timer);
   }, [showSplash]);
 
   if (showSplash) {
     return (
-      <div className="fixed inset-0 bg-gradient-to-b from-red-700 to-red-600 flex flex-col items-center justify-center z-50">
-        <div className="flex-1 flex items-center justify-center w-full">
-          <div className="text-center">
-            <div className="mb-8">
-              <div className="w-64 h-64 mx-auto flex items-center justify-center relative">
-                <img 
-                  src="/logo-blend.png" 
-                  alt="Jimmy Jam BBQ Slam Logo" 
-                  className="w-full h-full object-contain mix-blend-screen drop-shadow-2xl animate-pulse" 
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full px-8 pb-20">
-          <p className="text-white text-xl font-bold text-center mb-6">Loading Community</p>
-          <div className="w-full bg-white bg-opacity-20 rounded-full h-2 overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-yellow-300 to-yellow-100 transition-all duration-200"
-              style={{ width: `${Math.min(loadingProgress, 100)}%` }}
-            ></div>
-          </div>
-        </div>
+      <div className="fixed inset-0 bg-black flex flex-col items-center justify-center z-50 overflow-hidden">
+        <video
+          src="/jimmy-jam-new-intro.mp4"
+          autoPlay
+          muted
+          playsInline
+          onEnded={() => setShowSplash(false)}
+          className="w-full h-full object-cover max-w-md mx-auto"
+        />
+        {/* Skip button */}
+        <button
+          onClick={() => setShowSplash(false)}
+          className="absolute bottom-6 right-6 z-20 px-4 py-2 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider border border-white/30 transition-all flex items-center gap-1.5 shadow-xl active:scale-95 cursor-pointer"
+        >
+          <span>Skip Intro</span>
+          <span>→</span>
+        </button>
       </div>
     );
   }
@@ -735,18 +547,7 @@ const JimmyJamApp = () => {
       { name: 'Bourbon Cocktails', desc: 'Old Fashioned, Mint Julep', price: '$10' },
       { name: 'Bourbon & BBQ Pairing', desc: 'Curated selection', price: '$28' }
     ]
-  };
-
-  const assistanceTypes = [
-    { id: 'housing', label: '🏠 Housing', desc: 'Rent, mortgage, utilities' },
-    { id: 'medical', label: '🏥 Medical', desc: 'Medical bills, prescriptions' },
-    { id: 'transportation', label: '🚗 Transportation', desc: 'Car repairs, gas' },
-    { id: 'food', label: '🍖 Food', desc: 'Groceries, food' },
-    { id: 'childcare', label: '👶 Childcare', desc: 'Daycare, school' },
-    { id: 'utilities', label: '💡 Utilities', desc: 'Electric, water, gas' },
-    { id: 'emergency', label: '🆘 Emergency', desc: 'Crisis situations' }
-  ];
-
+  };
   // Real content from jimmyjambbqslam.com/about. These are the actual impact stories
   // published there (anonymized by the organization itself, no names given) — we do not
   // invent names or quotes attributed to fictional people.
@@ -780,58 +581,7 @@ const JimmyJamApp = () => {
     { title: 'Keeping a Family Housed', body: 'A hardworking mom juggling two jobs was struggling with rent. We stepped in to cover her balance for two months so she could get back on track.' },
     { title: 'Rebuilding After Losing a Home', body: 'A family of four who lost their home received financial assistance to help rebuild their lives.' },
     { title: 'A New Walker for Dad', body: '"Because of Jimmy Jam, they have given that gift of accessibility to him in order to enjoy life with his grandson, and that means the world to us." — Sarah Felker, whose father Stanley Reigger (who has Parkinson’s disease) received a brand-new walker after his broke. She shared the story publicly on Facebook (as reported by St. Johns Citizen, Jan. 23, 2026).' }
-  ];
-
-  const swagItems = [
-    { name: 'Buckle Up 2026 Lineup Tee', price: 45.00, image: '/jimmy_jam_merch_tees_1778038020125.png' },
-    { name: 'Desert Rider 2026 Lineup Tee', price: 45.00, image: '/jimmy_jam_merch_tees_1778038020125.png' },
-    { name: 'Jimmy Jam Logo Baseball Hat', price: 35.00, image: 'https://images.unsplash.com/photo-1588850567047-dc4b75d3d24c?auto=format&fit=crop&q=80&w=400' },
-    { name: 'Indigo Sunset Festival Hoodie', price: 65.00, image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=400' },
-    { name: 'BBQ Championship Apron', price: 39.99, image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=400' },
-    { name: 'Premium Bandana Set (3-pack)', price: 24.99, image: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&q=80&w=400' },
-    { name: 'Bourbon & BBQ Trucker Hat', price: 42.00, image: 'https://images.unsplash.com/photo-1596455607563-ad6193f76b17?auto=format&fit=crop&q=80&w=400' },
-    { name: 'Festival Lineup Zip Hoodie', price: 75.00, image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400' },
-    { name: 'Jimmy Jam Coffee Mug', price: 16.99, image: 'https://images.unsplash.com/photo-1514228742587-6b1558fbed20?auto=format&fit=crop&q=80&w=400' },
-    { name: 'Premium BBQ Rub Collection', price: 54.99, image: 'https://images.unsplash.com/photo-1532336411638-af7294273e8d?auto=format&fit=crop&q=80&w=400' },
-    { name: 'Stainless Steel Tumbler', price: 28.00, image: 'https://images.unsplash.com/photo-1517254456976-ee8682099819?auto=format&fit=crop&q=80&w=400' },
-    { name: 'Festival Bourbon Glass Set', price: 34.99, image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=400' }
-  ];
-
-  const handleAssistanceTypeToggle = (type) => {
-    const newTypes = assistanceForm.assistanceType.includes(type)
-      ? assistanceForm.assistanceType.filter(t => t !== type)
-      : [...assistanceForm.assistanceType, type];
-    setAssistanceForm({ ...assistanceForm, assistanceType: newTypes });
-  };
-
-  const submitAssistance = async () => {
-    if (!assistanceForm.firstName || !assistanceForm.lastName || !assistanceForm.email || assistanceForm.assistanceType.length === 0 || !assistanceForm.agree) {
-      alert('Please fill all required fields');
-      return;
-    }
-
-    setAssistanceSubmitting(true);
-    setAssistanceError('');
-
-    const { error } = await supabase.from('assistance_applications').insert({
-      first_name: assistanceForm.firstName,
-      last_name: assistanceForm.lastName,
-      email: assistanceForm.email,
-      phone: assistanceForm.phone,
-      assistance_type: assistanceForm.assistanceType,
-      description: assistanceForm.description
-    });
-
-    setAssistanceSubmitting(false);
-
-    if (error) {
-      setAssistanceError('Something went wrong submitting your application. Please try again or call us directly.');
-      return;
-    }
-
-    setAppSubmitted(true);
-  };
-
+  ];
   const nextPhoto = () => {
     setCurrentPhotoIndex((prev) => (prev + 1) % galleryPhotos.length);
   };
@@ -1082,117 +832,18 @@ const JimmyJamApp = () => {
         )}
 
         {/* MAPS & INFO PAGE */}
+        {/* MAPS & INFO TAB */}
         {activeNav === 'maps' && (
-          <div className="space-y-4 pb-20 -mx-4 px-4 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
-            {/* HEADER */}
-            <div className="p-4 pt-6 -mx-4 px-8">
-              <h1 className="font-display text-4xl tracking-wide" style={{ color: 'var(--text-primary)' }}>MAPS & INFO</h1>
-            </div>
-
-            {/* TABS */}
-            <div className="flex gap-2 border-b overflow-x-auto no-scrollbar" style={{ borderColor: 'var(--border-subtle)' }}>
-              {[
-                { id: 'gps', icon: '🧭', label: 'Wayfinding Map' },
-                { id: 'venue', icon: '🗺️', label: 'Site Layout' },
-                { id: 'info', icon: 'ℹ️', label: 'Venue Info' }
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className="px-4 py-3 font-bold transition-all flex items-center gap-2 border-b-4"
-                  style={{
-                    borderColor: activeTab === tab.id ? 'var(--color-primary)' : 'transparent',
-                    color: activeTab === tab.id ? 'var(--color-primary)' : 'var(--text-secondary)'
-                  }}
-                >
-                  {tab.icon} {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* VENUE MAP TAB */}
-            {activeTab === 'venue' && (
-              <div className="space-y-4">
-                <div className="w-full rounded-lg overflow-hidden border shadow-card relative" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
-                  <img
-                    src="/map.png"
-                    alt="Official site map of VIP Parking, Judges Parking, Team Parking, Handicap Parking, Food Trucks, Chili Teams, Vendors, Kid Zone, BMX Show, K9 Show, Car Show, and Side by Sides"
-                    className="w-full h-auto"
-                  />
-                </div>
-                <p className="text-xs text-center" style={{ color: 'var(--text-muted)' }}>For turn-by-turn walking directions to any of these areas, use the GPS Map tab.</p>
-              </div>
-            )}
-
-            {/* GPS MAP TAB */}
-            {activeTab === 'gps' && (
-              <div className="space-y-4">
-                <VenueMap venueLat={EVENT_LAT} venueLon={EVENT_LON} />
-
-                {/* LOCATION INFO */}
-                <div className="rounded-lg p-4 border space-y-3 shadow-card" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)', boxShadow: 'var(--shadow-card)' }}>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xl" style={{ backgroundColor: 'var(--color-primary)' }}>📍</div>
-                    <div>
-                      <h3 className="font-bold leading-tight" style={{ color: 'var(--text-primary)' }}>{EVENT_VENUE_NAME}</h3>
-                      <p className="text-xs italic" style={{ color: 'var(--text-secondary)' }}>Official Jimmy Jam Venue</p>
-                    </div>
-                  </div>
-                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{EVENT_VENUE_ADDRESS}</p>
-                  <button
-                    onClick={() => openExternal(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(EVENT_VENUE_NAME + ', ' + EVENT_VENUE_ADDRESS)}`)}
-                    className="w-full py-4 rounded-lg font-bold shadow-card transform active:scale-95 transition-all flex items-center justify-center gap-2"
-                    style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', boxShadow: 'var(--shadow-card)' }}
-                  >
-                    🧭 GET DIRECTIONS
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* INFO TAB */}
-            {activeTab === 'info' && (
-              <div className="space-y-3">
-                {/* SEARCH */}
-                <div className="relative mb-4">
-                  <Search className="absolute left-4 top-3 text-gray-400" size={20} />
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-lg text-gray-700 placeholder-gray-400 focus:outline-none focus:border-blue-600"
-                  />
-                </div>
-
-                {/* INFO SECTIONS */}
-                <div className="space-y-2">
-                  {faqData.map((item, idx) => (
-                    <div key={idx} className="bg-yellow-50 border-b-2 border-blue-600">
-                      <button
-                        onClick={() => setOpenInfoSection(openInfoSection === idx ? null : idx)}
-                        className="w-full hover:bg-yellow-100 p-4 text-left transition-all flex items-center justify-between group"
-                      >
-                        <p className="font-bold text-lg text-gray-900 group-hover:text-blue-600">{item.title}</p>
-                        <span className={`text-2xl text-gray-400 group-hover:text-blue-600 transition-transform ${openInfoSection === idx ? 'rotate-90' : ''}`}>›</span>
-                      </button>
-                      {openInfoSection === idx && (
-                        <div className="px-4 pb-4 space-y-3">
-                          {item.qa.map((pair, qi) => (
-                            <div key={qi}>
-                              <p className="font-bold text-gray-900 text-sm">{pair.q}</p>
-                              <p className="text-gray-700 text-sm">{pair.a}</p>
-                            </div>
-                          ))}
-                          <p className="text-xs text-gray-500 pt-2 border-t border-yellow-200">
-                            Question not answered here? Email <a href={`mailto:${item.contact}`} className="text-blue-600 underline">{item.contact}</a>.
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          <FestivalMapsAndInfo
+            EVENT_LAT={EVENT_LAT}
+            EVENT_LON={EVENT_LON}
+            EVENT_VENUE_NAME={EVENT_VENUE_NAME}
+            EVENT_VENUE_ADDRESS={EVENT_VENUE_ADDRESS}
+            EVENT_DATE_LABEL={EVENT_DATE_LABEL}
+            openExternal={openExternal}
+            faqData={faqData}
+            setActiveNav={setActiveNav}
+          />
         )}
 
         {/* OFFICIAL PARTNERS */}
@@ -1230,159 +881,12 @@ const JimmyJamApp = () => {
 
         {/* TASTING BALLOT */}
         {activeNav === 'ballot' && (
-          <div className="space-y-6 pb-20 -mx-4 px-4 bg-canvas min-h-screen">
-            <div className="pt-6 text-center">
-              <h1 className="font-display text-4xl text-text-primary tracking-wide" style={{ color: 'var(--text-primary)' }}>MY TASTING BALLOT</h1>
-              <p className="text-text-secondary text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Rate teams as you taste, then cast your real vote with tokens</p>
-            </div>
-
-            <div className="bg-surface rounded-lg p-4 border border-border-subtle" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)' }}>
-              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Official People's Choice voting uses paper tokens, not this app: buy $1 tasting tokens, earn voting tokens as you spend (1 per $10 for Chili & Chowder, 1 per $20 for BBQ), and drop them in your favorite team's jar. Use this ballot to jot down ratings and notes as you go, so you remember your favorites when it's time to vote for real.
-              </p>
-            </div>
-
-            {/* ADD ENTRY FORM */}
-            <div className="rounded-lg p-5 space-y-4 shadow-card" style={{ backgroundColor: 'var(--bg-surface)', boxShadow: 'var(--shadow-card)' }}>
-              <h2 className="font-display text-2xl tracking-wide" style={{ color: 'var(--text-primary)' }}>ADD A TASTING</h2>
-
-              <input
-                type="text"
-                value={ballotTeam}
-                onChange={(e) => setBallotTeam(e.target.value)}
-                placeholder="Team name or booth #"
-                className="w-full p-3 rounded-md bg-transparent border placeholder-text-muted"
-                style={{ borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
-              />
-
-              <div className="flex gap-2">
-                {['BBQ', 'Chili & Chowder'].map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => setBallotCategory(cat)}
-                    className="flex-1 py-2 rounded-pill text-xs font-bold uppercase tracking-wide border transition-all"
-                    style={
-                      ballotCategory === cat
-                        ? { backgroundColor: 'var(--color-primary)', borderColor: 'var(--color-primary)', color: '#FFFFFF' }
-                        : { backgroundColor: 'transparent', borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }
-                    }
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-
-              {/* 5-STAR RATING CONTROL */}
-              <div className="flex items-center justify-center gap-2 py-2">
-                {[1, 2, 3, 4, 5].map(n => (
-                  <button
-                    key={n}
-                    onClick={() => setBallotRating(n)}
-                    className="transition-all"
-                    style={{
-                      fontSize: '30px',
-                      color: n <= ballotRating ? 'var(--color-secondary)' : 'var(--border-active)',
-                      filter: n <= ballotRating ? 'drop-shadow(0 0 6px rgba(255, 179, 0, 0.35))' : 'none',
-                      width: '44px', height: '44px'
-                    }}
-                  >
-                    {n <= ballotRating ? '★' : '☆'}
-                  </button>
-                ))}
-              </div>
-
-              <textarea
-                value={ballotNotes}
-                onChange={(e) => setBallotNotes(e.target.value)}
-                placeholder="Notes (optional) — smoke ring, sauce, texture..."
-                rows={2}
-                className="w-full p-3 rounded-md bg-transparent border placeholder-text-muted resize-none"
-                style={{ borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
-              />
-
-              <button
-                onClick={addBallotEntry}
-                disabled={!ballotTeam.trim() || ballotRating === 0}
-                className="w-full py-3 rounded-md font-bold text-sm uppercase tracking-wide transition-all disabled:opacity-40"
-                style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', height: '48px' }}
-              >
-                Add to Ballot
-              </button>
-            </div>
-
-            {/* BALLOT ENTRIES */}
-            <div className="space-y-3">
-              <h2 className="font-display text-2xl tracking-wide" style={{ color: 'var(--text-primary)' }}>
-                MY RATINGS ({ballotEntries.length})
-              </h2>
-              {ballotEntries.length === 0 && (
-                <p className="text-sm text-center py-8" style={{ color: 'var(--text-muted)' }}>No tastings logged yet — add one above as you sample each team.</p>
-              )}
-              {ballotEntries.map(entry => (
-                <div key={entry.id} className="rounded-lg p-4 flex items-start justify-between gap-3" style={{ backgroundColor: 'var(--bg-surface)', boxShadow: 'var(--shadow-card)' }}>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span
-                        className="text-[11px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-sm"
-                        style={{ backgroundColor: 'var(--bg-surface-elevated)', color: 'var(--text-secondary)', border: '1px solid var(--border-subtle)' }}
-                      >
-                        {entry.category}
-                      </span>
-                    </div>
-                    <p className="font-bold" style={{ color: 'var(--text-primary)' }}>{entry.team}</p>
-                    <p className="text-sm" style={{ color: 'var(--color-secondary)' }}>{'★'.repeat(entry.rating)}{'☆'.repeat(5 - entry.rating)}</p>
-                    {entry.notes && <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{entry.notes}</p>}
-                  </div>
-                  <button onClick={() => removeBallotEntry(entry.id)} className="text-xs font-bold flex-shrink-0" style={{ color: 'var(--color-danger)' }}>Remove</button>
-                </div>
-              ))}
-            </div>
-          </div>
+          <FestivalBallot setActiveNav={setActiveNav} />
         )}
 
         {/* VOLUNTEER */}
         {activeNav === 'volunteer' && (
-          <div className="space-y-6 pb-20">
-            <div className="bg-gradient-to-br from-orange-600 to-red-700 text-white p-8 rounded-2xl shadow-lg text-center">
-              <h2 className="text-3xl font-bold mb-2">🙋 Be a Volunteer</h2>
-              <p className="text-orange-100">Help make the Jimmy Jam BBQ Slam a success</p>
-            </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-md border-2 border-gray-200 space-y-4">
-              <p className="text-gray-700 leading-relaxed">
-                As a nonprofit event, Jimmy Jam relies on dedicated volunteers to bring the whole experience to life. Whether you love BBQ, cars, live music, or just want to give back to the community, there's a role for you.
-              </p>
-
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2">Volunteer Opportunities Include</h3>
-                <ul className="text-sm text-gray-700 space-y-1.5">
-                  <li>✅ Event setup & breakdown</li>
-                  <li>✅ Assisting with competitions (Chili Cook-Off, BBQ, Cornhole, Car Show)</li>
-                  <li>✅ Ticket & token sales</li>
-                  <li>✅ Guest assistance & information booth</li>
-                  <li>✅ Kids' activities & family fun zone support</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2">Why Volunteer</h3>
-                <ul className="text-sm text-gray-700 space-y-1.5">
-                  <li>🤝 Give back to the community and support those in need</li>
-                  <li>🎟️ Gain event experience and meet great people</li>
-                  <li>🔥 Enjoy the energy and excitement of the event up close</li>
-                  <li>❤️ Be part of Jimmy Jam's legacy of kindness and generosity</li>
-                </ul>
-              </div>
-
-              <button
-                onClick={() => openExternal('https://jimmyjambbqslam.com/volunteer')}
-                className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-full font-bold text-lg transition-all"
-              >
-                Sign Up to Volunteer →
-              </button>
-              <p className="text-xs text-gray-500 text-center">Opens the volunteer sign-up form on jimmyjambbqslam.com, which always shows current open positions.</p>
-            </div>
-          </div>
+          <FestivalVolunteer setActiveNav={setActiveNav} />
         )}
 
         {/* FAQ */}
@@ -1427,7 +931,10 @@ const JimmyJamApp = () => {
                   onClick={() => setLightboxOpen(true)}
                   className="relative bg-gradient-to-br from-red-600 to-orange-600 h-[500px] w-full flex items-center justify-center overflow-hidden cursor-zoom-in"
                 >
-                  <img src={galleryPhotos[currentPhotoIndex].src} alt={galleryPhotos[currentPhotoIndex].title} className="w-full h-full object-cover" />
+                  <div className="relative w-full h-full flex items-center justify-center bg-black">
+                    <img src={galleryPhotos[currentPhotoIndex].src} alt={galleryPhotos[currentPhotoIndex].title} className="w-full h-full object-cover px-3 py-6 sm:px-6 sm:py-8" />
+                    <img src="/filmstrip-frame.png" alt="35mm Filmstrip Frame" className="absolute inset-0 w-full h-full object-fill pointer-events-none z-10 opacity-95" />
+                  </div>
                 </button>
               )}
               <div className="p-8">
@@ -1532,7 +1039,8 @@ const JimmyJamApp = () => {
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-6" style={{ color: 'var(--text-primary)' }}>
                   <span className="text-6xl mb-4">🥃</span>
                   <h2 className="font-display text-4xl tracking-wide">BOURBON & BARBEQUE</h2>
-                  <p className="mt-2" style={{ color: 'var(--text-secondary)' }}>Premium Tasting & Feast</p>
+                  <p className="mt-1 text-xs text-amber-200">Saturday, October 17, 2026 • Tringali Barn • $100/ticket</p>
+                  <p className="text-[11px] text-white/80 mt-1">Whole Hog, Wagyu Gold Brisket by 2X Champion Ryan King & Broudy's Bourbon</p>
                   <div className="mt-4 px-6 py-2 rounded-pill font-bold text-sm uppercase tracking-wide" style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}>Explore Event</div>
                 </div>
               </button>
@@ -1547,7 +1055,8 @@ const JimmyJamApp = () => {
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-6" style={{ color: 'var(--text-primary)' }}>
                   <span className="text-6xl mb-4">🍖</span>
                   <h2 className="font-display text-4xl tracking-wide">BBQ SLAM EVENT</h2>
-                  <p className="mt-2" style={{ color: 'var(--text-secondary)' }}>World-Class Competition</p>
+                  <p className="mt-1 text-xs text-amber-300">Saturday, January 9, 2027 • St. Johns County Fairgrounds</p>
+                  <p className="text-[11px] text-white/80 mt-1">Chili Cook-Off ($875 Cash Prizes - Free Entry) & $17,000 BBQ Slam</p>
                   <div className="mt-4 px-6 py-2 rounded-pill font-bold text-sm uppercase tracking-wide" style={{ backgroundColor: 'var(--color-secondary)', color: '#1E1C1A' }}>Explore Event</div>
                 </div>
               </button>
@@ -1725,7 +1234,6 @@ const JimmyJamApp = () => {
                     <button
                       key={sponsor.id}
                       onClick={() => {
-                        setSelectedSponsor(sponsor);
                         setActiveNav('sponsors');
                       }}
                       className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-all group"
@@ -1763,159 +1271,15 @@ const JimmyJamApp = () => {
         )}
 
         {/* SPONSORS - LIST VIEW */}
-        {activeNav === 'sponsors' && !selectedSponsor && (
-          <div className="space-y-4 -mx-4 px-4 pt-2 pb-4 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
-            <h1 className="font-display text-4xl tracking-wide" style={{ color: 'var(--text-primary)' }}>SPONSORS</h1>
-            {/* SEARCH BAR */}
-            <div className="relative">
-              <Search className="absolute left-4 top-3" size={20} style={{ color: 'var(--text-muted)' }} />
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full pl-12 pr-4 py-3 rounded-full border focus:outline-none"
-                style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)', color: 'var(--text-primary)' }}
-              />
-            </div>
-
-            {/* BECOME A SPONSOR */}
-            <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}>
-              <button onClick={() => setShowSponsorTiers(prev => !prev)} className="w-full flex items-center justify-between text-left">
-                <div>
-                  <p className="font-bold text-lg">🤝 Become a Sponsor</p>
-                  <p className="text-sm opacity-90">See our sponsorship packages & benefits</p>
-                </div>
-                <span className="text-2xl">{showSponsorTiers ? '−' : '+'}</span>
-              </button>
-              {showSponsorTiers && (
-                <div className="mt-4 space-y-2">
-                  {sponsorTiers.map((tier, i) => (
-                    <div key={i} className="rounded-xl overflow-hidden" style={{ backgroundColor: 'rgba(0,0,0,0.2)' }}>
-                      <button onClick={() => setOpenSponsorTier(openSponsorTier === i ? null : i)} className="w-full p-4 flex items-center justify-between text-left">
-                        <span className="font-bold">{tier.icon} {tier.name}</span>
-                        <span>{openSponsorTier === i ? '−' : '+'}</span>
-                      </button>
-                      {openSponsorTier === i && (
-                        <div className="px-4 pb-4 space-y-2">
-                          <ul className="text-sm opacity-90 space-y-1 list-disc list-inside">
-                            {tier.perks.map((p, pi) => <li key={pi}>{p}</li>)}
-                          </ul>
-                          {tier.addOns && (
-                            <div>
-                              <p className="text-xs font-bold uppercase tracking-wide opacity-80 mt-2">Optional Add-Ons</p>
-                              <ul className="text-sm opacity-90 space-y-1 list-disc list-inside">
-                                {tier.addOns.map((a, ai) => <li key={ai}>{a}</li>)}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                  <button onClick={() => setActiveNav('connect')} className="w-full py-2.5 rounded-lg font-bold text-sm mt-2" style={{ backgroundColor: '#FFFFFF', color: 'var(--color-primary)' }}>Contact Us to Sponsor</button>
-                </div>
-              )}
-            </div>
-
-            {/* SPONSORS LIST */}
-            <div className="space-y-3">
-              {sponsorsData.map((sponsor) => (
-                <button
-                  key={sponsor.id}
-                  onClick={() => setSelectedSponsor(sponsor)}
-                  className="w-full rounded-2xl p-4 border shadow-card transition-all text-left"
-                  style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}
-                >
-                  <div className="flex items-start gap-4">
-                    {/* LOGO */}
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden p-1" style={{ backgroundColor: 'var(--bg-paper)' }}>
-                      {sponsor.logoImage ? (
-                        <img src={sponsor.logoImage} alt={sponsor.name} className="w-full h-full object-contain" />
-                      ) : (
-                        sponsor.logo
-                      )}
-                    </div>
-
-                    {/* TEXT */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>{sponsor.name}</h3>
-                      <p className="text-sm truncate" style={{ color: 'var(--text-secondary)' }}>{sponsor.tier}</p>
-                    </div>
-
-                    {/* ARROW */}
-                    <ChevronRight size={20} className="flex-shrink-0 mt-1" style={{ color: 'var(--color-primary)' }} />
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
+        {activeNav === 'sponsors' && (
+          <FestivalSponsors
+            sponsorsData={sponsorsData}
+            sponsorTiers={sponsorTiers}
+            setActiveNav={setActiveNav}
+            openExternal={openExternal}
+          />
         )}
 
-        {/* SPONSORS - DETAIL VIEW */}
-        {activeNav === 'sponsors' && selectedSponsor && (
-          <div className="space-y-4 pb-20 -mx-4 px-4 pt-2 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
-            {/* BACK BUTTON */}
-            <button
-              onClick={() => setSelectedSponsor(null)}
-              className="flex items-center gap-2 font-bold mb-4"
-              style={{ color: 'var(--color-primary)' }}
-            >
-              <ChevronLeft size={24} />
-              Back
-            </button>
-
-            {/* LOGO SECTION */}
-            <div className="w-full h-40 rounded-lg flex items-center justify-center shadow-card p-4" style={{ backgroundColor: 'var(--bg-paper)', boxShadow: 'var(--shadow-card)' }}>
-              {selectedSponsor.logoImage ? (
-                <img src={selectedSponsor.logoImage} alt={selectedSponsor.name} className="max-w-full max-h-full object-contain" />
-              ) : (
-                <span className="text-6xl">{selectedSponsor.logo}</span>
-              )}
-            </div>
-
-            {/* TITLE & TIER */}
-            <div className="space-y-2">
-              <h1 className="font-display text-4xl tracking-wide" style={{ color: 'var(--text-primary)' }}>{selectedSponsor.name}</h1>
-              <p style={{ color: 'var(--text-secondary)' }}>{selectedSponsor.tier}</p>
-            </div>
-
-            {/* WEBSITE & SHARE BUTTONS */}
-            <div className="flex gap-2 flex-wrap">
-              {selectedSponsor.website && (
-                <button
-                  onClick={() => openExternal(selectedSponsor.website)}
-                  className="px-4 py-2 border rounded-full font-semibold transition-all flex items-center gap-2"
-                  style={{ borderColor: 'var(--color-primary)', color: 'var(--color-primary)' }}
-                >
-                  🌐 Website
-                </button>
-              )}
-              {selectedSponsor.website && (
-                <button
-                  onClick={() => {
-                    if (navigator.share) {
-                      navigator.share({ title: selectedSponsor.name, url: selectedSponsor.website });
-                    } else {
-                      navigator.clipboard.writeText(selectedSponsor.website);
-                      alert('Website link copied to clipboard!');
-                    }
-                  }}
-                  className="px-4 py-2 border rounded-full font-semibold transition-all flex items-center gap-2"
-                  style={{ borderColor: 'var(--color-primary)', color: 'var(--color-primary)' }}
-                >
-                  📤 Share
-                </button>
-              )}
-            </div>
-
-            {/* DESCRIPTION */}
-            <div className="rounded-lg p-4 border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-active)' }}>
-              <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>About</h3>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{selectedSponsor.description}</p>
-            </div>
-          </div>
-        )}
-
-        {/* BOURBON */}
         {activeNav === 'bourbon' && (
           <div className="space-y-8">
             <h1 className="text-5xl font-bold text-center bg-gradient-to-r from-red-600 to-orange-600 text-white p-8 rounded-lg">🥃 BOURBON & BBQ</h1>
@@ -1957,113 +1321,7 @@ const JimmyJamApp = () => {
 
         {/* WEATHER */}
         {activeNav === 'weather' && (
-          <div className="space-y-4 pb-20">
-            {/* CURRENT WEATHER CARD */}
-            <div className="bg-gradient-to-br from-blue-600 to-cyan-600 text-white p-8 rounded-2xl text-center shadow-lg">
-              {weatherError && <p className="text-sm mb-2 bg-red-500/30 rounded px-3 py-1 inline-block">{weatherError}</p>}
-              {weatherData ? (
-                <>
-                  <p className="text-5xl font-bold mb-2">{weatherData.current.icon} {weatherData.current.temp}°F</p>
-                  <p className="text-2xl">{weatherData.current.condition}</p>
-                  <p className="text-sm mt-4">Humidity: {weatherData.current.humidity}% | Wind: {weatherData.current.wind} mph</p>
-                </>
-              ) : (
-                <p className="text-xl">Loading live weather...</p>
-              )}
-            </div>
-
-            {/* LOCATION SELECTOR */}
-            <div className="bg-white rounded-lg p-4 border-2 border-blue-300 flex items-center gap-2">
-              <span className="text-2xl">☀️</span>
-              <div className="flex-1">
-                <p className="text-sm text-gray-600">{EVENT_VENUE_NAME}</p>
-              </div>
-              <span className="text-gray-400">▼</span>
-            </div>
-
-            {/* TABS */}
-            <div className="flex gap-2 border-b-2 border-gray-300">
-              <button onClick={() => setActiveTab('forecast')} className={`px-4 py-3 font-bold transition-all ${activeTab === 'forecast' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
-                📅 7-Day
-              </button>
-              <button onClick={() => setActiveTab('hourly')} className={`px-4 py-3 font-bold transition-all ${activeTab === 'hourly' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
-                ⏰ Hourly
-              </button>
-              <button onClick={() => setActiveTab('map')} className={`px-4 py-3 font-bold transition-all ${activeTab === 'map' ? 'border-b-4 border-blue-600 text-blue-600' : 'text-gray-600'}`}>
-                🗺️ Map
-              </button>
-            </div>
-
-            {/* 7-DAY FORECAST */}
-            {activeTab === 'forecast' && (
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">7-Day Forecast</h3>
-                {weatherData ? (
-                  <div className="grid grid-cols-7 gap-2">
-                    {weatherData.forecast.map((day, i) => (
-                      <div key={i} className="bg-white rounded-lg border-2 border-blue-300 p-3 text-center shadow-md hover:shadow-lg transition-all">
-                        <p className="text-xs font-bold text-blue-700 mb-2">{day.day}</p>
-                        <p className="text-3xl mb-2">{day.icon}</p>
-                        <p className="text-lg font-bold text-blue-700">{day.high}°</p>
-                        <p className="text-xs text-blue-600">{day.low}°</p>
-                        <p className="text-xs text-blue-600 mt-1">🌧️{day.rain}%</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-500">Loading forecast...</p>
-                )}
-              </div>
-            )}
-
-            {/* HOURLY FORECAST */}
-            {activeTab === 'hourly' && (
-              <div className="space-y-3">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Hourly Forecast</h3>
-
-                {weatherData ? (
-                  <div className="bg-white rounded-lg p-4 border-2 border-blue-300">
-                    <div className="space-y-2">
-                      {weatherData.hourly.map((hour, idx) => (
-                        <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
-                          <div className="flex items-center gap-3 flex-1">
-                            <p className="font-bold text-gray-800 w-20">{hour.time}</p>
-                            <p className="text-2xl">{hour.icon}</p>
-                            <p className="font-bold text-gray-800 w-12">{hour.temp}°</p>
-                          </div>
-                          <div className="text-right text-xs text-gray-600">
-                            <p>💧 {hour.humidity}%</p>
-                            <p>💨 {hour.wind}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <p className="text-gray-500">Loading hourly forecast...</p>
-                )}
-              </div>
-            )}
-
-            {/* MAP VIEW */}
-            {activeTab === 'map' && (
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-gray-800">Event Location</h3>
-                <div className="w-full h-64 rounded-lg overflow-hidden border-2 border-blue-300 shadow-lg">
-                  <iframe
-                    title="Event Weather Location Map"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${EVENT_LON - 0.02}%2C${EVENT_LAT - 0.015}%2C${EVENT_LON + 0.02}%2C${EVENT_LAT + 0.015}&layer=mapnik&marker=${EVENT_LAT}%2C${EVENT_LON}`}
-                  />
-                </div>
-                <p className="text-sm text-gray-500 text-center">
-                  Live radar overlays aren't available yet — check the 7-Day and Hourly tabs above for current conditions.
-                </p>
-              </div>
-            )}
-          </div>
+          <FestivalWeather setActiveNav={setActiveNav} />
         )}
 
         {/* TESTIMONIALS */}
@@ -2098,65 +1356,10 @@ const JimmyJamApp = () => {
         )}
 
         {/* ASSISTANCE */}
-        {activeNav === 'assistance' && !appSubmitted && (
-          <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-red-700 text-center">❤️ APPLICATION FOR ASSISTANCE</h2>
-            
-            <div className="bg-white rounded-lg border-2 border-red-700 p-8 space-y-6 max-w-2xl mx-auto shadow-lg">
-              <div className="grid md:grid-cols-2 gap-6">
-                <input type="text" placeholder="First Name *" className="p-3 border-2 border-red-300 rounded-lg" value={assistanceForm.firstName} onChange={(e) => setAssistanceForm({...assistanceForm, firstName: e.target.value})} />
-                <input type="text" placeholder="Last Name *" className="p-3 border-2 border-red-300 rounded-lg" value={assistanceForm.lastName} onChange={(e) => setAssistanceForm({...assistanceForm, lastName: e.target.value})} />
-                <input type="email" placeholder="Email *" className="p-3 border-2 border-red-300 rounded-lg" value={assistanceForm.email} onChange={(e) => setAssistanceForm({...assistanceForm, email: e.target.value})} />
-                <input type="tel" placeholder="Phone *" className="p-3 border-2 border-red-300 rounded-lg" value={assistanceForm.phone} onChange={(e) => setAssistanceForm({...assistanceForm, phone: e.target.value})} />
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-red-700 mb-4">What assistance do you need?</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {assistanceTypes.map(type => (
-                    <label key={type.id} className="flex items-start p-4 border-2 border-red-300 rounded-lg hover:bg-red-50 cursor-pointer">
-                      <input type="checkbox" className="mt-1 mr-3 w-5 h-5" checked={assistanceForm.assistanceType.includes(type.id)} onChange={() => handleAssistanceTypeToggle(type.id)} />
-                      <div>
-                        <p className="font-bold text-red-700">{type.label}</p>
-                        <p className="text-red-600 text-sm">{type.desc}</p>
-                      </div>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <textarea className="w-full p-3 border-2 border-red-300 rounded-lg" rows="5" placeholder="Tell us about your situation..." value={assistanceForm.description} onChange={(e) => setAssistanceForm({...assistanceForm, description: e.target.value})} />
-
-              <label className="flex items-start gap-3">
-                <input type="checkbox" className="mt-1 w-5 h-5" checked={assistanceForm.agree} onChange={(e) => setAssistanceForm({...assistanceForm, agree: e.target.checked})} />
-                <span className="text-red-700">I confirm this information is accurate.</span>
-              </label>
-
-              {assistanceError && (
-                <p className="text-red-700 font-semibold text-center">{assistanceError}</p>
-              )}
-
-              <button
-                onClick={submitAssistance}
-                disabled={assistanceSubmitting}
-                className="w-full bg-red-700 hover:bg-red-800 disabled:opacity-60 text-white py-4 rounded-lg font-bold text-lg"
-              >
-                {assistanceSubmitting ? 'SUBMITTING...' : '✓ SUBMIT APPLICATION'}
-              </button>
-            </div>
-          </div>
+        {activeNav === 'assistance' && (
+          <FestivalAssistance setActiveNav={setActiveNav} />
         )}
 
-        {activeNav === 'assistance' && appSubmitted && (
-          <div className="bg-green-50 border-2 border-green-500 p-8 rounded-lg text-center max-w-md mx-auto shadow-lg">
-            <div className="text-6xl mb-4">✅</div>
-            <h3 className="text-3xl font-bold text-green-700 mb-2">SUBMITTED!</h3>
-            <p className="text-green-700">We'll review within 5-7 business days.</p>
-          </div>
-        )}
-
-        {/* SWAG */}
-        {/* CONNECT - SOCIALS PAGE */}
         {activeNav === 'connect' && (
           <div className="space-y-4 pb-20">
             {/* CONTACT US */}
@@ -2225,166 +1428,9 @@ const JimmyJamApp = () => {
 
         {/* SWAG */}
         {activeNav === 'swag' && (
-          <div className="space-y-4 pb-20">
-            {/* DARK HEADER */}
-            <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800 text-white p-6 rounded-lg -mx-4 px-4 flex items-center justify-between sticky top-0 z-20">
-              <button onClick={() => setActiveNav('home')} className="text-2xl text-yellow-100">‹</button>
-              <h1 className="text-3xl font-bold text-yellow-100 flex-1 text-center">SWAG STORE</h1>
-              <button onClick={() => setShowCart(true)} className="text-2xl relative">
-                🛒
-                {cart.length > 0 && (
-                  <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                    {cart.reduce((sum, c) => sum + c.qty, 0)}
-                  </span>
-                )}
-              </button>
-            </div>
-
-            {/* INFO BANNER */}
-            <div className="bg-gray-900 text-white rounded-lg p-5 border-l-4 border-yellow-500">
-              <h2 className="text-lg font-bold mb-3">Official Festival Merchandise</h2>
-              <p className="text-sm leading-relaxed">
-                Bandanas, hats, tees & more. Shop the Jimmy Jam collection. While supplies last.
-              </p>
-            </div>
-
-            {/* TABS */}
-            <div className="flex gap-6 border-b-2 border-gray-300 px-2">
-              <button onClick={() => setActiveTab('festival')} className={`px-2 py-3 font-bold transition-all text-lg ${activeTab === 'festival' ? 'border-b-4 border-yellow-500 text-yellow-500' : 'text-gray-600'}`}>
-                Shop
-              </button>
-              <button onClick={() => setActiveTab('wishlist')} className={`px-2 py-3 font-bold transition-all text-lg ${activeTab === 'wishlist' ? 'border-b-4 border-yellow-500 text-gray-300' : 'text-gray-600'}`}>
-                Wishlist
-              </button>
-            </div>
-
-            {/* SEARCH */}
-            {activeTab === 'festival' && (
-              <div className="relative">
-                <Search className="absolute left-4 top-4 text-gray-400" size={20} />
-                <input
-                  type="text"
-                  value={swagSearch}
-                  onChange={(e) => setSwagSearch(e.target.value)}
-                  placeholder="Search"
-                  className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-full bg-gray-100 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-yellow-500 focus:bg-white"
-                />
-              </div>
-            )}
-
-            {/* PRODUCTS GRID */}
-            {activeTab === 'festival' && (
-              <div className="grid grid-cols-2 gap-4">
-                {swagItems.filter(item => item.name.toLowerCase().includes(swagSearch.toLowerCase())).map((item, i) => (
-                  <div key={i} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
-                    {/* PRODUCT IMAGE */}
-                    <div className="bg-white h-56 flex items-center justify-center relative">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover"
-                      />
-                      {/* HEART ICON */}
-                      <button
-                        onClick={() => toggleWishlist(item.name)}
-                        className={`absolute top-3 right-3 bg-white hover:bg-red-50 rounded-full p-2.5 transition-all shadow-lg border border-red-100 ${wishlist.includes(item.name) ? 'text-red-600' : 'text-gray-400'}`}
-                      >
-                        {wishlist.includes(item.name) ? '♥' : '♡'}
-                      </button>
-                    </div>
-
-                    {/* PRODUCT INFO */}
-                    <div className="p-4 text-center bg-gray-900">
-                      <h3 className="text-white font-bold mb-2 text-sm leading-tight">{item.name}</h3>
-                      <p className="text-yellow-400 font-bold text-lg mb-3">${item.price}</p>
-                      <button
-                        onClick={() => addToCart(item.name)}
-                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 rounded-lg text-sm"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* WISHLIST TAB */}
-            {activeTab === 'wishlist' && (
-              wishlist.length === 0 ? (
-                <div className="text-center py-16">
-                  <p className="text-5xl mb-4">♡</p>
-                  <p className="text-gray-700 font-bold text-lg">Your wishlist is empty</p>
-                  <p className="text-gray-500 text-sm mt-2">Tap the heart on any item to save it for later</p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 gap-4">
-                  {swagItems.filter(item => wishlist.includes(item.name)).map((item, i) => (
-                    <div key={i} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-                      <div className="bg-white h-56 flex items-center justify-center relative">
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                        <button onClick={() => toggleWishlist(item.name)} className="absolute top-3 right-3 bg-white text-red-600 rounded-full p-2.5 shadow-lg border border-red-100">♥</button>
-                      </div>
-                      <div className="p-4 text-center bg-gray-900">
-                        <h3 className="text-white font-bold mb-2 text-sm leading-tight">{item.name}</h3>
-                        <p className="text-yellow-400 font-bold text-lg mb-3">${item.price}</p>
-                        <button onClick={() => addToCart(item.name)} className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 rounded-lg text-sm">Add to Cart</button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )
-            )}
-
-            {/* CART DRAWER */}
-            {showCart && (
-              <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center">
-                <div className="absolute inset-0 bg-black/50" onClick={() => setShowCart(false)}></div>
-                <div className="relative bg-white rounded-t-2xl md:rounded-2xl w-full md:max-w-md max-h-[80vh] overflow-y-auto p-6 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-bold text-gray-900">Your Cart</h2>
-                    <button onClick={() => setShowCart(false)} className="text-gray-500 font-bold text-xl">✕</button>
-                  </div>
-
-                  {cart.length === 0 ? (
-                    <p className="text-gray-500 text-center py-8">Your cart is empty.</p>
-                  ) : (
-                    <>
-                      <div className="space-y-3">
-                        {cart.map((c, i) => {
-                          const item = swagItems.find(s => s.name === c.name);
-                          return (
-                            <div key={i} className="flex items-center justify-between border-b border-gray-100 pb-3">
-                              <div>
-                                <p className="font-bold text-sm text-gray-900">{c.name}</p>
-                                <p className="text-xs text-gray-500">Qty {c.qty} &times; ${item?.price.toFixed(2)}</p>
-                              </div>
-                              <button onClick={() => removeFromCart(c.name)} className="text-red-600 text-sm font-bold">Remove</button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div className="flex justify-between font-bold text-lg text-gray-900 pt-2">
-                        <span>Subtotal</span>
-                        <span>${cart.reduce((sum, c) => {
-                          const item = swagItems.find(s => s.name === c.name);
-                          return sum + (item?.price || 0) * c.qty;
-                        }, 0).toFixed(2)}</span>
-                      </div>
-                      <button
-                        onClick={() => alert('Online checkout is being finalized. Please check back soon, or purchase swag in person at the event!')}
-                        className="w-full bg-red-700 hover:bg-red-800 text-white py-3 rounded-lg font-bold"
-                      >
-                        Checkout
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
+          <FestivalSwag setActiveNav={setActiveNav} />
         )}
-        {/* TIDE CHART */}
+
         {activeNav === 'tides' && (
           <div className="space-y-6 pb-20">
             <div className="bg-gradient-to-br from-blue-700 to-blue-900 text-white p-8 rounded-2xl shadow-lg text-center">
@@ -2683,63 +1729,27 @@ const JimmyJamApp = () => {
           </div>
         )}
 
+        {/* FESTIVAL GUIDE */}
+        {activeNav === 'guide' && (
+          <FestivalGuide
+            setActiveNav={setActiveNav}
+            openExternal={openExternal}
+          />
+        )}
+
         {/* ADMIN - MANAGE GPS PINS */}
         {activeNav === 'admin' && (
           <AdminPins venueLat={EVENT_LAT} venueLon={EVENT_LON} />
         )}
       </main>
 
-      {/* FOOTER - BOTTOM NAVIGATION */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-red-700 text-white shadow-lg z-30">
-        <div className="max-w-6xl mx-auto px-2 py-1.5 relative">
-          <div className="flex items-center justify-around">
-            {/* HOME */}
-            <button
-              onClick={() => { setActiveNav('home'); setShowMoreMenu(false); }}
-              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${activeNav === 'home' ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
-            >
-              <span className="text-xl">🏠</span>
-              <span className="text-[11px]">Home</span>
-            </button>
-
-            {/* ARTISTS */}
-            <button
-              onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }}
-              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${activeNav === 'artists' ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
-            >
-              <span className="text-xl">🎤</span>
-              <span className="text-[11px]">Artists</span>
-            </button>
-
-            {/* SCHEDULE */}
-            <button
-              onClick={() => { setActiveNav('schedule'); setShowMoreMenu(false); }}
-              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${activeNav === 'schedule' ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
-            >
-              <span className="text-xl">📅</span>
-              <span className="text-[11px]">Schedule</span>
-            </button>
-
-            {/* MAPS */}
-            <button
-              onClick={() => { setActiveNav('maps'); setShowMoreMenu(false); }}
-              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${activeNav === 'maps' ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
-            >
-              <span className="text-xl">📍</span>
-              <span className="text-[11px]">Maps</span>
-            </button>
-
-            {/* MORE MENU */}
-            <button
-              onClick={() => setShowMoreMenu(!showMoreMenu)}
-              className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-lg transition-all flex-1 ${showMoreMenu ? 'bg-red-900/60 text-amber-300 font-bold' : 'hover:bg-red-800 text-white'}`}
-            >
-              <span className="text-xl">☰</span>
-              <span className="text-[11px]">More</span>
-            </button>
-          </div>
-        </div>
-      </footer>
+      {/* FOOTER - CURVED FLOATING NOTCH BOTTOM NAVIGATION */}
+      <FestivalBottomNav
+        activeNav={activeNav}
+        setActiveNav={setActiveNav}
+        showMoreMenu={showMoreMenu}
+        setShowMoreMenu={setShowMoreMenu}
+      />
 
       {/* FESTIVAL SLIDE-OVER MENU DRAWER */}
       {showMoreMenu && (
