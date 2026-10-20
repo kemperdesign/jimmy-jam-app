@@ -25,6 +25,7 @@ export default function FestivalArtists({
   toggleMySchedule,
   addArtistToCalendar,
   openExternal,
+  openInAppModal,
   setActiveNav,
   EVENT_VENUE_NAME = 'St. Johns County Fairgrounds'
 }) {
@@ -50,6 +51,8 @@ export default function FestivalArtists({
       eventStartTime: '20:15',
       time: '8:15 PM – 10:00 PM',
       stage: 'The Tringali Barn Patio',
+      stageShort: 'Tringali Barn',
+      youtubeId: 'VrMzNq42iu0',
       location: 'Elkton, FL • The Tringali Barn',
       price: '$100 / person',
       priceSubtitle: 'Dinner & Concert Ticket',
@@ -85,6 +88,7 @@ export default function FestivalArtists({
       eventStartTime: '11:30',
       time: '11:30 AM – 3:30 PM',
       stage: 'Main Amphitheater Stage',
+      stageShort: 'Main Stage',
       location: 'St. Johns County Fairgrounds',
       price: 'Free Entry',
       priceSubtitle: 'Included with Admission',
@@ -120,6 +124,7 @@ export default function FestivalArtists({
       eventStartTime: '13:00',
       time: '1:00 PM – 4:00 PM',
       stage: 'Acoustic Pavilion',
+      stageShort: 'Acoustic Tent',
       location: 'St. Johns County Fairgrounds',
       price: 'Free Entry',
       priceSubtitle: 'Included with Admission',
@@ -323,7 +328,7 @@ export default function FestivalArtists({
                 Location
               </span>
               <p className="font-bold text-xs text-white truncate">
-                {selectedArtist.stage.split(' ')[0]}
+                {selectedArtist.stageShort || selectedArtist.stage}
               </p>
             </div>
 
@@ -359,6 +364,40 @@ export default function FestivalArtists({
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          
+
+          {/* EMBEDDED YOUTUBE VIDEO */}
+          {selectedArtist.youtubeId && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-lg bg-red-600 flex items-center justify-center text-white text-xs shadow-md shadow-red-600/30">
+                    ▶
+                  </div>
+                  <h3 className="font-bold text-base text-white">Live Performance Video</h3>
+                </div>
+                <button
+                  onClick={() => openExternal(`https://youtu.be/${selectedArtist.youtubeId}`)}
+                  className="text-[11px] font-bold text-red-400 hover:text-red-300 flex items-center gap-1"
+                >
+                  <span>Watch on YouTube</span>
+                  <ExternalLink size={12} />
+                </button>
+              </div>
+
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-black">
+                <iframe
+                  className="w-full h-full"
+                  src={`https://www.youtube.com/embed/${selectedArtist.youtubeId}?rel=0&modestbranding=1`}
+                  title={`${selectedArtist.displayName} Live Performance`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
             </div>
           )}
 
@@ -419,7 +458,7 @@ export default function FestivalArtists({
 
               {selectedArtist.ticketUrl ? (
                 <button
-                  onClick={() => openExternal(selectedArtist.ticketUrl)}
+                  onClick={() => openInAppModal ? openInAppModal(selectedArtist.ticketUrl, `${selectedArtist.displayName} Tickets`) : openExternal(selectedArtist.ticketUrl)}
                   className="flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all active:scale-95"
                 >
                   <Ticket size={16} />

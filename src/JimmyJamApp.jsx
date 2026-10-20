@@ -267,6 +267,14 @@ const JimmyJamApp = () => {
 
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [selectedSponsor, setSelectedSponsor] = useState(null);
+  const [activeEmbeddedUrl, setActiveEmbeddedUrl] = useState(null);
+  const [embeddedTitle, setEmbeddedTitle] = useState('Register & Tickets');
+
+  const openInAppModal = (url, title = 'Register & Tickets') => {
+    if (!url) return;
+    setActiveEmbeddedUrl(url);
+    setEmbeddedTitle(title);
+  };
 
   const [assistanceForm, setAssistanceForm] = useState({
     firstName: '',
@@ -1036,6 +1044,7 @@ const JimmyJamApp = () => {
         {/* SCHEDULE */}
         {activeNav === 'schedule' && (
           <FestivalSchedule
+            openInAppModal={openInAppModal}
             mySchedule={mySchedule}
             toggleMySchedule={toggleMySchedule}
             openExternal={openExternal}
@@ -1081,7 +1090,7 @@ const JimmyJamApp = () => {
 
             {/* BUY BUTTON */}
             <button
-              onClick={() => openExternal('https://pci.jotform.com/form/260406377587163')}
+              onClick={() => openInAppModal('https://pci.jotform.com/form/260406377587163', 'Jimmy Jam Tickets')}
               className="w-full block text-center py-4 rounded-pill font-bold text-lg transition-all"
               style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF', height: '48px' }}
             >
@@ -1112,7 +1121,7 @@ const JimmyJamApp = () => {
                   </div>
 
                   <button
-                    onClick={() => openExternal(ticket.url)}
+                    onClick={() => openInAppModal(ticket.url, ticket.title)}
                     className="w-full mt-4 block text-center py-2 rounded-md font-bold text-sm transition-all"
                     style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}
                   >
@@ -1875,6 +1884,7 @@ const JimmyJamApp = () => {
         {/* ARTISTS */}
         {activeNav === 'artists' && (
           <FestivalArtists
+            openInAppModal={openInAppModal}
             artistsData={artistsData}
             selectedArtist={selectedArtist}
             setSelectedArtist={setSelectedArtist}
@@ -2971,6 +2981,46 @@ const JimmyJamApp = () => {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      
+      {/* IN-APP EMBEDDED MODAL VIEWER (No external browser tabs!) */}
+      {activeEmbeddedUrl && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-[#181716] text-white px-4 py-3 flex items-center justify-between border-b border-neutral-800 shadow-md">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1 flex-shrink-0">
+                🔒 Secure Form
+              </span>
+              <span className="font-bold text-sm text-neutral-200 truncate">{embeddedTitle}</span>
+            </div>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <button
+                onClick={() => openExternal(activeEmbeddedUrl)}
+                className="text-xs text-neutral-400 hover:text-white px-2.5 py-1 rounded-lg border border-neutral-700 hover:border-neutral-500 transition-colors"
+                title="Open in new window"
+              >
+                ↗ Browser
+              </button>
+              <button
+                onClick={() => setActiveEmbeddedUrl(null)}
+                className="w-8 h-8 rounded-full bg-neutral-800 hover:bg-neutral-700 text-white flex items-center justify-center transition-colors"
+                aria-label="Close form"
+              >
+                <X size={18} />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex-1 w-full h-full bg-white relative">
+            <iframe
+              src={activeEmbeddedUrl}
+              title={embeddedTitle}
+              className="w-full h-full border-0"
+              allow="payment; camera; geolocation"
+            />
           </div>
         </div>
       )}

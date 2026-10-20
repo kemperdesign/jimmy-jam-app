@@ -21,6 +21,7 @@ export default function FestivalSchedule({
   mySchedule = [],
   toggleMySchedule,
   openExternal,
+  openInAppModal,
   setActiveNav,
   EVENT_DATE_LABEL = 'January 9, 2027',
   EVENT_VENUE_NAME = 'St. Johns County Fairgrounds'
@@ -209,7 +210,7 @@ export default function FestivalSchedule({
       date: 'Saturday, October 17, 2026',
       venue: 'The Tringali Barn • Elkton, FL',
       cta: 'Reserve Dinner ($100)',
-      action: () => openExternal('https://pci.jotform.com/form/262125277149156'),
+      action: () => openInAppModal ? openInAppModal('https://pci.jotform.com/form/262125277149156', 'Bourbon & BBQ Dinner Registration') : openExternal('https://pci.jotform.com/form/262125277149156'),
       gradient: 'linear-gradient(135deg, #7C2D12 0%, #EA580C 50%, #C2410C 100%)',
       photo: 'https://images.zoogletools.com/s:bzglfiles/u/188709/0fadb2caa1a76a2c326d930c9511749d8c4dbf86/original/photo-output-4.jpeg/!!/b%3AW1sicmVzaXplIiwxODAwXSxbIm1heCJdLFsid2UiXV0%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg'
     },
@@ -224,7 +225,7 @@ export default function FestivalSchedule({
       gradient: 'linear-gradient(135deg, #065F46 0%, #059669 50%, #047857 100%)',
       photo: '/images/event-photos/dsc08387.jpg'
     }
-  ], [EVENT_DATE_LABEL, EVENT_VENUE_NAME, setActiveNav, openExternal]);
+  ], [EVENT_DATE_LABEL, EVENT_VENUE_NAME, setActiveNav, openExternal, openInAppModal]);
 
   // Categories for horizontal pill filters
   const categories = [
@@ -630,7 +631,7 @@ export default function FestivalSchedule({
                         <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
                           {event.ticketUrl ? (
                             <button
-                              onClick={() => openExternal(event.ticketUrl)}
+                              onClick={() => openInAppModal ? openInAppModal(event.ticketUrl, event.title) : openExternal(event.ticketUrl)}
                               className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1"
                             >
                               <Ticket size={13} />
