@@ -128,7 +128,7 @@ export default function FestivalSponsors({
                   } group`}
                 >
                   {/* Sponsor Logo Container (Clean white space, perfectly centered) */}
-                  <div className="h-24 w-full flex items-center justify-center p-2 mb-2 rounded-lg bg-white overflow-hidden">
+                  <div className="h-24 w-full flex items-center justify-center p-2 mb-2 rounded-xl bg-slate-50/70 border border-slate-100 overflow-hidden">
                     {sponsor.logoImage ? (
                       <img
                         src={sponsor.logoImage}
@@ -136,13 +136,17 @@ export default function FestivalSponsors({
                         className="max-h-20 max-w-full object-contain group-hover:scale-105 transition-transform duration-200"
                         onError={(e) => {
                           e.target.style.display = 'none';
+                          const fallback = e.target.parentElement.querySelector('.logo-fallback');
+                          if (fallback) fallback.style.display = 'flex';
                         }}
                       />
-                    ) : (
-                      <div className="w-16 h-16 rounded-xl bg-slate-100 flex items-center justify-center text-3xl">
-                        {sponsor.logo || '🤝'}
-                      </div>
-                    )}
+                    ) : null}
+                    <div
+                      className="logo-fallback w-16 h-16 rounded-xl bg-slate-100 flex items-center justify-center text-3xl"
+                      style={{ display: sponsor.logoImage ? 'none' : 'flex' }}
+                    >
+                      {sponsor.logo || '🤝'}
+                    </div>
                   </div>
 
                   {/* Sponsor Name (Bold text like mockup) */}

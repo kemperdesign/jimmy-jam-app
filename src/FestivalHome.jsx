@@ -11,7 +11,10 @@ import {
   MapPin,
   BookOpen,
   Play,
-  X
+  X,
+  ChevronLeft,
+  ChevronRight,
+  ZoomIn
 } from 'lucide-react';
 import {
   BbqGrillBadge,
@@ -23,6 +26,36 @@ import {
   FestivalMapBadge
 } from './BbqBadgeIcons';
 
+const DEFENDING_CHAMPIONS = [
+  {
+    name: 'Maya Jane BBQ',
+    subtitle: 'Defending Champ',
+    division: 'PRO GRAND CHAMPION',
+    badge: 'PRO GRAND',
+    badgeBg: 'bg-amber-500 text-slate-950',
+    src: '/winners/maya-jane-bbq-co-pro-grand-champion-2026.jpg',
+    desc: '2026 Pro Grand Champions taking the top stage award at the 10th Annual Jimmy Jam BBQ Slam.'
+  },
+  {
+    name: "Mike's Backyard",
+    subtitle: 'Reserve Champ',
+    division: 'BACKYARD RESERVE GRAND CHAMPION',
+    badge: 'BACKYARD',
+    badgeBg: 'bg-blue-600 text-white',
+    src: '/winners/mikes-backyard-bbq-backyard-reserve-grand-champion-2026.jpg',
+    desc: '2026 Backyard Reserve Grand Champions celebrated with their custom engraved trophy slab.'
+  },
+  {
+    name: 'So So BBQ',
+    subtitle: 'Public Favorite',
+    division: "PEOPLE'S CHOICE WINNER",
+    badge: "PEOPLE'S",
+    badgeBg: 'bg-red-600 text-white',
+    src: '/winners/so-so-bbq-peoples-choice-2026.jpg',
+    desc: "2026 People's Choice Champion voted by festival-goers and public tasting token holders."
+  }
+];
+
 export default function FestivalHome({
   setActiveNav,
   openExternal,
@@ -31,6 +64,7 @@ export default function FestivalHome({
   setShowMoreMenu
 }) {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [enlargedIndex, setEnlargedIndex] = useState(null);
 
   return (
     <div className="relative -mx-4 -mt-8 px-4 pt-4 pb-12 overflow-hidden"
@@ -346,59 +380,39 @@ export default function FestivalHome({
           </div>
 
           <div className="grid grid-cols-3 gap-2">
-            {/* Pro Grand Champion: Maya Jane BBQ Co */}
-            <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col group">
-              <div className="relative aspect-square overflow-hidden bg-slate-900">
-                <img
-                  src="/winners/maya-jane-bbq-co-pro-grand-champion-2026.jpg"
-                  alt="Maya Jane BBQ Co - Pro Grand Champion"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
-                <span className="absolute top-1 left-1 bg-amber-500 text-slate-950 font-black text-[9px] px-1.5 py-0.5 rounded shadow">
-                  PRO GRAND
-                </span>
-              </div>
-              <div className="p-2 text-center flex-1 flex flex-col justify-between">
-                <p className="font-bold text-xs text-slate-900 leading-tight">Maya Jane BBQ</p>
-                <p className="text-[10px] text-amber-700 font-semibold mt-0.5">Defending Champ</p>
-              </div>
-            </div>
-
-            {/* Backyard Reserve Champion: Mike's Backyard BBQ */}
-            <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col group">
-              <div className="relative aspect-square overflow-hidden bg-slate-900">
-                <img
-                  src="/winners/mikes-backyard-bbq-backyard-reserve-grand-champion-2026.jpg"
-                  alt="Mike's Backyard BBQ - Backyard Reserve Champion"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
-                <span className="absolute top-1 left-1 bg-blue-600 text-white font-black text-[9px] px-1.5 py-0.5 rounded shadow">
-                  BACKYARD
-                </span>
-              </div>
-              <div className="p-2 text-center flex-1 flex flex-col justify-between">
-                <p className="font-bold text-xs text-slate-900 leading-tight">Mike's Backyard</p>
-                <p className="text-[10px] text-blue-700 font-semibold mt-0.5">Reserve Champ</p>
-              </div>
-            </div>
-
-            {/* People's Choice: So So BBQ */}
-            <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col group">
-              <div className="relative aspect-square overflow-hidden bg-slate-900">
-                <img
-                  src="/winners/so-so-bbq-peoples-choice-2026.jpg"
-                  alt="So So BBQ - People's Choice Winner"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
-                <span className="absolute top-1 left-1 bg-red-600 text-white font-black text-[9px] px-1.5 py-0.5 rounded shadow">
-                  PEOPLE'S
-                </span>
-              </div>
-              <div className="p-2 text-center flex-1 flex flex-col justify-between">
-                <p className="font-bold text-xs text-slate-900 leading-tight">So So BBQ</p>
-                <p className="text-[10px] text-red-600 font-semibold mt-0.5">Public Favorite</p>
-              </div>
-            </div>
+            {DEFENDING_CHAMPIONS.map((champ, idx) => (
+              <button
+                key={champ.name}
+                type="button"
+                onClick={() => setEnlargedIndex(idx)}
+                className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col group text-left cursor-pointer hover:border-amber-400 hover:shadow-md transition-all active:scale-95 focus:outline-none"
+                aria-label={`Enlarge photo: ${champ.name} - ${champ.division}`}
+              >
+                <div className="relative aspect-square overflow-hidden bg-slate-900">
+                  <img
+                    src={champ.src}
+                    alt={`${champ.name} - ${champ.division}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className={`absolute top-1 left-1 ${champ.badgeBg} font-black text-[9px] px-1.5 py-0.5 rounded shadow`}>
+                    {champ.badge}
+                  </span>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="p-1.5 rounded-full bg-black/70 text-white shadow-lg backdrop-blur-sm">
+                      <ZoomIn size={14} />
+                    </span>
+                  </div>
+                </div>
+                <div className="p-2 text-center flex-1 flex flex-col justify-between">
+                  <p className="font-bold text-xs text-slate-900 leading-tight">{champ.name}</p>
+                  <p className={`text-[10px] font-semibold mt-0.5 ${
+                    idx === 0 ? 'text-amber-700' : idx === 1 ? 'text-blue-700' : 'text-red-600'
+                  }`}>
+                    {champ.subtitle}
+                  </p>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
 
@@ -557,6 +571,72 @@ export default function FestivalHome({
         </div>
 
       </div>
+
+      {/* FULLSCREEN ENLARGED WINNER LIGHTBOX */}
+      {enlargedIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 animate-in fade-in duration-200"
+          onClick={() => setEnlargedIndex(null)}
+        >
+          {/* Top Bar with Title and Close Button */}
+          <div className="flex items-center justify-between z-10 pt-2 px-2 max-w-2xl mx-auto w-full" onClick={(e) => e.stopPropagation()}>
+            <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${DEFENDING_CHAMPIONS[enlargedIndex].badgeBg} shadow-lg`}>
+              {DEFENDING_CHAMPIONS[enlargedIndex].division}
+            </span>
+            <button
+              onClick={() => setEnlargedIndex(null)}
+              className="text-white bg-white/10 hover:bg-white/20 active:scale-95 rounded-full p-2.5 transition-all border border-white/20 shadow-lg cursor-pointer"
+              aria-label="Close enlarged photo"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* Centered Enlarged Image with Next/Prev Nav */}
+          <div
+            className="flex-1 flex items-center justify-center p-2 relative my-auto max-h-[75vh] max-w-2xl mx-auto w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setEnlargedIndex((prev) => (prev > 0 ? prev - 1 : DEFENDING_CHAMPIONS.length - 1))}
+              className="absolute left-1 sm:left-4 z-20 text-white bg-black/70 hover:bg-black/90 active:scale-95 rounded-full p-3 transition-all border border-white/20 shadow-xl cursor-pointer"
+              aria-label="Previous photo"
+            >
+              <ChevronLeft size={28} />
+            </button>
+
+            <img
+              src={DEFENDING_CHAMPIONS[enlargedIndex].src}
+              alt={DEFENDING_CHAMPIONS[enlargedIndex].name}
+              className="max-w-full max-h-[70vh] object-contain rounded-2xl shadow-2xl border border-white/10"
+            />
+
+            <button
+              onClick={() => setEnlargedIndex((prev) => (prev < DEFENDING_CHAMPIONS.length - 1 ? prev + 1 : 0))}
+              className="absolute right-1 sm:right-4 z-20 text-white bg-black/70 hover:bg-black/90 active:scale-95 rounded-full p-3 transition-all border border-white/20 shadow-xl cursor-pointer"
+              aria-label="Next photo"
+            >
+              <ChevronRight size={28} />
+            </button>
+          </div>
+
+          {/* Bottom Caption & Counter */}
+          <div
+            className="text-center text-white pb-4 px-4 z-10 max-w-md mx-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl sm:text-2xl font-bold font-display tracking-wider text-amber-300">
+              {DEFENDING_CHAMPIONS[enlargedIndex].name}
+            </h3>
+            <p className="text-neutral-300 text-xs sm:text-sm mt-1 leading-relaxed">
+              {DEFENDING_CHAMPIONS[enlargedIndex].desc}
+            </p>
+            <p className="text-neutral-400 text-[11px] font-semibold tracking-wider uppercase mt-2">
+              Photo {enlargedIndex + 1} of {DEFENDING_CHAMPIONS.length}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

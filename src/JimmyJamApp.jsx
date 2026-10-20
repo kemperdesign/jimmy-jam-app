@@ -38,14 +38,19 @@ const JimmyJamApp = () => {
   const EVENT_VENUE_ADDRESS = '5840 State Rd. 207, Elkton, FL 32145';
   const EVENT_DATE_LABEL = 'January 9, 2027';
 
-  const [showSplash, setShowSplash] = useState(true);  const [activeNav, setActiveNav] = useState('home');  const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  const [activeNav, setActiveNav] = useState('home');
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');  const [openRegistration, setOpenRegistration] = useState(null);  const [seasonView, setSeasonView] = useState('list');
+  const [activeTab, setActiveTab] = useState('overview');
+  const [openRegistration, setOpenRegistration] = useState(null);
+  const [seasonView, setSeasonView] = useState('list');
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const d = new Date();
     return new Date(d.getFullYear(), d.getMonth(), 1);
-  });
+  });
+
   const [mySchedule, setMySchedule] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('jj_my_schedule') || '[]');
@@ -114,7 +119,8 @@ const JimmyJamApp = () => {
     a.click();
     document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 2000);
-  };
+  };
+
   // Set default tabs when navigating to specific pages
   useEffect(() => {
     if (activeNav === 'weather') {
@@ -146,11 +152,11 @@ const JimmyJamApp = () => {
     { id: 11, name: 'United Rentals', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/united-rentals.png', website: 'https://www.unitedrentals.com/locations/fl/jacksonville/power-hvac-rentals/g80', description: 'United Rentals\' Jacksonville branch supplies power generation and HVAC rental equipment for construction sites and events, part of the world\'s largest equipment rental company.' },
     { id: 12, name: 'Bozard Ford', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/bozard-ford.svg', website: 'https://bozardford.com/', description: 'Bozard Ford is a Ford dealership at 540 Outlet Mall Blvd in St. Augustine offering new trucks, used cars, service, parts, and financing to the greater Jacksonville area.' },
     { id: 1, name: 'Evans Automotive', tier: "People's Choice — Chili & Chowder", logo: '🌶️', logoImage: '/sponsor-logos/evans-automotive.jpg', website: 'https://www.evans-automotive.com/', description: 'Evans Automotive & Tire Center is a family-owned auto repair shop on Pinecrest St. in St. Augustine with over 25 years of experience in brakes, A/C, transmission, alignment, and tire service — and sponsor of the Chili & Chowder People\'s Choice competition.' },
-    { id: 2, name: 'Steelhead Plumbing', tier: "People's Choice — BBQ", logo: '🍖', website: 'https://steelheadplumbing.com/', description: 'Steelhead Plumbing LLC is a licensed and insured St. Augustine plumbing contractor serving residential and commercial clients, and a supporter of the St. Johns Police Athletic League — now sponsoring the BBQ People\'s Choice competition.' },
-    { id: 13, name: 'Hometech Pest Control', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://hometechpest.com/', description: 'HomeTech Pest Solutions is a family-run pest control company operating locally since 2005, offering residential and commercial pest, termite, and rodent control along with wood-destroying organism inspections.' },
-    { id: 14, name: 'Perfect Promo Solutions', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://www.perfectpromosolutions.com/', description: 'Perfect Promo Solutions supplies custom-branded promotional merchandise — apparel, drinkware, bags, awards, and tech accessories — along with printing, wraps, and wooden gifts to help local businesses promote their brands.' },
-    { id: 15, name: 'MySALL.org', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://mysall.org/', description: 'St. Augustine Little League ("SALL") is a youth baseball organization handling player registration, divisions, game scheduling, and volunteer and sponsorship programs for local kids.' },
-    { id: 16, name: 'Edwards Law Firm', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://edwardslawfirm.com/', description: 'The Edwards Law Firm serves clients in Jacksonville, St. Augustine, Fernandina Beach, and Mandarin, focusing on estate planning and elder law — including asset protection, probate, long-term care planning, and veterans\' benefits.' },
+    { id: 2, name: 'Steelhead Plumbing', tier: "People's Choice — BBQ", logo: '🍖', logoImage: '/sponsor-logos/steelhead-plumbing.png', website: 'https://steelheadplumbing.com/', description: 'Steelhead Plumbing LLC is a licensed and insured St. Augustine plumbing contractor serving residential and commercial clients, and a supporter of the St. Johns Police Athletic League — now sponsoring the BBQ People\'s Choice competition.' },
+    { id: 13, name: 'Hometech Pest Control', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/hometech.jpg', website: 'https://hometechpest.com/', description: 'HomeTech Pest Solutions is a family-run pest control company operating locally since 2005, offering residential and commercial pest, termite, and rodent control along with wood-destroying organism inspections.' },
+    { id: 14, name: 'Perfect Promo Solutions', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/pps.png', website: 'https://www.perfectpromosolutions.com/', description: 'Perfect Promo Solutions supplies custom-branded promotional merchandise — apparel, drinkware, bags, awards, and tech accessories — along with printing, wraps, and wooden gifts to help local businesses promote their brands.' },
+    { id: 15, name: 'MySALL.org', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/mysall.png', website: 'https://mysall.org/', description: 'St. Augustine Little League ("SALL") is a youth baseball organization handling player registration, divisions, game scheduling, and volunteer and sponsorship programs for local kids.' },
+    { id: 16, name: 'Edwards Law Firm', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/edwards.png', website: 'https://edwardslawfirm.com/', description: 'The Edwards Law Firm serves clients in Jacksonville, St. Augustine, Fernandina Beach, and Mandarin, focusing on estate planning and elder law — including asset protection, probate, long-term care planning, and veterans\' benefits.' },
     { id: 17, name: 'Melvin’s Auto & Truck Repair', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://www.melvinsautoandtruckrepair.com/', description: 'Melvin\'s Auto & Truck Repair is an auto repair shop in St. Augustine working on both cars and trucks.' },
     { id: 18, name: 'MRT St. Augustine', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://mrtstaug.com/', description: 'Mr. T\'s Mechanical Refrigerated Technologies is a state-licensed HVAC and refrigeration contractor in St. Augustine, operating since 2002 and serving homes, businesses, and commercial refrigeration like walk-in coolers and ice machines.' },
     { id: 19, name: 'SSS BBQ Inc.', tier: 'Banner Sponsor', logo: '🏳️', website: 'https://www.sssbbqinc.com/', description: 'Schrader\'s Smoker Service (SSS BBQ Inc.) is a family-run north central Florida business selling commercial-grade smokers and BBQ grills, with parts, repairs, rentals, and relocation services across the Southeast — in business since 1999 as an authorized Southern Pride distributor.' },
@@ -193,14 +199,16 @@ const JimmyJamApp = () => {
     }
   ];
 
-  const [selectedArtist, setSelectedArtist] = useState(null);  const [activeEmbeddedUrl, setActiveEmbeddedUrl] = useState(null);
+  const [selectedArtist, setSelectedArtist] = useState(null);
+  const [activeEmbeddedUrl, setActiveEmbeddedUrl] = useState(null);
   const [embeddedTitle, setEmbeddedTitle] = useState('Register & Tickets');
 
   const openInAppModal = (url, title = 'Register & Tickets') => {
     if (!url) return;
     setActiveEmbeddedUrl(url);
     setEmbeddedTitle(title);
-  };
+  };
+
   // NOAA station 8720576 — St. Augustine, City Dock, FL (nearest tide station to the venue)
   const TIDE_STATION_ID = '8720576';
   const TIDE_STATION_NAME = 'St. Augustine, City Dock, FL';
@@ -268,7 +276,7 @@ const JimmyJamApp = () => {
   // Splash screen fallback timeout
   useEffect(() => {
     if (!showSplash) return;
-    const fallback = setTimeout(() => setShowSplash(false), 9000);
+    const fallback = setTimeout(() => setShowSplash(false), 11000);
     return () => clearTimeout(fallback);
   }, [showSplash]);
 
@@ -545,7 +553,8 @@ const JimmyJamApp = () => {
       { name: 'Bourbon Cocktails', desc: 'Old Fashioned, Mint Julep', price: '$10' },
       { name: 'Bourbon & BBQ Pairing', desc: 'Curated selection', price: '$28' }
     ]
-  };
+  };
+
   // Real content from jimmyjambbqslam.com/about. These are the actual impact stories
   // published there (anonymized by the organization itself, no names given) — we do not
   // invent names or quotes attributed to fictional people.
@@ -579,7 +588,8 @@ const JimmyJamApp = () => {
     { title: 'Keeping a Family Housed', body: 'A hardworking mom juggling two jobs was struggling with rent. We stepped in to cover her balance for two months so she could get back on track.' },
     { title: 'Rebuilding After Losing a Home', body: 'A family of four who lost their home received financial assistance to help rebuild their lives.' },
     { title: 'A New Walker for Dad', body: '"Because of Jimmy Jam, they have given that gift of accessibility to him in order to enjoy life with his grandson, and that means the world to us." — Sarah Felker, whose father Stanley Reigger (who has Parkinson’s disease) received a brand-new walker after his broke. She shared the story publicly on Facebook (as reported by St. Johns Citizen, Jan. 23, 2026).' }
-  ];
+  ];
+
   const nextPhoto = () => {
     setCurrentPhotoIndex((prev) => (prev + 1) % galleryPhotos.length);
   };
