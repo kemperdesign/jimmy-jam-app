@@ -357,6 +357,15 @@ export default function FestivalRecipes({ setActiveNav }) {
   // Filter recipes based on course tab, category, and search query
   const filteredRecipes = useMemo(() => {
     return recipes.filter(r => {
+      if (activeTab === 'MY_BOOK') {
+        const isSaved = savedRecipeIds.includes(r.id);
+        const matchesSearch =
+          !searchQuery.trim() ||
+          r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          r.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          r.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+        return isSaved && matchesSearch;
+      }
       const matchesCourse = activeTab === 'ALL' || r.course === activeTab;
       const matchesCategory = selectedCategory === 'ALL' || r.category === selectedCategory;
       const matchesSearch =
@@ -366,7 +375,7 @@ export default function FestivalRecipes({ setActiveNav }) {
         r.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchesCourse && matchesCategory && matchesSearch;
     });
-  }, [recipes, activeTab, selectedCategory, searchQuery]);
+  }, [recipes, activeTab, selectedCategory, searchQuery, savedRecipeIds]);
 
   // Popular dish carousel items
   const popularDishes = useMemo(() => {
@@ -500,27 +509,40 @@ export default function FestivalRecipes({ setActiveNav }) {
               {selectedRecipe.desc}
             </p>
 
-            {/* ADD TO RECIPE BOOK BUTTON (Matching Reference Pill) */}
-            <button
-              onClick={() => toggleSaveRecipe(selectedRecipe.id)}
-              className={`w-full py-3.5 rounded-full font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl transform active:scale-98 transition-all ${
-                isSaved
-                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-900/40'
-                  : 'bg-black hover:bg-neutral-900 text-white border border-white/20 shadow-black/50'
-              }`}
-            >
-              {isSaved ? (
-                <>
-                  <Check size={16} />
-                  <span>SAVED TO MY RECIPE BOOK</span>
-                </>
-              ) : (
-                <>
-                  <BookOpen size={16} />
-                  <span>ADD TO RECIPE BOOK</span>
-                </>
-              )}
-            </button>
+            {/* ADD TO RECIPE BOOK BUTTON & DIRECT BOOK SHORTCUT */}
+            <div className="space-y-2 pt-1">
+              <button
+                onClick={() => toggleSaveRecipe(selectedRecipe.id)}
+                className={`w-full py-3.5 rounded-full font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl transform active:scale-98 transition-all ${
+                  isSaved
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-900/40'
+                    : 'bg-black hover:bg-neutral-900 text-white border border-white/20 shadow-black/50'
+                }`}
+              >
+                {isSaved ? (
+                  <>
+                    <Check size={16} />
+                    <span>SAVED IN YOUR RECIPE BOOK</span>
+                  </>
+                ) : (
+                  <>
+                    <BookOpen size={16} />
+                    <span>ADD TO RECIPE BOOK</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={() => {
+                  setSelectedRecipe(null);
+                  setActiveTab('MY_BOOK');
+                }}
+                className="w-full py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-amber-300 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-sm"
+              >
+                <BookOpen size={14} />
+                <span>Open My Recipe Book ({savedRecipeIds.length} Saved) →</span>
+              </button>
+            </div>
 
             {/* Social / Metric Counters Row (Matching Reference Icons) */}
             <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/10 text-center">
@@ -671,13 +693,38 @@ export default function FestivalRecipes({ setActiveNav }) {
       
       <div className="relative max-w-xl mx-auto space-y-6 z-10">
 
+        {/* TOP TITLE ROW WITH DIRECT "MY RECIPE BOOK" BUTTON */}
+        <div className="flex items-center justify-between pt-1">
+          <div>
+            <h1 className="font-serif text-xl sm:text-2xl font-extrabold text-white tracking-wide">
+              PITMASTER RECIPES
+            </h1>
+            <p className="text-[11px] text-neutral-400">Jimmy Jam BBQ Slam & Bourbon</p>
+          </div>
+
+          <button
+            onClick={() => setActiveTab(activeTab === 'MY_BOOK' ? 'ALL' : 'MY_BOOK')}
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-2 border transition-all shadow-md ${
+              activeTab === 'MY_BOOK'
+                ? 'bg-amber-400 text-amber-950 border-amber-300 shadow-amber-500/20'
+                : 'bg-[#1E293B] text-amber-300 border-amber-400/40 hover:bg-[#283548]'
+            }`}
+          >
+            <BookOpen size={14} />
+            <span>My Recipe Book</span>
+            <span className="w-5 h-5 rounded-full bg-amber-500 text-amber-950 font-extrabold text-[10px] flex items-center justify-center">
+              {savedRecipeIds.length}
+            </span>
+          </button>
+        </div>
+
         {/* 1. TOP OVAL PILL SEARCH BAR (Matching Screen 1 Mockup) */}
-        <div className="relative pt-1">
+        <div className="relative">
           <div className="relative flex items-center">
             <Search size={18} className="absolute left-4 text-neutral-300 pointer-events-none" />
             <input
               type="text"
-              placeholder="Search for recipes & channels"
+              placeholder="Search for recipes, ingredients & rubs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-11 pr-10 py-3 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs sm:text-sm text-white placeholder-neutral-300 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white/20 transition-all shadow-lg"
@@ -694,13 +741,36 @@ export default function FestivalRecipes({ setActiveNav }) {
           </div>
         </div>
 
-        {/* 2. MEAL / TIME FILTER PILLS (BREAKFAST / LUNCH / DINNER Style) */}
-        <div className="flex items-center justify-between gap-2 px-2">
-          {['ALL', 'BREAKFAST', 'LUNCH', 'DINNER'].map(course => (
+        {/* 2. MEAL & RECIPE BOOK TABS */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          <button
+            onClick={() => setActiveTab('ALL')}
+            className={`py-1.5 px-3.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+              activeTab === 'ALL'
+                ? 'bg-white text-neutral-900 shadow-md font-extrabold'
+                : 'text-neutral-300 hover:text-white'
+            }`}
+          >
+            ALL DISHES
+          </button>
+
+          <button
+            onClick={() => setActiveTab('MY_BOOK')}
+            className={`py-1.5 px-3.5 rounded-full text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-all ${
+              activeTab === 'MY_BOOK'
+                ? 'bg-amber-400 text-amber-950 shadow-md font-extrabold'
+                : 'bg-amber-400/15 text-amber-300 border border-amber-400/30 hover:bg-amber-400/25'
+            }`}
+          >
+            <BookOpen size={13} />
+            <span>MY RECIPE BOOK ({savedRecipeIds.length})</span>
+          </button>
+
+          {['LUNCH', 'DINNER'].map(course => (
             <button
               key={course}
               onClick={() => setActiveTab(course)}
-              className={`flex-1 py-1.5 px-3 rounded-full text-[11px] font-bold tracking-wider uppercase transition-all ${
+              className={`py-1.5 px-3.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
                 activeTab === course
                   ? 'bg-white text-neutral-900 shadow-md font-extrabold'
                   : 'text-neutral-300 hover:text-white'
@@ -711,8 +781,29 @@ export default function FestivalRecipes({ setActiveNav }) {
           ))}
         </div>
 
-        {/* 3. POPULAR DISH OF THE WEEK (Horizontal Carousel Matching Mockup) */}
-        <div className="space-y-3 pt-1">
+        {/* ACTIVE RECIPE BOOK BANNER (When viewing My Book) */}
+        {activeTab === 'MY_BOOK' && (
+          <div className="rounded-2xl p-4 bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-red-500/20 border border-amber-400/30 space-y-1.5 animate-in fade-in duration-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-amber-300 font-bold text-sm">
+                <BookOpen size={18} />
+                <span>YOUR SAVED FESTIVAL COOKBOOK</span>
+              </div>
+              <span className="text-xs bg-amber-400 text-amber-950 px-2.5 py-0.5 rounded-full font-bold">
+                {savedRecipeIds.length} Saved
+              </span>
+            </div>
+            <p className="text-xs text-neutral-300 leading-relaxed">
+              These recipes are stored on your device for quick offline access at the smoker or kitchen. Tap any dish to view complete ingredients and instructions.
+            </p>
+          </div>
+        )}
+
+        {/* 3 & 4. DISCOVERY CAROUSEL & CATEGORIES (Hidden when viewing My Recipe Book) */}
+        {activeTab !== 'MY_BOOK' && (
+          <>
+            {/* POPULAR DISH OF THE WEEK */}
+            <div className="space-y-3 pt-1">
           <div className="flex items-center gap-2">
             <span className="w-1 h-4 bg-amber-400 rounded-full inline-block" />
             <h2 className="font-serif tracking-wider text-xs sm:text-sm font-bold uppercase text-white">
@@ -831,12 +922,16 @@ export default function FestivalRecipes({ setActiveNav }) {
             ))}
           </div>
         </div>
+          </>
+        )}
 
         {/* 5. ALL RECIPES LIST (When filtering or browsing) */}
         <div className="space-y-3 pt-3">
           <div className="flex items-center justify-between px-1">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400">
-              Pitmaster Collection ({filteredRecipes.length})
+              {activeTab === 'MY_BOOK'
+                ? `Saved in Recipe Book (${filteredRecipes.length})`
+                : `Pitmaster Collection (${filteredRecipes.length})`}
             </span>
             <span className="text-[11px] text-amber-400 font-semibold">
               {savedRecipeIds.length} Saved in Cookbook
@@ -896,7 +991,23 @@ export default function FestivalRecipes({ setActiveNav }) {
               );
             })}
 
-            {filteredRecipes.length === 0 && (
+            {activeTab === 'MY_BOOK' && filteredRecipes.length === 0 ? (
+              <div className="text-center py-12 px-4 rounded-3xl bg-[#1E293B]/70 border border-white/10 space-y-3">
+                <div className="w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto text-3xl shadow-inner">
+                  📖
+                </div>
+                <h3 className="font-serif text-lg font-bold text-white">Your Recipe Book is Empty</h3>
+                <p className="text-xs text-neutral-300 max-w-xs mx-auto leading-relaxed">
+                  Browse our Championship Brisket, Bourbon Glazed Ribs, or Secret Sauces and tap "Add to Recipe Book" to save them here for offline access at the smoker!
+                </p>
+                <button
+                  onClick={() => setActiveTab('ALL')}
+                  className="px-5 py-2.5 rounded-full bg-amber-400 text-amber-950 font-bold text-xs uppercase tracking-wider shadow-md hover:bg-amber-300 transition-all"
+                >
+                  Browse All Recipes
+                </button>
+              </div>
+            ) : filteredRecipes.length === 0 ? (
               <div className="text-center py-12 space-y-2">
                 <p className="text-sm text-neutral-400">No recipes found matching "{searchQuery}".</p>
                 <button
@@ -906,7 +1017,7 @@ export default function FestivalRecipes({ setActiveNav }) {
                   Reset all filters
                 </button>
               </div>
-            )}
+            ) : null}
           </div>
         </div>
 
