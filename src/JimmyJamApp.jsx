@@ -1168,11 +1168,11 @@ const JimmyJamApp = () => {
             </div>
 
             {/* TABS */}
-            <div className="flex gap-3 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
+            <div className="flex gap-2 border-b overflow-x-auto no-scrollbar" style={{ borderColor: 'var(--border-subtle)' }}>
               {[
-                { id: 'venue', icon: '📍', label: 'Map' },
-                { id: 'gps', icon: '🧭', label: 'GPS Map' },
-                { id: 'info', icon: 'ℹ️', label: 'Info' }
+                { id: 'gps', icon: '🧭', label: 'Wayfinding Map' },
+                { id: 'venue', icon: '🗺️', label: 'Site Layout' },
+                { id: 'info', icon: 'ℹ️', label: 'Venue Info' }
               ].map(tab => (
                 <button
                   key={tab.id}
