@@ -1856,6 +1856,10 @@ const JimmyJamApp = () => {
                   <span className="text-lg">🎵</span>
                   <span>Spotify Festival Playlist</span>
                 </button>
+                <button onClick={() => { openExternal('https://jimmy-jam-app.vercel.app/privacy.html'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                  <span className="text-lg">🔒</span>
+                  <span>Privacy Policy</span>
+                </button>
                 <button onClick={() => { setActiveNav('admin'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-xs text-gray-400 hover:bg-gray-50 rounded-lg transition-colors">
                   <span className="text-base">⚙️</span>
                   <span>Staff: Map Pins</span>

@@ -24,8 +24,12 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Jimmy Jam uses your location to show your position on the venue map and give you walking directions to parking, food trucks, and other event areas.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Jimmy Jam uses your device's compass to point the walking-direction arrow on the venue map. This data stays on your device.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
