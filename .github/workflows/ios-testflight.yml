@@ -70,6 +70,10 @@ jobs:
             -sdk iphoneos \
             -archivePath "$RUNNER_TEMP/App.xcarchive" \
             -destination "generic/platform=iOS" \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM=3A5PGPT896 \
+            PROVISIONING_PROFILE_SPECIFIER="Jimmy Jam BBQ Slam App Store CI" \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
             archive
 
       - name: Export IPA
