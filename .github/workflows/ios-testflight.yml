@@ -51,6 +51,13 @@ jobs:
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o "$CERTIFICATE_PATH"
           echo -n "$PROVISIONING_PROFILE_BASE64" | base64 --decode -o "$PP_PATH"
 
+          echo "DIAGNOSTIC: certificate file size = $(wc -c < "$CERTIFICATE_PATH")"
+          echo "DIAGNOSTIC: certificate sha256 = $(shasum -a 256 "$CERTIFICATE_PATH")"
+          echo "DIAGNOSTIC: base64 secret length = ${#BUILD_CERTIFICATE_BASE64}"
+          echo "DIAGNOSTIC: password length = ${#P12_PASSWORD}"
+          echo "DIAGNOSTIC: openssl legacy check:"
+          openssl pkcs12 -in "$CERTIFICATE_PATH" -passin "pass:$P12_PASSWORD" -noout -legacy 2>&1 || true
+
           security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
