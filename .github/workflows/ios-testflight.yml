@@ -44,6 +44,10 @@ jobs:
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
+          # Strip any stray whitespace/newlines that may have been pasted into the secrets
+          P12_PASSWORD=$(printf '%s' "$P12_PASSWORD" | tr -d '\n\r[:space:]')
+          KEYCHAIN_PASSWORD=$(printf '%s' "$KEYCHAIN_PASSWORD" | tr -d '\n\r[:space:]')
+
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o "$CERTIFICATE_PATH"
           echo -n "$PROVISIONING_PROFILE_BASE64" | base64 --decode -o "$PP_PATH"
 
