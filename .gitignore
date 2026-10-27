@@ -38,3 +38,6 @@ Thumbs.db
 
 .vercel
 .env*.local
+
+# Internal CI setup notes (keep out of the public repo)
+CI_SETUP.md
