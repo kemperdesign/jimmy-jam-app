@@ -15,7 +15,7 @@ import {
   Check,
   Ticket
 } from 'lucide-react';
-import { BbqGrillBadge, BourbonBadge, PerformersBadge } from './BbqBadgeIcons';
+import { BbqGrillBadge, PerformersBadge } from './BbqBadgeIcons';
 
 export default function FestivalSchedule({
   mySchedule = [],
@@ -142,52 +142,6 @@ export default function FestivalSchedule({
       icon: '🏆',
       featured: false
     },
-    {
-      id: 'bourbon-cocktail',
-      date: 'Oct 17, 2026',
-      dateGroup: 'Bourbon & BBQ Dinner — Oct 17, 2026',
-      time: '6:00 PM – 7:00 PM',
-      title: 'Welcome Cocktail & Hors d’oeuvres',
-      desc: 'Signature welcome bourbon cocktail, appetizers, and silent auction viewing on the outdoor patio.',
-      category: 'bourbon',
-      categoryLabel: 'Bourbon Dinner',
-      location: 'The Tringali Barn Patio',
-      priceLabel: 'Dinner Ticket Required',
-      image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800',
-      icon: '🥂',
-      featured: false
-    },
-    {
-      id: 'bourbon-dinner',
-      date: 'Oct 17, 2026',
-      dateGroup: 'Bourbon & BBQ Dinner — Oct 17, 2026',
-      time: '7:00 PM',
-      title: '3rd Annual Bourbon & BBQ Charity Dinner',
-      desc: 'A premier culinary evening featuring a multi-course dinner prepared by 2-Time World Champion Kings BBQ and curated bourbon pairings.',
-      category: 'bourbon',
-      categoryLabel: 'Bourbon Dinner',
-      location: 'The Tringali Barn',
-      priceLabel: '$100 / person',
-      image: 'https://images.unsplash.com/photo-1527030280862-64139fba04ca?auto=format&fit=crop&q=80&w=800',
-      icon: '🥃',
-      featured: true,
-      ticketUrl: 'https://pci.jotform.com/form/262125277149156'
-    },
-    {
-      id: 'futch-brothers',
-      date: 'Oct 17, 2026',
-      dateGroup: 'Bourbon & BBQ Dinner — Oct 17, 2026',
-      time: '8:15 PM – 10:00 PM',
-      title: 'Live Music: The Futch Brothers Band',
-      desc: 'Live patio concert by singer-songwriter Brian Futch and band playing country, rock, blues, and Americana originals + bourbon raffle drawing.',
-      category: 'music',
-      categoryLabel: 'Live Music',
-      location: 'The Tringali Barn Patio',
-      priceLabel: 'Included with Dinner',
-      image: 'https://images.zoogletools.com/s:bzglfiles/u/188709/0fadb2caa1a76a2c326d930c9511749d8c4dbf86/original/photo-output-4.jpeg/!!/b%3AW1sicmVzaXplIiwxODAwXSxbIm1heCJdLFsid2UiXV0%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg',
-      icon: '🎸',
-      featured: true
-    }
   ], [EVENT_VENUE_NAME]);
 
   // Featured Hero Carousel items
@@ -204,17 +158,6 @@ export default function FestivalSchedule({
       photo: '/images/event-photos/dsc08414.jpg'
     },
     {
-      badge: 'Charity Evening',
-      title: '3rd Annual Bourbon & BBQ Dinner',
-      subtitle: 'Kings BBQ Dinner, Curated Bourbon & The Futch Brothers Band',
-      date: 'Saturday, October 17, 2026',
-      venue: 'The Tringali Barn • Elkton, FL',
-      cta: 'Reserve Dinner ($100)',
-      action: () => openInAppModal ? openInAppModal('https://pci.jotform.com/form/262125277149156', 'Bourbon & BBQ Dinner Registration') : openExternal('https://pci.jotform.com/form/262125277149156'),
-      gradient: 'linear-gradient(135deg, #7C2D12 0%, #EA580C 50%, #C2410C 100%)',
-      photo: 'https://images.zoogletools.com/s:bzglfiles/u/188709/0fadb2caa1a76a2c326d930c9511749d8c4dbf86/original/photo-output-4.jpeg/!!/b%3AW1sicmVzaXplIiwxODAwXSxbIm1heCJdLFsid2UiXV0%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg'
-    },
-    {
       badge: 'Tournaments',
       title: 'Cornhole & Classic Car Show',
       subtitle: '$25 Blind Draw Cornhole + Vintage Cars & Motorcycles',
@@ -225,7 +168,7 @@ export default function FestivalSchedule({
       gradient: 'linear-gradient(135deg, #065F46 0%, #059669 50%, #047857 100%)',
       photo: '/images/event-photos/dsc08387.jpg'
     }
-  ], [EVENT_DATE_LABEL, EVENT_VENUE_NAME, setActiveNav, openExternal, openInAppModal]);
+  ], [EVENT_DATE_LABEL, EVENT_VENUE_NAME, setActiveNav]);
 
   // Categories for horizontal pill filters
   const categories = [
@@ -233,7 +176,6 @@ export default function FestivalSchedule({
     { id: 'tastings', label: 'BBQ & Tastings', icon: BbqGrillBadge, isCustomIcon: true },
     { id: 'music', label: 'Live Music', icon: PerformersBadge, isCustomIcon: true },
     { id: 'tournaments', label: 'Tournaments', icon: Trophy },
-    { id: 'bourbon', label: 'Bourbon Dinner', icon: BourbonBadge, isCustomIcon: true },
     { id: 'my', label: `My Schedule (${mySchedule.length})`, icon: Heart }
   ];
 

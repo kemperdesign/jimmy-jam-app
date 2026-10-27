@@ -39,12 +39,6 @@ export default function FestivalSwag({ setActiveNav }) {
       image: '/logo-transparent.png'
     },
     {
-      title: 'Reserve Bourbon & BBQ Tasting Glass',
-      desc: 'Etched commemorative Glencairn bourbon glass celebrating the 3rd Annual Bourbon Dinner.',
-      badge: 'VIP Collectible',
-      image: '/images/event-photos/dsc08443.jpg'
-    },
-    {
       title: 'Heavyweight Canvas Pitmaster Apron',
       desc: 'Waxed canvas with reinforced utility pockets and brass hardware for grilling and smoking.',
       badge: 'Pit Crew Favorite',
@@ -134,7 +128,7 @@ export default function FestivalSwag({ setActiveNav }) {
             {/* Fairgrounds On-Site Location Notice */}
             <div className="pt-2 text-[11px] text-neutral-400 flex items-center justify-center gap-1.5">
               <MapPin size={13} className="text-amber-400" />
-              <span>Available live at the Main Merch Tent • Tringali Barn</span>
+              <span>Available live at the Main Merch Tent • St. Johns County Fairgrounds</span>
             </div>
 
           </div>

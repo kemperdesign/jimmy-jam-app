@@ -22,6 +22,10 @@ import FestivalGuide from './FestivalGuide';
 // window.open() for external links — this opens them in the system's
 // in-app Safari view on native iOS/Android, and falls back to a normal
 // new tab on the web.
+// Staff-only map pin tools. Off unless REACT_APP_SHOW_ADMIN=true is set at build
+// time, so the public App Store build never shows the staff sign-in screen.
+const SHOW_STAFF_TOOLS = process.env.REACT_APP_SHOW_ADMIN === 'true';
+
 const openExternal = async (url) => {
   if (Capacitor.isNativePlatform()) {
     await Browser.open({ url });
@@ -131,8 +135,6 @@ const JimmyJamApp = () => {
       setActiveTab('gps');
     } else if (activeNav === 'events') {
       setActiveTab('overview');
-    } else if (activeNav === 'bourbon') {
-      setActiveTab('bbq');
     }
   }, [activeNav]);
   // SPONSORS DATA — real 2027 sponsors pulled from jimmyjambbqslam.com/sponsors.
@@ -169,22 +171,8 @@ const JimmyJamApp = () => {
 
   // ARTISTS DATA — only confirmed real acts. No named lineup has been announced for the
   // main BBQ Slam (the real site only says "local and regional artists"), so we do not
-  // invent names, set times, or stages for it. The Futch Brothers Band is the one
-  // confirmed act, for the separate ticketed Bourbon & BBQ Event.
+  // invent names, set times, or stages for it.
   const artistsData = [
-    {
-      id: 1,
-      name: 'The Futch Brothers Band',
-      genre: 'Performing at the 3rd Annual Bourbon & BBQ Event',
-      logo: '🎸',
-      image: 'https://images.zoogletools.com/s:bzglfiles/u/188709/0fadb2caa1a76a2c326d930c9511749d8c4dbf86/original/photo-output-4.jpeg/!!/b%3AW1sicmVzaXplIiwxODAwXSxbIm1heCJdLFsid2UiXV0%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg',
-      website: 'https://brianfutch.com/',
-      description: 'Led by singer-songwriter Brian Futch, Brothers Futch plays a genre-spanning mix described on their own site as "rock to country to blues to folk to Americana," with original songs about life and love. The band played more than 50 shows in 2025 and is working on an EP of original material. They perform on the patio immediately following the evening program at the 3rd Annual Bourbon & BBQ Event at The Tringali Barn.',
-      time: 'After dinner',
-      stage: 'Bourbon & BBQ Event (Tringali Barn)',
-      eventDate: '2026-10-17',
-      eventStartTime: '20:00'
-    },
     {
       id: 2,
       name: 'Local & Regional Artists',
@@ -313,11 +301,6 @@ const JimmyJamApp = () => {
       { time: '11:00 AM – 3:00 PM', title: 'Chili & Chowder People’s Choice Tasting (15+ Teams)', location: EVENT_VENUE_NAME, icon: '🌶️' },
       { time: '2:00 PM – 4:00 PM', title: 'BBQ People’s Choice Tasting (60+ Teams)', location: EVENT_VENUE_NAME, icon: '🍖' }
     ]},
-    { date: 'October 17', dateStr: 'Sat', events: [
-      { time: '6:00 PM – 7:00 PM', title: 'Welcome Cocktail & Hors d’oeuvres', location: 'The Tringali Barn', icon: '🥂' },
-      { time: '7:00 PM', title: 'Dinner — 3rd Annual Bourbon & BBQ Event ($100/person)', location: 'The Tringali Barn', icon: '🥃' },
-      { time: 'After Dinner', title: 'Live Music: The Futch Brothers Band', location: 'The Tringali Barn Patio', icon: '🎸' }
-    ]}
   ];
 
 
@@ -539,21 +522,6 @@ const JimmyJamApp = () => {
     { id: 'p479', src: '/images/event-photos/dsc08479.jpg', title: 'Pro Reserve Grand Champion', desc: '10th Annual Jimmy Jam BBQ Slam 2026 award, sponsored by The Shee Family' }
   ];
 
-  const bourbonMenu = {
-    bbq: [
-      { name: 'Smoked Brisket', desc: '14-hour St Augustine, Florida style', price: '$18' },
-      { name: 'St. Louis Ribs', desc: 'Fall-off-bone tender', price: '$16' },
-      { name: 'Pulled Pork', desc: 'Carolina mustard sauce', price: '$12' },
-      { name: 'Smoked Chicken', desc: 'Apple-smoked', price: '$12' }
-    ],
-    bourbon: [
-      { name: "Maker's Mark Flight", desc: 'Neat, water, rocks', price: '$12' },
-      { name: 'Woodford Flight', desc: 'Premium tasting', price: '$15' },
-      { name: 'Bourbon Cocktails', desc: 'Old Fashioned, Mint Julep', price: '$10' },
-      { name: 'Bourbon & BBQ Pairing', desc: 'Curated selection', price: '$28' }
-    ]
-  };
-
   // Real content from jimmyjambbqslam.com/about. These are the actual impact stories
   // published there (anonymized by the organization itself, no names given) — we do not
   // invent names or quotes attributed to fictional people.
@@ -647,18 +615,6 @@ const JimmyJamApp = () => {
         'Day-of entry available, limited spots'
       ],
       url: 'https://form.jotform.com/jimmyjammarketing1/car-show-entry-form'
-    },
-    {
-      icon: '🥃',
-      title: '3rd Annual Bourbon & BBQ Event',
-      price: 100,
-      priceLabel: '$100 per person',
-      features: [
-        'Saturday, October 17th at The Tringali Barn',
-        'Welcome cocktail, dinner by 2-Time World Champion Kings BBQ',
-        'Live music from The Futch Brothers Band + bourbon raffle'
-      ],
-      url: 'https://pci.jotform.com/form/262125277149156'
     }
   ];
 
@@ -1036,22 +992,6 @@ const JimmyJamApp = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-6">
-              {/* BOURBON & BBQ CARD */}
-              <button
-                onClick={() => setActiveTab('bourbon-event')}
-                className="group relative h-64 rounded-2xl overflow-hidden shadow-2xl transition-all transform hover:scale-[1.02]"
-              >
-                <img src="/images/event-photos/dsc08443.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(14,13,12,0.95), rgba(14,13,12,0.4))' }}></div>
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-6" style={{ color: 'var(--text-primary)' }}>
-                  <span className="text-6xl mb-4">🥃</span>
-                  <h2 className="font-display text-4xl tracking-wide">BOURBON & BARBEQUE</h2>
-                  <p className="mt-1 text-xs text-amber-200">Saturday, October 17, 2026 • Tringali Barn • $100/ticket</p>
-                  <p className="text-[11px] text-white/80 mt-1">Whole Hog, Wagyu Gold Brisket by 2X Champion Ryan King & Broudy's Bourbon</p>
-                  <div className="mt-4 px-6 py-2 rounded-pill font-bold text-sm uppercase tracking-wide" style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}>Explore Event</div>
-                </div>
-              </button>
-
               {/* BBQ SLAM CARD */}
               <button
                 onClick={() => setActiveTab('bbq-slam-event')}
@@ -1065,72 +1005,6 @@ const JimmyJamApp = () => {
                   <p className="mt-1 text-xs text-amber-300">Saturday, January 9, 2027 • St. Johns County Fairgrounds</p>
                   <p className="text-[11px] text-white/80 mt-1">Chili Cook-Off ($875 Cash Prizes - Free Entry) & $17,000 BBQ Slam</p>
                   <div className="mt-4 px-6 py-2 rounded-pill font-bold text-sm uppercase tracking-wide" style={{ backgroundColor: 'var(--color-secondary)', color: '#1E1C1A' }}>Explore Event</div>
-                </div>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* BOURBON & BBQ EVENT DETAIL */}
-        {activeNav === 'events' && activeTab === 'bourbon-event' && (
-          <div className="space-y-8 pb-20 -mx-4 px-4 pt-2 bg-canvas min-h-screen" style={{ backgroundColor: 'var(--bg-canvas)' }}>
-            <button onClick={() => setActiveTab('overview')} className="flex items-center gap-2 font-bold mb-4" style={{ color: 'var(--color-primary)' }}>
-              <ChevronLeft size={24} /> Back to Events
-            </button>
-
-            <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg">
-              <img src="/images/event-photos/dsc08443.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(14,13,12,0.9), rgba(14,13,12,0.3))' }}></div>
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6" style={{ color: 'var(--text-primary)' }}>
-                <h1 className="font-display text-5xl tracking-wide">BOURBON & BARBEQUE</h1>
-                <p className="text-lg mt-1" style={{ color: 'var(--text-secondary)' }}>The Ultimate Pairing Experience</p>
-              </div>
-            </div>
-
-            {/* MENU SECTION */}
-            <div className="space-y-4">
-              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>THE MENU</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                {bourbonMenu.bbq.map((item, i) => (
-                  <div key={i} className="p-5 rounded-xl shadow-card border flex justify-between items-center" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
-                    <div>
-                      <p className="font-bold" style={{ color: 'var(--text-primary)' }}>{item.name}</p>
-                      <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
-                    </div>
-                    <span className="font-bold" style={{ color: 'var(--color-secondary)' }}>{item.price}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* SPONSORS SECTION */}
-            <div className="space-y-4">
-              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>EVENT SPONSORS</h2>
-              <div className="grid grid-cols-3 gap-4">
-                {sponsorsData.slice(0, 3).map((sponsor) => (
-                  <div key={sponsor.id} className="p-4 rounded-xl shadow-card text-center border transition-all" style={{ backgroundColor: 'var(--bg-paper)', borderColor: 'var(--border-subtle)', boxShadow: 'var(--shadow-card)' }}>
-                    {sponsor.logoImage ? (
-                      <img src={sponsor.logoImage} alt={sponsor.name} className="h-12 w-full object-contain mb-2" />
-                    ) : (
-                      <span className="text-4xl block mb-2">{sponsor.logo}</span>
-                    )}
-                    <p className="font-bold text-xs" style={{ color: 'var(--text-on-light)' }}>{sponsor.name}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* VIDEOS SECTION */}
-            <div className="space-y-4">
-              <h2 className="font-display text-2xl tracking-wide pl-4 border-l-4" style={{ color: 'var(--text-primary)', borderColor: 'var(--color-primary)' }}>VIDEO HIGHLIGHTS</h2>
-              <button
-                onClick={() => setActiveNav('videos')}
-                className="w-full aspect-video rounded-2xl flex items-center justify-center text-6xl shadow-2xl relative overflow-hidden group"
-                style={{ backgroundColor: 'var(--bg-surface)' }}
-              >
-                🎬
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer" style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}>
-                  <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl pl-2 shadow-xl" style={{ backgroundColor: 'var(--color-primary)', color: '#FFFFFF' }}>▶</div>
                 </div>
               </button>
             </div>
@@ -1285,45 +1159,6 @@ const JimmyJamApp = () => {
             setActiveNav={setActiveNav}
             openExternal={openExternal}
           />
-        )}
-
-        {activeNav === 'bourbon' && (
-          <div className="space-y-8">
-            <h1 className="text-5xl font-bold text-center bg-gradient-to-r from-red-600 to-orange-600 text-white p-8 rounded-lg">🥃 BOURBON & BBQ</h1>
-
-            <div className="flex gap-4 border-b-2 border-gray-300">
-              <button onClick={() => setActiveTab('bbq')} className={`px-4 py-3 font-bold ${activeTab === 'bbq' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}>BBQ Menu</button>
-              <button onClick={() => setActiveTab('bourbon')} className={`px-4 py-3 font-bold ${activeTab === 'bourbon' ? 'border-b-4 border-red-700 text-red-700' : 'text-gray-600'}`}>Bourbon</button>
-            </div>
-
-            {activeTab === 'bbq' && (
-              <div className="grid md:grid-cols-2 gap-6">
-                {bourbonMenu.bbq.map((item, i) => (
-                  <div key={i} className="bg-white rounded-lg p-6 border-l-4 border-red-700 shadow-lg">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-bold text-red-700 text-lg">{item.name}</h3>
-                      <span className="text-red-600 font-bold">{item.price}</span>
-                    </div>
-                    <p className="text-gray-600">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {activeTab === 'bourbon' && (
-              <div className="grid md:grid-cols-2 gap-6">
-                {bourbonMenu.bourbon.map((item, i) => (
-                  <div key={i} className="bg-white rounded-lg p-6 border-l-4 border-yellow-700 shadow-lg">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-bold text-yellow-900 text-lg">{item.name}</h3>
-                      <span className="text-yellow-700 font-bold">{item.price}</span>
-                    </div>
-                    <p className="text-gray-600">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
         )}
 
         {/* WEATHER */}
@@ -1745,7 +1580,7 @@ const JimmyJamApp = () => {
         )}
 
         {/* ADMIN - MANAGE GPS PINS */}
-        {activeNav === 'admin' && (
+        {SHOW_STAFF_TOOLS && activeNav === 'admin' && (
           <AdminPins venueLat={EVENT_LAT} venueLon={EVENT_LON} />
         )}
       </main>
@@ -1859,10 +1694,12 @@ const JimmyJamApp = () => {
                   <span className="text-lg">🔒</span>
                   <span>Privacy Policy</span>
                 </button>
-                <button onClick={() => { setActiveNav('admin'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-xs text-gray-400 hover:bg-gray-50 rounded-lg transition-colors">
-                  <span className="text-base">⚙️</span>
-                  <span>Staff: Map Pins</span>
-                </button>
+                {SHOW_STAFF_TOOLS && (
+                  <button onClick={() => { setActiveNav('admin'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-xs text-gray-400 hover:bg-gray-50 rounded-lg transition-colors">
+                    <span className="text-base">⚙️</span>
+                    <span>Staff: Map Pins</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>

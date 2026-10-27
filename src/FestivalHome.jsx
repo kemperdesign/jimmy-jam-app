@@ -20,7 +20,6 @@ import {
   BbqGrillBadge,
   CrossedCleaversBadge,
   BuyTicketsStampBadge,
-  BourbonBadge,
   PerformersBadge,
   TastingBallotBadge,
   FestivalMapBadge
@@ -212,50 +211,6 @@ export default function FestivalHome({
             </button>
           </div>
 
-          {/* Lower Row: BOURBON & MUSIC Pennant Banner */}
-          <div className="mt-2.5">
-            <button
-              onClick={() => setActiveNav('events')}
-              className="group w-full relative text-left transform rotate-1 hover:rotate-0 transition-transform duration-200"
-            >
-              <div
-                className="relative overflow-hidden px-5 py-3 rounded-2xl shadow-lg border-2 border-white flex items-center justify-between"
-                style={{
-                  background: 'linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%)',
-                  boxShadow: '0 8px 20px -4px rgba(183, 28, 28, 0.4)'
-                }}
-              >
-                {/* Marquee Bulb lights border styling */}
-                <div className="absolute top-1 left-3 right-3 flex justify-between opacity-80">
-                  {[...Array(9)].map((_, i) => (
-                    <span key={i} className="w-1 h-1 rounded-full bg-amber-200" />
-                  ))}
-                </div>
-
-                <div className="flex items-center gap-3 pt-1">
-                  <BourbonBadge className="w-11 h-11 flex-shrink-0 drop-shadow" />
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-amber-200 block">3rd Annual Dinner</span>
-                    <h3 className="font-display text-2xl tracking-wider text-white leading-none group-hover:text-amber-200 transition-colors">
-                      BOURBON & BBQ
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="text-right pt-1">
-                  <span className="inline-block px-2.5 py-1 bg-amber-400 text-amber-950 font-display text-xs tracking-wider rounded-full font-bold shadow-sm">
-                    SAT OCT 17
-                  </span>
-                </div>
-
-                <div className="absolute bottom-1 left-3 right-3 flex justify-between opacity-80">
-                  {[...Array(9)].map((_, i) => (
-                    <span key={i} className="w-1 h-1 rounded-full bg-amber-200" />
-                  ))}
-                </div>
-              </div>
-            </button>
-          </div>
         </div>
 
         {/* 3. FESTIVAL NOTCHED SWALLOWTAIL RIBBON STACK */}

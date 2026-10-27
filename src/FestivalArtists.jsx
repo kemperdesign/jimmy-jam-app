@@ -37,43 +37,6 @@ export default function FestivalArtists({
   // Full artist roster with high-resolution imagery and metadata
   const artists = useMemo(() => [
     {
-      id: 1,
-      name: 'THE FUTCH BROTHERS BAND',
-      displayName: 'The Futch Brothers Band',
-      genre: 'Country • Rock • Blues • Americana',
-      subtitle: 'Headlining the 3rd Annual Bourbon & BBQ Charity Event',
-      badge: 'Bourbon & BBQ',
-      category: 'bourbon',
-      dateDay: '17',
-      dateMonth: 'OCT',
-      dateFull: 'Saturday, October 17, 2026',
-      eventDate: '2026-10-17',
-      eventStartTime: '20:15',
-      time: '8:15 PM – 10:00 PM',
-      stage: 'The Tringali Barn Patio',
-      stageShort: 'Tringali Barn',
-      youtubeId: 'VrMzNq42iu0',
-      location: 'Elkton, FL • The Tringali Barn',
-      price: '$100 / person',
-      priceSubtitle: 'Dinner & Concert Ticket',
-      goingCount: '250+ going',
-      image: 'https://images.zoogletools.com/s:bzglfiles/u/188709/0fadb2caa1a76a2c326d930c9511749d8c4dbf86/original/photo-output-4.jpeg/!!/b%3AW1sicmVzaXplIiwxODAwXSxbIm1heCJdLFsid2UiXV0%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg',
-      website: 'https://brianfutch.com/',
-      spotifyUrl: 'https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw',
-      ticketUrl: 'https://pci.jotform.com/form/262125277149156',
-      description: 'Led by renowned singer-songwriter Brian Futch, The Futch Brothers Band delivers an electrifying mix described on their site as "rock to country to blues to folk to Americana," with original songs about life, grit, and love. Playing more than 50 shows a year and currently producing an EP of original material, the band headlines the patio immediately following the Kings BBQ dinner program at The Tringali Barn.',
-      highlights: [
-        'Multi-instrumental live performance with acoustic & electric sets',
-        'Special guest appearances during the evening bourbon raffle',
-        'Intimate open-air patio setting under the Florida stars'
-      ],
-      avatars: [
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120',
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120',
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120'
-      ]
-    },
-    {
       id: 2,
       name: 'REGIONAL COUNTRY & SOUTHERN ROCK SHOWCASE',
       displayName: 'Regional Country & Southern Rock Showcase',
@@ -185,7 +148,6 @@ export default function FestivalArtists({
   // Category filter buttons
   const categories = [
     { id: 'all', label: 'View all' },
-    { id: 'bourbon', label: 'Bourbon & BBQ' },
     { id: 'mainstage', label: 'Main Stage' },
     { id: 'acoustic', label: 'Acoustic / Blues' },
     { id: 'favorites', label: `Favorites (${favoriteArtists.length})` }
