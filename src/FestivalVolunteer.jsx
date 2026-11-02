@@ -10,68 +10,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-const VOLUNTEER_SHIFTS = [
-  {
-    id: 'shift-chili',
-    title: 'Chili Cook-Off Tasting & Token Sales',
-    sponsor: 'Sponsored by Evans Automotive',
-    date: 'Saturday, Jan 9, 2027',
-    time: '10:30 AM – 3:30 PM',
-    spotsTotal: 12,
-    spotsLeft: 4,
-    location: 'Chili Arena • North Fairgrounds',
-    desc: 'Assist competing chili teams, distribute 2-oz tasting cups, sell tasting tokens, and guide guests to the voting token drop boxes.',
-    perks: ['Official Volunteer T-Shirt', 'Free BBQ Tasting Pass', 'Community Service Hours Certificate']
-  },
-  {
-    id: 'shift-bbq-runner',
-    title: 'BBQ Pitmaster Hospitality & Judging Runner',
-    sponsor: 'Jimmy Jam Outreach Crew',
-    date: 'Saturday, Jan 9, 2027',
-    time: '1:30 PM – 5:00 PM',
-    spotsTotal: 8,
-    spotsLeft: 2,
-    location: 'Competition Barn & Pitmaster Alley',
-    desc: 'Escort turn-in trays from champion pitmasters to certified KCBS judges table. Handle water, ice, and staging logistics for cook teams.',
-    perks: ['Official Volunteer T-Shirt', 'Behind-the-Scenes Smoker Access', 'Meal Pass']
-  },
-  {
-    id: 'shift-gate',
-    title: 'Gate Welcome & Will-Call Wristbands',
-    sponsor: 'Jimmy Jam Community Outreach',
-    date: 'Saturday, Jan 9, 2027',
-    time: '8:30 AM – 1:30 PM',
-    spotsTotal: 10,
-    spotsLeft: 5,
-    location: 'Gate A Main Entrance',
-    desc: 'Greet incoming festival attendees, scan digital tickets, verify registrations, and distribute attendee wristbands and event maps.',
-    perks: ['Official Volunteer T-Shirt', 'Festival Meal Pass', 'Community Service Credit']
-  },
-  {
-    id: 'shift-kids-zone',
-    title: 'Kids Zone & Family Fun Area Monitor',
-    sponsor: 'Family Support Committee',
-    date: 'Saturday, Jan 9, 2027',
-    time: '11:00 AM – 3:30 PM',
-    spotsTotal: 6,
-    spotsLeft: 3,
-    location: 'West Lawn Family Pavilion',
-    desc: 'Supervise bounce house queues, assist with face painting stations, and coordinate crowd safety for the BMX stunt & K9 demonstrations.',
-    perks: ['Official Volunteer T-Shirt', 'Snack & Beverage Pass', 'Volunteer Certificate']
-  },
-  {
-    id: 'shift-friday-setup',
-    title: 'Friday Staging & Ancillary Contest Crew',
-    sponsor: 'Pit Crew Logistics',
-    date: 'Friday, Jan 8, 2027',
-    time: '2:30 PM – 7:30 PM',
-    spotsTotal: 10,
-    spotsLeft: 6,
-    location: 'Main Event Barn & Staging Lots',
-    desc: 'Help erect banners, stage tables, direct team trailers into designated parking spots, and assist with Friday evening wing & slider contests.',
-    perks: ['Official Volunteer T-Shirt', 'Cookout Dinner with Pitmasters', 'Service Hours']
-  }
-];
+const VOLUNTEER_SHIFTS = [];
 
 export default function FestivalVolunteer({ setActiveNav }) {
   // 'opportunities' | 'my-schedule' | 'checkin'

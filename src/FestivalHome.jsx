@@ -25,10 +25,17 @@ import {
   FestivalMapBadge
 } from './BbqBadgeIcons';
 
+const plankBackground = (light, mid, dark) => [
+  'repeating-linear-gradient(92deg, rgba(0,0,0,0.10) 0 1px, transparent 1px 7px, rgba(255,255,255,0.07) 7px 8px, transparent 8px 19px, rgba(0,0,0,0.12) 19px 21px, transparent 21px 34px)',
+  'radial-gradient(circle at 18% 35%, rgba(255,255,255,0.22) 0 1px, transparent 2px) 0 0 / 13px 11px',
+  'radial-gradient(circle at 72% 60%, rgba(0,0,0,0.25) 0 1px, transparent 2px) 0 0 / 17px 15px',
+  `linear-gradient(180deg, ${light} 0%, ${mid} 40%, ${dark} 100%)`
+].join(', ');
+
 const DEFENDING_CHAMPIONS = [
   {
     name: 'Maya Jane BBQ',
-    subtitle: 'Defending Champ',
+    subtitle: 'Pro Grand Champion',
     division: 'PRO GRAND CHAMPION',
     badge: 'PRO GRAND',
     badgeBg: 'bg-amber-500 text-slate-950',
@@ -37,7 +44,7 @@ const DEFENDING_CHAMPIONS = [
   },
   {
     name: "Mike's Backyard",
-    subtitle: 'Reserve Champ',
+    subtitle: 'Backyard Grand Champion',
     division: 'BACKYARD RESERVE GRAND CHAMPION',
     badge: 'BACKYARD',
     badgeBg: 'bg-blue-600 text-white',
@@ -46,7 +53,7 @@ const DEFENDING_CHAMPIONS = [
   },
   {
     name: 'So So BBQ',
-    subtitle: 'Public Favorite',
+    subtitle: 'People\'s Choice Champion',
     division: "PEOPLE'S CHOICE WINNER",
     badge: "PEOPLE'S",
     badgeBg: 'bg-red-600 text-white',
@@ -222,7 +229,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('artists')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: 'linear-gradient(90deg, #102038 0%, #1E3A5F 50%, #102038 100%)',
+              background: plankBackground('#2A4B7A', '#1E3A5F', '#102038'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.4)',
               borderBottom: '1.5px solid rgba(0,0,0,0.3)'
@@ -243,7 +250,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('schedule')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: 'linear-gradient(90deg, #1E88E5 0%, #42A5F5 50%, #1E88E5 100%)',
+              background: plankBackground('#5CB8F7', '#1E88E5', '#0D5AA8'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.5)',
               borderBottom: '1.5px solid rgba(0,0,0,0.2)'
@@ -264,7 +271,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('ballot')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: 'linear-gradient(90deg, #C62828 0%, #E53935 50%, #C62828 100%)',
+              background: plankBackground('#E84B4B', '#C62828', '#8E1B1B'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.4)',
               borderBottom: '1.5px solid rgba(0,0,0,0.3)'
@@ -285,7 +292,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('maps')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: 'linear-gradient(90deg, #0D47A1 0%, #1976D2 50%, #0D47A1 100%)',
+              background: plankBackground('#2A8AE3', '#0D47A1', '#08306B'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.4)',
               borderBottom: '1.5px solid rgba(0,0,0,0.3)'
@@ -306,7 +313,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('photos')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: 'linear-gradient(90deg, #E65100 0%, #F57C00 50%, #E65100 100%)',
+              background: plankBackground('#FF9A3C', '#E65100', '#A33A00'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.4)',
               borderBottom: '1.5px solid rgba(0,0,0,0.3)'

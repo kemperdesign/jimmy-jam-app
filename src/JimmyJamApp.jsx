@@ -772,7 +772,7 @@ const JimmyJamApp = () => {
 
               <div>
                 <p className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>When</p>
-                <p style={{ color: 'var(--text-secondary)' }}>11th Annual Jimmy Jam BBQ Slam: {EVENT_DATE_LABEL}. (3rd Annual Bourbon & BBQ Event: October 2027, exact date TBA)</p>
+                <p style={{ color: 'var(--text-secondary)' }}>11th Annual Jimmy Jam BBQ Slam: {EVENT_DATE_LABEL}.</p>
               </div>
 
               <div>
