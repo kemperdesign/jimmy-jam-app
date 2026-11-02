@@ -118,7 +118,7 @@ export default function FestivalArtists({
       price: 'Free Entry',
       priceSubtitle: 'Included with Admission',
       goingCount: '',
-      image: '/images/event-photos/dsc08463.jpg',
+      image: '/artists/paper-city-hustlers.png',
       website: 'https://www.facebook.com/papercityhustlersmusic',
       spotifyUrl: 'https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw',
       ticketUrl: 'https://pci.jotform.com/form/260406377587163',
