@@ -26,10 +26,11 @@ import {
 } from './BbqBadgeIcons';
 
 const plankBackground = (light, mid, dark) => [
-  'repeating-linear-gradient(92deg, rgba(0,0,0,0.10) 0 1px, transparent 1px 7px, rgba(255,255,255,0.07) 7px 8px, transparent 8px 19px, rgba(0,0,0,0.12) 19px 21px, transparent 21px 34px)',
-  'radial-gradient(circle at 18% 35%, rgba(255,255,255,0.22) 0 1px, transparent 2px) 0 0 / 13px 11px',
-  'radial-gradient(circle at 72% 60%, rgba(0,0,0,0.25) 0 1px, transparent 2px) 0 0 / 17px 15px',
-  `linear-gradient(180deg, ${light} 0%, ${mid} 40%, ${dark} 100%)`
+  'radial-gradient(ellipse 16px 5px at 22% 42%, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, transparent 80%)',
+  'radial-gradient(ellipse 12px 4px at 71% 64%, rgba(0,0,0,0.3) 0%, transparent 80%)',
+  'repeating-linear-gradient(180deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 3px, rgba(255,255,255,0.10) 3px 4px, transparent 4px 7px, rgba(0,0,0,0.10) 7px 9px, transparent 9px 14px)',
+  'repeating-linear-gradient(90deg, rgba(0,0,0,0.45) 0 2px, rgba(255,255,255,0.12) 2px 3px, transparent 3px 160px)',
+  `linear-gradient(180deg, ${light} 0%, ${mid} 50%, ${dark} 100%)`
 ].join(', ');
 
 const DEFENDING_CHAMPIONS = [
