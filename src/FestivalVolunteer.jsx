@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { BUNDLED_VOLUNTEER_SHIFTS } from './festivalData';
+import { useContentItems } from './useContentItems';
 import {
   Users,
   Calendar,
@@ -10,9 +12,9 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-const VOLUNTEER_SHIFTS = [];
 
 export default function FestivalVolunteer({ setActiveNav }) {
+  const VOLUNTEER_SHIFTS = useContentItems('volunteer', BUNDLED_VOLUNTEER_SHIFTS);
   // 'opportunities' | 'my-schedule' | 'checkin'
   const [activeTab, setActiveTab] = useState('opportunities');
   const [claimedShiftIds, setClaimedShiftIds] = useState(() => {

@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { BUNDLED_SCHEDULE } from './festivalData';
+import { useContentItems } from './useContentItems';
 import {
   Calendar,
   Clock,
@@ -32,132 +34,7 @@ export default function FestivalSchedule({
   const [copiedEvent, setCopiedEvent] = useState(null);
 
   // All confirmed Jimmy Jam events with rich metadata & real photos
-  const allEvents = useMemo(() => [
-    {
-      id: 'cornhole-signup',
-      date: 'Jan 9, 2027',
-      dateGroup: 'Main Event — Jan 9, 2027',
-      time: '10:00 AM',
-      title: 'Cornhole Tournament Sign-Ups Open',
-      desc: 'Blind draw format. Limited brackets available on-site — sign up early at the tournament tent.',
-      category: 'tournaments',
-      categoryLabel: 'Tournament',
-      location: EVENT_VENUE_NAME,
-      priceLabel: '$25 / person',
-      image: '/images/event-photos/dji_20260110141907_0933_d.jpg',
-      icon: '🌽',
-      featured: false,
-      ticketUrl: 'https://pci.jotform.com/form/260406377587163'
-    },
-    {
-      id: 'cornhole-start',
-      date: 'Jan 9, 2027',
-      dateGroup: 'Main Event — Jan 9, 2027',
-      time: '11:00 AM',
-      title: 'Cornhole Tournament Starts',
-      desc: 'Tournament throws off! Spectators welcome. Trophies & cash prizes awarded to top teams.',
-      category: 'tournaments',
-      categoryLabel: 'Tournament',
-      location: EVENT_VENUE_NAME,
-      priceLabel: 'Free to Watch',
-      image: '/images/event-photos/dsc08399.jpg',
-      icon: '🌽',
-      featured: false
-    },
-    {
-      id: 'chili-chowder',
-      date: 'Jan 9, 2027',
-      dateGroup: 'Main Event — Jan 9, 2027',
-      time: '11:00 AM – 3:00 PM',
-      title: 'Chili & Chowder People’s Choice Tasting',
-      desc: 'Sample mouthwatering creations from 15+ competing teams. Cast your token vote for the crowd favorite!',
-      category: 'tastings',
-      categoryLabel: 'BBQ & Tastings',
-      location: 'Tasting Pavilion • Fairgrounds',
-      priceLabel: '$1 Tokens',
-      image: '/images/event-photos/dsc08414.jpg',
-      icon: '🌶️',
-      featured: true,
-      ticketUrl: 'https://pci.jotform.com/form/260406377587163'
-    },
-    {
-      id: 'car-show',
-      date: 'Jan 9, 2027',
-      dateGroup: 'Main Event — Jan 9, 2027',
-      time: '10:00 AM',
-      title: 'Classic Car, Truck & Motorcycle Show',
-      desc: 'Dozens of vintage hot rods, custom trucks, and classic motorcycles on display with awards in multiple categories.',
-      category: 'tournaments',
-      categoryLabel: 'Car Show',
-      location: 'Midway Grounds • Fairgrounds',
-      priceLabel: '$20 Pre-reg / $25 Day-of',
-      image: '/images/event-photos/dsc08387.jpg',
-      icon: '🚗',
-      featured: false,
-      ticketUrl: 'https://form.jotform.com/jimmyjammarketing1/car-show-entry-form'
-    },
-    {
-      id: 'live-music-main',
-      date: 'Jan 9, 2027',
-      dateGroup: 'Main Event — Jan 9, 2027',
-      time: '10:30 AM',
-      title: 'Live Music on the Main Stage',
-      desc: 'Walt Kulwicki (10:30 AM), Cottonmouth Band (11:15 AM), Paper City Hustlers (1:00 PM), and Brothers Futch (3:00 PM).',
-      category: 'music',
-      categoryLabel: 'Live Music',
-      location: 'Main Amphitheater Stage',
-      priceLabel: 'Included with Admission',
-      image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800',
-      icon: '🎸',
-      featured: true
-    },
-    {
-      id: 'bbq-tasting',
-      date: 'Jan 9, 2027',
-      dateGroup: 'Main Event — Jan 9, 2027',
-      time: '2:00 PM – 4:00 PM',
-      title: 'BBQ People’s Choice Tasting (60+ Teams)',
-      desc: 'The main event! Sample ribs, pulled pork, and brisket from over 60 championship BBQ teams and crown the 2027 champion.',
-      category: 'tastings',
-      categoryLabel: 'BBQ & Tastings',
-      location: 'Pitmaster Row • Fairgrounds',
-      priceLabel: '$1 Tokens',
-      image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&q=80&w=800',
-      icon: '🍖',
-      featured: true,
-      ticketUrl: 'https://pci.jotform.com/form/260406377587163'
-    },
-    {
-      id: 'car-show-awards',
-      date: 'Jan 9, 2027',
-      dateGroup: 'Main Event — Jan 9, 2027',
-      time: '12:30 PM',
-      title: 'Car Show Awards',
-      desc: 'Trophies presented to the winners of the Classic Car, Truck & Motorcycle Show.',
-      category: 'tournaments',
-      categoryLabel: 'Car Show',
-      location: 'Midway Grounds • Fairgrounds',
-      priceLabel: 'Free to Attend',
-      image: '/images/event-photos/dsc08387.jpg',
-      icon: '🚗',
-      featured: false
-    },
-    {
-      id: 'awards-ceremony',
-      date: 'Jan 9, 2027',
-      dateGroup: 'Main Event — Jan 9, 2027',
-      time: '5:00 PM',
-      title: 'BBQ Awards Ceremony',
-      desc: 'Presentation of the BBQ Grand Champion, Backyard Grand Champion, and People\'s Choice trophies on the Main Stage.',
-      category: 'tastings',
-      categoryLabel: 'Awards',
-      location: 'Main Stage',
-      priceLabel: 'Free to Attend',
-      image: '/images/event-photos/dsc08471.jpg',
-      icon: '🏆',
-      featured: false
-    },
-  ], [EVENT_VENUE_NAME]);
+  const allEvents = useContentItems('schedule', BUNDLED_SCHEDULE);
 
   // Featured Hero Carousel items
   const featuredCards = useMemo(() => [

@@ -15,122 +15,13 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { supabase } from './supabaseClient';
+import { BUNDLED_TEAMS } from './festivalData';
+import { useContentItems } from './useContentItems';
 
 // Contender teams list with booth numbers and divisions
-const COMPETING_TEAMS = [
-  {
-    id: 'team-1',
-    name: 'Maya Jane BBQ Co',
-    pitmaster: 'Dave "Smokey" Spencer',
-    booth: 'Booth 102',
-    category: 'BBQ',
-    division: 'Pro Division',
-    image: '/winners/maya-jane-bbq-co-pro-grand-champion-2026.jpg',
-    specialty: 'Texas Style Brisket & Glazed Ribs'
-  },
-  {
-    id: 'team-2',
-    name: "Mike's Backyard BBQ",
-    pitmaster: 'Mike Henderson',
-    booth: 'Booth 105',
-    category: 'BBQ',
-    division: 'Backyard Division',
-    image: '/winners/mikes-backyard-bbq-backyard-reserve-grand-champion-2026.jpg',
-    specialty: 'Applewood Smoked Pork Butt & Hot Links'
-  },
-  {
-    id: 'team-3',
-    name: 'So So BBQ',
-    pitmaster: 'Marcus Vance',
-    booth: 'Booth 108',
-    category: 'BBQ',
-    division: 'Defending People’s Choice',
-    image: '/winners/so-so-bbq-peoples-choice-2026.jpg',
-    specialty: 'Sweet & Spicy St. Louis Ribs'
-  },
-  {
-    id: 'team-4',
-    name: "Smokin' Spencer's Q",
-    pitmaster: 'Brian Spencer',
-    booth: 'Booth 112',
-    category: 'BBQ',
-    division: 'Pro Division',
-    image: '/images/event-photos/dsc08414.jpg',
-    specialty: 'Cherrywood Pulled Pork & Brisket Bark'
-  },
-  {
-    id: 'team-5',
-    name: 'Kings BBQ Pit Crew',
-    pitmaster: 'Chris King',
-    booth: 'Booth 115',
-    category: 'BBQ',
-    division: 'Backyard Division',
-    image: '/images/event-photos/dsc08416.jpg',
-    specialty: 'Brown Sugar Bourbon Ribs'
-  },
-  {
-    id: 'team-6',
-    name: 'Old City Smokehouse',
-    pitmaster: 'Travis Miller',
-    booth: 'Booth 118',
-    category: 'BBQ',
-    division: 'Pro Division',
-    image: '/images/event-photos/dsc08418.jpg',
-    specialty: 'Hickory Smoked Pork Belly Burnt Ends'
-  },
-  {
-    id: 'chili-1',
-    name: 'Blazin’ Datil Pepper Chili',
-    pitmaster: 'Captain Jim Ryan',
-    booth: 'Chili Tent #1',
-    category: 'Chili & Chowder',
-    division: 'Chili Cook-Off',
-    image: '/images/event-photos/dsc08401.jpg',
-    specialty: 'Local Minorcan Datil Pepper Beef Chili'
-  },
-  {
-    id: 'chili-2',
-    name: 'Smoked Brisket Campfire Chili',
-    pitmaster: 'Sarah Jenkins',
-    booth: 'Chili Tent #4',
-    category: 'Chili & Chowder',
-    division: 'Chili Cook-Off',
-    image: '/images/event-photos/dsc08404.jpg',
-    specialty: 'Chunky Smoked Brisket & Dark Stout'
-  },
-  {
-    id: 'chili-3',
-    name: 'Minorcan Clam & Pork Chowder',
-    pitmaster: 'Capt. Pete Hernandez',
-    booth: 'Chili Tent #7',
-    category: 'Chili & Chowder',
-    division: 'Chili Cook-Off',
-    image: '/images/event-photos/dsc08406.jpg',
-    specialty: 'Traditional Tomato Broth & Fresh Clams'
-  },
-  {
-    id: 'car-1',
-    name: '1969 Chevy Camaro SS (Marina Blue)',
-    pitmaster: 'Dan Miller',
-    booth: 'Car Show Spot #12',
-    category: 'Car Show',
-    division: 'Muscle Car Division',
-    image: '/images/event-photos/dsc08387.jpg',
-    specialty: 'Big Block 396 • 4-Speed'
-  },
-  {
-    id: 'car-2',
-    name: '1956 Ford F-100 Custom Pickup',
-    pitmaster: 'Robert Kelly',
-    booth: 'Car Show Spot #24',
-    category: 'Car Show',
-    division: 'Classic Truck Division',
-    image: '/images/event-photos/dsc08388.jpg',
-    specialty: 'Chop Top • Custom Patina V8'
-  }
-];
 
 export default function FestivalBallot({ setActiveNav }) {
+  const COMPETING_TEAMS = useContentItems('teams', BUNDLED_TEAMS);
   const [activeCategory, setActiveCategory] = useState('BBQ'); // 'BBQ' | 'Chili & Chowder' | 'Car Show'
   const [ballotEntries, setBallotEntries] = useState(() => {
     try {
@@ -287,7 +178,7 @@ export default function FestivalBallot({ setActiveNav }) {
   // Filter contenders for current category
   const activeContenders = useMemo(() => {
     return COMPETING_TEAMS.filter(t => t.category === activeCategory);
-  }, [activeCategory]);
+  }, [activeCategory, COMPETING_TEAMS]);
 
   // Filter user's saved scorecards for current category, ranked by overall score
   const categoryBallotEntries = useMemo(() => {

@@ -25,13 +25,16 @@ import {
   FestivalMapBadge
 } from './BbqBadgeIcons';
 
-const plankBackground = (light, mid, dark) => [
-  'radial-gradient(ellipse 16px 5px at 22% 42%, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, transparent 80%)',
-  'radial-gradient(ellipse 12px 4px at 71% 64%, rgba(0,0,0,0.3) 0%, transparent 80%)',
-  'repeating-linear-gradient(180deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 3px, rgba(255,255,255,0.10) 3px 4px, transparent 4px 7px, rgba(0,0,0,0.10) 7px 9px, transparent 9px 14px)',
-  'repeating-linear-gradient(90deg, rgba(0,0,0,0.45) 0 2px, rgba(255,255,255,0.12) 2px 3px, transparent 3px 160px)',
-  `linear-gradient(180deg, ${light} 0%, ${mid} 50%, ${dark} 100%)`
-].join(', ');
+// Worn plank photo (grayscale) multiplied over a tinted gradient, so each tab
+// keeps the real grain, knots and cracks while taking its own color.
+const plankStyle = (light, mid, dark) => ({
+  backgroundImage: [
+    'url(/textures/worn-plank.jpg)',
+    `linear-gradient(180deg, ${light} 0%, ${mid} 50%, ${dark} 100%)`
+  ].join(', '),
+  backgroundSize: '100% 100%, 100% 100%',
+  backgroundBlendMode: 'multiply, normal'
+});
 
 const DEFENDING_CHAMPIONS = [
   {
@@ -230,7 +233,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('artists')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: plankBackground('#2A4B7A', '#1E3A5F', '#102038'),
+              ...plankStyle('#2A4B7A', '#1E3A5F', '#102038'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.4)',
               borderBottom: '1.5px solid rgba(0,0,0,0.3)'
@@ -251,7 +254,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('schedule')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: plankBackground('#5CB8F7', '#1E88E5', '#0D5AA8'),
+              ...plankStyle('#5CB8F7', '#1E88E5', '#0D5AA8'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.5)',
               borderBottom: '1.5px solid rgba(0,0,0,0.2)'
@@ -272,7 +275,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('ballot')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: plankBackground('#E84B4B', '#C62828', '#8E1B1B'),
+              ...plankStyle('#E84B4B', '#C62828', '#8E1B1B'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.4)',
               borderBottom: '1.5px solid rgba(0,0,0,0.3)'
@@ -293,7 +296,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('maps')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: plankBackground('#2A8AE3', '#0D47A1', '#08306B'),
+              ...plankStyle('#2A8AE3', '#0D47A1', '#08306B'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.4)',
               borderBottom: '1.5px solid rgba(0,0,0,0.3)'
@@ -314,7 +317,7 @@ export default function FestivalHome({
             onClick={() => setActiveNav('photos')}
             className="group w-full relative py-3 px-6 text-center transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 drop-shadow-md"
             style={{
-              background: plankBackground('#FF9A3C', '#E65100', '#A33A00'),
+              ...plankStyle('#FF9A3C', '#E65100', '#A33A00'),
               clipPath: 'polygon(14px 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0% 50%)',
               borderTop: '1.5px solid rgba(255,255,255,0.4)',
               borderBottom: '1.5px solid rgba(0,0,0,0.3)'

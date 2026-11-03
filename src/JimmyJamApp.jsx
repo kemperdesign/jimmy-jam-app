@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { BUNDLED_SPONSORS, BUNDLED_WINNERS } from './festivalData';
+import { useContentItems, useFaqSections } from './useContentItems';
 import { Search, ChevronLeft, ChevronRight, Star, Calendar, Ticket, Camera, Trophy, Users, Shirt, HeartHandshake, CloudSun, MessageCircle, X, Menu } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
@@ -10,6 +12,7 @@ import FestivalFaq from './FestivalFaq';
 import FestivalRecipes from './FestivalRecipes';
 import FestivalBottomNav from './FestivalBottomNav';
 import FestivalBallot from './FestivalBallot';
+import FestivalPeoplesChoice from './FestivalPeoplesChoice';
 import FestivalAssistance from './FestivalAssistance';
 import FestivalVolunteer from './FestivalVolunteer';
 import FestivalWeather from './FestivalWeather';
@@ -140,34 +143,10 @@ const JimmyJamApp = () => {
   // SPONSORS DATA — real 2027 sponsors pulled from jimmyjambbqslam.com/sponsors.
   // Logo images use GoDaddy CSS backgrounds we couldn't extract programmatically,
   // so these use a generic badge icon until real logo files are supplied.
-  const sponsorsData = [
-    { id: 0, name: 'The Shee Family', tier: 'Title Sponsor', logo: '🏆', logoImage: '/sponsor-logos/shee-family-title-sponsor.svg', website: null, description: 'Title Sponsor of the 10th Annual Jimmy Jam BBQ Slam. The Shee Family also performed live at the 2026 event.' },
-    { id: 3, name: 'My DUI Guy Law', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/my-dui-guy-law.png', website: 'https://www.myduiguy.law/', description: 'My DUI Guy, a division of Douglas Law Firm, is a Florida criminal defense practice led by Scott C. DuPont, a former Circuit Court Judge and prosecutor, focused primarily on DUI defense with in-person meetings in St. Augustine.' },
-    { id: 4, name: 'Glacier HVAC', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/glacier-hvac.jpg', website: 'https://glacier-hvac.com/', description: 'Glacier Heating & Air Conditioning is a family-owned HVAC company based on Dobbs Road in St. Augustine, offering 24/7 residential and commercial repair, replacement, and maintenance throughout St. Johns County.' },
-    { id: 5, name: 'Saint Augustine Slabs & Sawmill', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/saint-augustine-slabs.svg', website: 'https://saintaugustineslabsandsawmill.com/', description: 'Saint Augustine Slabs and Sawmill, located on Dobbs Road in St. Augustine, provides custom-cut wood slabs and offers free estimates for specific slab requests.' },
-    { id: 6, name: 'St. Johns Cultural Council', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/st-johns-culture.png', website: 'https://stjohnsculture.com/', description: 'The St. Johns Cultural Council is a 501(c)(3) nonprofit and the designated Local Arts Agency for St. Johns County, supporting local artists and promoting the county as a cultural destination for residents and visitors.' },
-    { id: 6.5, name: 'St. Johns County Tourist Development Council', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/st-johns-tdc.jpg', website: 'https://www.floridashistoriccoast.com/', description: 'Florida\'s Historic Coast (the St. Augustine, Ponte Vedra & The Beaches Visitors and Convention Bureau) promotes the area to leisure travelers and meeting planners, offering trip-planning, lodging, dining, and event resources.' },
-    { id: 7, name: 'Mastercraft Builder Group', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/mastercraft-builder-group.webp', website: 'https://mastercraftbuildergroup.com/clays-for-a-cause-celebrates-10-years/', description: 'Mastercraft Builder Group, a Perry Homes company, builds new homes across Florida — including the Madeira, SilverLeaf, EverRange, and Istoria communities — and is also behind the long-running charity shoot Clays for a Cause.' },
-    { id: 8, name: 'BNS Signs', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/bns-signs.png', website: 'https://bnssigns.com/', description: 'B&S Signs is a family-owned sign company in St. Augustine with over fifty years of experience, producing everything from vinyl lettering to large pylon signs along with repair, maintenance, and installation services.' },
-    { id: 9, name: 'Dynamic Reel', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/dynamic-reel.png', website: 'https://www.dynamicreel.com/', description: 'Dynamic Reel Productions is a St. Augustine videography company producing corporate, event, promotional, and cause-driven video content for small businesses, corporations, and nonprofits across Northeast Florida.' },
-    { id: 10, name: 'Sonny’s BBQ', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/sonnys-bbq.png', website: 'https://www.sonnysbbq.com/', description: 'Sonny\'s BBQ is a Southern barbecue restaurant chain founded in 1968, known for slow-smoked meats and its Random Acts of BBQ program that surprises local heroes and community members with free food.' },
-    { id: 11, name: 'United Rentals', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/united-rentals.png', website: 'https://www.unitedrentals.com/locations/fl/jacksonville/power-hvac-rentals/g80', description: 'United Rentals\' Jacksonville branch supplies power generation and HVAC rental equipment for construction sites and events, part of the world\'s largest equipment rental company.' },
-    { id: 12, name: 'Bozard Ford', tier: 'Community Sponsor', logo: '🤝', logoImage: '/sponsor-logos/bozard-ford.svg', website: 'https://bozardford.com/', description: 'Bozard Ford is a Ford dealership at 540 Outlet Mall Blvd in St. Augustine offering new trucks, used cars, service, parts, and financing to the greater Jacksonville area.' },
-    { id: 1, name: 'Evans Automotive', tier: "People's Choice — Chili & Chowder", logo: '🌶️', logoImage: '/sponsor-logos/evans-automotive.jpg', website: 'https://www.evans-automotive.com/', description: 'Evans Automotive & Tire Center is a family-owned auto repair shop on Pinecrest St. in St. Augustine with over 25 years of experience in brakes, A/C, transmission, alignment, and tire service — and sponsor of the Chili & Chowder People\'s Choice competition.' },
-    { id: 2, name: 'Steelhead Plumbing', tier: "People's Choice — BBQ", logo: '🍖', logoImage: '/sponsor-logos/steelhead-plumbing.png', website: 'https://steelheadplumbing.com/', description: 'Steelhead Plumbing LLC is a licensed and insured St. Augustine plumbing contractor serving residential and commercial clients, and a supporter of the St. Johns Police Athletic League — now sponsoring the BBQ People\'s Choice competition.' },
-    { id: 13, name: 'Hometech Pest Control', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/hometech.jpg', website: 'https://hometechpest.com/', description: 'HomeTech Pest Solutions is a family-run pest control company operating locally since 2005, offering residential and commercial pest, termite, and rodent control along with wood-destroying organism inspections.' },
-    { id: 14, name: 'Perfect Promo Solutions', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/pps.png', website: 'https://www.perfectpromosolutions.com/', description: 'Perfect Promo Solutions supplies custom-branded promotional merchandise — apparel, drinkware, bags, awards, and tech accessories — along with printing, wraps, and wooden gifts to help local businesses promote their brands.' },
-    { id: 15, name: 'MySALL.org', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/mysall.png', website: 'https://mysall.org/', description: 'St. Augustine Little League ("SALL") is a youth baseball organization handling player registration, divisions, game scheduling, and volunteer and sponsorship programs for local kids.' },
-    { id: 16, name: 'Edwards Law Firm', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/edwards.png', website: 'https://edwardslawfirm.com/', description: 'The Edwards Law Firm serves clients in Jacksonville, St. Augustine, Fernandina Beach, and Mandarin, focusing on estate planning and elder law — including asset protection, probate, long-term care planning, and veterans\' benefits.' },
-    { id: 17, name: 'Melvin’s Auto & Truck Repair', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/melvins.png', website: 'https://www.melvinsautoandtruckrepair.com/', description: 'Melvin\'s Auto & Truck Repair is an auto repair shop in St. Augustine working on both cars and trucks.' },
-    { id: 18, name: 'MRT St. Augustine', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/mrT.jpg', website: 'https://mrtstaug.com/', description: 'Mr. T\'s Mechanical Refrigerated Technologies is a state-licensed HVAC and refrigeration contractor in St. Augustine, operating since 2002 and serving homes, businesses, and commercial refrigeration like walk-in coolers and ice machines.' },
-    { id: 19, name: 'SSS BBQ Inc.', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/sssbbqinc.png', website: 'https://www.sssbbqinc.com/', description: 'Schrader\'s Smoker Service (SSS BBQ Inc.) is a family-run north central Florida business selling commercial-grade smokers and BBQ grills, with parts, repairs, rentals, and relocation services across the Southeast — in business since 1999 as an authorized Southern Pride distributor.' },
-    { id: 20, name: 'PV Golf Carts', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/pv-logo-oval.png', website: 'https://www.pvgolfcarts.com/', description: 'Ponte Vedra Golf Carts is a locally owned Club Car and Sierra LSV dealer serving Jacksonville, Ponte Vedra Beach, and Nocatee, with new and refurbished carts plus service, parts, and rentals.' },
-    { id: 21, name: 'Best Sub Sandwich', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/logo_top.png', website: 'https://bestsubsandwich.com/', description: 'Old City Subs is a St. Augustine sub sandwich shop founded in 2009, offering subs, salads, catering, and free local delivery from its US-1 South location.' },
-    { id: 22, name: 'Tillman’s BBQ', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/tillmans-bbq.png', website: 'https://tillmansbbq.com/', description: 'Tillman\'s Barbecue sells BBQ sauces and dry rubs, including Grandma\'s Red Sauce based on a family recipe from the 1940s, along with wholesale and retail distribution across the region.' },
-    { id: 23, name: 'Honorable Discharge', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/hdlogo.png', website: 'https://honorable-discharge.com/', description: 'Honorable Discharge Portable Latrines is a veteran-owned, family-owned company in Elkton, FL, renting portable toilets, wash stations, and RV/boat pump-out services for construction sites, events, and rural properties across Saint Johns, Flagler, and Putnam counties.' },
-    { id: 24, name: 'Outdoor Site Solutions', tier: 'Banner Sponsor', logo: '🏳️', logoImage: '/sponsor-logos/odss.jpg', website: 'https://www.facebook.com/p/Outdoor-Site-Solutions-LLC-100054171442698/', description: 'Proud 2027 Banner Sponsor of the Jimmy Jam BBQ Slam.' }
-  ];
+  // Hooks must run before the splash screen's early return below.
+  const sponsorsData = useContentItems('sponsors', BUNDLED_SPONSORS);
+  const faqData = useFaqSections();
+  const pastWinnersData = useContentItems('winners', BUNDLED_WINNERS);
 
   // ARTISTS DATA — only confirmed real acts. No named lineup has been announced for the
   // main BBQ Slam (the real site only says "local and regional artists"), so we do not
@@ -367,57 +346,6 @@ const JimmyJamApp = () => {
     }
   ];
 
-  const faqData = [
-    {
-      title: '📋 General',
-      qa: [
-        { q: 'What is the Jimmy Jam BBQ Slam?', a: 'A nonprofit event dedicated to celebrating BBQ, classic cars, live music, and community giving. All proceeds go toward helping individuals and families in need.' },
-        { q: 'When and where is the event?', a: `${EVENT_VENUE_NAME}, ${EVENT_VENUE_ADDRESS}. The 11th Annual Jimmy Jam BBQ Slam is ${EVENT_DATE_LABEL}.` },
-        { q: 'Is there an entry fee?', a: 'General admission is free. There are fees for tastings, competition entries, and vendor participation (see Registrations).' },
-        { q: 'What can I expect at the event?', a: 'BBQ & Chili Cook-Offs, Live Music, Cornhole Tournament, Car Show, Food Vendors & Shopping, and Family-Friendly Activities.' },
-        { q: 'Is there a cost for the live music?', a: 'No, live music is included with your event admission!' },
-        { q: 'Is the event family-friendly?', a: 'Absolutely! We offer activities for all ages, including games, food, and entertainment.' },
-        { q: 'Is parking available?', a: 'VIP parking available for VIP passholders and free parking to general admission patrons.' },
-        { q: 'Are pets allowed?', a: 'Pets are welcome and must be leashed at all times.' }
-      ],
-      contact: 'jimmyjaminfo@gmail.com'
-    },
-    {
-      title: '🍖 BBQ & Chili Competition',
-      qa: [
-        { q: 'How do I sign up for the Chili Cook-Off or BBQ Competition?', a: 'Registration is open to all interested competitors — see the Registrations section of this app.' },
-        { q: 'How does the People’s Choice voting work?', a: 'Guests purchase $1 tasting tokens and receive voting tokens based on amount spent: Chili & Chowder (11am–3pm) is 1 voting token per $10 spent, BBQ (2pm–4pm) is 1 voting token per $20 spent.' },
-        { q: 'Are there prizes for competition winners?', a: 'Yes! Trophies and bragging rights go to the top competitors in both judge-selected and People’s Choice categories.' }
-      ],
-      contact: 'jimmyjammarketing1@gmail.com'
-    },
-    {
-      title: '🚗 Car Show',
-      qa: [
-        { q: 'How do I register my car for the show?', a: 'Car registration is $20 per vehicle if registered in advance, $25 on the day of the show (non-refundable). See the Registrations section.' },
-        { q: 'What types of vehicles can enter?', a: 'Categories include Classic Cars, Trucks, and Motorcycles.' },
-        { q: 'Will trophies be awarded?', a: 'Yes, trophies will be given out in multiple categories.' },
-        { q: 'Can I register my car on the day of the event?', a: 'Yes, but the entry fee increases to $25 and spots are limited.' }
-      ],
-      contact: 'jimmyjammarketing1@gmail.com'
-    },
-    {
-      title: '🅿️ Parking & Accommodations',
-      qa: [
-        { q: 'Where can I park?', a: 'VIP parking for VIP passholders; free general admission parking. Judges, team, vendor/volunteer/band, and handicap parking are all separately zoned on-site.' },
-        { q: 'Where can I stay nearby?', a: 'Hampton Inn and Best Western Historical Inn both have a block of rooms reserved for Jimmy Jam BBQ Slam. Sun Outdoor Campground/RV Park is also nearby.' },
-        { q: 'What amenities are available on-site?', a: 'Firewood, hot showers, and ice are available at the fairgrounds.' }
-      ],
-      contact: 'jimmyjaminfo@gmail.com'
-    },
-    {
-      title: '♿ Services for People with Disabilities',
-      qa: [
-        { q: 'Is the event accessible?', a: 'Yes — handicap parking is available on-site. Email us to let us know what accommodations you need and we’ll do our best to help.' }
-      ],
-      contact: 'jimmyjaminfo@gmail.com'
-    }
-  ];
 
   const registrationDetails = [
     {
@@ -482,11 +410,6 @@ const JimmyJamApp = () => {
     }
   ];
 
-  const pastWinnersData = [
-    { year: '2026', category: 'Pro Grand Champion', team: 'Maya Jane BBQ Co.', photo: '/winners/maya-jane-bbq-co-pro-grand-champion-2026.jpg', logo: '/winners/maya-jane-bbq-co-logo.jpg' },
-    { year: '2026', category: 'Backyard Reserve Grand Champion', team: "Mike's Backyard BBQ", photo: '/winners/mikes-backyard-bbq-backyard-reserve-grand-champion-2026.jpg', logo: '/winners/mikes-backyard-bbq-logo.jpg' },
-    { year: '2026', category: "People's Choice", team: 'So So BBQ', photo: '/winners/so-so-bbq-peoples-choice-2026.jpg', logo: null }
-  ];
 
   // Real photos from the 10th Annual Jimmy Jam BBQ Slam, January 2026.
   const galleryPhotos = [
@@ -845,6 +768,11 @@ const JimmyJamApp = () => {
         {/* TASTING BALLOT */}
         {activeNav === 'ballot' && (
           <FestivalBallot setActiveNav={setActiveNav} />
+        )}
+
+        {/* PEOPLE'S CHOICE VOTE + LIVE RESULTS */}
+        {activeNav === 'peoplesChoice' && (
+          <FestivalPeoplesChoice setActiveNav={setActiveNav} />
         )}
 
         {/* VOLUNTEER */}
@@ -1630,9 +1558,9 @@ const JimmyJamApp = () => {
                   <span className="text-lg">🎟️</span>
                   <span className="font-display tracking-wider text-base">BUY EVENT TICKETS</span>
                 </button>
-                <button onClick={() => { setActiveNav('ballot'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
+                <button onClick={() => { setActiveNav('peoplesChoice'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
                   <span className="text-lg">⭐</span>
-                  <span className="font-medium">BBQ People's Choice Ballot</span>
+                  <span className="font-medium">People's Choice Vote &amp; Results</span>
                 </button>
                 <button onClick={() => { setActiveNav('artists'); setShowMoreMenu(false); }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-amber-50 rounded-lg transition-colors">
                   <span className="text-lg">🎤</span>

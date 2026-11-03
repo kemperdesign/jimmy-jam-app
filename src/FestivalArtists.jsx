@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { BUNDLED_ARTISTS } from './festivalData';
+import { useContentItems } from './useContentItems';
 import {
   Search,
   MapPin,
@@ -35,133 +37,7 @@ export default function FestivalArtists({
   const [copiedId, setCopiedId] = useState(null);
 
   // Full artist roster with high-resolution imagery and metadata
-  const artists = useMemo(() => [
-    {
-      id: 2,
-      name: 'WALT KULWICKI',
-      displayName: 'Walt Kulwicki',
-      genre: 'Live Music',
-      subtitle: 'Main Stage Performance',
-      badge: 'Main Stage',
-      category: 'mainstage',
-      dateDay: '09',
-      dateMonth: 'JAN',
-      dateFull: 'Saturday, January 9, 2027',
-      eventDate: '2027-01-09',
-      eventStartTime: '10:30',
-      time: '10:30 AM',
-      stage: 'Main Amphitheater Stage',
-      stageShort: 'Main Stage',
-      location: 'St. Johns County Fairgrounds',
-      price: 'Free Entry',
-      priceSubtitle: 'Included with Admission',
-      goingCount: '',
-      image: '/artists/walt-kulwicki.jpg',
-      website: 'https://www.facebook.com/Waltsmusicpage',
-      spotifyUrl: 'https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw',
-      ticketUrl: 'https://pci.jotform.com/form/260406377587163',
-      description: 'Walt Kulwicki performs on the Main Stage at the 11th Annual Jimmy Jam BBQ Slam.',
-      highlights: [
-        'Main Stage performance',
-        'Included with event admission'
-      ],
-      avatars: []
-    },
-    {
-      id: 3,
-      name: 'COTTONMOUTH BAND',
-      displayName: 'Cottonmouth Band',
-      genre: 'Live Music',
-      subtitle: 'Main Stage Performance',
-      badge: 'Main Stage',
-      category: 'mainstage',
-      dateDay: '09',
-      dateMonth: 'JAN',
-      dateFull: 'Saturday, January 9, 2027',
-      eventDate: '2027-01-09',
-      eventStartTime: '11:15',
-      time: '11:15 AM',
-      stage: 'Main Amphitheater Stage',
-      stageShort: 'Main Stage',
-      location: 'St. Johns County Fairgrounds',
-      price: 'Free Entry',
-      priceSubtitle: 'Included with Admission',
-      goingCount: '',
-      image: '/artists/cottonmouth-band.jpg',
-      website: 'https://www.facebook.com/cottonmouthbandSTA',
-      spotifyUrl: 'https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw',
-      ticketUrl: 'https://pci.jotform.com/form/260406377587163',
-      description: 'Cottonmouth Band performs on the Main Stage at the 11th Annual Jimmy Jam BBQ Slam.',
-      highlights: [
-        'Main Stage performance',
-        'Included with event admission'
-      ],
-      avatars: []
-    },
-    {
-      id: 4,
-      name: 'PAPER CITY HUSTLERS',
-      displayName: 'Paper City Hustlers',
-      genre: 'Live Music',
-      subtitle: 'Main Stage Performance',
-      badge: 'Main Stage',
-      category: 'mainstage',
-      dateDay: '09',
-      dateMonth: 'JAN',
-      dateFull: 'Saturday, January 9, 2027',
-      eventDate: '2027-01-09',
-      eventStartTime: '13:00',
-      time: '1:00 PM',
-      stage: 'Main Amphitheater Stage',
-      stageShort: 'Main Stage',
-      location: 'St. Johns County Fairgrounds',
-      price: 'Free Entry',
-      priceSubtitle: 'Included with Admission',
-      goingCount: '',
-      image: '/artists/paper-city-hustlers.jpg',
-      website: 'https://www.facebook.com/papercityhustlersmusic',
-      spotifyUrl: 'https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw',
-      ticketUrl: 'https://pci.jotform.com/form/260406377587163',
-      description: 'Paper City Hustlers perform on the Main Stage at the 11th Annual Jimmy Jam BBQ Slam.',
-      highlights: [
-        'Main Stage performance',
-        'Included with event admission'
-      ],
-      avatars: []
-    },
-    {
-      id: 5,
-      name: 'BROTHERS FUTCH',
-      displayName: 'Brothers Futch',
-      genre: 'Rock • Country • Blues • Folk • Americana',
-      subtitle: 'Main Stage Performance',
-      badge: 'Main Stage',
-      category: 'mainstage',
-      dateDay: '09',
-      dateMonth: 'JAN',
-      dateFull: 'Saturday, January 9, 2027',
-      eventDate: '2027-01-09',
-      eventStartTime: '15:00',
-      time: '3:00 PM',
-      stage: 'Main Amphitheater Stage',
-      stageShort: 'Main Stage',
-      location: 'St. Johns County Fairgrounds',
-      price: 'Free Entry',
-      priceSubtitle: 'Included with Admission',
-      goingCount: '',
-      image: 'https://images.zoogletools.com/s:bzglfiles/u/188709/0fadb2caa1a76a2c326d930c9511749d8c4dbf86/original/photo-output-4.jpeg/!!/b%3AW1sicmVzaXplIiwxODAwXSxbIm1heCJdLFsid2UiXV0%3D/meta%3AeyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D.jpg',
-      website: 'https://brianfutch.com/',
-      spotifyUrl: 'https://open.spotify.com/playlist/2RGhCcMgYDuUnJo7hXNFd2?si=HrjflBeqQaCJzF7jHwibAw',
-      ticketUrl: 'https://pci.jotform.com/form/260406377587163',
-      description: 'Brian Futch leads Brothers Futch, playing a mix of rock, country, blues, folk, and Americana, with original songs about life and love. The band has played more than 50 shows in a year and is working on an EP of original material.',
-      highlights: [
-        'Main Stage performance',
-        'Original songs and crowd-favorite covers',
-        'Included with event admission'
-      ],
-      avatars: []
-    }
-  ], []);
+  const artists = useContentItems('artists', BUNDLED_ARTISTS);
 
   // Category filter buttons
   const categories = [
